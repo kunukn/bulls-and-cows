@@ -23,7 +23,7 @@ renderers.
 
 ## Stack
 
-React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours are `@theme` tokens in `src/index.css`). State: XState (game flow) and Zustand with `persist` (settings, high scores) — pick whichever fits rather than introducing a third pattern.
+React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours and the shadcn/ui semantic tokens are defined in `src/index.css`; the app is dark-only). UI kit: [shadcn/ui](https://ui.shadcn.com) on Radix UI, copied into `src/components/ui/` (configured by `components.json`). Icons: `lucide-react`. i18n: i18next + react-i18next. State: XState (game flow) and Zustand with `persist` (settings, high scores) — pick whichever fits rather than introducing a third pattern.
 
 ## Commands
 
@@ -43,9 +43,20 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 - Always run `pnpm format` after edits. Oxfmt ([`oxfmt.config.mts`](../oxfmt.config.mts)) uses Prettier-compatible defaults — double quotes, semicolons, 80 columns — and sorts Tailwind classes, including inside `cn()`/`clsx()`.
 - Oxlint ([`oxlint.config.mts`](../oxlint.config.mts)) has no warnings: every rule is an error. It also flags unknown Tailwind classes (`better-tailwindcss/no-unknown-classes`). No default exports (config files excepted) and no `Array#forEach` — use `for…of`.
 - TypeScript strict mode is on, plus `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`. Don't leave unused symbols.
-- Prefer native HTML elements (radio groups, forms, `<button>`) over hand-rolled widgets.
+- **UI components:** use a native HTML element when it does the job (radio groups, forms, `<button>`). For anything richer — popovers, dialogs, menus — use the shadcn/ui component in `src/components/ui/`; add new ones with `pnpm dlx shadcn@latest add <name>`, then run `pnpm format` and `pnpm check`. Don't hand-roll a widget that one of those already covers.
 - No auto-imports — import React hooks and `react-router` exports explicitly.
 - **Playwright/browser screenshots go in `.temp/`** — never write screenshots (or other scratch artifacts) to the repo root. The `.temp/` folder is gitignored. When using a browser MCP tool, pass an explicit filename targeting `.temp/`, e.g. `.temp/intro.png`.
+
+## Translations (i18n)
+
+All user-facing text — including `aria-label`, `title`, `placeholder` and `confirm()` messages — goes through `t()` from `react-i18next`. No hard-coded English in components.
+
+- Languages: English (`en`, the source), Simplified Chinese (`zh`), French (`fr`), German (`de`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`. All five are bundled (no lazy loading).
+- **Add a key to all five files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
+- Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`. Interpolate with `{{name}}`.
+- Format numbers and dates with `Intl` in the active language (`i18n.language`), not a fixed locale.
+- The Settings popover (`src/i18n/LanguageSwitcher.tsx`) stores the choice in `localStorage` (`bulls-and-cows:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
+- Tone rules for the locale files: [`.github/instructions/translation.instructions.md`](instructions/translation.instructions.md).
 
 ## Git workflow
 
@@ -244,7 +255,8 @@ chore!: drop support for Node 18
 ## Quick Reference Checklist
 
 - ✅ Import from `react-router` (NOT `react-router-dom`)
-- ✅ Prefer native HTML elements over hand-rolled widgets
+- ✅ Native HTML first, then `src/components/ui` (shadcn/ui) — no hand-rolled widgets
+- ✅ All user-facing text via `t()`; add new keys to all five locale files
 - ✅ Use `type` not `interface`
 - ✅ Use Zustand or XState for state — don't introduce a third pattern
 - ✅ Follow Conventional Commits for commit messages

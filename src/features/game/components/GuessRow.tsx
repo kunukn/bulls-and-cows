@@ -1,6 +1,7 @@
 import type { Color } from "@/features/game/logic";
 import type { Guess } from "@/features/game/machine";
 import { cn } from "@/utils/cn";
+import { useTranslation } from "react-i18next";
 import { FeedbackPegs } from "./FeedbackPegs";
 import { Peg } from "./Peg";
 import {
@@ -27,6 +28,8 @@ export function GuessRow({
   onClearSlot,
   ref,
 }: Props) {
+  const { t } = useTranslation();
+
   return (
     <li
       ref={ref}
@@ -53,7 +56,10 @@ export function GuessRow({
               key={index}
               type="button"
               onClick={() => onClearSlot(index)}
-              aria-label={`Slot ${index + 1}: ${color}. Clear`}
+              aria-label={t("game.slotClear", {
+                slot: index + 1,
+                color: t(`colors.${color}`),
+              })}
               className="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
             >
               <Peg color={color} />

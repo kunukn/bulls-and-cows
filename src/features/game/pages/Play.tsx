@@ -6,12 +6,14 @@ import {
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
 import { Palette } from "../components/Palette";
 import { ResultPanel } from "../components/ResultPanel";
 import { Timer } from "../components/Timer";
 
 export function Play() {
+  const { t } = useTranslation();
   const actor = useGameActorRef();
   const difficulty = useGameSelector((snapshot) => snapshot.context.difficulty);
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
@@ -21,11 +23,7 @@ export function Play() {
   const setDifficulty = useSettings((state) => state.setDifficulty);
 
   function changeDifficulty(next: Difficulty) {
-    if (
-      isPlaying &&
-      hasProgress &&
-      !window.confirm("Abandon the current game?")
-    )
+    if (isPlaying && hasProgress && !window.confirm(t("game.abandonConfirm")))
       return;
 
     setDifficulty(next);
@@ -69,7 +67,7 @@ export function Play() {
     <div className="flex flex-col gap-4">
       <DifficultyPicker
         name="difficulty"
-        legend="Difficulty"
+        legend={t("difficulty.legend")}
         value={difficulty}
         onChange={changeDifficulty}
       />
@@ -77,11 +75,11 @@ export function Play() {
         <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
           <span className="flex items-center gap-1.5">
             <span className="size-2.5 rounded-full bg-zinc-950 ring-1 ring-zinc-400" />
-            Bull: right spot
+            {t("game.legendBull")}
           </span>
           <span className="flex items-center gap-1.5">
             <span className="size-2.5 rounded-full bg-white" />
-            Cow: wrong spot
+            {t("game.legendCow")}
           </span>
         </span>
         <Timer />

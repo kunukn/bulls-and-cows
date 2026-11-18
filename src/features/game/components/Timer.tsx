@@ -1,8 +1,10 @@
 import { useGameSelector } from "@/features/game/machine-context";
 import { formatDuration } from "@/utils/format";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function Timer() {
+  const { t } = useTranslation();
   const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
   const finishedAt = useGameSelector((snapshot) => snapshot.context.finishedAt);
   const [now, setNow] = useState(() => Date.now());
@@ -20,7 +22,7 @@ export function Timer() {
 
   return (
     <span className="font-mono text-sm text-slate-300 tabular-nums">
-      <span className="sr-only">Time </span>
+      <span className="sr-only">{t("game.time")} </span>
       {formatDuration(Math.max(0, elapsed))}
     </span>
   );

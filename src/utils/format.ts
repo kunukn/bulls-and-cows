@@ -7,10 +7,9 @@ export function formatDuration(ms: number): string {
   return `${minutes}:${seconds}`;
 }
 
-const dateFormatter = new Intl.DateTimeFormat(undefined, {
-  dateStyle: "medium",
-});
-
-export function formatDate(epochMs: number): string {
-  return dateFormatter.format(epochMs);
+/* Medium date in the UI language, e.g. "18 Nov 2026" / "18. Nov. 2026". */
+export function formatDate(epochMs: number, locale: string): string {
+  return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
+    epochMs,
+  );
 }

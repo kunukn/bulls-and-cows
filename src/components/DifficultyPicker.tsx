@@ -3,6 +3,7 @@ import {
   DIFFICULTY_KEYS,
   type Difficulty,
 } from "@/features/game/logic";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   value: Difficulty;
@@ -13,11 +14,13 @@ type Props = {
 
 /* Native radio group styled as a segmented control — arrow-key navigation for free. */
 export function DifficultyPicker({ value, onChange, name, legend }: Props) {
+  const { t } = useTranslation();
+
   return (
     <fieldset className="flex rounded-lg bg-slate-800 p-1">
       <legend className="sr-only">{legend}</legend>
       {DIFFICULTY_KEYS.map((key) => {
-        const { label, pegs, colors } = DIFFICULTIES[key];
+        const { pegs, colors } = DIFFICULTIES[key];
 
         return (
           <label
@@ -32,9 +35,9 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
               onChange={() => onChange(key)}
               className="sr-only"
             />
-            {label}
+            {t(`difficulty.${key}`)}
             <span className="block text-xs font-normal text-slate-400">
-              {pegs} pegs · {colors} colours
+              {t("difficulty.details", { pegs, colors })}
             </span>
           </label>
         );

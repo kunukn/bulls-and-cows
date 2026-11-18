@@ -14,7 +14,6 @@ export type Color = (typeof COLORS)[number];
 export type Difficulty = "easy" | "classic" | "hard";
 
 export type DifficultyConfig = {
-  label: string;
   pegs: number;
   colors: number;
   maxGuesses: number;
@@ -23,21 +22,18 @@ export type DifficultyConfig = {
 
 export const DIFFICULTIES: Record<Difficulty, DifficultyConfig> = {
   easy: {
-    label: "Easy",
     pegs: 4,
     colors: 6,
     maxGuesses: 10,
     allowRepeats: false,
   },
   classic: {
-    label: "Classic",
     pegs: 4,
     colors: 6,
     maxGuesses: 10,
     allowRepeats: true,
   },
   hard: {
-    label: "Hard",
     pegs: 5,
     colors: 8,
     maxGuesses: 12,

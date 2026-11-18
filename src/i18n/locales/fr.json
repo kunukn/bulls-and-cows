@@ -1,0 +1,63 @@
+{
+  "app": { "title": "Bulls & Cows" },
+  "common": { "settings": "Réglages", "language": "Langue" },
+  "nav": { "play": "Jouer", "highScores": "Meilleurs scores" },
+  "difficulty": {
+    "legend": "Difficulté",
+    "easy": "Facile",
+    "classic": "Classique",
+    "hard": "Difficile",
+    "details": "{{pegs}} pions · {{colors}} couleurs"
+  },
+  "colors": {
+    "red": "rouge",
+    "blue": "bleu",
+    "green": "vert",
+    "yellow": "jaune",
+    "purple": "violet",
+    "orange": "orange",
+    "pink": "rose",
+    "cyan": "cyan"
+  },
+  "game": {
+    "legendBull": "Taureau : bonne place",
+    "legendCow": "Vache : mauvaise place",
+    "time": "Temps",
+    "board": "Plateau",
+    "secret": "Code secret",
+    "secretHidden": "Code secret (caché)",
+    "slotClear": "Case {{slot}} : {{color}}. Effacer",
+    "feedback": "{{bulls}}, {{cows}}",
+    "bulls_one": "{{count}} taureau",
+    "bulls_other": "{{count}} taureaux",
+    "cows_one": "{{count}} vache",
+    "cows_other": "{{count}} vaches",
+    "noMatches": "Aucune correspondance",
+    "palette": "Palette de couleurs",
+    "addColor": "Ajouter {{color}} (touche {{key}})",
+    "undo": "Annuler",
+    "check": "Vérifier",
+    "abandonConfirm": "Abandonner la partie en cours ?"
+  },
+  "result": {
+    "won_one": "Trouvé en {{count}} essai · {{time}}",
+    "won_other": "Trouvé en {{count}} essais · {{time}}",
+    "lost": "Plus d'essais — le code est révélé en haut",
+    "yourName": "Ton nom",
+    "save": "Enregistrer",
+    "saved": "Score enregistré",
+    "newGame": "Nouvelle partie"
+  },
+  "highScores": {
+    "title": "Meilleurs scores",
+    "showFor": "Voir les scores pour",
+    "empty": "Pas encore de scores. Gagne une partie pour entrer au tableau.",
+    "rank": "#",
+    "name": "Nom",
+    "guesses": "Essais",
+    "time": "Temps",
+    "date": "Date",
+    "clear": "Tout effacer",
+    "clearConfirm": "Effacer les scores de toutes les difficultés ?"
+  }
+}

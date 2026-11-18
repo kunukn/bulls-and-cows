@@ -4,6 +4,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
 import {
@@ -16,6 +17,7 @@ import {
 import { Peg } from "./Peg";
 
 export function Board() {
+  const { t } = useTranslation();
   const actor = useGameActorRef();
   const { difficulty, guesses, current, secret } = useGameSelector(
     (snapshot) => snapshot.context,
@@ -34,11 +36,11 @@ export function Board() {
 
   return (
     <section
-      aria-label="Board"
+      aria-label={t("game.board")}
       className="rounded-2xl bg-amber-800 p-3 shadow-lg shadow-black/40"
     >
       <div
-        aria-label={isPlaying ? "Secret code (hidden)" : "Secret code"}
+        aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}
         className={cn(ROW_LAYOUT, "mb-3 rounded-lg bg-amber-950/50 py-2")}
       >
         <span aria-hidden className={NUMBER_COLUMN} />
@@ -59,7 +61,7 @@ export function Board() {
             : secret.map((color, index) => (
                 <span key={index} className="contents">
                   <Peg color={color} />
-                  <span className="sr-only">{color}</span>
+                  <span className="sr-only">{t(`colors.${color}`)}</span>
                 </span>
               ))}
         </div>

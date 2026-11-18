@@ -1,0 +1,60 @@
+{
+  "app": { "title": "Bulls & Cows" },
+  "common": { "settings": "设置", "language": "语言" },
+  "nav": { "play": "游戏", "highScores": "排行榜" },
+  "difficulty": {
+    "legend": "难度",
+    "easy": "简单",
+    "classic": "经典",
+    "hard": "困难",
+    "details": "{{pegs}} 个位置 · {{colors}} 种颜色"
+  },
+  "colors": {
+    "red": "红色",
+    "blue": "蓝色",
+    "green": "绿色",
+    "yellow": "黄色",
+    "purple": "紫色",
+    "orange": "橙色",
+    "pink": "粉色",
+    "cyan": "青色"
+  },
+  "game": {
+    "legendBull": "公牛：位置正确",
+    "legendCow": "母牛：位置不对",
+    "time": "时间",
+    "board": "棋盘",
+    "secret": "密码",
+    "secretHidden": "密码（已隐藏）",
+    "slotClear": "第 {{slot}} 格：{{color}}。清除",
+    "feedback": "{{bulls}}，{{cows}}",
+    "bulls_other": "{{count}} 头公牛",
+    "cows_other": "{{count}} 头母牛",
+    "noMatches": "没有匹配",
+    "palette": "调色板",
+    "addColor": "添加{{color}}（按键 {{key}}）",
+    "undo": "撤销",
+    "check": "检查",
+    "abandonConfirm": "放弃当前这一局？"
+  },
+  "result": {
+    "won_other": "{{count}} 次就破解了 · {{time}}",
+    "lost": "猜测次数用完了——密码已在上方揭晓",
+    "yourName": "你的名字",
+    "save": "保存成绩",
+    "saved": "成绩已保存",
+    "newGame": "新游戏"
+  },
+  "highScores": {
+    "title": "排行榜",
+    "showFor": "显示排行榜",
+    "empty": "还没有成绩。赢一局就能上榜。",
+    "rank": "#",
+    "name": "名字",
+    "guesses": "猜测次数",
+    "time": "用时",
+    "date": "日期",
+    "clear": "清除所有成绩",
+    "clearConfirm": "删除所有难度的成绩？"
+  }
+}

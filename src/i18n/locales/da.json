@@ -1,0 +1,63 @@
+{
+  "app": { "title": "Bulls & Cows" },
+  "common": { "settings": "Indstillinger", "language": "Sprog" },
+  "nav": { "play": "Spil", "highScores": "Topliste" },
+  "difficulty": {
+    "legend": "Sværhedsgrad",
+    "easy": "Let",
+    "classic": "Klassisk",
+    "hard": "Svær",
+    "details": "{{pegs}} pinde · {{colors}} farver"
+  },
+  "colors": {
+    "red": "rød",
+    "blue": "blå",
+    "green": "grøn",
+    "yellow": "gul",
+    "purple": "lilla",
+    "orange": "orange",
+    "pink": "lyserød",
+    "cyan": "turkis"
+  },
+  "game": {
+    "legendBull": "Tyr: rigtig plads",
+    "legendCow": "Ko: forkert plads",
+    "time": "Tid",
+    "board": "Spillebræt",
+    "secret": "Hemmelig kode",
+    "secretHidden": "Hemmelig kode (skjult)",
+    "slotClear": "Felt {{slot}}: {{color}}. Ryd",
+    "feedback": "{{bulls}}, {{cows}}",
+    "bulls_one": "{{count}} tyr",
+    "bulls_other": "{{count}} tyre",
+    "cows_one": "{{count}} ko",
+    "cows_other": "{{count}} køer",
+    "noMatches": "Ingen træffere",
+    "palette": "Farvepalet",
+    "addColor": "Tilføj {{color}} (tast {{key}})",
+    "undo": "Fortryd",
+    "check": "Tjek",
+    "abandonConfirm": "Opgiv det nuværende spil?"
+  },
+  "result": {
+    "won_one": "Knækket på {{count}} gæt · {{time}}",
+    "won_other": "Knækket på {{count}} gæt · {{time}}",
+    "lost": "Ikke flere gæt — koden er vist øverst",
+    "yourName": "Dit navn",
+    "save": "Gem score",
+    "saved": "Score gemt",
+    "newGame": "Nyt spil"
+  },
+  "highScores": {
+    "title": "Topliste",
+    "showFor": "Vis topliste for",
+    "empty": "Ingen scores endnu. Vind et spil for at komme på listen.",
+    "rank": "#",
+    "name": "Navn",
+    "guesses": "Gæt",
+    "time": "Tid",
+    "date": "Dato",
+    "clear": "Ryd alle scores",
+    "clearConfirm": "Slet alle scores for alle sværhedsgrader?"
+  }
+}

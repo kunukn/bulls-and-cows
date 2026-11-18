@@ -2,6 +2,7 @@ import { DifficultyPicker } from "@/components/DifficultyPicker";
 import { DIFFICULTY_KEYS, type Difficulty } from "@/features/game/logic";
 import { useSettings } from "@/features/game/store/settings";
 import { formatDate, formatDuration } from "@/utils/format";
+import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { useHighScores } from "../store";
 
@@ -10,6 +11,7 @@ function isDifficulty(value: string | null): value is Difficulty {
 }
 
 export function HighScores() {
+  const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const fallback = useSettings((state) => state.difficulty);
   const param = searchParams.get("difficulty");
@@ -18,15 +20,15 @@ export function HighScores() {
   const clear = useHighScores((state) => state.clear);
 
   function handleClear() {
-    if (window.confirm("Delete all high scores for every difficulty?")) clear();
+    if (window.confirm(t("highScores.clearConfirm"))) clear();
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">High scores</h2>
+      <h2 className="text-xl font-bold">{t("highScores.title")}</h2>
       <DifficultyPicker
         name="highscore-difficulty"
-        legend="Show high scores for"
+        legend={t("highScores.showFor")}
         value={difficulty}
         onChange={(next) =>
           setSearchParams({ difficulty: next }, { replace: true })
@@ -35,29 +37,29 @@ export function HighScores() {
 
       {entries.length === 0 ? (
         <p className="rounded-2xl bg-slate-800 p-6 text-center text-slate-400">
-          No scores yet. Win a game to get on the board.
+          {t("highScores.empty")}
         </p>
       ) : (
         <table className="w-full overflow-hidden rounded-2xl bg-slate-800 text-left text-sm">
           <thead className="bg-slate-700/60 text-xs tracking-wide text-slate-300 uppercase">
             <tr>
               <th scope="col" className="px-3 py-2">
-                #
+                {t("highScores.rank")}
               </th>
               <th scope="col" className="px-3 py-2">
-                Name
+                {t("highScores.name")}
               </th>
               <th scope="col" className="px-3 py-2 text-right">
-                Guesses
+                {t("highScores.guesses")}
               </th>
               <th scope="col" className="px-3 py-2 text-right">
-                Time
+                {t("highScores.time")}
               </th>
               <th
                 scope="col"
                 className="hidden px-3 py-2 text-right sm:table-cell"
               >
-                Date
+                {t("highScores.date")}
               </th>
             </tr>
           </thead>
@@ -77,7 +79,7 @@ export function HighScores() {
                   {formatDuration(entry.elapsedMs)}
                 </td>
                 <td className="hidden px-3 py-2 text-right text-slate-400 sm:table-cell">
-                  {formatDate(entry.achievedAt)}
+                  {formatDate(entry.achievedAt, i18n.language)}
                 </td>
               </tr>
             ))}
@@ -90,7 +92,7 @@ export function HighScores() {
         onClick={handleClear}
         className="self-end text-sm text-slate-400 underline-offset-2 hover:text-red-400 hover:underline"
       >
-        Clear all scores
+        {t("highScores.clear")}
       </button>
     </div>
   );

@@ -1,11 +1,13 @@
 import type { Feedback } from "@/features/game/logic";
 import { cn } from "@/utils/cn";
+import { useTranslation } from "react-i18next";
 import { FEEDBACK_COLUMN } from "./rowLayout";
 
 type Props = Partial<Feedback> & { pegs: number };
 
 /* Bulls (black) first, then cows (white), then empty holes. */
 export function FeedbackPegs({ black = 0, white = 0, pegs }: Props) {
+  const { t } = useTranslation();
   const marks = Array.from({ length: pegs }, (_, index) => {
     if (index < black) return "black";
 
@@ -13,8 +15,11 @@ export function FeedbackPegs({ black = 0, white = 0, pegs }: Props) {
   });
   const label =
     black + white === 0 && pegs > 0
-      ? "No matches"
-      : `${black} bull${black === 1 ? "" : "s"}, ${white} cow${white === 1 ? "" : "s"}`;
+      ? t("game.noMatches")
+      : t("game.feedback", {
+          bulls: t("game.bulls", { count: black }),
+          cows: t("game.cows", { count: white }),
+        });
 
   return (
     <div

@@ -7,9 +7,11 @@ import { elapsedMs } from "@/features/game/machine";
 import { qualifies, useHighScores } from "@/features/highscores/store";
 import { formatDuration } from "@/utils/format";
 import { Trophy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 export function ResultPanel() {
+  const { t } = useTranslation();
   const actor = useGameActorRef();
   const navigate = useNavigate();
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
@@ -46,19 +48,19 @@ export function ResultPanel() {
       {isWon ? (
         <p className="flex items-center gap-2 text-lg font-semibold">
           <Trophy className="size-5 shrink-0 text-amber-400" />
-          Cracked in {run.guesses} {run.guesses === 1 ? "guess" : "guesses"} ·{" "}
-          {formatDuration(run.elapsedMs)}
+          {t("result.won", {
+            count: run.guesses,
+            time: formatDuration(run.elapsedMs),
+          })}
         </p>
       ) : (
-        <p className="text-lg font-semibold">
-          Out of guesses — code revealed above
-        </p>
+        <p className="text-lg font-semibold">{t("result.lost")}</p>
       )}
 
       {canRecord && (
         <form onSubmit={handleSubmit} className="flex w-full gap-2">
           <label htmlFor="highscore-name" className="sr-only">
-            Your name
+            {t("result.yourName")}
           </label>
           <input
             id="highscore-name"
@@ -70,25 +72,27 @@ export function ResultPanel() {
             // oxlint-disable-next-line jsx-a11y/no-autofocus -- focus follows the player's own winning move, so it isn't a surprise
             autoFocus
             defaultValue={lastName}
-            placeholder="Your name"
+            placeholder={t("result.yourName")}
             className="min-w-0 flex-1 rounded-lg bg-slate-900 px-3 py-2 text-slate-100 ring-1 ring-slate-600 outline-none focus:ring-2 focus:ring-sky-400"
           />
           <button
             type="submit"
             className="rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
           >
-            Save score
+            {t("result.save")}
           </button>
         </form>
       )}
-      {isRecorded && <p className="text-sm text-emerald-400">Score saved</p>}
+      {isRecorded && (
+        <p className="text-sm text-emerald-400">{t("result.saved")}</p>
+      )}
 
       <button
         type="button"
         onClick={() => actor.send({ type: "NEW_GAME" })}
         className="rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
       >
-        New game
+        {t("result.newGame")}
       </button>
     </section>
   );

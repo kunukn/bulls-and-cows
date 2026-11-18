@@ -1,0 +1,63 @@
+{
+  "app": { "title": "Bulls & Cows" },
+  "common": { "settings": "Einstellungen", "language": "Sprache" },
+  "nav": { "play": "Spielen", "highScores": "Bestenliste" },
+  "difficulty": {
+    "legend": "Schwierigkeit",
+    "easy": "Leicht",
+    "classic": "Klassisch",
+    "hard": "Schwer",
+    "details": "{{pegs}} Stifte · {{colors}} Farben"
+  },
+  "colors": {
+    "red": "Rot",
+    "blue": "Blau",
+    "green": "Grün",
+    "yellow": "Gelb",
+    "purple": "Lila",
+    "orange": "Orange",
+    "pink": "Rosa",
+    "cyan": "Türkis"
+  },
+  "game": {
+    "legendBull": "Stier: richtige Stelle",
+    "legendCow": "Kuh: falsche Stelle",
+    "time": "Zeit",
+    "board": "Spielbrett",
+    "secret": "Geheimer Code",
+    "secretHidden": "Geheimer Code (verdeckt)",
+    "slotClear": "Feld {{slot}}: {{color}}. Leeren",
+    "feedback": "{{bulls}}, {{cows}}",
+    "bulls_one": "{{count}} Stier",
+    "bulls_other": "{{count}} Stiere",
+    "cows_one": "{{count}} Kuh",
+    "cows_other": "{{count}} Kühe",
+    "noMatches": "Keine Treffer",
+    "palette": "Farbpalette",
+    "addColor": "{{color}} setzen (Taste {{key}})",
+    "undo": "Zurück",
+    "check": "Prüfen",
+    "abandonConfirm": "Aktuelles Spiel abbrechen?"
+  },
+  "result": {
+    "won_one": "Geknackt mit {{count}} Versuch · {{time}}",
+    "won_other": "Geknackt mit {{count}} Versuchen · {{time}}",
+    "lost": "Keine Versuche mehr – der Code steht oben",
+    "yourName": "Dein Name",
+    "save": "Speichern",
+    "saved": "Gespeichert",
+    "newGame": "Neues Spiel"
+  },
+  "highScores": {
+    "title": "Bestenliste",
+    "showFor": "Bestenliste zeigen für",
+    "empty": "Noch keine Einträge. Gewinne ein Spiel, um auf die Liste zu kommen.",
+    "rank": "#",
+    "name": "Name",
+    "guesses": "Versuche",
+    "time": "Zeit",
+    "date": "Datum",
+    "clear": "Alle löschen",
+    "clearConfirm": "Alle Einträge für jede Schwierigkeit löschen?"
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "app": { "title": "Bulls & Cows" },
+  "common": { "settings": "Settings", "language": "Language" },
+  "nav": { "play": "Play", "highScores": "High scores" },
+  "difficulty": {
+    "legend": "Difficulty",
+    "easy": "Easy",
+    "classic": "Classic",
+    "hard": "Hard",
+    "details": "{{pegs}} pegs · {{colors}} colours"
+  },
+  "colors": {
+    "red": "red",
+    "blue": "blue",
+    "green": "green",
+    "yellow": "yellow",
+    "purple": "purple",
+    "orange": "orange",
+    "pink": "pink",
+    "cyan": "cyan"
+  },
+  "game": {
+    "legendBull": "Bull: right spot",
+    "legendCow": "Cow: wrong spot",
+    "time": "Time",
+    "board": "Board",
+    "secret": "Secret code",
+    "secretHidden": "Secret code (hidden)",
+    "slotClear": "Slot {{slot}}: {{color}}. Clear",
+    "feedback": "{{bulls}}, {{cows}}",
+    "bulls_one": "{{count}} bull",
+    "bulls_other": "{{count}} bulls",
+    "cows_one": "{{count}} cow",
+    "cows_other": "{{count}} cows",
+    "noMatches": "No matches",
+    "palette": "Colour palette",
+    "addColor": "Add {{color}} (key {{key}})",
+    "undo": "Undo",
+    "check": "Check",
+    "abandonConfirm": "Abandon the current game?"
+  },
+  "result": {
+    "won_one": "Cracked in {{count}} guess · {{time}}",
+    "won_other": "Cracked in {{count}} guesses · {{time}}",
+    "lost": "Out of guesses — code revealed above",
+    "yourName": "Your name",
+    "save": "Save score",
+    "saved": "Score saved",
+    "newGame": "New game"
+  },
+  "highScores": {
+    "title": "High scores",
+    "showFor": "Show high scores for",
+    "empty": "No scores yet. Win a game to get on the board.",
+    "rank": "#",
+    "name": "Name",
+    "guesses": "Guesses",
+    "time": "Time",
+    "date": "Date",
+    "clear": "Clear all scores",
+    "clearConfirm": "Delete all high scores for every difficulty?"
+  }
+}
