@@ -1,0 +1,8 @@
+# Bulk formatting commits — skipped by `git blame` (GitHub reads this file automatically).
+# Locally: git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+# style: use Prettier defaults (double quotes, semicolons)
+b361752595ed69d64550230d9564f35d2a71a298
+
+# style: format repo with oxfmt
+3f518d807e735ea9c834c4d073e1344ab1a31ffa
