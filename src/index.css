@@ -62,6 +62,89 @@
   --radius: 0.625rem;
 }
 
+/*
+ * Board themes. Components use the role tokens (bg-board-hole,
+ * ring-board-ring, …) and the `board-surface` utility; the nearest
+ * `[data-board-theme]` ancestor picks the values. Surfaces can be gradients,
+ * so they go through `background`, not a colour token.
+ */
+@theme inline {
+  --color-board-tray: var(--board-tray);
+  --color-board-hole: var(--board-hole);
+  --color-board-hole-ring: var(--board-hole-ring);
+  --color-board-active: var(--board-active);
+  --color-board-ring: var(--board-ring);
+  --color-board-label: var(--board-label);
+  --shadow-board-glow: var(--board-glow);
+}
+
+@utility board-surface {
+  background: var(--board-surface);
+}
+
+[data-board-theme="wood"] {
+  --board-surface: oklch(0.473 0.137 46.201); /* amber-800 */
+  --board-tray: oklch(0.279 0.077 45.635 / 50%); /* amber-950 */
+  --board-hole: oklch(0.279 0.077 45.635 / 60%);
+  --board-hole-ring: transparent;
+  --board-active: oklch(0.555 0.163 48.998 / 60%); /* amber-700 */
+  --board-ring: oklch(0.879 0.169 91.605 / 70%); /* amber-300 */
+  --board-label: oklch(0.924 0.12 95.746 / 70%); /* amber-200 */
+  --board-glow: 0 0 #0000;
+}
+
+/* Black plastic, like the retail board. Faint hole rims keep holes visible. */
+[data-board-theme="classic"] {
+  --board-surface: linear-gradient(oklch(0.27 0 0), oklch(0.17 0 0));
+  --board-tray: oklch(0 0 0 / 50%);
+  --board-hole: oklch(0 0 0 / 70%);
+  --board-hole-ring: oklch(1 0 0 / 7%);
+  --board-active: oklch(0.371 0 0 / 60%); /* neutral-700 */
+  --board-ring: oklch(0.795 0.184 86.047 / 70%); /* yellow-500 */
+  --board-label: oklch(0.708 0 0); /* neutral-400 */
+  --board-glow: 0 0 #0000;
+}
+
+/* Dark brushed metal; kept dark so white feedback pegs still read. */
+[data-board-theme="gunmetal"] {
+  --board-surface:
+    repeating-linear-gradient(
+      90deg,
+      oklch(1 0 0 / 3%) 0 1px,
+      transparent 1px 3px
+    ),
+    linear-gradient(
+      135deg,
+      oklch(0.442 0.017 285.786),
+      oklch(0.37 0.013 285.805) 50%,
+      oklch(0.442 0.017 285.786)
+    ); /* zinc-600 → zinc-700 */
+  --board-tray: oklch(0.21 0.006 285.885 / 60%); /* zinc-900 */
+  --board-hole: oklch(0.21 0.006 285.885 / 70%);
+  --board-hole-ring: oklch(1 0 0 / 8%);
+  --board-active: oklch(0.552 0.016 285.938 / 50%); /* zinc-500 */
+  --board-ring: oklch(0.92 0.004 286.32 / 70%); /* zinc-200 */
+  --board-label: oklch(0.871 0.006 286.286 / 80%); /* zinc-300 */
+  --board-glow: 0 0 #0000;
+}
+
+/* Near-black with a faint cyan grid; the active row glows. */
+[data-board-theme="neon"] {
+  --board-surface:
+    linear-gradient(oklch(0.789 0.154 211.53 / 6%) 1px, transparent 1px) 0 0 /
+      24px 24px,
+    linear-gradient(90deg, oklch(0.789 0.154 211.53 / 6%) 1px, transparent 1px)
+      0 0 / 24px 24px,
+    oklch(0.129 0.042 264.695); /* cyan-400 grid on slate-950 */
+  --board-tray: oklch(0.789 0.154 211.53 / 8%);
+  --board-hole: oklch(0 0 0 / 60%);
+  --board-hole-ring: oklch(0.789 0.154 211.53 / 35%);
+  --board-active: oklch(0.789 0.154 211.53 / 12%);
+  --board-ring: oklch(0.789 0.154 211.53 / 80%);
+  --board-label: oklch(0.865 0.127 207.078 / 70%); /* cyan-300 */
+  --board-glow: 0 0 16px oklch(0.789 0.154 211.53 / 45%);
+}
+
 @layer base {
   body {
     @apply min-h-dvh bg-background text-foreground antialiased;

@@ -9,7 +9,14 @@
     "close": "Schließen",
     "version": "Version",
     "showTimer": "Timer anzeigen",
-    "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste."
+    "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste.",
+    "boardTheme": "Spielbrett",
+    "boardThemes": {
+      "wood": "Holz",
+      "classic": "Klassisch",
+      "gunmetal": "Metall",
+      "neon": "Neon"
+    }
   },
   "nav": {
     "play": "Spielen",

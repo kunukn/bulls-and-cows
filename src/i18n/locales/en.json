@@ -9,7 +9,14 @@
     "close": "Close",
     "version": "Version",
     "showTimer": "Show timer",
-    "showTimerDescription": "The clock still runs for high scores."
+    "showTimerDescription": "The clock still runs for high scores.",
+    "boardTheme": "Board",
+    "boardThemes": {
+      "wood": "Wood",
+      "classic": "Classic",
+      "gunmetal": "Metal",
+      "neon": "Neon"
+    }
   },
   "nav": {
     "play": "Play",

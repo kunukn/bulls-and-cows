@@ -1,0 +1,4 @@
+/* Board looks; each maps to a `[data-board-theme]` token block in index.css. */
+export const BOARD_THEMES = ["wood", "classic", "gunmetal", "neon"] as const;
+
+export type BoardTheme = (typeof BOARD_THEMES)[number];

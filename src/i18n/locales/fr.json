@@ -9,7 +9,14 @@
     "close": "Fermer",
     "version": "Version",
     "showTimer": "Afficher le chrono",
-    "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores."
+    "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores.",
+    "boardTheme": "Plateau",
+    "boardThemes": {
+      "wood": "Bois",
+      "classic": "Classique",
+      "gunmetal": "Métal",
+      "neon": "Néon"
+    }
   },
   "nav": {
     "play": "Jouer",

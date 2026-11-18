@@ -3,6 +3,7 @@ import {
   useGameActorRef,
   useGameSelector,
 } from "@/features/game/machine-context";
+import { useSettings } from "@/features/game/store/settings";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
@@ -25,6 +26,7 @@ export function Board() {
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
   const activeRowRef = useRef<HTMLLIElement>(null);
+  const boardTheme = useSettings((state) => state.boardTheme);
 
   /* Keep the active row visible on small screens as the board grows. */
   useEffect(() => {
@@ -37,11 +39,12 @@ export function Board() {
   return (
     <section
       aria-label={t("game.board")}
-      className="rounded-2xl bg-amber-800 p-3 shadow-lg shadow-black/40"
+      data-board-theme={boardTheme}
+      className="rounded-2xl p-3 shadow-lg shadow-black/40 board-surface"
     >
       <div
         aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}
-        className={cn(ROW_LAYOUT, "mb-3 rounded-lg bg-amber-950/50 py-2")}
+        className={cn(ROW_LAYOUT, "mb-3 rounded-lg bg-board-tray py-2")}
       >
         <span aria-hidden className={NUMBER_COLUMN} />
         <div className={PEGS_COLUMN}>

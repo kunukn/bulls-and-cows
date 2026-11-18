@@ -9,7 +9,14 @@
     "close": "Luk",
     "version": "Version",
     "showTimer": "Vis tid",
-    "showTimerDescription": "Tiden tæller stadig med på toplisten."
+    "showTimerDescription": "Tiden tæller stadig med på toplisten.",
+    "boardTheme": "Spillebræt",
+    "boardThemes": {
+      "wood": "Træ",
+      "classic": "Klassisk",
+      "gunmetal": "Metal",
+      "neon": "Neon"
+    }
   },
   "nav": {
     "play": "Spil",

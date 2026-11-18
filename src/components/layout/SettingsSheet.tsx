@@ -1,3 +1,4 @@
+import { BoardThemePicker } from "@/components/BoardThemePicker";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -23,6 +24,8 @@ export function SettingsSheet() {
   const { t } = useTranslation();
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const setTimerVisible = useSettings((state) => state.setTimerVisible);
+  const boardTheme = useSettings((state) => state.boardTheme);
+  const setBoardTheme = useSettings((state) => state.setBoardTheme);
 
   return (
     <Sheet>
@@ -77,6 +80,12 @@ export function SettingsSheet() {
               {t("common.showTimerDescription")}
             </p>
           </div>
+          <BoardThemePicker
+            name="settings-board-theme"
+            legend={t("common.boardTheme")}
+            value={boardTheme}
+            onChange={setBoardTheme}
+          />
         </div>
 
         <SheetFooter className="items-end">

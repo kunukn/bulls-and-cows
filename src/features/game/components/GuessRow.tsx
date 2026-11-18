@@ -35,13 +35,13 @@ export function GuessRow({
         // scroll-mb keeps the active row clear of the sticky palette on scrollIntoView.
         ROW_LAYOUT,
         "scroll-mb-40 rounded-lg py-1",
-        isActive && "bg-amber-700/60 ring-2 ring-amber-300/70",
+        isActive && "bg-board-active shadow-board-glow ring-2 ring-board-ring",
       )}
     >
       <span
         className={cn(
           NUMBER_COLUMN,
-          "text-right text-xs text-amber-200/70 tabular-nums",
+          "text-right text-xs text-board-label tabular-nums",
         )}
       >
         {rowNumber}

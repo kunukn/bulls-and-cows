@@ -28,7 +28,7 @@ export function Peg({ color, className }: Props) {
         "block rounded-full",
         color
           ? cn(PEG_CLASS[color], "shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)]")
-          : "bg-amber-950/60 shadow-[inset_0_2px_4px_rgb(0_0_0/0.5)]",
+          : "bg-board-hole shadow-[inset_0_2px_4px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
         className,
       )}
     />

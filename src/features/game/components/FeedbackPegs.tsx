@@ -51,7 +51,7 @@ export function FeedbackPegs({
             mark === "black" && "bg-zinc-950 ring-1 ring-zinc-400",
             mark === "white" && "bg-white",
             mark === "empty" &&
-              "bg-amber-950/60 shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)]",
+              "bg-board-hole shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
           )}
         />
       ))}

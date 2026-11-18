@@ -9,7 +9,14 @@
     "close": "关闭",
     "version": "版本",
     "showTimer": "显示计时器",
-    "showTimerDescription": "隐藏后仍会计时，用于排行榜。"
+    "showTimerDescription": "隐藏后仍会计时，用于排行榜。",
+    "boardTheme": "棋盘",
+    "boardThemes": {
+      "wood": "木纹",
+      "classic": "经典",
+      "gunmetal": "金属",
+      "neon": "霓虹"
+    }
   },
   "nav": {
     "play": "游戏",
