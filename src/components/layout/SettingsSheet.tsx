@@ -24,6 +24,8 @@ export function SettingsSheet() {
   const { t } = useTranslation();
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const setTimerVisible = useSettings((state) => state.setTimerVisible);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
+  const setMinimalText = useSettings((state) => state.setMinimalText);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
 
@@ -78,6 +80,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.showTimerDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-minimal-text" className="font-medium">
+                {t("common.minimalText")}
+              </label>
+              <Switch
+                id="settings-minimal-text"
+                checked={isMinimalText}
+                onCheckedChange={setMinimalText}
+                aria-describedby="settings-minimal-text-description"
+              />
+            </div>
+            <p
+              id="settings-minimal-text-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.minimalTextDescription")}
             </p>
           </div>
           <BoardThemePicker

@@ -1,9 +1,14 @@
 import { useGameSelector } from "@/features/game/machine-context";
+import { cn } from "@/utils/cn";
 import { formatDuration } from "@/utils/format";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-export function Timer() {
+type Props = {
+  className?: string;
+};
+
+export function Timer({ className }: Props) {
   const { t } = useTranslation();
   const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
   const finishedAt = useGameSelector((snapshot) => snapshot.context.finishedAt);
@@ -21,7 +26,9 @@ export function Timer() {
   const elapsed = startedAt === 0 ? 0 : (finishedAt || now) - startedAt;
 
   return (
-    <span className="font-mono text-sm text-slate-300 tabular-nums">
+    <span
+      className={cn("font-mono text-sm text-slate-300 tabular-nums", className)}
+    >
       <span className="sr-only">{t("game.time")} </span>
       {formatDuration(Math.max(0, elapsed))}
     </span>

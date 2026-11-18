@@ -1,5 +1,6 @@
 import { paths } from "@/app/paths";
 import { BullIcon } from "@/components/icons/BullIcon";
+import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
 import { HowItWorksPopover } from "./HowItWorksPopover";
 import { SettingsSheet } from "./SettingsSheet";
@@ -17,6 +18,7 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function Layout() {
   const { t } = useTranslation();
+  const isMinimalText = useSettings((state) => state.isMinimalText);
   // The rules only help while playing, not on the high scores page.
   const isPlayPage = useMatch({ path: paths.play, end: true }) !== null;
 
@@ -25,11 +27,17 @@ export function Layout() {
       <header className="flex items-center justify-between gap-2 py-4">
         <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap">
           <BullIcon className="size-7 shrink-0" />
-          {/* Below 360px the full name and four header icons don't fit. */}
-          <span className="max-[360px]:sr-only">{t("app.title")}</span>
-          <span aria-hidden className="min-[360px]:hidden">
-            {t("app.shortTitle")}
-          </span>
+          {isMinimalText ? (
+            <span className="sr-only">{t("app.title")}</span>
+          ) : (
+            <>
+              {/* Below 360px the full name and four header icons don't fit. */}
+              <span className="max-[360px]:sr-only">{t("app.title")}</span>
+              <span aria-hidden className="min-[360px]:hidden">
+                {t("app.shortTitle")}
+              </span>
+            </>
+          )}
         </h1>
         <div className="flex items-center gap-1">
           {isPlayPage && <HowItWorksPopover />}

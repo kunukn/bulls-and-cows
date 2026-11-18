@@ -10,6 +10,8 @@
     "version": "Version",
     "showTimer": "Show timer",
     "showTimerDescription": "The clock still runs for high scores.",
+    "minimalText": "Minimal text",
+    "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "boardTheme": "Board",
     "boardThemes": {
       "wood": "Wood",

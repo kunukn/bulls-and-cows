@@ -10,6 +10,8 @@
     "version": "Version",
     "showTimer": "Timer anzeigen",
     "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste.",
+    "minimalText": "Weniger Text",
+    "minimalTextDescription": "Symbole statt Wörter. Der ?-Knopf erklärt weiter die Regeln.",
     "boardTheme": "Spielbrett",
     "boardThemes": {
       "wood": "Holz",

@@ -1,13 +1,41 @@
 import { DifficultyPicker } from "@/components/DifficultyPicker";
 import { DIFFICULTY_KEYS, type Difficulty } from "@/features/game/logic";
 import { useSettings } from "@/features/game/store/settings";
+import { cn } from "@/utils/cn";
 import { formatDate, formatDuration } from "@/utils/format";
+import {
+  CalendarDays,
+  Clock,
+  Rows4,
+  Trash2,
+  Trophy,
+  UserRound,
+  type LucideIcon,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router";
 import { useHighScores } from "../store";
 
 function isDifficulty(value: string | null): value is Difficulty {
   return DIFFICULTY_KEYS.includes(value as Difficulty);
+}
+
+type HeaderLabelProps = {
+  label: string;
+  icon: LucideIcon;
+  isMinimalText: boolean;
+};
+
+/* Column header: the word, or an icon with the word kept for screen readers. */
+function HeaderLabel({ label, icon: Icon, isMinimalText }: HeaderLabelProps) {
+  if (!isMinimalText) return label;
+
+  return (
+    <span title={label} className="inline-flex">
+      <Icon aria-hidden className="size-4" />
+      <span className="sr-only">{label}</span>
+    </span>
+  );
 }
 
 export function HighScores() {
@@ -18,6 +46,7 @@ export function HighScores() {
   const difficulty = isDifficulty(param) ? param : fallback;
   const entries = useHighScores((state) => state.scores[difficulty]);
   const clear = useHighScores((state) => state.clear);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
 
   function handleClear() {
     if (window.confirm(t("highScores.clearConfirm"))) clear();
@@ -25,7 +54,10 @@ export function HighScores() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-xl font-bold">{t("highScores.title")}</h2>
+      {/* The active trophy tab already says where you are. */}
+      <h2 className={isMinimalText ? "sr-only" : "text-xl font-bold"}>
+        {t("highScores.title")}
+      </h2>
       <DifficultyPicker
         name="highscore-difficulty"
         legend={t("highScores.showFor")}
@@ -36,8 +68,13 @@ export function HighScores() {
       />
 
       {entries.length === 0 ? (
-        <p className="rounded-2xl bg-slate-800 p-6 text-center text-slate-400">
-          {t("highScores.empty")}
+        <p className="flex justify-center rounded-2xl bg-slate-800 p-6 text-center text-slate-400">
+          {isMinimalText && (
+            <Trophy aria-hidden className="size-10 text-slate-600" />
+          )}
+          <span className={isMinimalText ? "sr-only" : undefined}>
+            {t("highScores.empty")}
+          </span>
         </p>
       ) : (
         <table className="w-full overflow-hidden rounded-2xl bg-slate-800 text-left text-sm">
@@ -47,19 +84,35 @@ export function HighScores() {
                 {t("highScores.rank")}
               </th>
               <th scope="col" className="px-3 py-2">
-                {t("highScores.name")}
+                <HeaderLabel
+                  label={t("highScores.name")}
+                  icon={UserRound}
+                  isMinimalText={isMinimalText}
+                />
               </th>
               <th scope="col" className="px-3 py-2 text-right">
-                {t("highScores.guesses")}
+                <HeaderLabel
+                  label={t("highScores.guesses")}
+                  icon={Rows4}
+                  isMinimalText={isMinimalText}
+                />
               </th>
               <th scope="col" className="px-3 py-2 text-right">
-                {t("highScores.time")}
+                <HeaderLabel
+                  label={t("highScores.time")}
+                  icon={Clock}
+                  isMinimalText={isMinimalText}
+                />
               </th>
               <th
                 scope="col"
                 className="hidden px-3 py-2 text-right sm:table-cell"
               >
-                {t("highScores.date")}
+                <HeaderLabel
+                  label={t("highScores.date")}
+                  icon={CalendarDays}
+                  isMinimalText={isMinimalText}
+                />
               </th>
             </tr>
           </thead>
@@ -90,9 +143,16 @@ export function HighScores() {
       <button
         type="button"
         onClick={handleClear}
-        className="self-end text-sm text-slate-400 underline-offset-2 hover:text-red-400 hover:underline"
+        title={isMinimalText ? t("highScores.clear") : undefined}
+        className={cn(
+          "self-end text-sm text-slate-400 underline-offset-2 hover:text-red-400",
+          isMinimalText ? "rounded-md p-2" : "hover:underline",
+        )}
       >
-        {t("highScores.clear")}
+        {isMinimalText && <Trash2 aria-hidden className="size-5" />}
+        <span className={isMinimalText ? "sr-only" : undefined}>
+          {t("highScores.clear")}
+        </span>
       </button>
     </div>
   );

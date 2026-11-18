@@ -10,6 +10,8 @@
     "version": "版本",
     "showTimer": "显示计时器",
     "showTimerDescription": "隐藏后仍会计时，用于排行榜。",
+    "minimalText": "精简文字",
+    "minimalTextDescription": "用图标代替文字。? 按钮仍会讲解规则。",
     "boardTheme": "棋盘",
     "boardThemes": {
       "wood": "木纹",

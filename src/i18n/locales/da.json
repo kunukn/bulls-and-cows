@@ -10,6 +10,8 @@
     "version": "Version",
     "showTimer": "Vis tid",
     "showTimerDescription": "Tiden tæller stadig med på toplisten.",
+    "minimalText": "Mindre tekst",
+    "minimalTextDescription": "Ikoner i stedet for ord. Knappen ? forklarer stadig reglerne.",
     "boardTheme": "Spillebræt",
     "boardThemes": {
       "wood": "Træ",

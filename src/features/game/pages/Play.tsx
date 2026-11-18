@@ -22,6 +22,9 @@ export function Play() {
   );
   const setDifficulty = useSettings((state) => state.setDifficulty);
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
+  // Hidden only while playing; the final time shows once the game ends.
+  const isTimerShown = isTimerVisible || !isPlaying;
 
   function changeDifficulty(next: Difficulty) {
     if (isPlaying && hasProgress && !window.confirm(t("game.abandonConfirm")))
@@ -75,20 +78,24 @@ export function Play() {
         value={difficulty}
         onChange={changeDifficulty}
       />
-      <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
-        <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <span className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-zinc-950 ring-1 ring-zinc-400" />
-            {t("game.legendBull")}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-white" />
-            {t("game.legendCow")}
-          </span>
-        </span>
-        {/* Hidden only while playing; the final time shows once the game ends. */}
-        {(isTimerVisible || !isPlaying) && <Timer />}
-      </div>
+      {/* Minimal text drops the legend; the help popover still explains pegs. */}
+      {(!isMinimalText || isTimerShown) && (
+        <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
+          {!isMinimalText && (
+            <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <span className="flex items-center gap-1.5">
+                <span className="size-2.5 rounded-full bg-zinc-950 ring-1 ring-zinc-400" />
+                {t("game.legendBull")}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="size-2.5 rounded-full bg-white" />
+                {t("game.legendCow")}
+              </span>
+            </span>
+          )}
+          {isTimerShown && <Timer className="ms-auto" />}
+        </div>
+      )}
       <Board />
       {/* Sticky: on short viewports the board scrolls under the controls. */}
       <div className="dock sticky bottom-0 -mx-4">

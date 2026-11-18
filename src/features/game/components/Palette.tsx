@@ -3,6 +3,7 @@ import {
   useGameActorRef,
   useGameSelector,
 } from "@/features/game/machine-context";
+import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
 import { CornerDownLeft, Delete } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +20,9 @@ export function Palette() {
   const isRowFull = !current.includes(null);
   const isRowEmpty = current.every((peg) => peg === null);
   const palette = paletteFor(difficulty);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
+  // Icon-only buttons keep their name for screen readers and as a tooltip.
+  const labelClass = isMinimalText ? "sr-only" : undefined;
 
   return (
     <section aria-label={t("game.palette")} className="flex flex-col gap-3">
@@ -57,21 +61,23 @@ export function Palette() {
           type="button"
           disabled={isRowEmpty}
           onClick={() => actor.send({ type: "REMOVE_PEG" })}
+          title={isMinimalText ? t("game.undo") : undefined}
           className={cn(actionButtonClass, "bg-slate-700 hover:bg-slate-600")}
         >
           <Delete className="size-4" />
-          {t("game.undo")}
+          <span className={labelClass}>{t("game.undo")}</span>
         </button>
         <button
           type="button"
           disabled={!isRowFull}
           onClick={() => actor.send({ type: "SUBMIT" })}
+          title={isMinimalText ? t("game.check") : undefined}
           className={cn(
             actionButtonClass,
             "bg-emerald-600 text-white hover:bg-emerald-500",
           )}
         >
-          {t("game.check")}
+          <span className={labelClass}>{t("game.check")}</span>
           <CornerDownLeft className="size-4" />
         </button>
       </div>

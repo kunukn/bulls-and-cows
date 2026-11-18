@@ -11,6 +11,9 @@ type SettingsStore = {
   /* Display only: the game clock keeps running for high scores either way. */
   isTimerVisible: boolean;
   setTimerVisible: (isTimerVisible: boolean) => void;
+  /* Icons instead of words; hidden text stays in aria-label / title. */
+  isMinimalText: boolean;
+  setMinimalText: (isMinimalText: boolean) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -23,6 +26,8 @@ export const useSettings = create<SettingsStore>()(
       // Off for first-time visitors; a saved choice still wins on rehydrate.
       isTimerVisible: false,
       setTimerVisible: (isTimerVisible) => set({ isTimerVisible }),
+      isMinimalText: false,
+      setMinimalText: (isMinimalText) => set({ isMinimalText }),
     }),
     { name: "bulls-and-cows:settings" },
   ),
