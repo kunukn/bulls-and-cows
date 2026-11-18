@@ -1,0 +1,22 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-peg-red: oklch(0.63 0.24 27);
+  --color-peg-blue: oklch(0.62 0.19 259);
+  --color-peg-green: oklch(0.72 0.19 150);
+  --color-peg-yellow: oklch(0.88 0.18 95);
+  --color-peg-purple: oklch(0.6 0.22 300);
+  --color-peg-orange: oklch(0.74 0.18 55);
+  --color-peg-pink: oklch(0.78 0.14 350);
+  --color-peg-cyan: oklch(0.8 0.13 210);
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply min-h-dvh bg-slate-900 text-slate-100 antialiased;
+  }
+}
