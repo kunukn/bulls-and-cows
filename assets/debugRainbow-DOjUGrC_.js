@@ -1,0 +1,1 @@
+function e(){if(document.getElementById(`rainbow-debugger`))return;let e=document.createElement(`script`);e.id=`rainbow-debugger`,e.src=`/bulls-and-cows/rainbow.js`,document.body.append(e)}export{e as initDebugRainbow};
