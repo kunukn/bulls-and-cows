@@ -1,4 +1,4 @@
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Globe } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -57,11 +57,12 @@ export function LanguageSelect({ id }: Props) {
 
   return (
     <div className="relative">
+      <Globe className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
       <select
         id={id}
         value={i18n.language}
         onChange={handleChange}
-        className="w-full appearance-none rounded-lg border border-input bg-background py-2 ps-3 pe-9 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="w-full appearance-none rounded-lg border border-input bg-background py-2 ps-9 pe-9 text-sm text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         {options.map(({ code, label }) => (
           <option key={code} value={code} lang={code}>
