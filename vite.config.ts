@@ -1,5 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
-import pluginReact from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig } from "vite";
 
@@ -10,7 +10,7 @@ export default defineConfig({
    */
   base: process.env.VITE_BASE_PATH ?? "/",
   cacheDir: "node_modules/.vite",
-  plugins: [tailwindcss(), pluginReact({ devTarget: "es2024" })],
+  plugins: [tailwindcss(), react()],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "./src"),
