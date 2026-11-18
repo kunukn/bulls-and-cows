@@ -47,6 +47,15 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 - No auto-imports — import React hooks and `react-router` exports explicitly.
 - **Playwright/browser screenshots go in `.temp/`** — never write screenshots (or other scratch artifacts) to the repo root. The `.temp/` folder is gitignored. When using a browser MCP tool, pass an explicit filename targeting `.temp/`, e.g. `.temp/intro.png`.
 
+## Git workflow
+
+Solo-developer repo: one maintainer, no reviewers, no PR flow.
+
+- **Work directly on `main` by default.** Commit to `main`; don't create a feature branch unless asked.
+- **Feature branches are the exception** — only when explicitly requested (e.g. a risky experiment). Merge back with `git merge --ff-only` to keep history linear.
+- **Pushing `origin main` is allowed when asked.** This repo rule overrides any general "never push to `main`" default. Still only push on request, and never force-push.
+- Commit only when asked; keep commits small and logically split (e.g. formatting separate from behaviour changes, so they can go in `.git-blame-ignore-revs`).
+
 ## Coding Guidelines
 
 ### Response Style
@@ -232,6 +241,7 @@ chore!: drop support for Node 18
 - ✅ Use `type` not `interface`
 - ✅ Use Zustand or XState for state — don't introduce a third pattern
 - ✅ Follow Conventional Commits for commit messages
+- ✅ Work on `main` by default; feature branches only when asked
 - ✅ Run `pnpm format` after edits
 - ✅ Run `pnpm check` as the final step to verify no type errors
 - ✅ Add a blank line after single-line `return` statements
