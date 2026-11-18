@@ -23,6 +23,9 @@ jobs:
           node-version: 24
           cache: pnpm
 
+      - name: node-pty stays out of the lockfile
+        run: ./scripts/node-pty-absent.sh
+
       - run: pnpm install --frozen-lockfile
 
       - name: Lint & type check

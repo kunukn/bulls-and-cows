@@ -3,3 +3,15 @@ minimumReleaseAge: 1440
 
 allowBuilds:
   esbuild: false
+  # Belt and braces for the `node-pty: "-"` override below: if node-pty ever
+  # re-enters the graph, `pnpm install` must keep working. Never set it to true.
+  node-pty: false
+
+overrides:
+  # Optional native dep of @code-inspector/core. Whenever it resolves, the
+  # inspector starts a terminal bridge: an unauthenticated shell on its helper
+  # server, which listens on all interfaces. No plugin option turns it off, and
+  # denying the build script is not enough (node-pty ships macOS prebuilds).
+  # Removing it from the graph disables the bridge; click-to-source still works.
+  # Guarded by scripts/node-pty-absent.sh (CI).
+  node-pty: "-"

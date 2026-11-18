@@ -56,6 +56,13 @@ Solo-developer repo: one maintainer, no reviewers, no PR flow.
 - **Pushing `origin main` is allowed when asked.** This repo rule overrides any general "never push to `main`" default. Still only push on request, and never force-push.
 - Commit only when asked; keep commits small and logically split (e.g. formatting separate from behaviour changes, so they can go in `.git-blame-ignore-revs`).
 
+## Click-to-source (code inspector)
+
+Dev-only `code-inspector-plugin`, off by default. Put `VITE_CODE_INSPECTOR=1` in `.env.local` (gitignored; `.env` holds the committed `0` default), restart `pnpm dev`, then hold Option+Shift (macOS) / Alt+Shift and click an element to open its source.
+
+- **Never let `node-pty` back in.** The plugin's core starts an unauthenticated terminal bridge (a shell on its helper server, listening on all interfaces) whenever `node-pty` resolves. The `node-pty: "-"` override in `pnpm-workspace.yaml` removes it; `scripts/node-pty-absent.sh` fails CI if the lockfile resolves it again. Never answer a pnpm prompt with `allowBuilds: node-pty: true`.
+- The plugin is imported lazily in `vite.config.ts`, only for `vite` dev with the flag on, with `pathType: "relative"` so the helper server refuses files outside the repo.
+
 ## Coding Guidelines
 
 ### Response Style

@@ -66,7 +66,8 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+# `.env` is committed: non-secret defaults only (Vite inlines VITE_* into the
+# client bundle anyway). Personal overrides go in the ignored `.env.local`.
 .env.*
 !.env.example
 
