@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
 import { BULL_PEG_CLASS, COW_PEG_CLASS } from "../components/FeedbackPegs";
+import { GiveUpButton } from "../components/GiveUpButton";
 import { Palette } from "../components/Palette";
 import { ResultPanel } from "../components/ResultPanel";
 import { Timer } from "../components/Timer";
@@ -103,7 +104,7 @@ export function Play() {
         onConfirm={() => pendingDifficulty && startGame(pendingDifficulty)}
       />
       {/* Minimal text drops the legend; the help popover still explains pegs. */}
-      {(!isMinimalText || isTimerShown) && (
+      {(!isMinimalText || isTimerShown || isPlaying) && (
         <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
           {!isMinimalText && (
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -117,7 +118,10 @@ export function Play() {
               </span>
             </span>
           )}
-          {isTimerShown && <Timer className="ms-auto" />}
+          <span className="ms-auto flex items-center gap-3">
+            {isPlaying && <GiveUpButton />}
+            {isTimerShown && <Timer />}
+          </span>
         </div>
       )}
       <Board />

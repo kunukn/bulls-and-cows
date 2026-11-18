@@ -59,6 +59,9 @@
     "undo": "撤销",
     "check": "检查",
     "abandonConfirm": "放弃当前这一局？",
+    "giveUp": "放弃",
+    "giveUpConfirm": "要放弃吗？",
+    "giveUpDescription": "密码会显示出来。",
     "abandon": "放弃",
     "abandonDescription": "这一局的猜测会被清掉。"
   },
@@ -87,7 +90,8 @@
     "yourName": "你的名字",
     "save": "保存成绩",
     "saved": "成绩已保存",
-    "newGame": "新游戏"
+    "newGame": "新游戏",
+    "gaveUp": "你放弃了——密码已在上方揭晓"
   },
   "highScores": {
     "title": "排行榜",

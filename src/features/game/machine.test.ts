@@ -101,4 +101,15 @@ describe("gameMachine", () => {
     expect(context.current).toHaveLength(5);
     expect(context.startedAt).toBe(0);
   });
+
+  it("GIVE_UP ends the game as lost and keeps the guesses", () => {
+    const actor = startGame();
+    guess(actor, ["blue", "blue", "blue", "blue"]);
+    actor.send({ type: "GIVE_UP" });
+    const { value, context } = actor.getSnapshot();
+
+    expect(value).toBe("lost");
+    expect(context.guesses).toHaveLength(1);
+    expect(context.finishedAt).toBeGreaterThan(0);
+  });
 });

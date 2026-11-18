@@ -3,6 +3,7 @@ import {
   useGameActorRef,
   useGameSelector,
 } from "@/features/game/machine-context";
+import { DIFFICULTIES } from "@/features/game/logic";
 import { elapsedMs } from "@/features/game/machine";
 import { useSettings } from "@/features/game/store/settings";
 import { qualifies, useHighScores } from "@/features/highscores/store";
@@ -20,6 +21,8 @@ import { useNavigate } from "react-router";
 
 type OutcomeMessageProps = {
   isWon: boolean;
+  /* Lost with guesses left, i.e. the player gave up. */
+  hasGivenUp: boolean;
   guesses: number;
   elapsedMs: number;
   isMinimalText: boolean;
@@ -28,6 +31,7 @@ type OutcomeMessageProps = {
 /* Win/loss line; minimal text keeps the full sentence for screen readers. */
 function OutcomeMessage({
   isWon,
+  hasGivenUp,
   guesses,
   elapsedMs,
   isMinimalText,
@@ -35,13 +39,14 @@ function OutcomeMessage({
   const { t } = useTranslation();
 
   if (!isWon) {
+    const message = hasGivenUp ? t("result.gaveUp") : t("result.lost");
     if (!isMinimalText)
-      return <p className="text-lg font-semibold">{t("result.lost")}</p>;
+      return <p className="text-lg font-semibold">{message}</p>;
 
     return (
-      <p title={t("result.lost")}>
+      <p title={message}>
         <CircleX aria-hidden className="size-7 text-red-400" />
-        <span className="sr-only">{t("result.lost")}</span>
+        <span className="sr-only">{message}</span>
       </p>
     );
   }
@@ -106,6 +111,9 @@ export function ResultPanel() {
     >
       <OutcomeMessage
         isWon={isWon}
+        hasGivenUp={
+          !isWon && run.guesses < DIFFICULTIES[context.difficulty].maxGuesses
+        }
         guesses={run.guesses}
         elapsedMs={run.elapsedMs}
         isMinimalText={isMinimalText}

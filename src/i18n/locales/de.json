@@ -61,6 +61,9 @@
     "undo": "Zurück",
     "check": "Prüfen",
     "abandonConfirm": "Aktuelles Spiel abbrechen?",
+    "giveUp": "Aufgeben",
+    "giveUpConfirm": "Aufgeben?",
+    "giveUpDescription": "Der geheime Code wird gezeigt.",
     "abandon": "Abbrechen",
     "abandonDescription": "Deine Versuche auf diesem Brett gehen verloren."
   },
@@ -91,7 +94,8 @@
     "yourName": "Dein Name",
     "save": "Speichern",
     "saved": "Gespeichert",
-    "newGame": "Neues Spiel"
+    "newGame": "Neues Spiel",
+    "gaveUp": "Du hast aufgegeben – der Code steht oben"
   },
   "highScores": {
     "title": "Bestenliste",

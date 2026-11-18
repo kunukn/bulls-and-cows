@@ -33,6 +33,7 @@ export type GameEvent =
   | { type: "REMOVE_PEG" }
   | { type: "CLEAR_SLOT"; index: number }
   | { type: "SUBMIT" }
+  | { type: "GIVE_UP" }
   | { type: "NEW_GAME"; difficulty?: Difficulty };
 
 function emptyRow(difficulty: Difficulty): null[] {
@@ -160,6 +161,8 @@ export const gameMachine = setup({
           },
           { guard: "isRowComplete", actions: "submitGuess" },
         ],
+        // Ends the game as a loss so the secret is revealed.
+        GIVE_UP: { target: "lost", actions: "markFinished" },
       },
     },
     won: {},
