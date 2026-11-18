@@ -3,6 +3,16 @@ import { cn } from "@/utils/cn";
 import { useTranslation } from "react-i18next";
 import { FEEDBACK_COLUMN } from "./rowLayout";
 
+/*
+ * Scored pegs are full size, empty slots a small dot: size, not colour, tells
+ * a black bull from an empty hole on every board theme. The bull gets a light
+ * rim and a highlight so it reads as a raised peg even on near-black boards.
+ * Shared with the legend in Play.
+ */
+export const BULL_PEG_CLASS =
+  "bg-[radial-gradient(circle_at_35%_30%,var(--color-zinc-500),var(--color-zinc-950)_65%)] ring-1 ring-zinc-300";
+export const COW_PEG_CLASS = "bg-white";
+
 type Props = Partial<Feedback> & {
   pegs: number;
   /* False for rows not yet guessed: draw empty holes, announce nothing. */
@@ -43,17 +53,21 @@ export function FeedbackPegs({
     >
       {isScored && <span className="sr-only">{label}</span>}
       {marks.map((mark, index) => (
+        // Fixed-size slot, so small empty dots keep the grid aligned.
         <span
           key={index}
           aria-hidden
-          className={cn(
-            "size-3 rounded-full",
-            mark === "black" && "bg-zinc-950 ring-1 ring-zinc-400",
-            mark === "white" && "bg-white",
-            mark === "empty" &&
-              "bg-board-hole shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
-          )}
-        />
+          className="grid size-3 place-items-center"
+        >
+          <span
+            className={cn(
+              "rounded-full",
+              mark === "black" && cn("size-3", BULL_PEG_CLASS),
+              mark === "white" && cn("size-3", COW_PEG_CLASS),
+              mark === "empty" && "size-1.5 bg-board-label opacity-40",
+            )}
+          />
+        </span>
       ))}
     </div>
   );

@@ -5,9 +5,11 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
+import { cn } from "@/utils/cn";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
+import { BULL_PEG_CLASS, COW_PEG_CLASS } from "../components/FeedbackPegs";
 import { Palette } from "../components/Palette";
 import { ResultPanel } from "../components/ResultPanel";
 import { Timer } from "../components/Timer";
@@ -84,11 +86,11 @@ export function Play() {
           {!isMinimalText && (
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="flex items-center gap-1.5">
-                <span className="size-2.5 rounded-full bg-zinc-950 ring-1 ring-zinc-400" />
+                <span className={cn("size-2.5 rounded-full", BULL_PEG_CLASS)} />
                 {t("game.legendBull")}
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="size-2.5 rounded-full bg-white" />
+                <span className={cn("size-2.5 rounded-full", COW_PEG_CLASS)} />
                 {t("game.legendCow")}
               </span>
             </span>
