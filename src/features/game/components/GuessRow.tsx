@@ -4,12 +4,7 @@ import { cn } from "@/utils/cn";
 import { useTranslation } from "react-i18next";
 import { FeedbackPegs } from "./FeedbackPegs";
 import { Peg } from "./Peg";
-import {
-  FEEDBACK_COLUMN,
-  NUMBER_COLUMN,
-  PEGS_COLUMN,
-  ROW_LAYOUT,
-} from "./rowLayout";
+import { NUMBER_COLUMN, PEGS_COLUMN, ROW_LAYOUT } from "./rowLayout";
 
 type Props = {
   rowNumber: number;
@@ -29,6 +24,8 @@ export function GuessRow({
   ref,
 }: Props) {
   const { t } = useTranslation();
+  // Rows not reached yet: holes stay visible but recede behind the play area.
+  const isUpcoming = !guess && !isActive;
 
   return (
     <li
@@ -49,7 +46,7 @@ export function GuessRow({
       >
         {rowNumber}
       </span>
-      <div className={PEGS_COLUMN}>
+      <div className={cn(PEGS_COLUMN, isUpcoming && "opacity-60")}>
         {pegs.map((color, index) =>
           isActive && color && onClearSlot ? (
             <button
@@ -69,15 +66,13 @@ export function GuessRow({
           ),
         )}
       </div>
-      {guess ? (
-        <FeedbackPegs
-          black={guess.black}
-          white={guess.white}
-          pegs={pegs.length}
-        />
-      ) : (
-        <div aria-hidden className={FEEDBACK_COLUMN} />
-      )}
+      <FeedbackPegs
+        black={guess?.black}
+        white={guess?.white}
+        pegs={pegs.length}
+        isScored={Boolean(guess)}
+        className={cn(isUpcoming && "opacity-60")}
+      />
     </li>
   );
 }
