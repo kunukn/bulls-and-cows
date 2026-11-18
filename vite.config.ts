@@ -55,6 +55,14 @@ export default defineConfig(async ({ command, mode }) => {
      */
     base: process.env.VITE_BASE_PATH ?? "/",
     cacheDir: "node_modules/.vite",
+    build: {
+      /*
+       * Single ~570 kB app chunk (React, React Router, XState, i18next, Radix)
+       * exceeds Vite's 500 kB default. Raised for now; splitting the bundle is
+       * tracked in BUGS.md.
+       */
+      chunkSizeWarningLimit: 650,
+    },
     plugins: [
       await codeInspector(isCodeInspectorEnabled),
       tailwindcss(),
