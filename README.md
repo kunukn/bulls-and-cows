@@ -1,10 +1,33 @@
-# bulls-and-cows
+# <img src="public/favicon.svg" width="32" height="32" align="absmiddle" alt="bull logo" /> Bulls & Cows
 
-A code-breaking game inspired by Mastermind. Crack the computer's secret colour
-code; each guess earns **bulls** (right colour, right spot) and **cows** (right
-colour, wrong spot).
+[![License: 0BSD](https://img.shields.io/badge/license-0BSD-green.svg)](LICENSE)
+[![Live](https://img.shields.io/badge/live-GitHub%20Pages-blue)](https://kunukn.github.io/bulls-and-cows/)
 
-## Develop
+**Crack the computer's secret colour code before you run out of guesses.**
+
+A code-breaking game inspired by Mastermind. Each guess earns **bulls** (black:
+right colour, right spot) and **cows** (white: right colour, wrong spot). The
+pegs don't say which spot they mean — that's the puzzle.
+
+## 🌐 Try It
+
+**[kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows/)**
+
+## ✨ What's Inside
+
+| Difficulty | Pegs | Colours | Guesses | Repeats |
+| ---------- | ---- | ------- | ------- | ------- |
+| Easy       | 4    | 6       | 10      | No      |
+| Classic    | 4    | 6       | 10      | Yes     |
+| Hard       | 5    | 8       | 12      | Yes     |
+
+- 🏆 **High scores** — top 10 per difficulty, ranked by fewest guesses, then
+  fastest time. Stored locally in your browser.
+- 🌍 **Five languages** — English, 简体中文, Français, Deutsch, Dansk.
+- ⌨️ **Keyboard support** — `1`–`8` add a colour, `Backspace` undoes, `Enter`
+  checks the row.
+
+## 🛠️ Develop
 
 ```bash
 pnpm install
@@ -15,6 +38,6 @@ pnpm format     # oxfmt, whole repo
 pnpm build
 ```
 
-Keyboard: `1`–`8` add a colour, `Backspace` undoes, `Enter` checks the row.
+Built with React 19, TypeScript, Vite, Tailwind CSS 4, shadcn/ui and XState.
 
 Deploys to GitHub Pages from `main` via `.github/workflows/deploy.yml`.
