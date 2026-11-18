@@ -1,0 +1,80 @@
+import { createActor } from "xstate";
+import { gameMachine } from "./machine";
+import { GAME_STORAGE_KEY, loadGame, saveGame } from "./persistence";
+
+const sequence = (values: number[]) => {
+  let index = 0;
+
+  return () => values[index++ % values.length];
+};
+
+beforeEach(() => localStorage.clear());
+
+describe("game persistence", () => {
+  it("restores an in-progress game after a reload", () => {
+    const actor = createActor(gameMachine, {
+      input: { difficulty: "classic", randomInt: sequence([0, 1, 2, 3]) },
+    }).start();
+    actor.subscribe(saveGame);
+    for (const color of ["blue", "red", "green", "yellow"] as const) {
+      actor.send({ type: "ADD_PEG", color });
+    }
+    actor.send({ type: "SUBMIT" });
+    actor.send({ type: "ADD_PEG", color: "red" });
+
+    const restored = createActor(gameMachine, {
+      input: { difficulty: "easy" },
+      snapshot: loadGame(),
+    }).start();
+    const { context, value } = restored.getSnapshot();
+
+    expect(value).toBe("playing");
+    expect(context.difficulty).toBe("classic");
+    expect(context.secret).toEqual(["red", "blue", "green", "yellow"]);
+    expect(context.guesses).toHaveLength(1);
+    expect(context.current).toEqual(["red", null, null, null]);
+    expect(context.startedAt).toBe(actor.getSnapshot().context.startedAt);
+
+    // randomInt is re-attached, so starting a new game still works.
+    restored.send({ type: "NEW_GAME" });
+    expect(restored.getSnapshot().context.guesses).toEqual([]);
+  });
+
+  it("restores a finished game in its final state", () => {
+    const actor = createActor(gameMachine, {
+      input: { difficulty: "classic", randomInt: sequence([0, 1, 2, 3]) },
+    }).start();
+    actor.subscribe(saveGame);
+    for (const color of ["red", "blue", "green", "yellow"] as const) {
+      actor.send({ type: "ADD_PEG", color });
+    }
+    actor.send({ type: "SUBMIT" });
+
+    expect(loadGame()?.value).toBe("won");
+  });
+
+  it.each([
+    ["nothing saved", null],
+    ["invalid JSON", "{"],
+    ["an old version", JSON.stringify({ version: 0 })],
+    [
+      "a secret of the wrong length",
+      JSON.stringify({
+        version: 1,
+        value: "playing",
+        context: {
+          difficulty: "classic",
+          secret: ["red"],
+          guesses: [],
+          current: [null, null, null, null],
+          startedAt: 0,
+          finishedAt: 0,
+        },
+      }),
+    ],
+  ])("starts fresh given %s", (_label, stored) => {
+    if (stored !== null) localStorage.setItem(GAME_STORAGE_KEY, stored);
+
+    expect(loadGame()).toBeUndefined();
+  });
+});
