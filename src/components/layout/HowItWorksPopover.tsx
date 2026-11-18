@@ -20,6 +20,13 @@ const STEP_KEYS = [
   "help.step6",
 ] as const;
 
+// Mirrors the shortcuts handled in Play.tsx.
+const KEYBOARD_KEYS = [
+  "help.keyboardColors",
+  "help.keyboardUndo",
+  "help.keyboardCheck",
+] as const;
+
 /*
  * Game rules in a popover, modelled on singing-experience's
  * ProgramHelpButton: title, one-line description, numbered steps. The
@@ -61,6 +68,16 @@ export function HowItWorksPopover() {
               <li key={key}>{t(key)}</li>
             ))}
           </ol>
+        </section>
+
+        {/* Touch-only devices have no keyboard to use these shortcuts with. */}
+        <section className="pointer-coarse:hidden">
+          <h3 className="mb-1 font-semibold">{t("help.keyboardTitle")}</h3>
+          <ul className="list-disc space-y-1 ps-5">
+            {KEYBOARD_KEYS.map((key) => (
+              <li key={key}>{t(key)}</li>
+            ))}
+          </ul>
         </section>
 
         <section>
