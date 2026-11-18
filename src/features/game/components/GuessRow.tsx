@@ -26,7 +26,8 @@ export function GuessRow({
       ref={ref}
       aria-current={isActive ? "step" : undefined}
       className={cn(
-        "flex items-center gap-3 rounded-lg px-2 py-1",
+        // scroll-mb keeps the active row clear of the sticky palette on scrollIntoView.
+        "flex scroll-mb-40 items-center gap-3 rounded-lg px-2 py-1",
         isActive && "bg-amber-700/60 ring-2 ring-amber-300/70",
       )}
     >

@@ -87,7 +87,10 @@ export function Play() {
         <Timer />
       </div>
       <Board />
-      {isPlaying ? <Palette /> : <ResultPanel />}
+      {/* Sticky: on short viewports the board scrolls under the controls. */}
+      <div className="sticky bottom-0 -mx-4 bg-slate-900/90 px-4 pt-3 pb-4 shadow-[0_-12px_16px_-8px_rgb(0_0_0/0.5)] backdrop-blur">
+        {isPlaying ? <Palette /> : <ResultPanel />}
+      </div>
     </div>
   );
 }
