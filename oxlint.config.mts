@@ -52,4 +52,8 @@ export default defineConfig({
     // CLI scripts: console output is the point.
     { files: ["scripts/**"], rules: { "no-console": "off" } },
   ],
+  ignorePatterns: [
+    // Vendored third-party CSS debugging helper (Alt+Shift+R), kept verbatim.
+    "public/rainbow.js",
+  ],
 });
