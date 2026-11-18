@@ -46,7 +46,7 @@ describe("generateSecret", () => {
     const palette = paletteFor("hard");
 
     expect(secret).toHaveLength(DIFFICULTIES.hard.pegs);
-    secret.forEach((color) => expect(palette).toContain(color));
+    expect(palette).toEqual(expect.arrayContaining(secret));
   });
 
   it("never repeats colours on easy", () => {

@@ -12,8 +12,12 @@ function startGame(difficulty: "easy" | "classic" | "hard" = "classic") {
   return actor;
 }
 
+function guessPegs(actor: ReturnType<typeof startGame>, colors: Color[]) {
+  for (const color of colors) actor.send({ type: "ADD_PEG", color });
+}
+
 function guess(actor: ReturnType<typeof startGame>, colors: Color[]) {
-  colors.forEach((color) => actor.send({ type: "ADD_PEG", color }));
+  guessPegs(actor, colors);
   actor.send({ type: "SUBMIT" });
 }
 
@@ -34,9 +38,7 @@ describe("gameMachine", () => {
 
   it("edits the current row", () => {
     const actor = startGame();
-    (["blue", "green", "yellow"] as const).forEach((color) =>
-      actor.send({ type: "ADD_PEG", color }),
-    );
+    guessPegs(actor, ["blue", "green", "yellow"]);
     actor.send({ type: "REMOVE_PEG" });
     actor.send({ type: "CLEAR_SLOT", index: 0 });
     actor.send({ type: "ADD_PEG", color: "red" });

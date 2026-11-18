@@ -39,7 +39,10 @@ export function qualifies(entries: HighScoreEntry[], run: RunResult): boolean {
 type HighScoresStore = {
   scores: Board;
   lastName: string;
-  addEntry: (difficulty: Difficulty, entry: HighScoreEntry) => void;
+  addEntry: (
+    difficulty: Difficulty,
+    entry: Omit<HighScoreEntry, "achievedAt">,
+  ) => void;
   clear: () => void;
 };
 
@@ -53,7 +56,7 @@ export const useHighScores = create<HighScoresStore>()(
           const existing = state.scores[difficulty];
           if (existing.some((item) => item.id === entry.id)) return state;
 
-          const entries = [...existing, entry]
+          const entries = [...existing, { ...entry, achievedAt: Date.now() }]
             .sort(compareEntries)
             .slice(0, MAX_ENTRIES);
 

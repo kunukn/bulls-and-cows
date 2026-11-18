@@ -5,9 +5,11 @@ type Props = Partial<Feedback> & { pegs: number };
 
 /* Bulls (black) first, then cows (white), then empty holes. */
 export function FeedbackPegs({ black = 0, white = 0, pegs }: Props) {
-  const marks = Array.from({ length: pegs }, (_, index) =>
-    index < black ? "black" : index < black + white ? "white" : "empty",
-  );
+  const marks = Array.from({ length: pegs }, (_, index) => {
+    if (index < black) return "black";
+
+    return index < black + white ? "white" : "empty";
+  });
   const label =
     black + white === 0 && pegs > 0
       ? "No matches"
@@ -15,16 +17,16 @@ export function FeedbackPegs({ black = 0, white = 0, pegs }: Props) {
 
   return (
     <div
-      role="img"
-      aria-label={label}
       className={cn(
         "grid w-10 shrink-0 gap-1",
         pegs > 4 ? "grid-cols-3" : "grid-cols-2",
       )}
     >
+      <span className="sr-only">{label}</span>
       {marks.map((mark, index) => (
         <span
           key={index}
+          aria-hidden
           className={cn(
             "size-3 rounded-full",
             mark === "black" && "bg-zinc-950 ring-1 ring-zinc-400",

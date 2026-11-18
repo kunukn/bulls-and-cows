@@ -97,14 +97,14 @@ export function scoreGuess(
   const secretCounts = new Map<Color, number>();
   const guessCounts = new Map<Color, number>();
 
-  secret.forEach((color, index) => {
+  for (const [index, color] of secret.entries()) {
     if (guess[index] === color) black++;
 
     secretCounts.set(color, (secretCounts.get(color) ?? 0) + 1);
-  });
-  guess.forEach((color) => {
+  }
+  for (const color of guess) {
     guessCounts.set(color, (guessCounts.get(color) ?? 0) + 1);
-  });
+  }
 
   let overlap = 0;
   for (const [color, count] of guessCounts) {

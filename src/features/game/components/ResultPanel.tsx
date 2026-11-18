@@ -33,7 +33,6 @@ export function ResultPanel() {
       id: context.startedAt,
       name,
       ...run,
-      achievedAt: Date.now(),
     });
     navigate(`${paths.highScores}?difficulty=${context.difficulty}`);
   }
@@ -64,7 +63,9 @@ export function ResultPanel() {
             name="name"
             required
             maxLength={20}
+            // oxlint-disable-next-line jsx-a11y/autocomplete-valid -- `nickname` is a valid HTML token; the rule's list lacks it
             autoComplete="nickname"
+            // oxlint-disable-next-line jsx-a11y/no-autofocus -- focus follows the player's own winning move, so it isn't a surprise
             autoFocus
             defaultValue={lastName}
             placeholder="Your name"
