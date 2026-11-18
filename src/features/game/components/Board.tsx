@@ -4,7 +4,15 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useEffect, useRef } from "react";
+import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
+import {
+  FEEDBACK_COLUMN,
+  NUMBER_COLUMN,
+  PEG_SIZE,
+  PEGS_COLUMN,
+  ROW_LAYOUT,
+} from "./rowLayout";
 import { Peg } from "./Peg";
 
 export function Board() {
@@ -31,24 +39,31 @@ export function Board() {
     >
       <div
         aria-label={isPlaying ? "Secret code (hidden)" : "Secret code"}
-        className="mb-3 flex items-center justify-center gap-2 rounded-lg bg-amber-950/50 py-2"
+        className={cn(ROW_LAYOUT, "mb-3 rounded-lg bg-amber-950/50 py-2")}
       >
-        {isPlaying
-          ? Array.from({ length: pegs }, (_, index) => (
-              <span
-                key={index}
-                aria-hidden
-                className="grid size-8 place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400 sm:size-9"
-              >
-                ?
-              </span>
-            ))
-          : secret.map((color, index) => (
-              <span key={index} className="contents">
-                <Peg color={color} />
-                <span className="sr-only">{color}</span>
-              </span>
-            ))}
+        <span aria-hidden className={NUMBER_COLUMN} />
+        <div className={PEGS_COLUMN}>
+          {isPlaying
+            ? Array.from({ length: pegs }, (_, index) => (
+                <span
+                  key={index}
+                  aria-hidden
+                  className={cn(
+                    PEG_SIZE,
+                    "grid place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400",
+                  )}
+                >
+                  ?
+                </span>
+              ))
+            : secret.map((color, index) => (
+                <span key={index} className="contents">
+                  <Peg color={color} />
+                  <span className="sr-only">{color}</span>
+                </span>
+              ))}
+        </div>
+        <span aria-hidden className={FEEDBACK_COLUMN} />
       </div>
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {

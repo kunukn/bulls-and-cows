@@ -3,6 +3,12 @@ import type { Guess } from "@/features/game/machine";
 import { cn } from "@/utils/cn";
 import { FeedbackPegs } from "./FeedbackPegs";
 import { Peg } from "./Peg";
+import {
+  FEEDBACK_COLUMN,
+  NUMBER_COLUMN,
+  PEGS_COLUMN,
+  ROW_LAYOUT,
+} from "./rowLayout";
 
 type Props = {
   rowNumber: number;
@@ -27,14 +33,20 @@ export function GuessRow({
       aria-current={isActive ? "step" : undefined}
       className={cn(
         // scroll-mb keeps the active row clear of the sticky palette on scrollIntoView.
-        "flex scroll-mb-40 items-center gap-3 rounded-lg px-2 py-1",
+        ROW_LAYOUT,
+        "scroll-mb-40 rounded-lg py-1",
         isActive && "bg-amber-700/60 ring-2 ring-amber-300/70",
       )}
     >
-      <span className="w-5 text-right text-xs text-amber-200/70 tabular-nums">
+      <span
+        className={cn(
+          NUMBER_COLUMN,
+          "text-right text-xs text-amber-200/70 tabular-nums",
+        )}
+      >
         {rowNumber}
       </span>
-      <div className="flex flex-1 justify-center gap-2">
+      <div className={PEGS_COLUMN}>
         {pegs.map((color, index) =>
           isActive && color && onClearSlot ? (
             <button
@@ -58,7 +70,7 @@ export function GuessRow({
           pegs={pegs.length}
         />
       ) : (
-        <div aria-hidden className="w-10 shrink-0" />
+        <div aria-hidden className={FEEDBACK_COLUMN} />
       )}
     </li>
   );

@@ -1,5 +1,6 @@
 import type { Feedback } from "@/features/game/logic";
 import { cn } from "@/utils/cn";
+import { FEEDBACK_COLUMN } from "./rowLayout";
 
 type Props = Partial<Feedback> & { pegs: number };
 
@@ -18,7 +19,8 @@ export function FeedbackPegs({ black = 0, white = 0, pegs }: Props) {
   return (
     <div
       className={cn(
-        "grid w-10 shrink-0 gap-1",
+        FEEDBACK_COLUMN,
+        "grid gap-1",
         pegs > 4 ? "grid-cols-3" : "grid-cols-2",
       )}
     >
