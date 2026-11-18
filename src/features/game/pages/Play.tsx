@@ -40,6 +40,9 @@ export function Play() {
       // Leave typing fields alone; the difficulty radios keep shortcuts working.
       if (target.closest("input:not([type=radio]), textarea, select")) return;
 
+      // An open dialog (e.g. the Settings drawer) owns the keyboard.
+      if (target.closest("[role=dialog]")) return;
+
       const palette = paletteFor(difficulty);
       const digit = Number(event.key);
 

@@ -43,7 +43,7 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 - Always run `pnpm format` after edits. Oxfmt ([`oxfmt.config.mts`](../oxfmt.config.mts)) uses Prettier-compatible defaults — double quotes, semicolons, 80 columns — and sorts Tailwind classes, including inside `cn()`/`clsx()`.
 - Oxlint ([`oxlint.config.mts`](../oxlint.config.mts)) has no warnings: every rule is an error. It also flags unknown Tailwind classes (`better-tailwindcss/no-unknown-classes`). No default exports (config files excepted) and no `Array#forEach` — use `for…of`.
 - TypeScript strict mode is on, plus `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`. Don't leave unused symbols.
-- **UI components:** use a native HTML element when it does the job (radio groups, forms, `<button>`). For anything richer — popovers, dialogs, menus — use the shadcn/ui component in `src/components/ui/`; add new ones with `pnpm dlx shadcn@latest add <name>`, then run `pnpm format` and `pnpm check`. Don't hand-roll a widget that one of those already covers.
+- **UI components:** use a native HTML element when it does the job (radio groups, forms, `<button>`). For anything richer — drawers (`sheet`), popovers, dialogs, menus, switches — use the shadcn/ui component in `src/components/ui/`; add new ones with `pnpm dlx shadcn@latest add <name>`, then run `pnpm format` and `pnpm check`. Don't hand-roll a widget that one of those already covers.
 - No auto-imports — import React hooks and `react-router` exports explicitly.
 - **Playwright/browser screenshots go in `.temp/`** — never write screenshots (or other scratch artifacts) to the repo root. The `.temp/` folder is gitignored. When using a browser MCP tool, pass an explicit filename targeting `.temp/`, e.g. `.temp/intro.png`.
 
@@ -55,7 +55,8 @@ All user-facing text — including `aria-label`, `title`, `placeholder` and `con
 - **Add a key to all five files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
 - Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`. Interpolate with `{{name}}`.
 - Format numbers and dates with `Intl` in the active language (`i18n.language`), not a fixed locale.
-- The Settings popover (`src/i18n/LanguageSwitcher.tsx`) stores the choice in `localStorage` (`bulls-and-cows:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
+- The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`bulls-and-cows:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
+- **New settings go in the Settings drawer**, one stacked section each (label + control), below Language. Labels and descriptions are translated like any other text.
 - Tone rules for the locale files: [`.github/instructions/translation.instructions.md`](instructions/translation.instructions.md).
 
 ## Git workflow

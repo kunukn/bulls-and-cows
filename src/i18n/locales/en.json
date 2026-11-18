@@ -1,7 +1,17 @@
 {
-  "app": { "title": "Bulls & Cows" },
-  "common": { "settings": "Settings", "language": "Language" },
-  "nav": { "play": "Play", "highScores": "High scores" },
+  "app": {
+    "title": "Bulls & Cows"
+  },
+  "common": {
+    "settings": "Settings",
+    "language": "Language",
+    "close": "Close",
+    "version": "Version"
+  },
+  "nav": {
+    "play": "Play",
+    "highScores": "High scores"
+  },
   "difficulty": {
     "legend": "Difficulty",
     "easy": "Easy",

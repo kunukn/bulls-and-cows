@@ -1,7 +1,7 @@
 import { paths } from "@/app/paths";
 import { BullIcon } from "@/components/icons/BullIcon";
-import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
 import { cn } from "@/utils/cn";
+import { SettingsSheet } from "./SettingsSheet";
 import { Gamepad2, Trophy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { NavLink, Outlet } from "react-router";
@@ -46,7 +46,7 @@ export function Layout() {
               <span className="sr-only">{t("nav.highScores")}</span>
             </NavLink>
           </nav>
-          <LanguageSwitcher />
+          <SettingsSheet />
         </div>
       </header>
       <main className="flex flex-1 flex-col pb-8">

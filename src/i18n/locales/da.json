@@ -1,7 +1,17 @@
 {
-  "app": { "title": "Bulls & Cows" },
-  "common": { "settings": "Indstillinger", "language": "Sprog" },
-  "nav": { "play": "Spil", "highScores": "Topliste" },
+  "app": {
+    "title": "Bulls & Cows"
+  },
+  "common": {
+    "settings": "Indstillinger",
+    "language": "Sprog",
+    "close": "Luk",
+    "version": "Version"
+  },
+  "nav": {
+    "play": "Spil",
+    "highScores": "Topliste"
+  },
   "difficulty": {
     "legend": "Sværhedsgrad",
     "easy": "Let",

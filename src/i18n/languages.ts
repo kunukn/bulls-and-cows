@@ -22,9 +22,8 @@ export const HTML_LANG: Record<Language, string> = {
   da: "da",
 };
 
-/* localStorage keys, written by LanguageSwitcher via usehooks-ts (JSON). */
+/* localStorage key (JSON string), written by LanguageSelect. */
 export const LANGUAGE_STORAGE_KEY = "bulls-and-cows:language";
-export const RECENT_LANGUAGES_STORAGE_KEY = "bulls-and-cows:language-recents";
 
 export function isLanguage(value: unknown): value is Language {
   return LANGUAGE_CODES.includes(value as Language);
