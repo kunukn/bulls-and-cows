@@ -54,5 +54,10 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Third-party licenses are up to date
+        run: |
+          pnpm licenses:update
+          git diff --exit-code THIRD-PARTY-LICENSES.md
+
       - name: Unit tests
         run: pnpm test:run

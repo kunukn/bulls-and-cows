@@ -20,7 +20,8 @@
     "e2e": "playwright install chromium && playwright test",
     "e2e:ui": "playwright install chromium && playwright test --ui",
     "check": "node scripts/pre-push-checks.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "licenses:update": "node scripts/third-party-licenses.ts"
   },
   "dependencies": {
     "@xstate/react": "^6.1.0",
