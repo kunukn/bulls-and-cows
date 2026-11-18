@@ -6,6 +6,7 @@ import {
 import { elapsedMs } from "@/features/game/machine";
 import { qualifies, useHighScores } from "@/features/highscores/store";
 import { formatDuration } from "@/utils/format";
+import { Trophy } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export function ResultPanel() {
@@ -43,9 +44,10 @@ export function ResultPanel() {
       className="flex flex-col items-center gap-3 rounded-2xl bg-slate-800 p-4 text-center"
     >
       {isWon ? (
-        <p className="text-lg font-semibold">
-          🎉 Cracked in {run.guesses} {run.guesses === 1 ? "guess" : "guesses"}{" "}
-          · {formatDuration(run.elapsedMs)}
+        <p className="flex items-center gap-2 text-lg font-semibold">
+          <Trophy className="size-5 shrink-0 text-amber-400" />
+          Cracked in {run.guesses} {run.guesses === 1 ? "guess" : "guesses"} ·{" "}
+          {formatDuration(run.elapsedMs)}
         </p>
       ) : (
         <p className="text-lg font-semibold">

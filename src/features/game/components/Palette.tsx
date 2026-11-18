@@ -4,10 +4,11 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { cn } from "@/utils/cn";
+import { CornerDownLeft, Delete } from "lucide-react";
 import { PEG_CLASS } from "./Peg";
 
 const actionButtonClass =
-  "rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-40";
+  "flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-40";
 
 export function Palette() {
   const actor = useGameActorRef();
@@ -44,7 +45,8 @@ export function Palette() {
           onClick={() => actor.send({ type: "REMOVE_PEG" })}
           className={cn(actionButtonClass, "bg-slate-700 hover:bg-slate-600")}
         >
-          ⌫ Undo
+          <Delete className="size-4" />
+          Undo
         </button>
         <button
           type="button"
@@ -55,7 +57,8 @@ export function Palette() {
             "bg-emerald-600 text-white hover:bg-emerald-500",
           )}
         >
-          Check ↵
+          Check
+          <CornerDownLeft className="size-4" />
         </button>
       </div>
     </section>

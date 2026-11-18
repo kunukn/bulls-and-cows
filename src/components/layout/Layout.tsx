@@ -1,4 +1,5 @@
 import { paths } from "@/app/paths";
+import { BullIcon } from "@/components/icons/BullIcon";
 import { cn } from "@/utils/cn";
 import { NavLink, Outlet } from "react-router";
 
@@ -14,8 +15,9 @@ export function Layout() {
   return (
     <div className="mx-auto flex min-h-dvh max-w-md flex-col px-4">
       <header className="flex items-center justify-between gap-2 py-4">
-        <h1 className="text-lg font-bold tracking-tight">
-          🐂 Bulls &amp; Cows
+        <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight">
+          <BullIcon className="size-7 shrink-0" />
+          Bulls &amp; Cows
         </h1>
         <nav className="flex gap-1">
           <NavLink to={paths.play} end className={navLinkClass}>
