@@ -18,7 +18,8 @@
       "classic": "Klassisch",
       "gunmetal": "Metall",
       "neon": "Neon"
-    }
+    },
+    "cancel": "Abbrechen"
   },
   "nav": {
     "play": "Spielen",
@@ -59,7 +60,9 @@
     "addColor": "{{color}} setzen (Taste {{key}})",
     "undo": "Zurück",
     "check": "Prüfen",
-    "abandonConfirm": "Aktuelles Spiel abbrechen?"
+    "abandonConfirm": "Aktuelles Spiel abbrechen?",
+    "abandon": "Abbrechen",
+    "abandonDescription": "Deine Versuche auf diesem Brett gehen verloren."
   },
   "help": {
     "button": "So funktioniert's",

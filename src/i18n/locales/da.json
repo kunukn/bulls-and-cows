@@ -18,7 +18,8 @@
       "classic": "Klassisk",
       "gunmetal": "Metal",
       "neon": "Neon"
-    }
+    },
+    "cancel": "Annuller"
   },
   "nav": {
     "play": "Spil",
@@ -59,7 +60,9 @@
     "addColor": "Tilføj {{color}} (tast {{key}})",
     "undo": "Fortryd",
     "check": "Tjek",
-    "abandonConfirm": "Opgiv det nuværende spil?"
+    "abandonConfirm": "Opgiv det nuværende spil?",
+    "abandon": "Opgiv",
+    "abandonDescription": "Dine gæt på denne plade bliver væk."
   },
   "help": {
     "button": "Sådan virker det",

@@ -18,7 +18,8 @@
       "classic": "Classic",
       "gunmetal": "Metal",
       "neon": "Neon"
-    }
+    },
+    "cancel": "Cancel"
   },
   "nav": {
     "play": "Play",
@@ -59,7 +60,9 @@
     "addColor": "Add {{color}} (key {{key}})",
     "undo": "Undo",
     "check": "Check",
-    "abandonConfirm": "Abandon the current game?"
+    "abandonConfirm": "Abandon the current game?",
+    "abandon": "Abandon",
+    "abandonDescription": "Your guesses on this board will be lost."
   },
   "help": {
     "button": "How it works",

@@ -18,7 +18,8 @@
       "classic": "经典",
       "gunmetal": "金属",
       "neon": "霓虹"
-    }
+    },
+    "cancel": "取消"
   },
   "nav": {
     "play": "游戏",
@@ -57,7 +58,9 @@
     "addColor": "添加{{color}}（按键 {{key}}）",
     "undo": "撤销",
     "check": "检查",
-    "abandonConfirm": "放弃当前这一局？"
+    "abandonConfirm": "放弃当前这一局？",
+    "abandon": "放弃",
+    "abandonDescription": "这一局的猜测会被清掉。"
   },
   "help": {
     "button": "玩法说明",

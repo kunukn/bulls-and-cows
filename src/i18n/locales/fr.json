@@ -18,7 +18,8 @@
       "classic": "Classique",
       "gunmetal": "Métal",
       "neon": "Néon"
-    }
+    },
+    "cancel": "Annuler"
   },
   "nav": {
     "play": "Jouer",
@@ -59,7 +60,9 @@
     "addColor": "Ajouter {{color}} (touche {{key}})",
     "undo": "Annuler",
     "check": "Vérifier",
-    "abandonConfirm": "Abandonner la partie en cours ?"
+    "abandonConfirm": "Abandonner la partie en cours ?",
+    "abandon": "Abandonner",
+    "abandonDescription": "Tes essais sur ce plateau seront perdus."
   },
   "help": {
     "button": "Comment ça marche",

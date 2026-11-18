@@ -1,3 +1,4 @@
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { DifficultyPicker } from "@/components/DifficultyPicker";
 import { paletteFor, type Difficulty } from "@/features/game/logic";
 import {
@@ -6,7 +7,7 @@ import {
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
 import { BULL_PEG_CLASS, COW_PEG_CLASS } from "../components/FeedbackPegs";
@@ -27,13 +28,24 @@ export function Play() {
   const isMinimalText = useSettings((state) => state.isMinimalText);
   // Hidden only while playing; the final time shows once the game ends.
   const isTimerShown = isTimerVisible || !isPlaying;
+  // Difficulty waiting on the abandon dialog; null while it is closed.
+  const [pendingDifficulty, setPendingDifficulty] = useState<Difficulty | null>(
+    null,
+  );
 
-  function changeDifficulty(next: Difficulty) {
-    if (isPlaying && hasProgress && !window.confirm(t("game.abandonConfirm")))
-      return;
-
+  function startGame(next: Difficulty) {
     setDifficulty(next);
     actor.send({ type: "NEW_GAME", difficulty: next });
+  }
+
+  function changeDifficulty(next: Difficulty) {
+    if (isPlaying && hasProgress) {
+      setPendingDifficulty(next);
+
+      return;
+    }
+
+    startGame(next);
   }
 
   /* Keys 1–8 add a colour, Backspace undoes, Enter checks the row. */
@@ -46,8 +58,8 @@ export function Play() {
       // Leave typing fields alone; the difficulty radios keep shortcuts working.
       if (target.closest("input:not([type=radio]), textarea, select")) return;
 
-      // An open dialog (e.g. the Settings drawer) owns the keyboard.
-      if (target.closest("[role=dialog]")) return;
+      // An open dialog (Settings drawer, confirm dialog) owns the keyboard.
+      if (target.closest("[role=dialog], [role=alertdialog]")) return;
 
       const palette = paletteFor(difficulty);
       const digit = Number(event.key);
@@ -79,6 +91,16 @@ export function Play() {
         legend={t("difficulty.legend")}
         value={difficulty}
         onChange={changeDifficulty}
+      />
+      <ConfirmDialog
+        isOpen={pendingDifficulty !== null}
+        onOpenChange={(isOpen) => {
+          if (!isOpen) setPendingDifficulty(null);
+        }}
+        title={t("game.abandonConfirm")}
+        description={t("game.abandonDescription")}
+        confirmLabel={t("game.abandon")}
+        onConfirm={() => pendingDifficulty && startGame(pendingDifficulty)}
       />
       {/* Minimal text drops the legend; the help popover still explains pegs. */}
       {(!isMinimalText || isTimerShown) && (
