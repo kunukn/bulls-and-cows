@@ -15,7 +15,8 @@ export const useSettings = create<SettingsStore>()(
     (set) => ({
       difficulty: "classic",
       setDifficulty: (difficulty) => set({ difficulty }),
-      isTimerVisible: true,
+      // Off for first-time visitors; a saved choice still wins on rehydrate.
+      isTimerVisible: false,
       setTimerVisible: (isTimerVisible) => set({ isTimerVisible }),
     }),
     { name: "bulls-and-cows:settings" },
