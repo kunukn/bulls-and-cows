@@ -1,5 +1,5 @@
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /*
  * Combines `clsx` (conditional class joining) with `tailwind-merge`
@@ -25,5 +25,5 @@ import { twMerge } from 'tailwind-merge'
  *      <div className={cn('rounded border p-2', className)} />
  */
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }

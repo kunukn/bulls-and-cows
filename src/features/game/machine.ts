@@ -1,4 +1,4 @@
-import { assign, setup } from 'xstate'
+import { assign, setup } from "xstate";
 import {
   cryptoRandomInt,
   DIFFICULTIES,
@@ -8,35 +8,35 @@ import {
   type Difficulty,
   type Feedback,
   type RandomInt,
-} from './logic'
+} from "./logic";
 
-export type Guess = Feedback & { pegs: Color[] }
+export type Guess = Feedback & { pegs: Color[] };
 
 export type GameContext = {
-  difficulty: Difficulty
-  secret: Color[]
-  guesses: Guess[]
-  current: (Color | null)[]
+  difficulty: Difficulty;
+  secret: Color[];
+  guesses: Guess[];
+  current: (Color | null)[];
   /* Epoch ms of the first peg placed; 0 until the player starts. */
-  startedAt: number
-  finishedAt: number
-  randomInt: RandomInt
-}
+  startedAt: number;
+  finishedAt: number;
+  randomInt: RandomInt;
+};
 
 export type GameInput = {
-  difficulty: Difficulty
-  randomInt?: RandomInt
-}
+  difficulty: Difficulty;
+  randomInt?: RandomInt;
+};
 
 export type GameEvent =
-  | { type: 'ADD_PEG'; color: Color }
-  | { type: 'REMOVE_PEG' }
-  | { type: 'CLEAR_SLOT'; index: number }
-  | { type: 'SUBMIT' }
-  | { type: 'NEW_GAME'; difficulty?: Difficulty }
+  | { type: "ADD_PEG"; color: Color }
+  | { type: "REMOVE_PEG" }
+  | { type: "CLEAR_SLOT"; index: number }
+  | { type: "SUBMIT" }
+  | { type: "NEW_GAME"; difficulty?: Difficulty };
 
 function emptyRow(difficulty: Difficulty): null[] {
-  return Array(DIFFICULTIES[difficulty].pegs).fill(null)
+  return Array(DIFFICULTIES[difficulty].pegs).fill(null);
 }
 
 function freshGame(difficulty: Difficulty, randomInt: RandomInt) {
@@ -47,15 +47,15 @@ function freshGame(difficulty: Difficulty, randomInt: RandomInt) {
     current: emptyRow(difficulty),
     startedAt: 0,
     finishedAt: 0,
-  }
+  };
 }
 
 function isComplete(row: (Color | null)[]): row is Color[] {
-  return row.every((peg) => peg !== null)
+  return row.every((peg) => peg !== null);
 }
 
 export function elapsedMs({ startedAt, finishedAt }: GameContext): number {
-  return startedAt === 0 ? 0 : finishedAt - startedAt
+  return startedAt === 0 ? 0 : finishedAt - startedAt;
 }
 
 export const gameMachine = setup({
@@ -76,93 +76,93 @@ export const gameMachine = setup({
   },
   actions: {
     addPeg: assign(({ context, event }) => {
-      if (event.type !== 'ADD_PEG') return {}
+      if (event.type !== "ADD_PEG") return {};
 
-      const index = context.current.indexOf(null)
-      if (index === -1) return {}
+      const index = context.current.indexOf(null);
+      if (index === -1) return {};
 
-      const current = [...context.current]
-      current[index] = event.color
+      const current = [...context.current];
+      current[index] = event.color;
 
       return {
         current,
         startedAt: context.startedAt || Date.now(),
-      }
+      };
     }),
     removePeg: assign(({ context }) => {
-      const index = context.current.findLastIndex((peg) => peg !== null)
-      if (index === -1) return {}
+      const index = context.current.findLastIndex((peg) => peg !== null);
+      if (index === -1) return {};
 
-      const current = [...context.current]
-      current[index] = null
+      const current = [...context.current];
+      current[index] = null;
 
-      return { current }
+      return { current };
     }),
     clearSlot: assign(({ context, event }) => {
-      if (event.type !== 'CLEAR_SLOT') return {}
+      if (event.type !== "CLEAR_SLOT") return {};
 
-      const current = [...context.current]
-      current[event.index] = null
+      const current = [...context.current];
+      current[event.index] = null;
 
-      return { current }
+      return { current };
     }),
     submitGuess: assign(({ context }) => {
-      if (!isComplete(context.current)) return {}
+      if (!isComplete(context.current)) return {};
 
       const guess: Guess = {
         pegs: context.current,
         ...scoreGuess(context.secret, context.current),
-      }
+      };
 
       return {
         guesses: [...context.guesses, guess],
         current: emptyRow(context.difficulty),
-      }
+      };
     }),
     markFinished: assign({ finishedAt: () => Date.now() }),
     resetGame: assign(({ context, event }) => {
       const difficulty =
-        event.type === 'NEW_GAME' && event.difficulty
+        event.type === "NEW_GAME" && event.difficulty
           ? event.difficulty
-          : context.difficulty
+          : context.difficulty;
 
-      return freshGame(difficulty, context.randomInt)
+      return freshGame(difficulty, context.randomInt);
     }),
   },
 }).createMachine({
-  id: 'game',
+  id: "game",
   context: ({ input }) => {
-    const randomInt = input.randomInt ?? cryptoRandomInt
+    const randomInt = input.randomInt ?? cryptoRandomInt;
 
-    return { ...freshGame(input.difficulty, randomInt), randomInt }
+    return { ...freshGame(input.difficulty, randomInt), randomInt };
   },
-  initial: 'playing',
+  initial: "playing",
   on: {
-    NEW_GAME: { target: '.playing', actions: 'resetGame' },
+    NEW_GAME: { target: ".playing", actions: "resetGame" },
   },
   states: {
     playing: {
       on: {
-        ADD_PEG: { actions: 'addPeg' },
-        REMOVE_PEG: { actions: 'removePeg' },
-        CLEAR_SLOT: { actions: 'clearSlot' },
+        ADD_PEG: { actions: "addPeg" },
+        REMOVE_PEG: { actions: "removePeg" },
+        CLEAR_SLOT: { actions: "clearSlot" },
         // Guards read the pre-submit row; first match wins.
         SUBMIT: [
           {
-            guard: 'isWinningGuess',
-            target: 'won',
-            actions: ['submitGuess', 'markFinished'],
+            guard: "isWinningGuess",
+            target: "won",
+            actions: ["submitGuess", "markFinished"],
           },
           {
-            guard: 'isLastGuess',
-            target: 'lost',
-            actions: ['submitGuess', 'markFinished'],
+            guard: "isLastGuess",
+            target: "lost",
+            actions: ["submitGuess", "markFinished"],
           },
-          { guard: 'isRowComplete', actions: 'submitGuess' },
+          { guard: "isRowComplete", actions: "submitGuess" },
         ],
       },
     },
     won: {},
     lost: {},
   },
-})
+});

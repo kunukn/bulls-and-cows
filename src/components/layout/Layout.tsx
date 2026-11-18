@@ -1,14 +1,14 @@
-import { paths } from '@/app/paths'
-import { cn } from '@/utils/cn'
-import { NavLink, Outlet } from 'react-router'
+import { paths } from "@/app/paths";
+import { cn } from "@/utils/cn";
+import { NavLink, Outlet } from "react-router";
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
-    'rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+    "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
     isActive
-      ? 'bg-slate-700 text-white'
-      : 'text-slate-300 hover:bg-slate-800 hover:text-white',
-  )
+      ? "bg-slate-700 text-white"
+      : "text-slate-300 hover:bg-slate-800 hover:text-white",
+  );
 
 export function Layout() {
   return (
@@ -30,5 +30,5 @@ export function Layout() {
         <Outlet />
       </main>
     </div>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import { Layout } from '@/components/layout/Layout'
-import { GameMachineProvider } from '@/features/game/machine-context'
-import { gameRoutes } from '@/features/game/routes'
-import { highScoreRoutes } from '@/features/highscores/routes'
-import { createHashRouter, Navigate } from 'react-router'
-import { paths } from './paths'
+import { Layout } from "@/components/layout/Layout";
+import { GameMachineProvider } from "@/features/game/machine-context";
+import { gameRoutes } from "@/features/game/routes";
+import { highScoreRoutes } from "@/features/highscores/routes";
+import { createHashRouter, Navigate } from "react-router";
+import { paths } from "./paths";
 
 /*
  * Hash router: GitHub Pages has no SPA fallback, so a reload on a path URL
@@ -20,7 +20,7 @@ export const router = createHashRouter([
     children: [
       ...gameRoutes,
       ...highScoreRoutes,
-      { path: '*', element: <Navigate to={paths.play} replace /> },
+      { path: "*", element: <Navigate to={paths.play} replace /> },
     ],
   },
-])
+]);

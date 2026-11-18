@@ -39,7 +39,7 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 
 ## Conventions
 
-- Always run `pnpm format` after edits to keep Prettier-clean (single quotes, semicolons, tailwind class sorting).
+- Always run `pnpm format` after edits to keep Prettier-clean (Prettier defaults — double quotes, semicolons — plus Tailwind class sorting).
 - TypeScript strict mode is on, plus `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`. Don't leave unused symbols.
 - Prefer native HTML elements (radio groups, forms, `<button>`) over hand-rolled widgets.
 - No auto-imports — import React hooks and `react-router` exports explicitly.

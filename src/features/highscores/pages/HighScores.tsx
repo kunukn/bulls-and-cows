@@ -1,24 +1,24 @@
-import { DifficultyPicker } from '@/components/DifficultyPicker'
-import { DIFFICULTY_KEYS, type Difficulty } from '@/features/game/logic'
-import { useSettings } from '@/features/game/store/settings'
-import { formatDate, formatDuration } from '@/utils/format'
-import { useSearchParams } from 'react-router'
-import { useHighScores } from '../store'
+import { DifficultyPicker } from "@/components/DifficultyPicker";
+import { DIFFICULTY_KEYS, type Difficulty } from "@/features/game/logic";
+import { useSettings } from "@/features/game/store/settings";
+import { formatDate, formatDuration } from "@/utils/format";
+import { useSearchParams } from "react-router";
+import { useHighScores } from "../store";
 
 function isDifficulty(value: string | null): value is Difficulty {
-  return DIFFICULTY_KEYS.includes(value as Difficulty)
+  return DIFFICULTY_KEYS.includes(value as Difficulty);
 }
 
 export function HighScores() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const fallback = useSettings((state) => state.difficulty)
-  const param = searchParams.get('difficulty')
-  const difficulty = isDifficulty(param) ? param : fallback
-  const entries = useHighScores((state) => state.scores[difficulty])
-  const clear = useHighScores((state) => state.clear)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const fallback = useSettings((state) => state.difficulty);
+  const param = searchParams.get("difficulty");
+  const difficulty = isDifficulty(param) ? param : fallback;
+  const entries = useHighScores((state) => state.scores[difficulty]);
+  const clear = useHighScores((state) => state.clear);
 
   function handleClear() {
-    if (window.confirm('Delete all high scores for every difficulty?')) clear()
+    if (window.confirm("Delete all high scores for every difficulty?")) clear();
   }
 
   return (
@@ -93,5 +93,5 @@ export function HighScores() {
         Clear all scores
       </button>
     </div>
-  )
+  );
 }

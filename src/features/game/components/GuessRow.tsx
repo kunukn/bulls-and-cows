@@ -1,17 +1,17 @@
-import type { Color } from '@/features/game/logic'
-import type { Guess } from '@/features/game/machine'
-import { cn } from '@/utils/cn'
-import { FeedbackPegs } from './FeedbackPegs'
-import { Peg } from './Peg'
+import type { Color } from "@/features/game/logic";
+import type { Guess } from "@/features/game/machine";
+import { cn } from "@/utils/cn";
+import { FeedbackPegs } from "./FeedbackPegs";
+import { Peg } from "./Peg";
 
 type Props = {
-  rowNumber: number
-  pegs: (Color | null)[]
-  guess?: Guess
-  isActive?: boolean
-  onClearSlot?: (index: number) => void
-  ref?: React.Ref<HTMLLIElement>
-}
+  rowNumber: number;
+  pegs: (Color | null)[];
+  guess?: Guess;
+  isActive?: boolean;
+  onClearSlot?: (index: number) => void;
+  ref?: React.Ref<HTMLLIElement>;
+};
 
 export function GuessRow({
   rowNumber,
@@ -24,10 +24,10 @@ export function GuessRow({
   return (
     <li
       ref={ref}
-      aria-current={isActive ? 'step' : undefined}
+      aria-current={isActive ? "step" : undefined}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-2 py-1',
-        isActive && 'bg-amber-700/60 ring-2 ring-amber-300/70',
+        "flex items-center gap-3 rounded-lg px-2 py-1",
+        isActive && "bg-amber-700/60 ring-2 ring-amber-300/70",
       )}
     >
       <span className="w-5 text-right text-xs text-amber-200/70 tabular-nums">
@@ -60,5 +60,5 @@ export function GuessRow({
         <div aria-hidden className="w-10 shrink-0" />
       )}
     </li>
-  )
+  );
 }

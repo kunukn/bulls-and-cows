@@ -1,28 +1,28 @@
-import { DIFFICULTIES } from '@/features/game/logic'
+import { DIFFICULTIES } from "@/features/game/logic";
 import {
   useGameActorRef,
   useGameSelector,
-} from '@/features/game/machine-context'
-import { useEffect, useRef } from 'react'
-import { GuessRow } from './GuessRow'
-import { Peg } from './Peg'
+} from "@/features/game/machine-context";
+import { useEffect, useRef } from "react";
+import { GuessRow } from "./GuessRow";
+import { Peg } from "./Peg";
 
 export function Board() {
-  const actor = useGameActorRef()
+  const actor = useGameActorRef();
   const { difficulty, guesses, current, secret } = useGameSelector(
     (snapshot) => snapshot.context,
-  )
-  const isPlaying = useGameSelector((snapshot) => snapshot.matches('playing'))
-  const { maxGuesses, pegs } = DIFFICULTIES[difficulty]
-  const activeRowRef = useRef<HTMLLIElement>(null)
+  );
+  const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
+  const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
+  const activeRowRef = useRef<HTMLLIElement>(null);
 
   /* Keep the active row visible on small screens as the board grows. */
   useEffect(() => {
     activeRowRef.current?.scrollIntoView({
-      block: 'nearest',
-      behavior: 'smooth',
-    })
-  }, [guesses.length])
+      block: "nearest",
+      behavior: "smooth",
+    });
+  }, [guesses.length]);
 
   return (
     <section
@@ -30,7 +30,7 @@ export function Board() {
       className="rounded-2xl bg-amber-800 p-3 shadow-lg shadow-black/40"
     >
       <div
-        aria-label={isPlaying ? 'Secret code (hidden)' : 'Secret code'}
+        aria-label={isPlaying ? "Secret code (hidden)" : "Secret code"}
         className="mb-3 flex items-center justify-center gap-2 rounded-lg bg-amber-950/50 py-2"
       >
         {isPlaying
@@ -52,8 +52,8 @@ export function Board() {
       </div>
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {
-          const guess = guesses[index]
-          const isActive = isPlaying && index === guesses.length
+          const guess = guesses[index];
+          const isActive = isPlaying && index === guesses.length;
 
           return (
             <GuessRow
@@ -66,12 +66,12 @@ export function Board() {
               guess={guess}
               isActive={isActive}
               onClearSlot={(slot) =>
-                actor.send({ type: 'CLEAR_SLOT', index: slot })
+                actor.send({ type: "CLEAR_SLOT", index: slot })
               }
             />
-          )
+          );
         })}
       </ol>
     </section>
-  )
+  );
 }
