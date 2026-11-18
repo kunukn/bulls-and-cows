@@ -1,0 +1,60 @@
+{
+  "name": "bulls-and-cows",
+  "version": "0.1.0",
+  "description": "A code-breaking game inspired by Mastermind",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@11.7.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "vite --port 5176",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "node scripts/lint-with-timing.js",
+    "typecheck": "node scripts/tscheck-with-timing.js",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check": "node scripts/pre-push-checks.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx,json,css,md}": "prettier --write"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@xstate/react": "^6.1.0",
+    "clsx": "^2.1.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.1",
+    "tailwind-merge": "^3.7.0",
+    "xstate": "^5.33.4",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.12",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react-swc": "^4.3.3",
+    "@vitest/coverage-v8": "^4.1.12",
+    "husky": "^9.1.7",
+    "jsdom": "^31.0.1",
+    "lint-staged": "^17.6.1",
+    "oxlint": "^1.94.0",
+    "prettier": "^3.10.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
+    "tailwindcss": "^4.3.5",
+    "typescript": "^6.0.3",
+    "vite": "^8.3.8",
+    "vitest": "^4.1.12"
+  }
+}

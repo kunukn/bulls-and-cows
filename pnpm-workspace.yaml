@@ -1,0 +1,6 @@
+# Supply-chain cooldown: only install package versions published >= 1 day ago (minutes).
+minimumReleaseAge: 1440
+
+allowBuilds:
+  '@swc/core': false
+  esbuild: false
