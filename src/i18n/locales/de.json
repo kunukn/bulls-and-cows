@@ -6,7 +6,9 @@
     "settings": "Einstellungen",
     "language": "Sprache",
     "close": "Schließen",
-    "version": "Version"
+    "version": "Version",
+    "showTimer": "Timer anzeigen",
+    "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste."
   },
   "nav": {
     "play": "Spielen",

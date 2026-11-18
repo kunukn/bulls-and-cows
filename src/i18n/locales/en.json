@@ -6,7 +6,9 @@
     "settings": "Settings",
     "language": "Language",
     "close": "Close",
-    "version": "Version"
+    "version": "Version",
+    "showTimer": "Show timer",
+    "showTimerDescription": "The clock still runs for high scores."
   },
   "nav": {
     "play": "Play",

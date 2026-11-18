@@ -8,6 +8,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { useSettings } from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
 import { Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -19,6 +21,8 @@ import { useTranslation } from "react-i18next";
  */
 export function SettingsSheet() {
   const { t } = useTranslation();
+  const isTimerVisible = useSettings((state) => state.isTimerVisible);
+  const setTimerVisible = useSettings((state) => state.setTimerVisible);
 
   return (
     <Sheet>
@@ -53,6 +57,25 @@ export function SettingsSheet() {
               {t("common.language")}
             </label>
             <LanguageSelect id="settings-language" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-timer" className="font-medium">
+                {t("common.showTimer")}
+              </label>
+              <Switch
+                id="settings-timer"
+                checked={isTimerVisible}
+                onCheckedChange={setTimerVisible}
+                aria-describedby="settings-timer-description"
+              />
+            </div>
+            <p
+              id="settings-timer-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.showTimerDescription")}
+            </p>
           </div>
         </div>
 

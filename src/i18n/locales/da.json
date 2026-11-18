@@ -6,7 +6,9 @@
     "settings": "Indstillinger",
     "language": "Sprog",
     "close": "Luk",
-    "version": "Version"
+    "version": "Version",
+    "showTimer": "Vis tid",
+    "showTimerDescription": "Tiden tæller stadig med på toplisten."
   },
   "nav": {
     "play": "Spil",

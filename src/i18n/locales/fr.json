@@ -6,7 +6,9 @@
     "settings": "Réglages",
     "language": "Langue",
     "close": "Fermer",
-    "version": "Version"
+    "version": "Version",
+    "showTimer": "Afficher le chrono",
+    "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores."
   },
   "nav": {
     "play": "Jouer",

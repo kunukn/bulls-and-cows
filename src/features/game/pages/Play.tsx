@@ -21,6 +21,7 @@ export function Play() {
     (snapshot) => snapshot.context.startedAt > 0,
   );
   const setDifficulty = useSettings((state) => state.setDifficulty);
+  const isTimerVisible = useSettings((state) => state.isTimerVisible);
 
   function changeDifficulty(next: Difficulty) {
     if (isPlaying && hasProgress && !window.confirm(t("game.abandonConfirm")))
@@ -85,7 +86,8 @@ export function Play() {
             {t("game.legendCow")}
           </span>
         </span>
-        <Timer />
+        {/* Hidden only while playing; the final time shows once the game ends. */}
+        {(isTimerVisible || !isPlaying) && <Timer />}
       </div>
       <Board />
       {/* Sticky: on short viewports the board scrolls under the controls. */}
