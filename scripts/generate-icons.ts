@@ -9,11 +9,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import {
   BULL_VIEWBOX,
   TILE_COLOR,
-  bullShapesMarkup,
+  bullPathsMarkup,
 } from "../src/components/icons/bullMark.ts";
 
 function tileSvg(cornerRadius: number): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${BULL_VIEWBOX}"><rect width="32" height="32" rx="${cornerRadius}" fill="${TILE_COLOR}"/>${bullShapesMarkup()}</svg>\n`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${BULL_VIEWBOX}"><rect width="32" height="32" rx="${cornerRadius}" fill="${TILE_COLOR}"/>${bullPathsMarkup()}</svg>\n`;
 }
 
 writeFileSync("public/favicon.svg", tileSvg(7));
