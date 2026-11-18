@@ -35,6 +35,8 @@ React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours and the shadc
 - `pnpm test` — Vitest in watch mode
 - `pnpm test:run` — Vitest single run (CI-style)
 - `pnpm test:coverage` — Vitest run with v8 coverage
+- `pnpm e2e` — Playwright E2E tests in `e2e/` (headless Chromium; starts Vite or reuses a running `pnpm dev`)
+- `pnpm e2e:ui` — Playwright UI mode
 
 Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/vitest.setup.ts`). Unit tests live alongside source as `*.test.ts(x)`. Note `pnpm check` runs only typecheck + lint, not tests — run tests separately.
 

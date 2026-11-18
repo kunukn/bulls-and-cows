@@ -17,6 +17,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
+    "e2e": "playwright install chromium && playwright test",
+    "e2e:ui": "playwright install chromium && playwright test --ui",
     "check": "node scripts/pre-push-checks.js",
     "prepare": "husky"
   },
@@ -36,6 +38,7 @@
     "zustand": "^5.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.65.1",
     "@tailwindcss/vite": "^4.3.5",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",

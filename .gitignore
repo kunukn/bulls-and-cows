@@ -161,3 +161,7 @@ vite.config.ts.timestamp-*
 .claude/settings.local.json
 CLAUDE.local.md
 .playwright-mcp/*
+
+# Playwright E2E output
+playwright-report/
+test-results/
