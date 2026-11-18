@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows"
+    "title": "Bulls & Cows",
+    "shortTitle": "B & C"
   },
   "common": {
     "settings": "Indstillinger",
@@ -50,6 +51,22 @@
     "undo": "Fortryd",
     "check": "Tjek",
     "abandonConfirm": "Opgiv det nuværende spil?"
+  },
+  "help": {
+    "button": "Sådan virker det",
+    "description": "Knæk den hemmelige farvekode, før du løber tør for gæt.",
+    "stepsTitle": "Sådan spiller du",
+    "step1": "Tryk på farver for at fylde den tomme række.",
+    "step2": "Tryk på Tjek for at prøve dit gæt.",
+    "step3": "Hver sort pind er en tyr: rigtig farve, rigtig plads.",
+    "step4": "Hver hvid pind er en ko: rigtig farve, forkert plads.",
+    "step5": "De sorte og hvide pinde siger ikke, hvilken plads de hører til. Det er det, der er gåden!",
+    "step6": "Knæk koden, før du løber tør for rækker.",
+    "difficultiesTitle": "Sværhedsgrader",
+    "guesses_one": "{{count}} gæt",
+    "guesses_other": "{{count}} gæt",
+    "repeats": "farver kan gentages",
+    "noRepeats": "ingen farve to gange"
   },
   "result": {
     "won_one": "Knækket på {{count}} gæt · {{time}}",

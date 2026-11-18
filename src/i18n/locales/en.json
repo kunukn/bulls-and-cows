@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows"
+    "title": "Bulls & Cows",
+    "shortTitle": "B & C"
   },
   "common": {
     "settings": "Settings",
@@ -50,6 +51,22 @@
     "undo": "Undo",
     "check": "Check",
     "abandonConfirm": "Abandon the current game?"
+  },
+  "help": {
+    "button": "How it works",
+    "description": "Crack the secret colour code before you run out of guesses.",
+    "stepsTitle": "How to play",
+    "step1": "Tap colours to fill the empty row.",
+    "step2": "Press Check to try your guess.",
+    "step3": "Each black peg is a bull: right colour, right spot.",
+    "step4": "Each white peg is a cow: right colour, wrong spot.",
+    "step5": "The black and white pegs don't say which spot they mean. That's the puzzle!",
+    "step6": "Crack the code before you run out of rows.",
+    "difficultiesTitle": "Difficulties",
+    "guesses_one": "{{count}} guess",
+    "guesses_other": "{{count}} guesses",
+    "repeats": "colours can repeat",
+    "noRepeats": "no colour twice"
   },
   "result": {
     "won_one": "Cracked in {{count}} guess · {{time}}",

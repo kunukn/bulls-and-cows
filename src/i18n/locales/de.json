@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows"
+    "title": "Bulls & Cows",
+    "shortTitle": "B & C"
   },
   "common": {
     "settings": "Einstellungen",
@@ -50,6 +51,22 @@
     "undo": "Zurück",
     "check": "Prüfen",
     "abandonConfirm": "Aktuelles Spiel abbrechen?"
+  },
+  "help": {
+    "button": "So funktioniert's",
+    "description": "Knack den geheimen Farbcode, bevor deine Versuche aufgebraucht sind.",
+    "stepsTitle": "So spielst du",
+    "step1": "Tippe auf Farben, um die leere Reihe zu füllen.",
+    "step2": "Drück auf Prüfen, um deinen Tipp abzugeben.",
+    "step3": "Jeder schwarze Stift ist ein Stier: richtige Farbe, richtige Stelle.",
+    "step4": "Jeder weiße Stift ist eine Kuh: richtige Farbe, falsche Stelle.",
+    "step5": "Die schwarzen und weißen Stifte verraten nicht, welche Stelle sie meinen. Das ist das Rätsel!",
+    "step6": "Knack den Code, bevor dir die Reihen ausgehen.",
+    "difficultiesTitle": "Schwierigkeit",
+    "guesses_one": "{{count}} Versuch",
+    "guesses_other": "{{count}} Versuche",
+    "repeats": "Farben dürfen doppelt vorkommen",
+    "noRepeats": "keine Farbe doppelt"
   },
   "result": {
     "won_one": "Geknackt mit {{count}} Versuch · {{time}}",

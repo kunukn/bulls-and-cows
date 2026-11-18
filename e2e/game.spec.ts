@@ -20,3 +20,16 @@ test("starts a game and scores the first guess", async ({ page }) => {
     page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
   ).toBeAttached();
 });
+
+test("explains the rules from the How it works button", async ({ page }) => {
+  await page.goto("/");
+
+  await page.getByRole("button", { name: "How it works" }).click();
+
+  const help = page.getByRole("dialog");
+  await expect(help.getByText("How to play")).toBeVisible();
+  await expect(help.getByText("Difficulties")).toBeVisible();
+
+  await page.keyboard.press("Escape");
+  await expect(help).toBeHidden();
+});

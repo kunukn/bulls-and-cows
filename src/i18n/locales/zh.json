@@ -1,6 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows"
+    "title": "Bulls & Cows",
+    "shortTitle": "B & C"
   },
   "common": {
     "settings": "设置",
@@ -48,6 +49,21 @@
     "undo": "撤销",
     "check": "检查",
     "abandonConfirm": "放弃当前这一局？"
+  },
+  "help": {
+    "button": "玩法说明",
+    "description": "在机会用完之前，破解秘密颜色密码。",
+    "stepsTitle": "怎么玩",
+    "step1": "点颜色，填满空着的那一行。",
+    "step2": "按“检查”提交你的猜测。",
+    "step3": "每个黑色小钉是一头公牛：颜色对，位置也对。",
+    "step4": "每个白色小钉是一头母牛：颜色对，位置不对。",
+    "step5": "黑白小钉不会告诉你是哪个位置。这就是谜题！",
+    "step6": "在行数用完之前破解密码。",
+    "difficultiesTitle": "难度",
+    "guesses_other": "{{count}} 次机会",
+    "repeats": "颜色可以重复",
+    "noRepeats": "颜色不重复"
   },
   "result": {
     "won_other": "{{count}} 次就破解了 · {{time}}",
