@@ -19,7 +19,10 @@
       "gunmetal": "Metal",
       "neon": "Neon"
     },
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "sourceCode": "Source code",
+    "reportIssue": "Report a problem",
+    "opensInNewTab": "(opens in a new tab)"
   },
   "nav": {
     "play": "Play",

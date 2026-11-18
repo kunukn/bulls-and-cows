@@ -12,8 +12,11 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useSettings } from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
-import { Settings } from "lucide-react";
+import { GitHubIcon } from "@/components/icons/GitHubIcon";
+import { Bug, Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
+
+const REPO_URL = "https://github.com/kunukn/bulls-and-cows";
 
 /*
  * App settings in a side drawer (shadcn Sheet), modelled on
@@ -28,6 +31,11 @@ export function SettingsSheet() {
   const setMinimalText = useSettings((state) => state.setMinimalText);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
+  const appVersion = import.meta.env.VITE_APP_VERSION;
+  // Prefill the build so every report says which version it came from.
+  const issueUrl = `${REPO_URL}/issues/new?${new URLSearchParams({
+    body: `${t("common.version")}: ${appVersion}\n\n`,
+  })}`;
 
   return (
     <Sheet>
@@ -109,10 +117,30 @@ export function SettingsSheet() {
           />
         </div>
 
-        <SheetFooter className="items-end">
-          <p className="text-xs leading-none text-muted-foreground">
-            {t("common.version")}: {import.meta.env.VITE_APP_VERSION}
+        <SheetFooter className="items-end gap-3 text-xs text-muted-foreground">
+          <p className="leading-none">
+            {t("common.version")}: {appVersion}
           </p>
+          <a
+            href={REPO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-foreground"
+          >
+            <GitHubIcon className="size-4" />
+            {t("common.sourceCode")}
+            <span className="sr-only">{t("common.opensInNewTab")}</span>
+          </a>
+          <a
+            href={issueUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 hover:text-foreground"
+          >
+            <Bug className="size-4" aria-hidden="true" />
+            {t("common.reportIssue")}
+            <span className="sr-only">{t("common.opensInNewTab")}</span>
+          </a>
         </SheetFooter>
       </SheetContent>
     </Sheet>

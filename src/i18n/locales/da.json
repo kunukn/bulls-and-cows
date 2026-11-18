@@ -19,7 +19,10 @@
       "gunmetal": "Metal",
       "neon": "Neon"
     },
-    "cancel": "Annuller"
+    "cancel": "Annuller",
+    "sourceCode": "Kildekode",
+    "reportIssue": "Meld en fejl",
+    "opensInNewTab": "(åbner i en ny fane)"
   },
   "nav": {
     "play": "Spil",

@@ -19,7 +19,10 @@
       "gunmetal": "Metall",
       "neon": "Neon"
     },
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "sourceCode": "Quellcode",
+    "reportIssue": "Problem melden",
+    "opensInNewTab": "(öffnet in neuem Tab)"
   },
   "nav": {
     "play": "Spielen",
