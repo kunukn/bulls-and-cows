@@ -29,8 +29,9 @@ React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours are `@theme` 
 
 - `pnpm dev` — Vite dev server
 - `pnpm build` — typechecks (`tsc -b`) then Vite production build
-- `pnpm format` — Prettier write
-- `pnpm format:check` — Prettier check (CI-style)
+- `pnpm format` — Oxfmt write (whole repo)
+- `pnpm format:check` — Oxfmt check (CI-style)
+- `pnpm lint` — Oxlint (whole repo)
 - `pnpm test` — Vitest in watch mode
 - `pnpm test:run` — Vitest single run (CI-style)
 - `pnpm test:coverage` — Vitest run with v8 coverage
@@ -39,7 +40,8 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 
 ## Conventions
 
-- Always run `pnpm format` after edits to keep Prettier-clean (Prettier defaults — double quotes, semicolons — plus Tailwind class sorting).
+- Always run `pnpm format` after edits. Oxfmt ([`oxfmt.config.mts`](../oxfmt.config.mts)) uses Prettier-compatible defaults — double quotes, semicolons, 80 columns — and sorts Tailwind classes, including inside `cn()`/`clsx()`.
+- Oxlint ([`oxlint.config.mts`](../oxlint.config.mts)) has no warnings: every rule is an error. It also flags unknown Tailwind classes (`better-tailwindcss/no-unknown-classes`). No default exports (config files excepted) and no `Array#forEach` — use `for…of`.
 - TypeScript strict mode is on, plus `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`. Don't leave unused symbols.
 - Prefer native HTML elements (radio groups, forms, `<button>`) over hand-rolled widgets.
 - No auto-imports — import React hooks and `react-router` exports explicitly.
@@ -88,7 +90,7 @@ type UserProfile = {
   email: string;
 };
 
-type UserPreferences = Pick<UserProfile, 'id' | 'name'>;
+type UserPreferences = Pick<UserProfile, "id" | "name">;
 ```
 
 ### Naming Conventions
@@ -114,10 +116,10 @@ type UserPreferences = Pick<UserProfile, 'id' | 'name'>;
 
 ```typescript
 // ✅ Correct
-import { useNavigate, Link } from 'react-router';
+import { useNavigate, Link } from "react-router";
 
 // ❌ Wrong
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from "react-router-dom";
 ```
 
 ### Early Return Spacing

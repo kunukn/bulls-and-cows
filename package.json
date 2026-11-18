@@ -1,31 +1,24 @@
 {
   "name": "bulls-and-cows",
   "version": "0.1.0",
-  "description": "A code-breaking game inspired by Mastermind",
-  "type": "module",
   "private": true,
-  "packageManager": "pnpm@11.7.0",
-  "engines": {
-    "node": ">=24"
-  },
+  "description": "A code-breaking game inspired by Mastermind",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite --port 5176",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint": "node scripts/lint-with-timing.js",
     "typecheck": "node scripts/tscheck-with-timing.js",
-    "format": "prettier --write ./src",
-    "format:check": "prettier --check ./src",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "check": "node scripts/pre-push-checks.js",
     "prepare": "husky"
   },
-  "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx,json,css,md}": "prettier --write"
-  },
-  "license": "MIT",
   "dependencies": {
     "@xstate/react": "^6.1.0",
     "clsx": "^2.1.1",
@@ -46,15 +39,22 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react-swc": "^4.3.3",
     "@vitest/coverage-v8": "^4.1.12",
+    "eslint-plugin-better-tailwindcss": "4.11.0",
     "husky": "^9.1.7",
     "jsdom": "^31.0.1",
     "lint-staged": "^17.6.1",
-    "oxlint": "^1.94.0",
-    "prettier": "^3.10.1",
-    "prettier-plugin-tailwindcss": "^0.8.1",
+    "oxfmt": "0.79.0",
+    "oxlint": "1.94.0",
     "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3",
     "vite": "^8.3.8",
     "vitest": "^4.1.12"
-  }
+  },
+  "lint-staged": {
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@11.7.0"
 }

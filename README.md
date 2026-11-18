@@ -10,7 +10,8 @@ colour, wrong spot).
 pnpm install
 pnpm dev        # http://localhost:5176
 pnpm test       # Vitest watch
-pnpm check      # typecheck + lint
+pnpm check      # typecheck + lint (oxlint)
+pnpm format     # oxfmt, whole repo
 pnpm build
 ```
 
