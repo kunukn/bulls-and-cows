@@ -55,7 +55,7 @@ export function Board() {
                   aria-hidden
                   className={cn(
                     PEG_SIZE,
-                    "grid place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400",
+                    "grid place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400 shadow-[inset_0_-2px_3px_rgb(0_0_0/0.25)]",
                   )}
                 >
                   ?
