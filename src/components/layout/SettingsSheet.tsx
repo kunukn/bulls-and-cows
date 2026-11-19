@@ -30,6 +30,8 @@ export function SettingsSheet() {
   const setTimerVisible = useSettings((state) => state.setTimerVisible);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const setMinimalText = useSettings((state) => state.setMinimalText);
+  const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
+  const setAutoSubmit = useSettings((state) => state.setAutoSubmit);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
   // Slide in from the inline end, the side the settings button sits on.
@@ -111,6 +113,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.minimalTextDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-auto-submit" className="font-medium">
+                {t("common.autoSubmit")}
+              </label>
+              <Switch
+                id="settings-auto-submit"
+                checked={isAutoSubmit}
+                onCheckedChange={setAutoSubmit}
+                aria-describedby="settings-auto-submit-description"
+              />
+            </div>
+            <p
+              id="settings-auto-submit-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.autoSubmitDescription")}
             </p>
           </div>
           <BoardThemePicker

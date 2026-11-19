@@ -12,6 +12,8 @@
     "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores.",
     "minimalText": "Moins de texte",
     "minimalTextDescription": "Des icônes à la place des mots. Le bouton ? explique toujours les règles.",
+    "autoSubmit": "Vérification auto",
+    "autoSubmitDescription": "Vérifie ton essai dès que le dernier pion est posé.",
     "boardTheme": "Plateau",
     "boardThemes": {
       "wood": "Bois",

@@ -12,6 +12,8 @@
     "showTimerDescription": "الساعة تبقى تعمل من أجل أفضل النتائج.",
     "minimalText": "نص أقل",
     "minimalTextDescription": "أيقونات بدل الكلمات. زر ? يشرح القواعد دائمًا.",
+    "autoSubmit": "تحقق تلقائي",
+    "autoSubmitDescription": "يتحقق من تخمينك فور وضع آخر وتد.",
     "boardTheme": "اللوحة",
     "boardThemes": {
       "wood": "خشب",

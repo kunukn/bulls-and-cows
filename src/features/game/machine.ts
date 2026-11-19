@@ -1,4 +1,4 @@
-import { assign, emit, setup } from "xstate";
+import { assign, emit, enqueueActions, raise, setup } from "xstate";
 import {
   cryptoRandomInt,
   DIFFICULTIES,
@@ -29,15 +29,20 @@ export type GameInput = {
 };
 
 export type GameEvent =
-  | { type: "ADD_PEG"; color: Color }
+  /* `isAutoSubmit`: check the guess once this peg completes the row. */
+  | { type: "ADD_PEG"; color: Color; isAutoSubmit?: boolean }
   | { type: "REMOVE_PEG" }
   | { type: "CLEAR_SLOT"; index: number }
   | { type: "SUBMIT" }
+  | { type: "AUTO_SUBMIT" }
   | { type: "GIVE_UP" }
   | { type: "NEW_GAME"; difficulty?: Difficulty };
 
 /* Side-channel notices for the UI; they don't change game state. */
 export type GameEmitted = { type: "rowIncomplete" };
+
+/* Lets the last peg's insert animation land before the row is checked. */
+export const AUTO_SUBMIT_DELAY_MS = 250;
 
 function emptyRow(difficulty: Difficulty): null[] {
   return Array(DIFFICULTIES[difficulty].pegs).fill(null);
@@ -148,7 +153,28 @@ export const gameMachine = setup({
   states: {
     playing: {
       on: {
-        ADD_PEG: { actions: "addPeg" },
+        ADD_PEG: {
+          actions: [
+            "addPeg",
+            // Runs after addPeg, so `context.current` already holds the new peg.
+            enqueueActions(({ context, event, enqueue }) => {
+              if (!event.isAutoSubmit || !isComplete(context.current)) return;
+
+              enqueue.raise(
+                { type: "AUTO_SUBMIT" },
+                { delay: AUTO_SUBMIT_DELAY_MS },
+              );
+            }),
+          ],
+        },
+        /*
+         * Re-checked when it fires: an undo during the delay leaves the row
+         * incomplete, so nothing is submitted and the row doesn't shake.
+         */
+        AUTO_SUBMIT: {
+          guard: "isRowComplete",
+          actions: raise({ type: "SUBMIT" }),
+        },
         REMOVE_PEG: { actions: "removePeg" },
         CLEAR_SLOT: { actions: "clearSlot" },
         // Guards read the pre-submit row; first match wins.

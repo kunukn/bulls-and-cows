@@ -12,6 +12,8 @@
     "showTimerDescription": "The clock still runs for high scores.",
     "minimalText": "Minimal text",
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
+    "autoSubmit": "Auto check",
+    "autoSubmitDescription": "Checks your guess as soon as the last peg is in.",
     "boardTheme": "Board",
     "boardThemes": {
       "wood": "Wood",

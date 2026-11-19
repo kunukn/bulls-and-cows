@@ -14,6 +14,9 @@ type SettingsStore = {
   /* Icons instead of words; hidden text stays in aria-label / title. */
   isMinimalText: boolean;
   setMinimalText: (isMinimalText: boolean) => void;
+  /* Check the guess as soon as the last peg is placed. */
+  isAutoSubmit: boolean;
+  setAutoSubmit: (isAutoSubmit: boolean) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -28,6 +31,8 @@ export const useSettings = create<SettingsStore>()(
       setTimerVisible: (isTimerVisible) => set({ isTimerVisible }),
       isMinimalText: false,
       setMinimalText: (isMinimalText) => set({ isMinimalText }),
+      isAutoSubmit: false,
+      setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
     }),
     { name: "bulls-and-cows:settings" },
   ),

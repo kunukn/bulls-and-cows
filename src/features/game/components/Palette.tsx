@@ -40,7 +40,13 @@ export function Palette() {
             key={color}
             type="button"
             disabled={isRowFull}
-            onClick={() => actor.send({ type: "ADD_PEG", color })}
+            onClick={() =>
+              actor.send({
+                type: "ADD_PEG",
+                color,
+                isAutoSubmit: useSettings.getState().isAutoSubmit,
+              })
+            }
             aria-label={t("game.addColor", {
               color: t(`colors.${color}`),
               key: index + 1,

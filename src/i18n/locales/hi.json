@@ -12,6 +12,8 @@
     "showTimerDescription": "हाई स्कोर के लिए घड़ी फिर भी चलती रहती है।",
     "minimalText": "कम शब्द",
     "minimalTextDescription": "शब्दों की जगह आइकन। ? बटन फिर भी नियम समझाता है।",
+    "autoSubmit": "अपने-आप जाँचो",
+    "autoSubmitDescription": "आख़िरी खूँटी लगते ही अंदाज़ा जाँच लिया जाता है।",
     "boardTheme": "बोर्ड",
     "boardThemes": {
       "wood": "लकड़ी",

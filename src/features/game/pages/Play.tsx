@@ -66,7 +66,11 @@ export function Play() {
       const digit = Number(event.key);
 
       if (digit >= 1 && digit <= palette.length) {
-        actor.send({ type: "ADD_PEG", color: palette[digit - 1] });
+        actor.send({
+          type: "ADD_PEG",
+          color: palette[digit - 1],
+          isAutoSubmit: useSettings.getState().isAutoSubmit,
+        });
       } else if (event.key === "Backspace") {
         event.preventDefault();
         actor.send({ type: "REMOVE_PEG" });

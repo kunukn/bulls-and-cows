@@ -1,6 +1,6 @@
 import { createActor } from "xstate";
 import type { Color } from "./logic";
-import { gameMachine } from "./machine";
+import { AUTO_SUBMIT_DELAY_MS, gameMachine } from "./machine";
 
 /* RNG always returning 0 → classic secret is red×4, easy is red/blue/green/yellow. */
 function startGame(difficulty: "easy" | "classic" | "hard" = "classic") {
@@ -47,6 +47,57 @@ describe("gameMachine", () => {
 
     guess(actor, ["blue", "blue", "blue"]);
     expect(onRowIncomplete).toHaveBeenCalledTimes(1);
+  });
+
+  describe("auto submit", () => {
+    beforeEach(() => vi.useFakeTimers());
+    afterEach(() => vi.useRealTimers());
+
+    function addPegs(actor: ReturnType<typeof startGame>, colors: Color[]) {
+      for (const color of colors) {
+        actor.send({ type: "ADD_PEG", color, isAutoSubmit: true });
+      }
+    }
+
+    it("does nothing when the flag is off", () => {
+      const actor = startGame();
+      guessPegs(actor, ["blue", "blue", "blue", "blue"]);
+      vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS);
+
+      expect(actor.getSnapshot().context.guesses).toHaveLength(0);
+    });
+
+    it("checks a full row after the delay", () => {
+      const actor = startGame();
+      addPegs(actor, ["blue", "blue", "blue", "blue"]);
+
+      vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS - 1);
+      expect(actor.getSnapshot().context.guesses).toHaveLength(0);
+
+      vi.advanceTimersByTime(1);
+      expect(actor.getSnapshot().context.guesses).toHaveLength(1);
+    });
+
+    it("skips the check, without a shake, if a peg is removed in time", () => {
+      const actor = startGame();
+      const onRowIncomplete = vi.fn<() => void>();
+      actor.on("rowIncomplete", onRowIncomplete);
+
+      addPegs(actor, ["blue", "blue", "blue", "blue"]);
+      actor.send({ type: "REMOVE_PEG" });
+      vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS);
+
+      expect(actor.getSnapshot().context.guesses).toHaveLength(0);
+      expect(onRowIncomplete).not.toHaveBeenCalled();
+    });
+
+    it("wins when the auto-checked row cracks the code", () => {
+      const actor = startGame();
+      addPegs(actor, ["red", "red", "red", "red"]);
+      vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS);
+
+      expect(actor.getSnapshot().value).toBe("won");
+    });
   });
 
   it("edits the current row", () => {

@@ -12,6 +12,8 @@
     "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste.",
     "minimalText": "Weniger Text",
     "minimalTextDescription": "Symbole statt Wörter. Der ?-Knopf erklärt weiter die Regeln.",
+    "autoSubmit": "Automatisch prüfen",
+    "autoSubmitDescription": "Prüft deinen Tipp, sobald der letzte Stift drin ist.",
     "boardTheme": "Spielbrett",
     "boardThemes": {
       "wood": "Holz",

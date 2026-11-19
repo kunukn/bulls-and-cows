@@ -12,6 +12,8 @@
     "showTimerDescription": "Tiden tæller stadig med på toplisten.",
     "minimalText": "Mindre tekst",
     "minimalTextDescription": "Ikoner i stedet for ord. Knappen ? forklarer stadig reglerne.",
+    "autoSubmit": "Tjek automatisk",
+    "autoSubmitDescription": "Tjekker dit gæt, så snart den sidste pind er sat.",
     "boardTheme": "Spillebræt",
     "boardThemes": {
       "wood": "Træ",
