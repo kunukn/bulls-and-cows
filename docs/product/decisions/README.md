@@ -12,6 +12,7 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0004](0004-offline-play.md)          | The game works offline and updates silently                | Accepted                   |
 | [0005](0005-colour-shapes.md)         | Colours can carry a shape too                              | Accepted                   |
 | [0006](0006-sound-on-by-default.md)   | Sound effects are on by default                            | Accepted                   |
+| [0007](0007-choose-peg-order.md)      | Players choose which hole a peg goes into                  | Accepted                   |
 
 ## Template
 
