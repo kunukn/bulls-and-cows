@@ -18,6 +18,8 @@
     "soundDescription": "نقرات عند وضع الأوتاد، ولحن قصير عند الفوز أو الخسارة.",
     "pinkBull": "ثيران وردية",
     "pinkBullDescription": "اعرض الأوتاد في المكان الصحيح باللون الوردي بدل الأسود.",
+    "pegShapes": "أشكال الألوان",
+    "pegShapesDescription": "لكل لون شكل خاص به، لتميّز الألوان بسهولة أكبر.",
     "boardTheme": "اللوحة",
     "boardThemes": {
       "wood": "خشب",

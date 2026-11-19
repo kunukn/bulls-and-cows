@@ -18,6 +18,8 @@
     "soundDescription": "Des clics pour les pions, et un air quand tu gagnes ou perds.",
     "pinkBull": "Taureaux roses",
     "pinkBullDescription": "Affiche les pions bien placés en rose plutôt qu’en noir.",
+    "pegShapes": "Formes des couleurs",
+    "pegShapesDescription": "Chaque couleur a sa propre forme, pour mieux les reconnaître.",
     "boardTheme": "Plateau",
     "boardThemes": {
       "wood": "Bois",

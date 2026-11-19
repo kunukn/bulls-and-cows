@@ -36,6 +36,8 @@ export function SettingsSheet() {
   const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
   const isPinkBull = useSettings((state) => state.isPinkBull);
   const setPinkBull = useSettings((state) => state.setPinkBull);
+  const isPegShapes = useSettings((state) => state.isPegShapes);
+  const setPegShapes = useSettings((state) => state.setPegShapes);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
   // Slide in from the inline end, the side the settings button sits on.
@@ -175,6 +177,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.pinkBullDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-peg-shapes" className="font-medium">
+                {t("common.pegShapes")}
+              </label>
+              <Switch
+                id="settings-peg-shapes"
+                checked={isPegShapes}
+                onCheckedChange={setPegShapes}
+                aria-describedby="settings-peg-shapes-description"
+              />
+            </div>
+            <p
+              id="settings-peg-shapes-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.pegShapesDescription")}
             </p>
           </div>
           <BoardThemePicker

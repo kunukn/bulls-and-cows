@@ -8,6 +8,7 @@ import { cn } from "@/utils/cn";
 import { CornerDownLeft, Delete } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { PEG_CLASS } from "./Peg";
+import { PegShape } from "./PegShape";
 
 const actionButtonClass =
   "flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-40";
@@ -21,6 +22,7 @@ export function Palette() {
   const isRowEmpty = current.every((peg) => peg === null);
   const palette = paletteFor(difficulty);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const isPegShapes = useSettings((state) => state.isPegShapes);
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
 
@@ -56,9 +58,22 @@ export function Palette() {
               "relative grid aspect-square w-full place-items-center rounded-full shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40",
             )}
           >
-            <span aria-hidden className="text-xs font-bold text-black/50">
-              {index + 1}
-            </span>
+            {isPegShapes ? (
+              <>
+                <PegShape color={color} className="size-3/5" />
+                {/* Digit moves to a corner badge; it is the keyboard shortcut. */}
+                <span
+                  aria-hidden
+                  className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-[0.625rem] font-bold text-slate-200 ring-1 ring-slate-600"
+                >
+                  {index + 1}
+                </span>
+              </>
+            ) : (
+              <span aria-hidden className="text-xs font-bold text-black/50">
+                {index + 1}
+              </span>
+            )}
           </button>
         ))}
       </div>

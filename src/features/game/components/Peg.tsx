@@ -1,5 +1,7 @@
 import { COLORS, type Color } from "@/features/game/logic";
+import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
+import { PegShape } from "./PegShape";
 import { PEG_SIZE } from "./rowLayout";
 
 /* Insert animations (keyframes in index.css); literal for Tailwind's scanner. */
@@ -59,18 +61,22 @@ type Props = {
 };
 
 export function Peg({ color, className, style }: Props) {
+  const isPegShapes = useSettings((state) => state.isPegShapes);
+
   return (
     <span
       aria-hidden
       style={style}
       className={cn(
         PEG_SIZE,
-        "block rounded-full",
+        "grid place-items-center rounded-full",
         color
           ? cn(PEG_CLASS[color], "shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)]")
           : "bg-board-hole shadow-[inset_0_2px_4px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
         className,
       )}
-    />
+    >
+      {color && isPegShapes && <PegShape color={color} className="size-3/5" />}
+    </span>
   );
 }

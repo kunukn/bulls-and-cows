@@ -23,6 +23,9 @@ type SettingsStore = {
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
+  /* A shape on each colour peg, for players who find colours hard to tell apart. */
+  isPegShapes: boolean;
+  setPegShapes: (isPegShapes: boolean) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -43,6 +46,8 @@ export const useSettings = create<SettingsStore>()(
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
+      isPegShapes: false,
+      setPegShapes: (isPegShapes) => set({ isPegShapes }),
     }),
     { name: "bulls-and-cows:settings" },
   ),

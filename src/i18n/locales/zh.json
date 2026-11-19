@@ -18,6 +18,8 @@
     "soundDescription": "放颜色时有咔嗒声，赢了或输了会有一段小曲。",
     "pinkBull": "粉色公牛",
     "pinkBullDescription": "位置正确的提示钉显示为粉色，而不是黑色。",
+    "pegShapes": "颜色形状",
+    "pegShapesDescription": "每种颜色都有自己的形状，更容易分清颜色。",
     "boardTheme": "棋盘",
     "boardThemes": {
       "wood": "木纹",

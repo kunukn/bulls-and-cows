@@ -18,6 +18,8 @@
     "soundDescription": "Klik for pindene og en lille melodi, når du vinder eller taber.",
     "pinkBull": "Lyserøde tyre",
     "pinkBullDescription": "Vis pinde på rigtig plads i lyserød i stedet for sort.",
+    "pegShapes": "Farveformer",
+    "pegShapesDescription": "Hver farve får sin egen form, så farverne er lettere at kende fra hinanden.",
     "boardTheme": "Spillebræt",
     "boardThemes": {
       "wood": "Træ",

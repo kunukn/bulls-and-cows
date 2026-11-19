@@ -18,6 +18,8 @@
     "soundDescription": "Klicks für die Stifte und eine Melodie, wenn du gewinnst oder verlierst.",
     "pinkBull": "Pinke Bullen",
     "pinkBullDescription": "Zeigt Stifte an der richtigen Stelle pink statt schwarz.",
+    "pegShapes": "Farbformen",
+    "pegShapesDescription": "Jede Farbe bekommt ihre eigene Form, so kannst du die Farben leichter unterscheiden.",
     "boardTheme": "Spielbrett",
     "boardThemes": {
       "wood": "Holz",
