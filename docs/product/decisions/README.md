@@ -1,0 +1,34 @@
+# Product Decision Records
+
+Why the product rules are what they are, including the options that were tried and rejected, so a settled question isn't reopened without new information.
+
+Records are append-only. To change a decision, add a new record and mark the old one `Superseded by NNNN`.
+
+| #                                     | Decision                        | Status   |
+| ------------------------------------- | ------------------------------- | -------- |
+| [0001](0001-physical-board-motion.md) | Motion follows a physical board | Accepted |
+
+## Template
+
+```markdown
+# NNNN — <decision in a few words>
+
+- **Status:** Proposed | Accepted | Superseded by NNNN
+- **Date:** YYYY-MM-DD
+
+## Context
+
+What problem or observation prompted this. Who is affected.
+
+## Decision
+
+The rule, in one or two sentences.
+
+## Alternatives considered
+
+What else was tried or proposed, and why it lost.
+
+## Consequences
+
+What this makes easier or harder; what guards it (tests, helpers).
+```

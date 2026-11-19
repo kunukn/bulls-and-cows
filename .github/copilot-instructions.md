@@ -48,6 +48,7 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 - TypeScript strict mode is on, plus `noUnusedLocals`, `noUnusedParameters`, `noFallthroughCasesInSwitch`. Don't leave unused symbols.
 - **UI components:** use a native HTML element when it does the job (radio groups, forms, `<button>`). For anything richer — drawers (`sheet`), popovers, dialogs, menus, switches — use the shadcn/ui component in `src/components/ui/`; add new ones with `pnpm dlx shadcn@latest add <name>`, then run `pnpm format` and `pnpm check`. Don't hand-roll a widget that one of those already covers.
 - No auto-imports — import React hooks and `react-router` exports explicitly.
+- **Product decisions** live in [`docs/product/decisions/`](../docs/product/decisions/README.md). Read them before changing animations or game feel; add a record when settling a new product rule.
 - **Playwright/browser screenshots go in `.temp/`** — never write screenshots (or other scratch artifacts) to the repo root. The `.temp/` folder is gitignored. When using a browser MCP tool, pass an explicit filename targeting `.temp/`, e.g. `.temp/intro.png`.
 
 ## Translations (i18n)
