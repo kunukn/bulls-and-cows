@@ -23,7 +23,7 @@ pegs don't say which spot they mean — that's the puzzle.
 
 - 🏆 **High scores** — top 10 per difficulty, ranked by fewest guesses, then
   fastest time. Stored locally in your browser.
-- 🌍 **Five languages** — English, 简体中文, Français, Deutsch, Dansk.
+- 🌍 **Seven languages** — English, 简体中文, हिन्दी, العربية (right-to-left), Français, Deutsch, Dansk.
 - ⌨️ **Keyboard support** — `1`–`8` add a colour, `Backspace` undoes, `Enter`
   checks the row.
 

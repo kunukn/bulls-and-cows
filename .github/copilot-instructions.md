@@ -54,13 +54,23 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 
 All user-facing text — including `aria-label`, `title`, `placeholder` and `confirm()` messages — goes through `t()` from `react-i18next`. No hard-coded English in components.
 
-- Languages: English (`en`, the source), Simplified Chinese (`zh`), French (`fr`), German (`de`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`. All five are bundled (no lazy loading).
-- **Add a key to all five files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
-- Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`. Interpolate with `{{name}}`.
+- Languages: English (`en`, the source), Simplified Chinese (`zh`), Hindi (`hi`), Arabic (`ar`), French (`fr`), German (`de`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`. All seven are bundled (no lazy loading).
+- **Add a key to all seven files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
+- Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`; Arabic needs all six (`_zero`, `_one`, `_two`, `_few`, `_many`, `_other`). Interpolate with `{{name}}`.
 - Format numbers and dates with `Intl` in the active language (`i18n.language`), not a fixed locale.
 - The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`bulls-and-cows:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
 - **New settings go in the Settings drawer**, one stacked section each (label + control), below Language. Labels and descriptions are translated like any other text.
 - Tone rules for the locale files: [`.github/instructions/translation.instructions.md`](instructions/translation.instructions.md).
+
+## RTL (right-to-left)
+
+Arabic renders right-to-left. `getDirection()` in `src/i18n/languages.ts` sets `<html dir>` (via `src/i18n/index.ts`) and Radix's `Direction.Provider` (in `src/app/App.tsx`). Layout must mirror without per-language code:
+
+- Use logical Tailwind utilities: `ms-*`/`me-*`, `ps-*`/`pe-*`, `start-*`/`end-*`, `text-start`/`text-end`, `rounded-s-*`/`rounded-e-*`, `border-s-*`/`border-e-*` — never the `l`/`r`/`left`/`right` forms. `top`/`bottom` and `mt-*`/`mb-*` are fine.
+- In plain CSS use `margin-inline-*`, `padding-inline-*`, `inset-inline-*`, `text-align: start | end`.
+- A horizontal `translate-x-*` doesn't flip: pair it with an `rtl:` counterpart (see the thumb in `src/components/ui/switch.tsx`).
+- Directional icons (arrows, chevrons pointing back/forward) need `rtl:-scale-x-100`.
+- The guess row mirrors on purpose: slot 1 sits at the reading start in both directions.
 
 ## Git workflow
 
@@ -260,7 +270,8 @@ chore!: drop support for Node 18
 
 - ✅ Import from `react-router` (NOT `react-router-dom`)
 - ✅ Native HTML first, then `src/components/ui` (shadcn/ui) — no hand-rolled widgets
-- ✅ All user-facing text via `t()`; add new keys to all five locale files
+- ✅ All user-facing text via `t()`; add new keys to all seven locale files
+- ✅ Logical (`ms`/`me`/`start`/`end`) Tailwind utilities, not `ml`/`mr`/`left`/`right` (RTL)
 - ✅ Use `type` not `interface`
 - ✅ Use Zustand or XState for state — don't introduce a third pattern
 - ✅ Follow Conventional Commits for commit messages
