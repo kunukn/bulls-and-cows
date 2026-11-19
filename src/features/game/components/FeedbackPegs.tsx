@@ -22,8 +22,8 @@ type Props = Partial<Feedback> & {
   className?: string;
 };
 
-const FEEDBACK_STAGGER_MS = 70;
-const FEEDBACK_POP_MS = 160;
+export const FEEDBACK_STAGGER_MS = 70;
+export const FEEDBACK_POP_MS = 160;
 
 /* Time until every feedback peg of a row has popped in. */
 export function feedbackRevealMs(pegs: number): number {

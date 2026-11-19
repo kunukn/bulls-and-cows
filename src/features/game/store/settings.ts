@@ -17,7 +17,7 @@ type SettingsStore = {
   /* Check the guess as soon as the last peg is placed. */
   isAutoSubmit: boolean;
   setAutoSubmit: (isAutoSubmit: boolean) => void;
-  /* Peg placement clicks; off by default. */
+  /* Sound effects (pegs, checks, game end); off by default. */
   isSoundEnabled: boolean;
   setSoundEnabled: (isSoundEnabled: boolean) => void;
 };

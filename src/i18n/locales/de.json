@@ -14,8 +14,8 @@
     "minimalTextDescription": "Symbole statt Wörter. Der ?-Knopf erklärt weiter die Regeln.",
     "autoSubmit": "Automatisch prüfen",
     "autoSubmitDescription": "Prüft deinen Tipp, sobald der letzte Stift drin ist.",
-    "sound": "Ton",
-    "soundDescription": "Macht ein Klicken, wenn du einen Stift setzt.",
+    "sound": "Soundeffekte",
+    "soundDescription": "Klicks für die Stifte und eine Melodie, wenn du gewinnst oder verlierst.",
     "boardTheme": "Spielbrett",
     "boardThemes": {
       "wood": "Holz",

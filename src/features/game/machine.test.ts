@@ -68,6 +68,49 @@ describe("gameMachine", () => {
     expect(onPegPlaced).toHaveBeenCalledTimes(8);
   });
 
+  it("emits pegRemoved only when a peg comes out", () => {
+    const actor = startGame();
+    const onPegRemoved = vi.fn<(event: GameEmitted) => void>();
+    actor.on("pegRemoved", onPegRemoved);
+
+    actor.send({ type: "REMOVE_PEG" });
+    actor.send({ type: "CLEAR_SLOT", index: 2 });
+    expect(onPegRemoved).not.toHaveBeenCalled();
+
+    guessPegs(actor, ["blue", "green"]);
+    actor.send({ type: "CLEAR_SLOT", index: 0 });
+    actor.send({ type: "REMOVE_PEG" });
+    expect(onPegRemoved.mock.calls).toEqual([
+      [{ type: "pegRemoved", rowNumber: 1, slot: 0, color: "blue" }],
+      [{ type: "pegRemoved", rowNumber: 1, slot: 1, color: "green" }],
+    ]);
+  });
+
+  it("emits scored for accepted guesses only, before gameOver", () => {
+    const actor = startGame();
+    const events: GameEmitted[] = [];
+    actor.on("*", (event) => events.push(event));
+
+    actor.send({ type: "SUBMIT" });
+    guess(actor, ["red", "blue", "red", "green"]);
+    guess(actor, ["red", "red", "red", "red"]);
+    expect(events.filter((event) => event.type !== "pegPlaced")).toEqual([
+      { type: "rowIncomplete" },
+      { type: "scored", black: 2, white: 0 },
+      { type: "scored", black: 4, white: 0 },
+      { type: "gameOver", isWon: true },
+    ]);
+  });
+
+  it("emits gameOver as a loss on give up", () => {
+    const actor = startGame();
+    const onGameOver = vi.fn<(event: GameEmitted) => void>();
+    actor.on("gameOver", onGameOver);
+
+    actor.send({ type: "GIVE_UP" });
+    expect(onGameOver).toHaveBeenCalledWith({ type: "gameOver", isWon: false });
+  });
+
   describe("auto submit", () => {
     beforeEach(() => vi.useFakeTimers());
     afterEach(() => vi.useRealTimers());

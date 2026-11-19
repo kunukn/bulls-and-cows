@@ -42,7 +42,12 @@ export type GameEvent =
 export type GameEmitted =
   | { type: "rowIncomplete" }
   /* A peg landed in the active row; `rowNumber` and `slot` match GuessRow. */
-  | { type: "pegPlaced"; rowNumber: number; slot: number; color: Color };
+  | { type: "pegPlaced"; rowNumber: number; slot: number; color: Color }
+  | { type: "pegRemoved"; rowNumber: number; slot: number; color: Color }
+  /* An accepted guess, with its score; fires before any won/lost gameOver. */
+  | { type: "scored"; black: number; white: number }
+  /* Entering won or lost, including giving up. Not on a restored snapshot. */
+  | { type: "gameOver"; isWon: boolean };
 
 /* Lets the last peg's insert animation land before the row is checked. */
 export const AUTO_SUBMIT_DELAY_MS = 250;
@@ -88,6 +93,27 @@ export const gameMachine = setup({
       context.guesses.length + 1 >= DIFFICULTIES[context.difficulty].maxGuesses,
   },
   actions: {
+    // Runs before the removal, while the slot still holds the peg.
+    emitPegRemoved: enqueueActions(({ context, event, enqueue }) => {
+      const slot =
+        event.type === "CLEAR_SLOT"
+          ? event.index
+          : context.current.findLastIndex((peg) => peg !== null);
+      const color = context.current[slot];
+      if (!color) return;
+
+      enqueue.emit({
+        type: "pegRemoved",
+        rowNumber: context.guesses.length + 1,
+        slot,
+        color,
+      });
+    }),
+    // Runs before submitGuess; the SUBMIT guards ensure the row is complete.
+    emitScored: emit(({ context }) => ({
+      type: "scored" as const,
+      ...scoreGuess(context.secret, context.current as Color[]),
+    })),
     addPeg: assign(({ context, event }) => {
       if (event.type !== "ADD_PEG") return {};
 
@@ -190,21 +216,21 @@ export const gameMachine = setup({
           guard: "isRowComplete",
           actions: raise({ type: "SUBMIT" }),
         },
-        REMOVE_PEG: { actions: "removePeg" },
-        CLEAR_SLOT: { actions: "clearSlot" },
+        REMOVE_PEG: { actions: ["emitPegRemoved", "removePeg"] },
+        CLEAR_SLOT: { actions: ["emitPegRemoved", "clearSlot"] },
         // Guards read the pre-submit row; first match wins.
         SUBMIT: [
           {
             guard: "isWinningGuess",
             target: "won",
-            actions: ["submitGuess", "markFinished"],
+            actions: ["emitScored", "submitGuess", "markFinished"],
           },
           {
             guard: "isLastGuess",
             target: "lost",
-            actions: ["submitGuess", "markFinished"],
+            actions: ["emitScored", "submitGuess", "markFinished"],
           },
-          { guard: "isRowComplete", actions: "submitGuess" },
+          { guard: "isRowComplete", actions: ["emitScored", "submitGuess"] },
           // Rejected submit: lets the board shake the active row.
           { actions: emit({ type: "rowIncomplete" }) },
         ],
@@ -212,7 +238,7 @@ export const gameMachine = setup({
         GIVE_UP: { target: "lost", actions: "markFinished" },
       },
     },
-    won: {},
-    lost: {},
+    won: { entry: emit({ type: "gameOver", isWon: true }) },
+    lost: { entry: emit({ type: "gameOver", isWon: false }) },
   },
 });
