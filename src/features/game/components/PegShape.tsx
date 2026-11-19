@@ -7,7 +7,8 @@ import { cn } from "@/utils/cn";
  * outlines: red ▲ / green ✚, blue ◆ / purple ☾, purple ☾ / pink ♥.
  */
 const SHAPE_PATHS: Record<Color, string> = {
-  red: "M12 3.5 20.5 19H3.5z",
+  // Raised 2 units so its centroid, not its box, sits at the centre.
+  red: "M12 1.5 20.5 17H3.5z",
   orange: "M5 5h14v14H5z",
   yellow:
     "M12 3l2.35 6.26 6.69.3-5.24 4.18 1.78 6.45L12 16.5l-5.58 3.69 1.78-6.45-5.24-4.18 6.69-.3z",
