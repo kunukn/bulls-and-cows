@@ -1,6 +1,6 @@
 # 0002 — Peg sounds are real plastic clicks, off by default
 
-- **Status:** Accepted
+- **Status:** Accepted; the default (off) is superseded by [0006](0006-sound-on-by-default.md)
 - **Date:** 2026-11-19
 
 ## Context
