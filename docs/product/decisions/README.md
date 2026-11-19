@@ -14,6 +14,7 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0006](0006-sound-on-by-default.md)   | Sound effects are on by default                              | Accepted                   |
 | [0007](0007-choose-peg-order.md)      | Players choose which hole a peg goes into                    | Accepted                   |
 | [0008](0008-light-mode.md)            | Light mode for the interface, and always light when printing | Accepted                   |
+| [0009](0009-paper-board-theme.md)     | A light board theme: Paper                                   | Accepted                   |
 
 ## Template
 
