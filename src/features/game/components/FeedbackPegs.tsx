@@ -84,7 +84,8 @@ export function FeedbackPegs({
             className={cn(
               "rounded-full",
               mark === "black" && cn("size-3", bullPegClass),
-              mark === "white" && cn("size-3", COW_PEG_CLASS),
+              mark === "white" &&
+                cn("size-3 ring-1 ring-board-cow-ring", COW_PEG_CLASS),
               mark === "empty" && "size-1.5 bg-board-label opacity-40",
               isAnimated &&
                 mark !== "empty" &&

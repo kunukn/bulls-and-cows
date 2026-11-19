@@ -27,7 +27,8 @@
       "wood": "木纹",
       "classic": "经典",
       "gunmetal": "金属",
-      "neon": "霓虹"
+      "neon": "霓虹",
+      "paper": "纸"
     },
     "cancel": "取消",
     "sourceCode": "源代码",

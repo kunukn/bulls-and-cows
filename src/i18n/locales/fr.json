@@ -27,7 +27,8 @@
       "wood": "Bois",
       "classic": "Classique",
       "gunmetal": "Métal",
-      "neon": "Néon"
+      "neon": "Néon",
+      "paper": "Papier"
     },
     "cancel": "Annuler",
     "sourceCode": "Code source",

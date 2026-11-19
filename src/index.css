@@ -247,6 +247,8 @@
  */
 [data-board-theme] {
   color-scheme: dark;
+  /* Outline for white cow pegs; only light boards need one. */
+  --board-cow-ring: transparent;
 }
 
 /*
@@ -265,6 +267,7 @@
   --color-board-shield-cap: var(--board-shield-cap);
   --color-board-shield-label: var(--board-shield-label);
   --color-board-shield-edge: var(--board-shield-edge);
+  --color-board-cow-ring: var(--board-cow-ring);
   --shadow-board-glow: var(--board-glow);
 }
 
@@ -366,6 +369,39 @@
   --board-shield-cap: oklch(0.372 0.044 257.287); /* slate-700 */
   --board-shield-label: oklch(0.704 0.04 256.788); /* slate-400 */
   --board-shield-edge: oklch(0.279 0.041 260.031); /* slate-800 */
+}
+
+/*
+ * Graph paper: Neon inverted for light mode. Slate holes and a ringed cow peg
+ * keep white cows and empty holes readable on the light surface.
+ */
+[data-board-theme="paper"] {
+  color-scheme: light;
+  --board-surface:
+    linear-gradient(oklch(0.588 0.158 241.966 / 10%) 1px, transparent 1px) 0 0 /
+      24px 24px,
+    linear-gradient(
+        90deg,
+        oklch(0.588 0.158 241.966 / 10%) 1px,
+        transparent 1px
+      )
+      0 0 / 24px 24px,
+    oklch(0.984 0.003 247.858); /* sky-600 grid on slate-50 */
+  --board-tray: oklch(0.929 0.013 255.508 / 70%); /* slate-200 */
+  --board-hole: oklch(0.869 0.022 252.894 / 80%); /* slate-300 */
+  --board-hole-ring: oklch(0.704 0.04 256.788 / 40%); /* slate-400 */
+  --board-active: oklch(0.685 0.169 237.323 / 10%); /* sky-500 */
+  --board-ring: oklch(0.588 0.158 241.966 / 70%); /* sky-600 */
+  --board-label: oklch(0.554 0.046 257.417); /* slate-500 */
+  --board-glow: 0 0 #0000;
+  --board-shield: linear-gradient(
+    oklch(0.929 0.013 255.508),
+    oklch(0.869 0.022 252.894)
+  ); /* slate-200 → slate-300 */
+  --board-shield-cap: oklch(0.704 0.04 256.788); /* slate-400 */
+  --board-shield-label: oklch(0.446 0.043 257.281); /* slate-600 */
+  --board-shield-edge: oklch(0.704 0.04 256.788); /* slate-400 */
+  --board-cow-ring: oklch(0.554 0.046 257.417); /* slate-500 */
 }
 
 @layer base {
