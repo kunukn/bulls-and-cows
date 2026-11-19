@@ -2,7 +2,7 @@
 export const BOARD_THEMES = [
   "neon",
   "classic",
-  "gunmetal",
+  "felt",
   "wood",
   "paper",
   "candy",

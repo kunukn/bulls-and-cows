@@ -56,7 +56,20 @@ export const useSettings = create<SettingsStore>()(
       colorScheme: "dark",
       setColorScheme: (colorScheme) => set({ colorScheme }),
     }),
-    { name: "bulls-and-cows:settings" },
+    {
+      name: "bulls-and-cows:settings",
+      // v1: the Metal board ("gunmetal") was replaced by Felt (0011).
+      version: 1,
+      migrate: (persistedState, version) => {
+        const state = persistedState as SettingsStore;
+        const boardTheme: string = state.boardTheme;
+        if (version < 1 && boardTheme === "gunmetal") {
+          return { ...state, boardTheme: "felt" };
+        }
+
+        return state;
+      },
+    },
   ),
 );
 
