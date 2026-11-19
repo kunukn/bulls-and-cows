@@ -75,6 +75,7 @@
     "description": "Trouve le code secret de couleurs avant d'avoir épuisé tes essais.",
     "stepsTitle": "Comment jouer",
     "step1": "Touche des couleurs pour remplir la ligne vide.",
+    "stepRemove": "Touche une couleur de la ligne pour l'enlever.",
     "step2": "Appuie sur Vérifier pour tenter ta chance.",
     "step3": "Chaque pion noir est un taureau : bonne couleur, bonne place.",
     "step4": "Chaque pion blanc est une vache : bonne couleur, mauvaise place.",

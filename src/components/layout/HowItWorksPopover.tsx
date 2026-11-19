@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 
 const STEP_KEYS = [
   "help.step1",
+  "help.stepRemove",
   "help.step2",
   "help.step3",
   "help.step4",

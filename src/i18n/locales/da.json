@@ -75,6 +75,7 @@
     "description": "Knæk den hemmelige farvekode, før du løber tør for gæt.",
     "stepsTitle": "Sådan spiller du",
     "step1": "Tryk på farver for at fylde den tomme række.",
+    "stepRemove": "Tryk på en farve i rækken for at fjerne den.",
     "step2": "Tryk på Tjek for at prøve dit gæt.",
     "step3": "Hver sort pind er en tyr: rigtig farve, rigtig plads.",
     "step4": "Hver hvid pind er en ko: rigtig farve, forkert plads.",

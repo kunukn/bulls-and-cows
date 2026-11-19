@@ -1,6 +1,7 @@
 import type { Color } from "@/features/game/logic";
 import type { Guess } from "@/features/game/machine";
 import { cn } from "@/utils/cn";
+import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { FeedbackPegs } from "./FeedbackPegs";
 import { Peg } from "./Peg";
@@ -57,9 +58,19 @@ export function GuessRow({
                 slot: index + 1,
                 color: t(`colors.${color}`),
               })}
-              className="rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+              className="group relative cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
             >
-              <Peg color={color} />
+              <Peg
+                color={color}
+                className="transition-opacity group-hover:opacity-70"
+              />
+              {/* Touch has no hover, so the badge is always shown there. */}
+              <span
+                aria-hidden
+                className="absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100"
+              >
+                <X className="size-3" strokeWidth={3} />
+              </span>
             </button>
           ) : (
             <Peg key={index} color={color} />
