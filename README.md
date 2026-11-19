@@ -13,6 +13,8 @@ pegs don't say which spot they mean — that's the puzzle.
 
 **[kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows/)**
 
+<img src="docs/qr-live-demo.png" alt="QR code for live demo" width="200" />
+
 ## ✨ What's Inside
 
 | Difficulty | Pegs | Colours | Guesses | Repeats |
