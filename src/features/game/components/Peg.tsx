@@ -12,6 +12,20 @@ export const PEG_INSERT_ANIMATIONS = [
 ] as const;
 
 /*
+ * Stable unsigned 32-bit hash of a placed peg. Integer hash (xorshift-multiply),
+ * not a linear sum: a linear seed lines up with palette order, e.g. red, blue,
+ * green, yellow all got one variant.
+ */
+export function hashPeg(rowNumber: number, slot: number, color: Color): number {
+  let hash = (rowNumber * 31 + slot) * 31 + COLORS.indexOf(color);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+  hash ^= hash >>> 16;
+
+  return hash >>> 0;
+}
+
+/*
  * Varies the insert animation across slots without Math.random(): the same
  * slot and colour always get the same variant, so re-renders stay pure.
  */
@@ -20,16 +34,9 @@ export function pickInsertAnimation(
   slot: number,
   color: Color,
 ): string {
-  /*
-   * Integer hash (xorshift-multiply), not a linear sum: a linear seed lines up
-   * with palette order, e.g. red, blue, green, yellow all got one variant.
-   */
-  let hash = (rowNumber * 31 + slot) * 31 + COLORS.indexOf(color);
-  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
-  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
-  hash ^= hash >>> 16;
-
-  return PEG_INSERT_ANIMATIONS[(hash >>> 0) % PEG_INSERT_ANIMATIONS.length];
+  return PEG_INSERT_ANIMATIONS[
+    hashPeg(rowNumber, slot, color) % PEG_INSERT_ANIMATIONS.length
+  ];
 }
 
 /* Literal class names so Tailwind's scanner picks them up. */
