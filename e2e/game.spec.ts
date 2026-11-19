@@ -19,6 +19,24 @@ test("starts a game and scores the first guess", async ({ page }) => {
   ).toBeAttached();
 });
 
+test("New game restarts without revealing the code", async ({ page }) => {
+  await page.goto("/");
+
+  const newGameButton = page.getByRole("button", { name: "New game" });
+  await expect(newGameButton).toBeHidden();
+
+  await page.getByRole("button", { name: "Add red" }).click();
+  await newGameButton.click();
+  await page
+    .getByRole("alertdialog")
+    .getByRole("button", { name: "Abandon" })
+    .click();
+
+  // Fresh board: no progress, so the button hides again and the code stays secret.
+  await expect(newGameButton).toBeHidden();
+  await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
+});
+
 test("explains the rules from the How it works button", async ({ page }) => {
   await page.goto("/");
 

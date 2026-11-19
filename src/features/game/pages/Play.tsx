@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
 import { COW_PEG_CLASS, useBullPegClass } from "../components/FeedbackPegs";
 import { GiveUpButton } from "../components/GiveUpButton";
+import { NewGameButton } from "../components/NewGameButton";
 import { Palette } from "../components/Palette";
 import { ResultPanel } from "../components/ResultPanel";
 import { Timer } from "../components/Timer";
@@ -30,7 +31,10 @@ export function Play() {
   const bullPegClass = useBullPegClass();
   // Hidden only while playing; the final time shows once the game ends.
   const isTimerShown = isTimerVisible || !isPlaying;
-  // Difficulty waiting on the abandon dialog; null while it is closed.
+  /*
+   * Difficulty waiting on the abandon dialog; null while it is closed. The
+   * current difficulty here means "New game" (restart at the same level).
+   */
   const [pendingDifficulty, setPendingDifficulty] = useState<Difficulty | null>(
     null,
   );
@@ -145,6 +149,9 @@ export function Play() {
             </span>
           )}
           <span className="ms-auto flex items-center gap-3">
+            {isPlaying && hasProgress && (
+              <NewGameButton onClick={() => setPendingDifficulty(difficulty)} />
+            )}
             {isPlaying && <GiveUpButton />}
             {isTimerShown && <Timer />}
           </span>
