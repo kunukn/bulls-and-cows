@@ -194,11 +194,19 @@
   --color-board-active: var(--board-active);
   --color-board-ring: var(--board-ring);
   --color-board-label: var(--board-label);
+  --color-board-shield-cap: var(--board-shield-cap);
+  --color-board-shield-label: var(--board-shield-label);
+  --color-board-shield-edge: var(--board-shield-edge);
   --shadow-board-glow: var(--board-glow);
 }
 
 @utility board-surface {
   background: var(--board-surface);
+}
+
+/* The secret shield's plate; `--board-shield-*` tokens colour its parts. */
+@utility board-shield {
+  background: var(--board-shield);
 }
 
 [data-board-theme="wood"] {
@@ -210,6 +218,13 @@
   --board-ring: oklch(0.879 0.169 91.605 / 70%); /* amber-300 */
   --board-label: oklch(0.924 0.12 95.746 / 70%); /* amber-200 */
   --board-glow: 0 0 #0000;
+  --board-shield: linear-gradient(
+    oklch(0.666 0.179 58.318),
+    oklch(0.555 0.163 48.998)
+  ); /* amber-600 → amber-700 */
+  --board-shield-cap: oklch(0.473 0.137 46.201); /* amber-800 */
+  --board-shield-label: oklch(0.962 0.059 95.617 / 85%); /* amber-100 */
+  --board-shield-edge: oklch(0.414 0.112 45.904); /* amber-900 */
 }
 
 /* Black plastic, like the retail board. Faint hole rims keep holes visible. */
@@ -222,6 +237,13 @@
   --board-ring: oklch(0.795 0.184 86.047 / 70%); /* yellow-500 */
   --board-label: oklch(0.708 0 0); /* neutral-400 */
   --board-glow: 0 0 #0000;
+  --board-shield: linear-gradient(
+    oklch(0.371 0 0),
+    oklch(0.269 0 0)
+  ); /* neutral-700 → neutral-800 */
+  --board-shield-cap: oklch(0.205 0 0); /* neutral-900 */
+  --board-shield-label: oklch(0.708 0 0); /* neutral-400 */
+  --board-shield-edge: oklch(0.145 0 0); /* neutral-950 */
 }
 
 /* Dark brushed metal; kept dark so white feedback pegs still read. */
@@ -245,6 +267,13 @@
   --board-ring: oklch(0.92 0.004 286.32 / 70%); /* zinc-200 */
   --board-label: oklch(0.871 0.006 286.286 / 80%); /* zinc-300 */
   --board-glow: 0 0 #0000;
+  --board-shield: linear-gradient(
+    oklch(0.552 0.016 285.938),
+    oklch(0.442 0.017 285.786)
+  ); /* zinc-500 → zinc-600 */
+  --board-shield-cap: oklch(0.37 0.013 285.805); /* zinc-700 */
+  --board-shield-label: oklch(0.871 0.006 286.286 / 80%); /* zinc-300 */
+  --board-shield-edge: oklch(0.274 0.006 286.033); /* zinc-800 */
 }
 
 /* Near-black with a faint cyan grid; the active row glows. */
@@ -262,6 +291,13 @@
   --board-ring: oklch(0.789 0.154 211.53 / 80%);
   --board-label: oklch(0.865 0.127 207.078 / 70%); /* cyan-300 */
   --board-glow: 0 0 16px oklch(0.789 0.154 211.53 / 45%);
+  --board-shield: linear-gradient(
+    oklch(0.446 0.043 257.281),
+    oklch(0.372 0.044 257.287)
+  ); /* slate-600 → slate-700 */
+  --board-shield-cap: oklch(0.372 0.044 257.287); /* slate-700 */
+  --board-shield-label: oklch(0.704 0.04 256.788); /* slate-400 */
+  --board-shield-edge: oklch(0.279 0.041 260.031); /* slate-800 */
 }
 
 @layer base {

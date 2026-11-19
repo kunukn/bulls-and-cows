@@ -30,7 +30,7 @@ export function SecretShield({ pegs, isOpen }: Props) {
       <div
         className={cn(
           ROW_LAYOUT,
-          "size-full rounded-lg bg-linear-to-b from-slate-600 to-slate-700 py-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_2px_4px_rgb(0_0_0/0.4)]",
+          "size-full rounded-lg py-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_2px_4px_rgb(0_0_0/0.4)] board-shield",
         )}
       >
         <span className={NUMBER_COLUMN} />
@@ -40,7 +40,7 @@ export function SecretShield({ pegs, isOpen }: Props) {
               key={index}
               className={cn(
                 PEG_SIZE,
-                "grid place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400 shadow-[inset_0_-2px_3px_rgb(0_0_0/0.25)]",
+                "grid place-items-center rounded-full bg-board-shield-cap text-sm font-bold text-board-shield-label shadow-[inset_0_-2px_3px_rgb(0_0_0/0.25)]",
               )}
             >
               ?
@@ -50,7 +50,7 @@ export function SecretShield({ pegs, isOpen }: Props) {
         <span className={FEEDBACK_COLUMN} />
       </div>
       {/* Front edge: hangs from the free edge down to the board. */}
-      <div className="absolute inset-x-0 top-full h-1.5 origin-top [transform:rotateX(-90deg)] rounded-b-sm bg-slate-800" />
+      <div className="absolute inset-x-0 top-full h-1.5 origin-top [transform:rotateX(-90deg)] rounded-b-sm bg-board-shield-edge" />
     </div>
   );
 }
