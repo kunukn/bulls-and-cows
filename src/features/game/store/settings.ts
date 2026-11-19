@@ -3,7 +3,9 @@ import { persist } from "zustand/middleware";
 import type { BoardTheme } from "@/features/game/boardThemes";
 import type { Difficulty } from "@/features/game/logic";
 
-export type ColorScheme = "dark" | "light";
+export const COLOR_SCHEMES = ["dark", "light"] as const;
+
+export type ColorScheme = (typeof COLOR_SCHEMES)[number];
 
 type SettingsStore = {
   difficulty: Difficulty;

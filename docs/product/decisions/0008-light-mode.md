@@ -9,12 +9,13 @@ The app was dark-only. Printers drop background colours, so a printed page (high
 
 ## Decision
 
-A Light mode switch in Settings, off by default, makes the app interface light. Printing is always light, whatever the setting. Board themes are not affected: the board keeps its look in both modes.
+An **Appearance** choice in Settings, **Dark** or **Light** (Dark by default), sets the app interface. It is a segmented native radio group rather than a Light mode switch: a switch can't grow to a third System option, and a Dark mode switch would be on by default. Printing is always light, whatever the setting. Board themes are not affected: the board keeps its look in both modes.
 
 ## Alternatives considered
 
 - **Print-only light styles.** Fixes printing, but gives players no light option on screen.
 - **Follow the system setting (`prefers-color-scheme`).** Would flip existing dark players to light without asking; the game's identity is dark. Could be a third option later.
+- **A Light mode or Dark mode switch.** Can't hold a System option. Named "Light mode" it is off by default; named "Dark mode" it is more familiar but on by default. "Theme" was also ruled out: it clashes with board themes.
 - **Light board themes too.** Each board theme is tuned so white cows and black bulls read clearly; re-tuning all of them for light is a separate decision.
 
 ## Consequences

@@ -10,7 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
-import { useSettings } from "@/features/game/store/settings";
+import { COLOR_SCHEMES, useSettings } from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
 import { GitHubIcon } from "@/components/icons/GitHubIcon";
 import { Bug, Settings } from "lucide-react";
@@ -91,27 +91,39 @@ export function SettingsSheet() {
             </label>
             <LanguageSelect id="settings-language" />
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-light-mode" className="font-medium">
-                {t("common.lightMode")}
-              </label>
-              <Switch
-                id="settings-light-mode"
-                checked={colorScheme === "light"}
-                onCheckedChange={(isChecked) =>
-                  setColorScheme(isChecked ? "light" : "dark")
-                }
-                aria-describedby="settings-light-mode-description"
-              />
+          <fieldset
+            className="flex flex-col gap-2"
+            aria-describedby="settings-appearance-description"
+          >
+            <legend className="mb-2 font-medium">
+              {t("common.appearance")}
+            </legend>
+            {/* Native radio group as a segmented control, like DifficultyPicker. */}
+            <div className="flex rounded-lg bg-background p-1 ring-1 ring-border">
+              {COLOR_SCHEMES.map((scheme) => (
+                <label
+                  key={scheme}
+                  className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
+                >
+                  <input
+                    type="radio"
+                    name="settings-color-scheme"
+                    value={scheme}
+                    checked={colorScheme === scheme}
+                    onChange={() => setColorScheme(scheme)}
+                    className="sr-only"
+                  />
+                  {t(`common.colorSchemes.${scheme}`)}
+                </label>
+              ))}
             </div>
             <p
-              id="settings-light-mode-description"
+              id="settings-appearance-description"
               className="text-sm text-muted-foreground"
             >
-              {t("common.lightModeDescription")}
+              {t("common.appearanceDescription")}
             </p>
-          </div>
+          </fieldset>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-sound" className="font-medium">

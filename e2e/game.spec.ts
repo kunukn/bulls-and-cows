@@ -42,7 +42,11 @@ test("light mode lightens the app but not the board", async ({ page }) => {
   );
 
   await page.getByRole("button", { name: "Settings" }).click();
-  await page.getByRole("switch", { name: "Light mode" }).click();
+  // The radio input is visually hidden; click its label like a player would.
+  await page
+    .getByRole("group", { name: "Appearance" })
+    .getByText("Light", { exact: true })
+    .click();
   await page.keyboard.press("Escape");
 
   await expect(page.locator("html")).toHaveAttribute(
