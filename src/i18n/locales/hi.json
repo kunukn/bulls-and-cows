@@ -14,6 +14,8 @@
     "minimalTextDescription": "शब्दों की जगह आइकन। ? बटन फिर भी नियम समझाता है।",
     "autoSubmit": "अपने-आप जाँचो",
     "autoSubmitDescription": "आख़िरी खूँटी लगते ही अंदाज़ा जाँच लिया जाता है।",
+    "sound": "आवाज़",
+    "soundDescription": "खूँटी लगाने पर क्लिक की आवाज़ आती है।",
     "boardTheme": "बोर्ड",
     "boardThemes": {
       "wood": "लकड़ी",

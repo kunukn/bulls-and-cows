@@ -4,6 +4,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
+import { usePegSound } from "@/features/game/usePegSound";
 import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
@@ -30,6 +31,7 @@ const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
 export function Board() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
+  usePegSound();
   const { difficulty, guesses, current, secret } = useGameSelector(
     (snapshot) => snapshot.context,
   );

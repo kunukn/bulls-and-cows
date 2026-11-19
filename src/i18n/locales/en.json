@@ -14,6 +14,8 @@
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "autoSubmit": "Auto check",
     "autoSubmitDescription": "Checks your guess as soon as the last peg is in.",
+    "sound": "Sound",
+    "soundDescription": "Plays a click when you place a peg.",
     "boardTheme": "Board",
     "boardThemes": {
       "wood": "Wood",

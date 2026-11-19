@@ -32,6 +32,8 @@ export function SettingsSheet() {
   const setMinimalText = useSettings((state) => state.setMinimalText);
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
   const setAutoSubmit = useSettings((state) => state.setAutoSubmit);
+  const isSoundEnabled = useSettings((state) => state.isSoundEnabled);
+  const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
   // Slide in from the inline end, the side the settings button sits on.
@@ -133,6 +135,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.autoSubmitDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-sound" className="font-medium">
+                {t("common.sound")}
+              </label>
+              <Switch
+                id="settings-sound"
+                checked={isSoundEnabled}
+                onCheckedChange={setSoundEnabled}
+                aria-describedby="settings-sound-description"
+              />
+            </div>
+            <p
+              id="settings-sound-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.soundDescription")}
             </p>
           </div>
           <BoardThemePicker

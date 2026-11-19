@@ -14,6 +14,8 @@
     "minimalTextDescription": "用图标代替文字。? 按钮仍会讲解规则。",
     "autoSubmit": "自动检查",
     "autoSubmitDescription": "填好最后一个颜色就马上检查。",
+    "sound": "声音",
+    "soundDescription": "放下颜色时发出咔嗒声。",
     "boardTheme": "棋盘",
     "boardThemes": {
       "wood": "木纹",

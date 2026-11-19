@@ -1,6 +1,6 @@
 import { createActor } from "xstate";
 import type { Color } from "./logic";
-import { AUTO_SUBMIT_DELAY_MS, gameMachine } from "./machine";
+import { AUTO_SUBMIT_DELAY_MS, gameMachine, type GameEmitted } from "./machine";
 
 /* RNG always returning 0 → classic secret is red×4, easy is red/blue/green/yellow. */
 function startGame(difficulty: "easy" | "classic" | "hard" = "classic") {
@@ -47,6 +47,25 @@ describe("gameMachine", () => {
 
     guess(actor, ["blue", "blue", "blue"]);
     expect(onRowIncomplete).toHaveBeenCalledTimes(1);
+  });
+
+  it("emits pegPlaced for each peg that lands, not on a full row", () => {
+    const actor = startGame();
+    const onPegPlaced = vi.fn<(event: GameEmitted) => void>();
+    actor.on("pegPlaced", onPegPlaced);
+
+    guess(actor, ["blue", "blue", "blue", "blue"]);
+    actor.send({ type: "ADD_PEG", color: "green" });
+    expect(onPegPlaced).toHaveBeenLastCalledWith({
+      type: "pegPlaced",
+      rowNumber: 2,
+      slot: 0,
+      color: "green",
+    });
+
+    guessPegs(actor, ["red", "red", "red"]);
+    actor.send({ type: "ADD_PEG", color: "red" });
+    expect(onPegPlaced).toHaveBeenCalledTimes(8);
   });
 
   describe("auto submit", () => {

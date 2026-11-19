@@ -14,6 +14,8 @@
     "minimalTextDescription": "أيقونات بدل الكلمات. زر ? يشرح القواعد دائمًا.",
     "autoSubmit": "تحقق تلقائي",
     "autoSubmitDescription": "يتحقق من تخمينك فور وضع آخر وتد.",
+    "sound": "الصوت",
+    "soundDescription": "يُصدر نقرة عند وضع وتد.",
     "boardTheme": "اللوحة",
     "boardThemes": {
       "wood": "خشب",

@@ -39,7 +39,10 @@ export type GameEvent =
   | { type: "NEW_GAME"; difficulty?: Difficulty };
 
 /* Side-channel notices for the UI; they don't change game state. */
-export type GameEmitted = { type: "rowIncomplete" };
+export type GameEmitted =
+  | { type: "rowIncomplete" }
+  /* A peg landed in the active row; `rowNumber` and `slot` match GuessRow. */
+  | { type: "pegPlaced"; rowNumber: number; slot: number; color: Color };
 
 /* Lets the last peg's insert animation land before the row is checked. */
 export const AUTO_SUBMIT_DELAY_MS = 250;
@@ -155,6 +158,18 @@ export const gameMachine = setup({
       on: {
         ADD_PEG: {
           actions: [
+            // Runs before addPeg, so a full row (no free slot) stays silent.
+            enqueueActions(({ context, event, enqueue }) => {
+              const slot = context.current.indexOf(null);
+              if (slot === -1) return;
+
+              enqueue.emit({
+                type: "pegPlaced",
+                rowNumber: context.guesses.length + 1,
+                slot,
+                color: event.color,
+              });
+            }),
             "addPeg",
             // Runs after addPeg, so `context.current` already holds the new peg.
             enqueueActions(({ context, event, enqueue }) => {

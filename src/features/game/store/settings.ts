@@ -17,6 +17,9 @@ type SettingsStore = {
   /* Check the guess as soon as the last peg is placed. */
   isAutoSubmit: boolean;
   setAutoSubmit: (isAutoSubmit: boolean) => void;
+  /* Peg placement clicks; off by default. */
+  isSoundEnabled: boolean;
+  setSoundEnabled: (isSoundEnabled: boolean) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -33,6 +36,8 @@ export const useSettings = create<SettingsStore>()(
       setMinimalText: (isMinimalText) => set({ isMinimalText }),
       isAutoSubmit: false,
       setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
+      isSoundEnabled: false,
+      setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
     }),
     { name: "bulls-and-cows:settings" },
   ),

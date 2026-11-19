@@ -14,6 +14,8 @@
     "minimalTextDescription": "Ikoner i stedet for ord. Knappen ? forklarer stadig reglerne.",
     "autoSubmit": "Tjek automatisk",
     "autoSubmitDescription": "Tjekker dit gæt, så snart den sidste pind er sat.",
+    "sound": "Lyd",
+    "soundDescription": "Siger klik, når du sætter en pind.",
     "boardTheme": "Spillebræt",
     "boardThemes": {
       "wood": "Træ",

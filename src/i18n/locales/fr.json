@@ -14,6 +14,8 @@
     "minimalTextDescription": "Des icônes à la place des mots. Le bouton ? explique toujours les règles.",
     "autoSubmit": "Vérification auto",
     "autoSubmitDescription": "Vérifie ton essai dès que le dernier pion est posé.",
+    "sound": "Son",
+    "soundDescription": "Fait un clic quand tu poses un pion.",
     "boardTheme": "Plateau",
     "boardThemes": {
       "wood": "Bois",
