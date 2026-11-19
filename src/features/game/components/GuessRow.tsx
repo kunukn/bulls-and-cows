@@ -67,7 +67,7 @@ export function GuessRow({
               {/* Touch has no hover, so the badge is always shown there. */}
               <span
                 aria-hidden
-                className="absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100"
+                className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100"
               >
                 <X className="size-3" strokeWidth={3} />
               </span>

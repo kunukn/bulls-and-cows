@@ -14,6 +14,7 @@ import { useSettings } from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
 import { GitHubIcon } from "@/components/icons/GitHubIcon";
 import { Bug, Settings } from "lucide-react";
+import { Direction } from "radix-ui";
 import { useTranslation } from "react-i18next";
 
 const REPO_URL = "https://github.com/kunukn/bulls-and-cows";
@@ -31,6 +32,8 @@ export function SettingsSheet() {
   const setMinimalText = useSettings((state) => state.setMinimalText);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
+  // Slide in from the inline end, the side the settings button sits on.
+  const side = Direction.useDirection() === "rtl" ? "left" : "right";
   const appVersion = import.meta.env.VITE_APP_VERSION;
   // Prefill the build so every report says which version it came from.
   const issueUrl = `${REPO_URL}/issues/new?${new URLSearchParams({
@@ -51,6 +54,7 @@ export function SettingsSheet() {
         </Button>
       </SheetTrigger>
       <SheetContent
+        side={side}
         closeLabel={t("common.close")}
         className="w-80 border-border"
       >

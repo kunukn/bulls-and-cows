@@ -1,0 +1,116 @@
+{
+  "app": {
+    "title": "Bulls & Cows",
+    "shortTitle": "B & C"
+  },
+  "common": {
+    "settings": "सेटिंग्स",
+    "language": "भाषा",
+    "close": "बंद करो",
+    "version": "वर्ज़न",
+    "showTimer": "टाइमर दिखाओ",
+    "showTimerDescription": "हाई स्कोर के लिए घड़ी फिर भी चलती रहती है।",
+    "minimalText": "कम शब्द",
+    "minimalTextDescription": "शब्दों की जगह आइकन। ? बटन फिर भी नियम समझाता है।",
+    "boardTheme": "बोर्ड",
+    "boardThemes": {
+      "wood": "लकड़ी",
+      "classic": "क्लासिक",
+      "gunmetal": "धातु",
+      "neon": "नियॉन"
+    },
+    "cancel": "रद्द करो",
+    "sourceCode": "सोर्स कोड",
+    "reportIssue": "समस्या बताओ",
+    "opensInNewTab": "(नए टैब में खुलता है)"
+  },
+  "nav": {
+    "play": "खेलो",
+    "highScores": "हाई स्कोर"
+  },
+  "difficulty": {
+    "legend": "कठिनाई",
+    "easy": "आसान",
+    "classic": "क्लासिक",
+    "hard": "कठिन",
+    "details": "{{pegs}} खूँटियाँ · {{colors}} रंग"
+  },
+  "colors": {
+    "red": "लाल",
+    "blue": "नीला",
+    "green": "हरा",
+    "yellow": "पीला",
+    "purple": "बैंगनी",
+    "orange": "नारंगी",
+    "pink": "गुलाबी",
+    "cyan": "आसमानी"
+  },
+  "game": {
+    "legendBull": "बैल: सही जगह",
+    "legendCow": "गाय: गलत जगह",
+    "time": "समय",
+    "board": "बोर्ड",
+    "secret": "गुप्त कोड",
+    "secretHidden": "गुप्त कोड (छिपा हुआ)",
+    "slotClear": "खाना {{slot}}: {{color}}। हटाओ",
+    "feedback": "{{bulls}}, {{cows}}",
+    "bulls_one": "{{count}} बैल",
+    "bulls_other": "{{count}} बैल",
+    "cows_one": "{{count}} गाय",
+    "cows_other": "{{count}} गायें",
+    "noMatches": "कोई मेल नहीं",
+    "palette": "रंगों की पट्टी",
+    "addColor": "{{color}} जोड़ो (कुंजी {{key}})",
+    "undo": "वापस लो",
+    "check": "जाँचो",
+    "abandonConfirm": "यह खेल छोड़ना है?",
+    "giveUp": "हार मानो",
+    "giveUpConfirm": "हार मानोगे?",
+    "giveUpDescription": "गुप्त कोड दिखा दिया जाएगा।",
+    "abandon": "छोड़ो",
+    "abandonDescription": "इस बोर्ड पर तुम्हारी कोशिशें मिट जाएँगी।"
+  },
+  "help": {
+    "button": "कैसे खेलें",
+    "description": "कोशिशें खत्म होने से पहले गुप्त रंग कोड तोड़ो।",
+    "stepsTitle": "कैसे खेलें",
+    "step1": "खाली पंक्ति भरने के लिए रंगों पर टैप करो।",
+    "stepRemove": "पंक्ति में किसी रंग पर टैप करके उसे हटाओ।",
+    "step2": "अपनी कोशिश आज़माने के लिए जाँचो दबाओ।",
+    "step3": "हर काली खूँटी एक बैल है: सही रंग, सही जगह।",
+    "step4": "हर सफ़ेद खूँटी एक गाय है: सही रंग, गलत जगह।",
+    "step5": "काली और सफ़ेद खूँटियाँ यह नहीं बतातीं कि वे किस जगह की बात कर रही हैं। यही तो पहेली है!",
+    "step6": "पंक्तियाँ खत्म होने से पहले कोड तोड़ो।",
+    "keyboardTitle": "कीबोर्ड",
+    "keyboardColors": "नंबर कुंजियाँ रंग जोड़ती हैं।",
+    "keyboardUndo": "Backspace आखिरी रंग हटाता है।",
+    "keyboardCheck": "Enter तुम्हारी कोशिश जाँचता है।",
+    "difficultiesTitle": "कठिनाई के स्तर",
+    "guesses_one": "{{count}} कोशिश",
+    "guesses_other": "{{count}} कोशिशें",
+    "repeats": "रंग दोहराए जा सकते हैं",
+    "noRepeats": "कोई रंग दो बार नहीं"
+  },
+  "result": {
+    "won_one": "{{count}} कोशिश में तोड़ा · {{time}}",
+    "won_other": "{{count}} कोशिशों में तोड़ा · {{time}}",
+    "lost": "कोशिशें खत्म — कोड ऊपर दिखा दिया गया",
+    "yourName": "तुम्हारा नाम",
+    "save": "स्कोर सेव करो",
+    "saved": "स्कोर सेव हो गया",
+    "newGame": "नया खेल",
+    "gaveUp": "तुमने हार मान ली — कोड ऊपर दिखा दिया गया"
+  },
+  "highScores": {
+    "title": "हाई स्कोर",
+    "showFor": "इसके हाई स्कोर दिखाओ",
+    "empty": "अभी कोई स्कोर नहीं। बोर्ड पर आने के लिए एक खेल जीतो।",
+    "rank": "#",
+    "name": "नाम",
+    "guesses": "कोशिशें",
+    "time": "समय",
+    "date": "तारीख",
+    "clear": "सारे स्कोर मिटाओ",
+    "clearConfirm": "हर कठिनाई के सारे हाई स्कोर मिटाने हैं?"
+  }
+}
