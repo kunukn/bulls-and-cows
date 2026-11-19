@@ -2,6 +2,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, loadEnv, type PluginOption } from "vite";
+import { VitePWA } from "vite-plugin-pwa";
 
 /*
  * Dev-only click-to-source (code-inspector-plugin). Opt in with
@@ -67,6 +68,46 @@ export default defineConfig(async ({ command, mode }) => {
       await codeInspector(isCodeInspectorEnabled),
       tailwindcss(),
       react(),
+      /*
+       * Offline support: Workbox precaches the build (incl. sounds) and a new
+       * deploy activates silently on the next load. Relative start_url/scope
+       * keep it working under both `/` and the GitHub Pages subpath.
+       */
+      VitePWA({
+        registerType: "autoUpdate",
+        includeAssets: ["favicon.svg", "apple-touch-icon.png"],
+        manifest: {
+          name: "Bulls & Cows",
+          short_name: "Bulls & Cows",
+          description: "Crack the secret colour code.",
+          theme_color: "#0f172a",
+          background_color: "#0f172a",
+          display: "standalone",
+          start_url: "./",
+          scope: "./",
+          icons: [
+            {
+              src: "icons/pwa-192x192.png",
+              sizes: "192x192",
+              type: "image/png",
+            },
+            {
+              src: "icons/pwa-512x512.png",
+              sizes: "512x512",
+              type: "image/png",
+            },
+            {
+              src: "icons/pwa-512x512-maskable.png",
+              sizes: "512x512",
+              type: "image/png",
+              purpose: "maskable",
+            },
+          ],
+        },
+        workbox: {
+          globPatterns: ["**/*.{js,css,html,svg,png,wav,mp3}"],
+        },
+      }),
     ],
     resolve: {
       alias: {

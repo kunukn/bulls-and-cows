@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="vite-plugin-pwa/client" />
 
 /* Must be `interface` to merge with Vite's own ImportMetaEnv. */
 interface ImportMetaEnv {
