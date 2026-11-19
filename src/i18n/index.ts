@@ -78,7 +78,7 @@ function syncDocument(language: string) {
     ? HTML_LANG[language]
     : language;
   document.documentElement.dir = getDirection(language);
-  document.title = i18n.t("app.title");
+  document.title = i18n.t("app.documentTitle");
 }
 
 syncDocument(i18n.language);

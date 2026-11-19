@@ -1,7 +1,8 @@
 {
   "app": {
     "title": "Bulls & Cows",
-    "shortTitle": "B & C"
+    "shortTitle": "B & C",
+    "documentTitle": "Bulls & Cows — لعبة مجانية: اكسر رمز الألوان"
   },
   "common": {
     "settings": "الإعدادات",
