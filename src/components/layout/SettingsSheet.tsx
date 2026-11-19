@@ -64,6 +64,11 @@ export function SettingsSheet() {
       <SheetContent
         side={side}
         closeLabel={t("common.close")}
+        // iPadOS opens a <select> when it gets focus; start on the panel instead.
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          (event.currentTarget as HTMLElement).focus();
+        }}
         // Scroll the whole drawer so the footer links stay reachable on short screens.
         className="w-80 overflow-y-auto overscroll-contain border-border"
       >
