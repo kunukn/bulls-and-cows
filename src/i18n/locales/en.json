@@ -28,7 +28,8 @@
       "classic": "Classic",
       "gunmetal": "Metal",
       "neon": "Neon",
-      "paper": "Paper"
+      "paper": "Paper",
+      "candy": "Candy"
     },
     "cancel": "Cancel",
     "sourceCode": "Source code",

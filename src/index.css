@@ -404,6 +404,45 @@
   --board-cow-ring: oklch(0.554 0.046 257.417); /* slate-500 */
 }
 
+/*
+ * Pastel lavender-to-mint with sprinkles, for younger players. Light like
+ * Paper, so it reuses the cow outline; no pink, so pink bulls still stand out.
+ */
+[data-board-theme="candy"] {
+  color-scheme: light;
+  --board-surface:
+    radial-gradient(oklch(0.879 0.169 91.605 / 70%) 0 1.5px, transparent 2px) 0
+      0 / 44px 44px,
+    radial-gradient(oklch(0.828 0.111 230.318 / 70%) 0 1.5px, transparent 2px)
+      22px 15px / 44px 44px,
+    radial-gradient(oklch(0.811 0.111 293.571 / 70%) 0 1.5px, transparent 2px)
+      8px 30px / 44px 44px,
+    radial-gradient(oklch(0.845 0.143 164.978 / 70%) 0 1.5px, transparent 2px)
+      33px 36px / 44px 44px,
+    linear-gradient(
+      160deg,
+      oklch(0.943 0.029 294.588),
+      oklch(0.951 0.026 236.824) 50%,
+      oklch(0.95 0.052 163.051)
+    ); /* amber-300, sky-300, violet-300, emerald-300 sprinkles on violet-100 → sky-100 → emerald-100 */
+  --board-tray: oklch(1 0 0 / 50%);
+  /* Opaque, so sprinkles don't show inside the holes. */
+  --board-hole: oklch(0.985 0.01 294);
+  --board-hole-ring: oklch(0.811 0.111 293.571 / 60%); /* violet-300 */
+  --board-active: oklch(1 0 0 / 55%);
+  --board-ring: oklch(0.769 0.188 70.08); /* amber-500 */
+  --board-label: oklch(0.606 0.25 292.717); /* violet-500 */
+  --board-glow: 0 0 12px oklch(0.828 0.189 84.429 / 50%); /* amber-400 */
+  --board-shield: linear-gradient(
+    oklch(0.811 0.111 293.571),
+    oklch(0.702 0.183 293.541)
+  ); /* violet-300 → violet-400 */
+  --board-shield-cap: oklch(0.606 0.25 292.717); /* violet-500 */
+  --board-shield-label: oklch(1 0 0 / 90%);
+  --board-shield-edge: oklch(0.541 0.281 293.009); /* violet-600 */
+  --board-cow-ring: oklch(0.702 0.183 293.541); /* violet-400 */
+}
+
 @layer base {
   /*
    * Full-height chain via % + flex instead of dvh: dvh tracks the iOS Safari

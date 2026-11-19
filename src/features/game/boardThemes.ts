@@ -5,6 +5,7 @@ export const BOARD_THEMES = [
   "gunmetal",
   "wood",
   "paper",
+  "candy",
 ] as const;
 
 export type BoardTheme = (typeof BOARD_THEMES)[number];
