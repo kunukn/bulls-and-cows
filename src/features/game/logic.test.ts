@@ -40,6 +40,29 @@ describe("scoreGuess", () => {
   );
 });
 
+describe("paletteFor", () => {
+  it("orders colours like a rainbow", () => {
+    expect(paletteFor("classic")).toEqual([
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "blue",
+      "purple",
+    ]);
+    expect(paletteFor("hard")).toEqual([
+      "red",
+      "orange",
+      "yellow",
+      "green",
+      "cyan",
+      "blue",
+      "purple",
+      "pink",
+    ]);
+  });
+});
+
 describe("generateSecret", () => {
   it("uses the configured length and palette", () => {
     const secret = generateSecret("hard");

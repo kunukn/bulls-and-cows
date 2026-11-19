@@ -55,8 +55,30 @@ export const cryptoRandomInt: RandomInt = (max) => {
   return buffer[0] % max;
 };
 
-export function paletteFor(difficulty: Difficulty): Color[] {
+/*
+ * Display order, by hue. `COLORS` stays in tier order (hard adds pink and
+ * cyan last), so the pool is sliced from it and then sorted by this.
+ */
+const RAINBOW_ORDER: readonly Color[] = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "cyan",
+  "blue",
+  "purple",
+  "pink",
+];
+
+function colorPoolFor(difficulty: Difficulty): Color[] {
   return COLORS.slice(0, DIFFICULTIES[difficulty].colors);
+}
+
+/* The difficulty's colours in rainbow order; digit shortcuts follow it. */
+export function paletteFor(difficulty: Difficulty): Color[] {
+  return colorPoolFor(difficulty).toSorted(
+    (a, b) => RAINBOW_ORDER.indexOf(a) - RAINBOW_ORDER.indexOf(b),
+  );
 }
 
 export function generateSecret(
@@ -64,7 +86,7 @@ export function generateSecret(
   randomInt: RandomInt = cryptoRandomInt,
 ): Color[] {
   const { pegs, allowRepeats } = DIFFICULTIES[difficulty];
-  const pool = paletteFor(difficulty);
+  const pool = colorPoolFor(difficulty);
 
   if (allowRepeats) {
     return Array.from({ length: pegs }, () => pool[randomInt(pool.length)]);
