@@ -86,6 +86,25 @@ export function SettingsSheet() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-peg-shapes" className="font-medium">
+                {t("common.pegShapes")}
+              </label>
+              <Switch
+                id="settings-peg-shapes"
+                checked={isPegShapes}
+                onCheckedChange={setPegShapes}
+                aria-describedby="settings-peg-shapes-description"
+              />
+            </div>
+            <p
+              id="settings-peg-shapes-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.pegShapesDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-timer" className="font-medium">
                 {t("common.showTimer")}
               </label>
@@ -177,25 +196,6 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.pinkBullDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-peg-shapes" className="font-medium">
-                {t("common.pegShapes")}
-              </label>
-              <Switch
-                id="settings-peg-shapes"
-                checked={isPegShapes}
-                onCheckedChange={setPegShapes}
-                aria-describedby="settings-peg-shapes-description"
-              />
-            </div>
-            <p
-              id="settings-peg-shapes-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.pegShapesDescription")}
             </p>
           </div>
           <BoardThemePicker
