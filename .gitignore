@@ -159,6 +159,8 @@ vite.config.ts.timestamp-*
 
 # Project
 .claude/settings.local.json
+# Agent worktrees (not used in this repo; lint/format would load their configs)
+.claude/worktrees/
 CLAUDE.local.md
 .playwright-mcp/*
 
