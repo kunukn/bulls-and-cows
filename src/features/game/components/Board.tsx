@@ -11,11 +11,11 @@ import { GuessRow } from "./GuessRow";
 import {
   FEEDBACK_COLUMN,
   NUMBER_COLUMN,
-  PEG_SIZE,
   PEGS_COLUMN,
   ROW_LAYOUT,
 } from "./rowLayout";
 import { Peg } from "./Peg";
+import { SecretShield } from "./SecretShield";
 
 /* Symmetric, so it needs no RTL counterpart. */
 const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
@@ -26,8 +26,6 @@ const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
   { transform: "translateX(2px)" },
   { transform: "translateX(0)" },
 ];
-
-const SECRET_FLIP_STAGGER_MS = 90;
 
 export function Board() {
   const { t } = useTranslation();
@@ -75,37 +73,27 @@ export function Board() {
     >
       <div
         aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}
-        className={cn(ROW_LAYOUT, "mb-3 rounded-lg bg-board-tray py-2")}
+        className={cn(
+          ROW_LAYOUT,
+          "relative mb-3 rounded-lg bg-board-tray py-2",
+        )}
       >
         <span aria-hidden className={NUMBER_COLUMN} />
         <div className={PEGS_COLUMN}>
+          {/* Empty holes while playing, so the code never reaches the DOM. */}
           {isPlaying
             ? Array.from({ length: pegs }, (_, index) => (
-                <span
-                  key={index}
-                  aria-hidden
-                  className={cn(
-                    PEG_SIZE,
-                    "grid place-items-center rounded-full bg-slate-700 text-sm font-bold text-slate-400 shadow-[inset_0_-2px_3px_rgb(0_0_0/0.25)]",
-                  )}
-                >
-                  ?
-                </span>
+                <Peg key={index} color={null} />
               ))
             : secret.map((color, index) => (
                 <span key={index} className="contents">
-                  <Peg
-                    color={color}
-                    className="motion-safe:animate-secret-flip"
-                    style={{
-                      animationDelay: `${index * SECRET_FLIP_STAGGER_MS}ms`,
-                    }}
-                  />
+                  <Peg color={color} />
                   <span className="sr-only">{t(`colors.${color}`)}</span>
                 </span>
               ))}
         </div>
         <span aria-hidden className={FEEDBACK_COLUMN} />
+        <SecretShield pegs={pegs} isOpen={!isPlaying} />
       </div>
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {

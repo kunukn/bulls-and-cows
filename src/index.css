@@ -22,9 +22,8 @@
   --animate-peg-tip: peg-tip 220ms ease-out;
   --animate-peg-rattle: peg-rattle 260ms ease-out;
   --animate-feedback-pop: feedback-pop 160ms ease-out backwards;
-  /* Win: a bright wave across the winning row. Secret: pegs flip face-up. */
+  /* Win: a bright wave across the winning row. */
   --animate-peg-shimmer: peg-shimmer 420ms ease-in-out backwards;
-  --animate-secret-flip: secret-flip 320ms ease-out backwards;
 
   @keyframes peg-shimmer {
     0%,
@@ -35,15 +34,6 @@
     45% {
       transform: scale(1.12);
       filter: brightness(1.45);
-    }
-  }
-
-  @keyframes secret-flip {
-    0% {
-      transform: perspective(160px) rotateY(90deg);
-    }
-    100% {
-      transform: perspective(160px) rotateY(0);
     }
   }
 
