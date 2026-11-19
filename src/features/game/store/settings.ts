@@ -18,7 +18,7 @@ type SettingsStore = {
   /* Icons instead of words; hidden text stays in aria-label / title. */
   isMinimalText: boolean;
   setMinimalText: (isMinimalText: boolean) => void;
-  /* Check the guess as soon as the last peg is placed. */
+  /* Check the guess as soon as the last peg is placed; on by default (0012). */
   isAutoSubmit: boolean;
   setAutoSubmit: (isAutoSubmit: boolean) => void;
   /* Sound effects (pegs, checks, game end); on by default (0006). */
@@ -47,7 +47,7 @@ export const useSettings = create<SettingsStore>()(
       setTimerVisible: (isTimerVisible) => set({ isTimerVisible }),
       isMinimalText: false,
       setMinimalText: (isMinimalText) => set({ isMinimalText }),
-      isAutoSubmit: false,
+      isAutoSubmit: true,
       setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
       isSoundEnabled: true,
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),

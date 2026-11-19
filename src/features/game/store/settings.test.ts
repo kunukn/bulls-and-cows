@@ -9,6 +9,10 @@ test("starts dark and mirrors the scheme onto <html>", () => {
   expect(document.documentElement.dataset.colorScheme).toBe("dark");
 });
 
+test("auto check is on for new players", () => {
+  expect(useSettings.getState().isAutoSubmit).toBe(true);
+});
+
 test("switching to light updates <html>", () => {
   useSettings.getState().setColorScheme("light");
 
