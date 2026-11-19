@@ -79,7 +79,9 @@ export default defineConfig(async ({ command, mode }) => {
         manifest: {
           name: "Bulls & Cows",
           short_name: "Bulls & Cows",
-          description: "Crack the secret colour code.",
+          description:
+            "Free Mastermind-style code-breaking game. Crack the secret colour code from bulls and cows clues.",
+          categories: ["games", "puzzle"],
           theme_color: "#0f172a",
           background_color: "#0f172a",
           display: "standalone",
