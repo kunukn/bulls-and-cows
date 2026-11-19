@@ -58,7 +58,8 @@ export function SettingsSheet() {
       <SheetContent
         side={side}
         closeLabel={t("common.close")}
-        className="w-80 border-border"
+        // Scroll the whole drawer so the footer links stay reachable on short screens.
+        className="w-80 overflow-y-auto overscroll-contain border-border"
       >
         <SheetHeader>
           <SheetTitle className="text-xl font-bold">
