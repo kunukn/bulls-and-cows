@@ -18,6 +18,7 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0010](0010-candy-board-theme.md)        | A child-friendly board theme: Candy                          | Accepted                   |
 | [0011](0011-felt-replaces-metal.md)      | Felt replaces the Metal board theme                          | Accepted                   |
 | [0012](0012-auto-check-on-by-default.md) | Auto check is on by default                                  | Accepted                   |
+| [0013](0013-game-menu.md)                | New game and Give up share one menu                          | Accepted                   |
 
 ## Template
 

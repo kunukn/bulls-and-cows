@@ -19,21 +19,18 @@ test("starts a game and scores the first guess", async ({ page }) => {
   ).toBeAttached();
 });
 
-test("New game restarts without revealing the code", async ({ page }) => {
+test("game menu restarts without revealing the code", async ({ page }) => {
   await page.goto("/");
 
-  const newGameButton = page.getByRole("button", { name: "New game" });
-  await expect(newGameButton).toBeHidden();
-
+  const firstSlot = page.getByRole("button", { name: /^Slot 1/ }).first();
   await page.getByRole("button", { name: "Add red" }).click();
-  await newGameButton.click();
-  await page
-    .getByRole("alertdialog")
-    .getByRole("button", { name: "Abandon" })
-    .click();
+  await expect(firstSlot).toHaveAccessibleName(/^Slot 1: red/);
 
-  // Fresh board: no progress, so the button hides again and the code stays secret.
-  await expect(newGameButton).toBeHidden();
+  // Opening the menu is the confirm step; New game acts at once.
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+
+  await expect(firstSlot).toHaveAccessibleName("Slot 1, empty");
   await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
 });
 
