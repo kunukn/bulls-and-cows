@@ -141,6 +141,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
   --color-card: var(--card);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -178,12 +179,15 @@
   --slate-700: oklch(0.372 0.044 257.287);
   --slate-800: oklch(0.279 0.041 260.031);
   --slate-900: oklch(0.208 0.042 265.755);
+  --slate-950: oklch(0.129 0.042 264.695);
 }
 
 :root {
   color-scheme: dark;
   --background: light-dark(var(--slate-100), var(--slate-900));
   --foreground: light-dark(var(--slate-900), var(--slate-100));
+  /* App title and logo: the dark-mode page colour, one step deeper. */
+  --heading: light-dark(var(--slate-950), var(--slate-100));
   /* Panels on the page: result panel, high-score table, difficulty picker. */
   --card: light-dark(oklch(1 0 0), var(--slate-800));
   --popover: light-dark(oklch(1 0 0), var(--slate-800));

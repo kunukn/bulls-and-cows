@@ -25,7 +25,7 @@ export function Layout() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4">
       <header className="flex items-center justify-between gap-2 py-4">
-        <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap">
+        <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap text-heading">
           <BullIcon className="size-7 shrink-0" />
           {isMinimalText ? (
             <span className="sr-only">{t("app.title")}</span>
