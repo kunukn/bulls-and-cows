@@ -10,7 +10,7 @@ import { cn } from "@/utils/cn";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
-import { BULL_PEG_CLASS, COW_PEG_CLASS } from "../components/FeedbackPegs";
+import { COW_PEG_CLASS, useBullPegClass } from "../components/FeedbackPegs";
 import { GiveUpButton } from "../components/GiveUpButton";
 import { Palette } from "../components/Palette";
 import { ResultPanel } from "../components/ResultPanel";
@@ -27,6 +27,7 @@ export function Play() {
   const setDifficulty = useSettings((state) => state.setDifficulty);
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const bullPegClass = useBullPegClass();
   // Hidden only while playing; the final time shows once the game ends.
   const isTimerShown = isTimerVisible || !isPlaying;
   // Difficulty waiting on the abandon dialog; null while it is closed.
@@ -113,7 +114,7 @@ export function Play() {
           {!isMinimalText && (
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="flex items-center gap-1.5">
-                <span className={cn("size-2.5 rounded-full", BULL_PEG_CLASS)} />
+                <span className={cn("size-2.5 rounded-full", bullPegClass)} />
                 {t("game.legendBull")}
               </span>
               <span className="flex items-center gap-1.5">

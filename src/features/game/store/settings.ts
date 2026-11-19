@@ -20,6 +20,9 @@ type SettingsStore = {
   /* Sound effects (pegs, checks, game end); off by default. */
   isSoundEnabled: boolean;
   setSoundEnabled: (isSoundEnabled: boolean) => void;
+  /* Pink bull pegs instead of black, for players who find black hard to see. */
+  isPinkBull: boolean;
+  setPinkBull: (isPinkBull: boolean) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -38,6 +41,8 @@ export const useSettings = create<SettingsStore>()(
       setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
       isSoundEnabled: false,
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
+      isPinkBull: false,
+      setPinkBull: (isPinkBull) => set({ isPinkBull }),
     }),
     { name: "bulls-and-cows:settings" },
   ),

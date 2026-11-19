@@ -34,6 +34,8 @@ export function SettingsSheet() {
   const setAutoSubmit = useSettings((state) => state.setAutoSubmit);
   const isSoundEnabled = useSettings((state) => state.isSoundEnabled);
   const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
+  const isPinkBull = useSettings((state) => state.isPinkBull);
+  const setPinkBull = useSettings((state) => state.setPinkBull);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
   // Slide in from the inline end, the side the settings button sits on.
@@ -154,6 +156,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.soundDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-pink-bull" className="font-medium">
+                {t("common.pinkBull")}
+              </label>
+              <Switch
+                id="settings-pink-bull"
+                checked={isPinkBull}
+                onCheckedChange={setPinkBull}
+                aria-describedby="settings-pink-bull-description"
+              />
+            </div>
+            <p
+              id="settings-pink-bull-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.pinkBullDescription")}
             </p>
           </div>
           <BoardThemePicker
