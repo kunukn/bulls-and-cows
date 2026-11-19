@@ -3,14 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Bulls & Cows — Free Colour Code-Breaking Game</title>
+    <meta
+      name="description"
+      content="Free Mastermind-style code-breaking game. Crack the secret colour code from bulls and cows clues. Three difficulty levels, high scores, plays offline."
+    />
+    <meta
+      name="keywords"
+      content="bulls and cows, cows and bulls, mastermind game, code breaker, code-breaking game, colour code puzzle, logic puzzle, deduction game, brain game, puzzle game online, free browser game, offline game, PWA"
+    />
     <meta name="theme-color" content="#0f172a" />
+    <meta name="application-name" content="Bulls & Cows" />
+    <meta name="apple-mobile-web-app-title" content="Bulls & Cows" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="canonical" href="https://kunukn.github.io/bulls-and-cows/" />
     <link rel="icon" href="/bulls-and-cows/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/bulls-and-cows/apple-touch-icon.png" />
-    <title>Bulls & Cows</title>
-    <script type="module" crossorigin src="/bulls-and-cows/assets/index-Cs7kBiNB.js"></script>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Bulls & Cows — Free Colour Code-Breaking Game"
+    />
+    <meta
+      property="og:description"
+      content="Free Mastermind-style code-breaking game. Crack the secret colour code from bulls and cows clues. Three difficulty levels, high scores, plays offline."
+    />
+    <meta
+      property="og:url"
+      content="https://kunukn.github.io/bulls-and-cows/"
+    />
+    <meta property="og:site_name" content="Bulls & Cows" />
+    <meta
+      property="og:image"
+      content="https://kunukn.github.io/bulls-and-cows/icons/pwa-512x512.png"
+    />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:image:alt" content="Bulls & Cows bull logo" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Bulls & Cows — Free Colour Code-Breaking Game"
+    />
+    <meta
+      name="twitter:description"
+      content="Free Mastermind-style code-breaking game. Crack the secret colour code from bulls and cows clues. Three difficulty levels, high scores, plays offline."
+    />
+    <meta
+      name="twitter:image"
+      content="https://kunukn.github.io/bulls-and-cows/icons/pwa-512x512.png"
+    />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Bulls & Cows",
+        "alternateName": ["Bulls and Cows", "Cows and Bulls"],
+        "url": "https://kunukn.github.io/bulls-and-cows/",
+        "description": "A code-breaking puzzle game inspired by Mastermind. The computer picks a secret colour code; each guess earns bulls (right colour, right spot) and cows (right colour, wrong spot). Three difficulty levels, local high scores, seven languages. Free, no sign-up, works offline.",
+        "applicationCategory": "GameApplication",
+        "genre": ["Puzzle", "Logic"],
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "inLanguage": ["en", "zh-Hans", "hi", "ar", "fr", "de", "da"],
+        "featureList": [
+          "Easy: 4 pegs, 6 colours, no repeats",
+          "Classic: 4 pegs, 6 colours, repeats allowed",
+          "Hard: 5 pegs, 8 colours, 12 guesses",
+          "Top 10 high scores per difficulty",
+          "Keyboard controls",
+          "Installable, plays offline"
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "browserRequirements": "Requires JavaScript. Works offline after the first visit."
+      }
+    </script>
+    <script type="module" crossorigin src="/bulls-and-cows/assets/index-CtJf_pIw.js"></script>
     <link rel="stylesheet" crossorigin href="/bulls-and-cows/assets/index-CB2U1Whh.css">
   <link rel="manifest" href="/bulls-and-cows/manifest.webmanifest"></head>
   <body>
+    <noscript>
+      <h1>Bulls & Cows</h1>
+      <p>
+        A free code-breaking game inspired by Mastermind. Crack the secret
+        colour code: each guess earns bulls (right colour, right spot) and cows
+        (right colour, wrong spot). Turn on JavaScript to play.
+      </p>
+    </noscript>
     <div id="root"></div>
   </body>
 </html>
