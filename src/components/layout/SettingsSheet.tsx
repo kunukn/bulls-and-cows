@@ -105,25 +105,6 @@ export function SettingsSheet() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-timer" className="font-medium">
-                {t("common.showTimer")}
-              </label>
-              <Switch
-                id="settings-timer"
-                checked={isTimerVisible}
-                onCheckedChange={setTimerVisible}
-                aria-describedby="settings-timer-description"
-              />
-            </div>
-            <p
-              id="settings-timer-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.showTimerDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-minimal-text" className="font-medium">
                 {t("common.minimalText")}
               </label>
@@ -196,6 +177,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.pinkBullDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-timer" className="font-medium">
+                {t("common.showTimer")}
+              </label>
+              <Switch
+                id="settings-timer"
+                checked={isTimerVisible}
+                onCheckedChange={setTimerVisible}
+                aria-describedby="settings-timer-description"
+              />
+            </div>
+            <p
+              id="settings-timer-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.showTimerDescription")}
             </p>
           </div>
           <BoardThemePicker
