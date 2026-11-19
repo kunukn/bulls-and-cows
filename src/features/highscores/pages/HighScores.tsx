@@ -53,7 +53,7 @@ export function HighScores() {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-8">
       {/* The active trophy tab already says where you are. */}
       <h2 className={isMinimalText ? "sr-only" : "text-xl font-bold"}>
         {t("highScores.title")}

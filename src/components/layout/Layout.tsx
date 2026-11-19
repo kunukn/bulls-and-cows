@@ -65,7 +65,8 @@ export function Layout() {
           <SettingsSheet />
         </div>
       </header>
-      <main className="flex flex-1 flex-col pb-8">
+      {/* No bottom padding: Play's sticky dock pads itself; it would show only at scroll end. */}
+      <main className="flex flex-1 flex-col">
         <Outlet />
       </main>
     </div>
