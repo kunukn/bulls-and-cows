@@ -17,7 +17,7 @@ type SettingsStore = {
   /* Check the guess as soon as the last peg is placed. */
   isAutoSubmit: boolean;
   setAutoSubmit: (isAutoSubmit: boolean) => void;
-  /* Sound effects (pegs, checks, game end); off by default. */
+  /* Sound effects (pegs, checks, game end); on by default (0006). */
   isSoundEnabled: boolean;
   setSoundEnabled: (isSoundEnabled: boolean) => void;
   /* Pink bull pegs instead of black, for players who find black hard to see. */
@@ -42,7 +42,7 @@ export const useSettings = create<SettingsStore>()(
       setMinimalText: (isMinimalText) => set({ isMinimalText }),
       isAutoSubmit: false,
       setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
-      isSoundEnabled: false,
+      isSoundEnabled: true,
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
