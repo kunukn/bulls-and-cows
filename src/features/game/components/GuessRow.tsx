@@ -4,7 +4,7 @@ import { cn } from "@/utils/cn";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { FeedbackPegs } from "./FeedbackPegs";
-import { Peg } from "./Peg";
+import { Peg, pickInsertAnimation } from "./Peg";
 import { NUMBER_COLUMN, PEGS_COLUMN, ROW_LAYOUT } from "./rowLayout";
 
 type Props = {
@@ -12,6 +12,8 @@ type Props = {
   pegs: (Color | null)[];
   guess?: Guess;
   isActive?: boolean;
+  /* The latest scored row: its feedback pegs pop in. */
+  isJustScored?: boolean;
   onClearSlot?: (index: number) => void;
   ref?: React.Ref<HTMLLIElement>;
 };
@@ -21,6 +23,7 @@ export function GuessRow({
   pegs,
   guess,
   isActive = false,
+  isJustScored = false,
   onClearSlot,
   ref,
 }: Props) {
@@ -62,7 +65,10 @@ export function GuessRow({
             >
               <Peg
                 color={color}
-                className="transition-opacity group-hover:opacity-70"
+                className={cn(
+                  pickInsertAnimation(rowNumber, index, color),
+                  "transition-opacity group-hover:opacity-70",
+                )}
               />
               {/* Touch has no hover, so the badge is always shown there. */}
               <span
@@ -82,6 +88,7 @@ export function GuessRow({
         white={guess?.white}
         pegs={pegs.length}
         isScored={Boolean(guess)}
+        isAnimated={isJustScored}
         className={cn(isUpcoming && "opacity-60")}
       />
     </li>

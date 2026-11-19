@@ -85,6 +85,7 @@ export function Board() {
               }
               guess={guess}
               isActive={isActive}
+              isJustScored={index === guesses.length - 1}
               onClearSlot={(slot) =>
                 actor.send({ type: "CLEAR_SLOT", index: slot })
               }

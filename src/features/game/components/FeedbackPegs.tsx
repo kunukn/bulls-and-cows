@@ -17,8 +17,12 @@ type Props = Partial<Feedback> & {
   pegs: number;
   /* False for rows not yet guessed: draw empty holes, announce nothing. */
   isScored?: boolean;
+  /* Pop scored pegs in one after another (bulls first, then cows). */
+  isAnimated?: boolean;
   className?: string;
 };
+
+const FEEDBACK_STAGGER_MS = 70;
 
 /* Bulls (black) first, then cows (white), then empty holes. */
 export function FeedbackPegs({
@@ -26,6 +30,7 @@ export function FeedbackPegs({
   white = 0,
   pegs,
   isScored = true,
+  isAnimated = false,
   className,
 }: Props) {
   const { t } = useTranslation();
@@ -65,7 +70,15 @@ export function FeedbackPegs({
               mark === "black" && cn("size-3", BULL_PEG_CLASS),
               mark === "white" && cn("size-3", COW_PEG_CLASS),
               mark === "empty" && "size-1.5 bg-board-label opacity-40",
+              isAnimated &&
+                mark !== "empty" &&
+                "motion-safe:animate-feedback-pop",
             )}
+            style={
+              isAnimated && mark !== "empty"
+                ? { animationDelay: `${index * FEEDBACK_STAGGER_MS}ms` }
+                : undefined
+            }
           />
         </span>
       ))}

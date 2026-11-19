@@ -1,6 +1,35 @@
-import type { Color } from "@/features/game/logic";
+import { COLORS, type Color } from "@/features/game/logic";
 import { cn } from "@/utils/cn";
 import { PEG_SIZE } from "./rowLayout";
+
+/* Insert animations (keyframes in index.css); literal for Tailwind's scanner. */
+export const PEG_INSERT_ANIMATIONS = [
+  "motion-safe:animate-peg-pop",
+  "motion-safe:animate-peg-drop",
+  "motion-safe:animate-peg-squish",
+  "motion-safe:animate-peg-ripple",
+] as const;
+
+/*
+ * Varies the insert animation across slots without Math.random(): the same
+ * slot and colour always get the same variant, so re-renders stay pure.
+ */
+export function pickInsertAnimation(
+  rowNumber: number,
+  slot: number,
+  color: Color,
+): string {
+  /*
+   * Integer hash (xorshift-multiply), not a linear sum: a linear seed lines up
+   * with palette order, e.g. red, blue, green, yellow all got one variant.
+   */
+  let hash = (rowNumber * 31 + slot) * 31 + COLORS.indexOf(color);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+  hash = Math.imul(hash ^ (hash >>> 16), 0x45d9f3b);
+  hash ^= hash >>> 16;
+
+  return PEG_INSERT_ANIMATIONS[(hash >>> 0) % PEG_INSERT_ANIMATIONS.length];
+}
 
 /* Literal class names so Tailwind's scanner picks them up. */
 export const PEG_CLASS: Record<Color, string> = {
