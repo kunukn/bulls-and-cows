@@ -86,6 +86,25 @@ export function SettingsSheet() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-sound" className="font-medium">
+                {t("common.sound")}
+              </label>
+              <Switch
+                id="settings-sound"
+                checked={isSoundEnabled}
+                onCheckedChange={setSoundEnabled}
+                aria-describedby="settings-sound-description"
+              />
+            </div>
+            <p
+              id="settings-sound-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.soundDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-peg-shapes" className="font-medium">
                 {t("common.pegShapes")}
               </label>
@@ -139,25 +158,6 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.autoSubmitDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-sound" className="font-medium">
-                {t("common.sound")}
-              </label>
-              <Switch
-                id="settings-sound"
-                checked={isSoundEnabled}
-                onCheckedChange={setSoundEnabled}
-                aria-describedby="settings-sound-description"
-              />
-            </div>
-            <p
-              id="settings-sound-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.soundDescription")}
             </p>
           </div>
           <div className="flex flex-col gap-2">
