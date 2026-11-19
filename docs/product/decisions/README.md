@@ -4,10 +4,11 @@ Why the product rules are what they are, including the options that were tried a
 
 Records are append-only. To change a decision, add a new record and mark the old one `Superseded by NNNN`.
 
-| #                                     | Decision                                           | Status   |
-| ------------------------------------- | -------------------------------------------------- | -------- |
-| [0001](0001-physical-board-motion.md) | Motion follows a physical board                    | Accepted |
-| [0002](0002-peg-sounds.md)            | Peg sounds are real plastic clicks, off by default | Accepted |
+| #                                     | Decision                                                   | Status   |
+| ------------------------------------- | ---------------------------------------------------------- | -------- |
+| [0001](0001-physical-board-motion.md) | Motion follows a physical board                            | Accepted |
+| [0002](0002-peg-sounds.md)            | Peg sounds are real plastic clicks, off by default         | Accepted |
+| [0003](0003-game-sounds.md)           | Board sounds stay physical; only the game's end gets music | Accepted |
 
 ## Template
 
