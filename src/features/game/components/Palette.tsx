@@ -62,7 +62,8 @@ export function Palette() {
           </button>
         ))}
       </div>
-      <div className="flex justify-center gap-2">
+      {/* Wide gap: Undo and Check are opposite actions, easy to mis-tap. */}
+      <div className="flex justify-center gap-6">
         <button
           type="button"
           disabled={isRowEmpty}
