@@ -6,8 +6,9 @@ import { PEG_SIZE } from "./rowLayout";
 export const PEG_INSERT_ANIMATIONS = [
   "motion-safe:animate-peg-pop",
   "motion-safe:animate-peg-drop",
-  "motion-safe:animate-peg-squish",
   "motion-safe:animate-peg-ripple",
+  "motion-safe:animate-peg-tip",
+  "motion-safe:animate-peg-rattle",
 ] as const;
 
 /*
