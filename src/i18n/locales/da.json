@@ -16,6 +16,8 @@
     "autoSubmitDescription": "Tjekker dit gæt, så snart den sidste pind er sat.",
     "sound": "Lydeffekter",
     "soundDescription": "Klik for pindene og en lille melodi, når du vinder eller taber.",
+    "lightMode": "Lys tilstand",
+    "lightModeDescription": "Et lyst udseende til appen. Brættet beholder sit tema, og udskrift er altid lys.",
     "pinkBull": "Lyserøde tyre",
     "pinkBullDescription": "Vis pinde på rigtig plads i lyserød i stedet for sort.",
     "pegShapes": "Farveformer",

@@ -19,7 +19,7 @@ export function BoardThemePicker({ value, onChange, name, legend }: Props) {
         {BOARD_THEMES.map((theme) => (
           <label
             key={theme}
-            className="flex cursor-pointer flex-col gap-1.5 rounded-lg p-1.5 text-center text-sm text-slate-300 ring-1 ring-border transition-colors has-checked:bg-slate-700 has-checked:text-white has-checked:ring-2 has-checked:ring-slate-300 has-focus-visible:outline-2 has-focus-visible:outline-sky-400"
+            className="flex cursor-pointer flex-col gap-1.5 rounded-lg p-1.5 text-center text-sm text-subtle ring-1 ring-border transition-colors has-checked:bg-secondary has-checked:text-foreground has-checked:ring-2 has-checked:ring-subtle has-focus-visible:outline-2 has-focus-visible:outline-ring"
           >
             <input
               type="radio"

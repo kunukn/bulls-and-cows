@@ -44,7 +44,7 @@ export function HowItWorksPopover() {
           size="icon-lg"
           aria-label={t("help.button")}
           title={t("help.button")}
-          className="text-slate-300 hover:text-white"
+          className="text-subtle hover:text-foreground"
         >
           <CircleHelp className="size-5" />
         </Button>

@@ -21,7 +21,7 @@ export function GiveUpButton() {
         type="button"
         onClick={() => setIsOpen(true)}
         title={isMinimalText ? t("game.giveUp") : undefined}
-        className="-my-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 text-xs text-slate-400 transition-colors hover:bg-slate-800 hover:text-slate-200 focus-visible:outline-2 focus-visible:outline-sky-400"
+        className="-my-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 text-xs text-muted-foreground transition-colors hover:bg-card hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
       >
         <Flag className="size-3.5" />
         <span className={isMinimalText ? "sr-only" : undefined}>

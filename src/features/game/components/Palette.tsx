@@ -11,7 +11,7 @@ import { PEG_CLASS } from "./Peg";
 import { PegShape } from "./PegShape";
 
 const actionButtonClass =
-  "flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 disabled:cursor-not-allowed disabled:opacity-40";
+  "flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-40";
 
 export function Palette() {
   const { t } = useTranslation();
@@ -59,7 +59,7 @@ export function Palette() {
             })}
             className={cn(
               PEG_CLASS[color],
-              "relative grid aspect-square w-full place-items-center rounded-full shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40",
+              "relative grid aspect-square w-full place-items-center rounded-full shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-95 disabled:cursor-not-allowed disabled:opacity-40",
             )}
           >
             {isPegShapes && <PegShape color={color} className="size-3/5" />}
@@ -80,7 +80,7 @@ export function Palette() {
           disabled={isRowEmpty}
           onClick={() => actor.send({ type: "REMOVE_PEG" })}
           title={isMinimalText ? t("game.undo") : undefined}
-          className={cn(actionButtonClass, "bg-slate-700 hover:bg-slate-600")}
+          className={cn(actionButtonClass, "bg-secondary hover:bg-control")}
         >
           <Delete className="size-4" />
           <span className={labelClass}>{t("game.undo")}</span>

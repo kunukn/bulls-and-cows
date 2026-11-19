@@ -27,7 +27,7 @@ export function Timer({ className }: Props) {
 
   return (
     <span
-      className={cn("font-mono text-sm text-slate-300 tabular-nums", className)}
+      className={cn("font-mono text-sm text-subtle tabular-nums", className)}
     >
       <span className="sr-only">{t("game.time")} </span>
       {formatDuration(Math.max(0, elapsed))}

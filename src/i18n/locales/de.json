@@ -16,6 +16,8 @@
     "autoSubmitDescription": "Prüft deinen Tipp, sobald der letzte Stift drin ist.",
     "sound": "Soundeffekte",
     "soundDescription": "Klicks für die Stifte und eine Melodie, wenn du gewinnst oder verlierst.",
+    "lightMode": "Heller Modus",
+    "lightModeDescription": "Ein helles Aussehen für die App. Das Brett behält sein Design, und Drucken ist immer hell.",
     "pinkBull": "Pinke Bullen",
     "pinkBullDescription": "Zeigt Stifte an der richtigen Stelle pink statt schwarz.",
     "pegShapes": "Farbformen",

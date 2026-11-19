@@ -20,7 +20,7 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
   const isMinimalText = useSettings((state) => state.isMinimalText);
 
   return (
-    <fieldset className="flex rounded-lg bg-slate-800 p-1">
+    <fieldset className="flex rounded-lg bg-card p-1">
       <legend className="sr-only">{legend}</legend>
       {DIFFICULTY_KEYS.map((key, index) => {
         const { pegs, colors } = DIFFICULTIES[key];
@@ -28,7 +28,7 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
         return (
           <label
             key={key}
-            className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-slate-300 transition-colors has-checked:bg-slate-600 has-checked:text-white has-focus-visible:outline-2 has-focus-visible:outline-sky-400"
+            className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
           >
             <input
               type="radio"
@@ -56,7 +56,7 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
             ) : (
               <>
                 {t(`difficulty.${key}`)}
-                <span className="block text-xs font-normal text-slate-400">
+                <span className="block text-xs font-normal text-muted-foreground">
                   {t("difficulty.details", { pegs, colors })}
                 </span>
               </>

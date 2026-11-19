@@ -45,7 +45,7 @@ function OutcomeMessage({
 
     return (
       <p title={message}>
-        <CircleX aria-hidden className="size-7 text-red-400" />
+        <CircleX aria-hidden className="size-7 text-destructive" />
         <span className="sr-only">{message}</span>
       </p>
     );
@@ -56,7 +56,7 @@ function OutcomeMessage({
 
   return (
     <p className="flex items-center gap-2 text-lg font-semibold">
-      <Trophy className="size-5 shrink-0 text-amber-400" />
+      <Trophy className="size-5 shrink-0 text-warning" />
       {isMinimalText ? (
         <>
           <span aria-hidden className="tabular-nums">
@@ -107,7 +107,7 @@ export function ResultPanel() {
   return (
     <section
       aria-live="polite"
-      className="flex flex-col items-center gap-3 rounded-2xl bg-slate-800 p-4 text-center"
+      className="flex flex-col items-center gap-3 rounded-2xl bg-card p-4 text-center"
     >
       <OutcomeMessage
         isWon={isWon}
@@ -125,7 +125,10 @@ export function ResultPanel() {
           className="flex w-full items-center gap-2"
         >
           {isMinimalText && (
-            <UserRound aria-hidden className="size-5 shrink-0 text-slate-400" />
+            <UserRound
+              aria-hidden
+              className="size-5 shrink-0 text-muted-foreground"
+            />
           )}
           <label htmlFor="highscore-name" className="sr-only">
             {t("result.yourName")}
@@ -141,12 +144,12 @@ export function ResultPanel() {
             autoFocus
             defaultValue={lastName}
             placeholder={isMinimalText ? undefined : t("result.yourName")}
-            className="min-w-0 flex-1 rounded-lg bg-slate-900 px-3 py-2 text-slate-100 ring-1 ring-slate-600 outline-none focus:ring-2 focus:ring-sky-400"
+            className="min-w-0 flex-1 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
           />
           <button
             type="submit"
             title={isMinimalText ? t("result.save") : undefined}
-            className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+            className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             {isMinimalText && <Save aria-hidden className="size-5" />}
             <span className={labelClass}>{t("result.save")}</span>
@@ -154,7 +157,7 @@ export function ResultPanel() {
         </form>
       )}
       {isRecorded && (
-        <p className="text-sm text-emerald-400">
+        <p className="text-sm text-success">
           {isMinimalText && <CircleCheck aria-hidden className="size-5" />}
           <span className={labelClass}>{t("result.saved")}</span>
         </p>
@@ -164,7 +167,7 @@ export function ResultPanel() {
         type="button"
         onClick={() => actor.send({ type: "NEW_GAME" })}
         title={isMinimalText ? t("result.newGame") : undefined}
-        className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
+        className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >
         {isMinimalText && <RotateCcw aria-hidden className="size-5" />}
         <span className={labelClass}>{t("result.newGame")}</span>

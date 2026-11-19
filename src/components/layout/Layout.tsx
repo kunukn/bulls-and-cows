@@ -12,8 +12,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   cn(
     "flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium whitespace-nowrap transition-colors",
     isActive
-      ? "bg-slate-700 text-white"
-      : "text-slate-300 hover:bg-slate-800 hover:text-white",
+      ? "bg-secondary text-foreground"
+      : "text-subtle hover:bg-card hover:text-foreground",
   );
 
 export function Layout() {

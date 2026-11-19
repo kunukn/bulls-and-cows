@@ -126,7 +126,7 @@ export function Play() {
       />
       {/* Minimal text drops the legend; the help popover still explains pegs. */}
       {(!isMinimalText || isTimerShown || isPlaying) && (
-        <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
+        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
           {!isMinimalText && (
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="flex items-center gap-1.5">
@@ -134,7 +134,12 @@ export function Play() {
                 {t("game.legendBull")}
               </span>
               <span className="flex items-center gap-1.5">
-                <span className={cn("size-2.5 rounded-full", COW_PEG_CLASS)} />
+                <span
+                  className={cn(
+                    "size-2.5 rounded-full ring-1 ring-black/20",
+                    COW_PEG_CLASS,
+                  )}
+                />
                 {t("game.legendCow")}
               </span>
             </span>
@@ -148,7 +153,7 @@ export function Play() {
       <Board />
       {/* Sticky: on short viewports the board scrolls under the controls. */}
       <div className="dock sticky bottom-0 -mx-4">
-        <div className="bg-slate-900/90 px-4 pt-3 pb-4 dock-shadow backdrop-blur">
+        <div className="bg-background/90 px-4 pt-3 pb-4 dock-shadow backdrop-blur">
           {isPlaying ? <Palette /> : <ResultPanel />}
         </div>
       </div>

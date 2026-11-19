@@ -68,17 +68,17 @@ export function HighScores() {
       />
 
       {entries.length === 0 ? (
-        <p className="flex justify-center rounded-2xl bg-slate-800 p-6 text-center text-slate-400">
+        <p className="flex justify-center rounded-2xl bg-card p-6 text-center text-muted-foreground">
           {isMinimalText && (
-            <Trophy aria-hidden className="size-10 text-slate-600" />
+            <Trophy aria-hidden className="size-10 text-faint" />
           )}
           <span className={isMinimalText ? "sr-only" : undefined}>
             {t("highScores.empty")}
           </span>
         </p>
       ) : (
-        <table className="w-full overflow-hidden rounded-2xl bg-slate-800 text-left text-sm">
-          <thead className="bg-slate-700/60 text-xs tracking-wide text-slate-300 uppercase">
+        <table className="w-full overflow-hidden rounded-2xl bg-card text-left text-sm">
+          <thead className="bg-secondary/60 text-xs tracking-wide text-subtle uppercase">
             <tr>
               <th scope="col" className="px-3 py-2">
                 {t("highScores.rank")}
@@ -118,8 +118,8 @@ export function HighScores() {
           </thead>
           <tbody>
             {entries.map((entry, index) => (
-              <tr key={entry.id} className="border-t border-slate-700">
-                <td className="px-3 py-2 text-slate-400 tabular-nums">
+              <tr key={entry.id} className="border-t border-secondary">
+                <td className="px-3 py-2 text-muted-foreground tabular-nums">
                   {index + 1}
                 </td>
                 <td className="max-w-32 truncate px-3 py-2 font-medium">
@@ -131,7 +131,7 @@ export function HighScores() {
                 <td className="px-3 py-2 text-right font-mono tabular-nums">
                   {formatDuration(entry.elapsedMs)}
                 </td>
-                <td className="hidden px-3 py-2 text-right text-slate-400 sm:table-cell">
+                <td className="hidden px-3 py-2 text-right text-muted-foreground sm:table-cell">
                   {formatDate(entry.achievedAt, i18n.language)}
                 </td>
               </tr>
@@ -145,7 +145,7 @@ export function HighScores() {
         onClick={handleClear}
         title={isMinimalText ? t("highScores.clear") : undefined}
         className={cn(
-          "self-end text-sm text-slate-400 underline-offset-2 hover:text-red-400",
+          "self-end text-sm text-muted-foreground underline-offset-2 hover:text-destructive",
           isMinimalText ? "rounded-md p-2" : "hover:underline",
         )}
       >

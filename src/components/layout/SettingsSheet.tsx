@@ -38,6 +38,8 @@ export function SettingsSheet() {
   const setPinkBull = useSettings((state) => state.setPinkBull);
   const isPegShapes = useSettings((state) => state.isPegShapes);
   const setPegShapes = useSettings((state) => state.setPegShapes);
+  const colorScheme = useSettings((state) => state.colorScheme);
+  const setColorScheme = useSettings((state) => state.setColorScheme);
   const boardTheme = useSettings((state) => state.boardTheme);
   const setBoardTheme = useSettings((state) => state.setBoardTheme);
   // Slide in from the inline end, the side the settings button sits on.
@@ -56,7 +58,7 @@ export function SettingsSheet() {
           size="icon-lg"
           aria-label={t("common.settings")}
           title={t("common.settings")}
-          className="text-slate-300 hover:text-white"
+          className="text-subtle hover:text-foreground"
         >
           <Settings className="size-5" />
         </Button>
@@ -88,6 +90,27 @@ export function SettingsSheet() {
               {t("common.language")}
             </label>
             <LanguageSelect id="settings-language" />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-light-mode" className="font-medium">
+                {t("common.lightMode")}
+              </label>
+              <Switch
+                id="settings-light-mode"
+                checked={colorScheme === "light"}
+                onCheckedChange={(isChecked) =>
+                  setColorScheme(isChecked ? "light" : "dark")
+                }
+                aria-describedby="settings-light-mode-description"
+              />
+            </div>
+            <p
+              id="settings-light-mode-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.lightModeDescription")}
+            </p>
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">

@@ -16,6 +16,8 @@
     "autoSubmitDescription": "Vérifie ton essai dès que le dernier pion est posé.",
     "sound": "Effets sonores",
     "soundDescription": "Des clics pour les pions, et un air quand tu gagnes ou perds.",
+    "lightMode": "Mode clair",
+    "lightModeDescription": "Un look clair pour l’appli. Le plateau garde son thème, et l’impression est toujours claire.",
     "pinkBull": "Taureaux roses",
     "pinkBullDescription": "Affiche les pions bien placés en rose plutôt qu’en noir.",
     "pegShapes": "Formes des couleurs",

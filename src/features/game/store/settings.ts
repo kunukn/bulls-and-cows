@@ -3,6 +3,8 @@ import { persist } from "zustand/middleware";
 import type { BoardTheme } from "@/features/game/boardThemes";
 import type { Difficulty } from "@/features/game/logic";
 
+export type ColorScheme = "dark" | "light";
+
 type SettingsStore = {
   difficulty: Difficulty;
   setDifficulty: (difficulty: Difficulty) => void;
@@ -26,6 +28,9 @@ type SettingsStore = {
   /* A shape on each colour peg, for players who find colours hard to tell apart. */
   isPegShapes: boolean;
   setPegShapes: (isPegShapes: boolean) => void;
+  /* App interface only; board themes and printing ignore it (0008). */
+  colorScheme: ColorScheme;
+  setColorScheme: (colorScheme: ColorScheme) => void;
 };
 
 export const useSettings = create<SettingsStore>()(
@@ -48,7 +53,34 @@ export const useSettings = create<SettingsStore>()(
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
       isPegShapes: false,
       setPegShapes: (isPegShapes) => set({ isPegShapes }),
+      colorScheme: "dark",
+      setColorScheme: (colorScheme) => set({ colorScheme }),
     }),
     { name: "bulls-and-cows:settings" },
   ),
 );
+
+// Matches --background per scheme, for the browser toolbar.
+const THEME_COLORS: Record<ColorScheme, string> = {
+  dark: "#0f172a",
+  light: "#f1f5f9",
+};
+
+/* Mirror the scheme onto <html> so `light-dark()` tokens in index.css follow it. */
+export function applyColorScheme(colorScheme: ColorScheme) {
+  document.documentElement.dataset.colorScheme = colorScheme;
+  document
+    .querySelector('meta[name="theme-color"]')
+    ?.setAttribute("content", THEME_COLORS[colorScheme]);
+}
+
+/*
+ * persist hydrates synchronously from localStorage, so this runs before the
+ * first render and a returning light-mode player sees no dark flash.
+ */
+applyColorScheme(useSettings.getState().colorScheme);
+useSettings.subscribe((state, previous) => {
+  if (state.colorScheme !== previous.colorScheme) {
+    applyColorScheme(state.colorScheme);
+  }
+});

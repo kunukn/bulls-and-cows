@@ -16,6 +16,8 @@
     "autoSubmitDescription": "填好最后一个颜色就马上检查。",
     "sound": "音效",
     "soundDescription": "放颜色时有咔嗒声，赢了或输了会有一段小曲。",
+    "lightMode": "浅色模式",
+    "lightModeDescription": "让界面变亮。棋盘保持原来的主题，打印时总是浅色。",
     "pinkBull": "粉色公牛",
     "pinkBullDescription": "位置正确的提示钉显示为粉色，而不是黑色。",
     "pegShapes": "颜色形状",

@@ -16,6 +16,8 @@
     "autoSubmitDescription": "Checks your guess as soon as the last peg is in.",
     "sound": "Sound effects",
     "soundDescription": "Clicks for pegs, plus a tune when you win or lose.",
+    "lightMode": "Light mode",
+    "lightModeDescription": "A bright look for the app. The board keeps its theme, and printing is always light.",
     "pinkBull": "Pink bulls",
     "pinkBullDescription": "Show right-spot pegs in pink instead of black.",
     "pegShapes": "Colour shapes",
