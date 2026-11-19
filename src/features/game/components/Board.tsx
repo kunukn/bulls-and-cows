@@ -17,6 +17,18 @@ import {
 } from "./rowLayout";
 import { Peg } from "./Peg";
 
+/* Symmetric, so it needs no RTL counterpart. */
+const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
+  { transform: "translateX(0)" },
+  { transform: "translateX(-5px)" },
+  { transform: "translateX(5px)" },
+  { transform: "translateX(-3px)" },
+  { transform: "translateX(2px)" },
+  { transform: "translateX(0)" },
+];
+
+const SECRET_FLIP_STAGGER_MS = 90;
+
 export function Board() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
@@ -24,6 +36,7 @@ export function Board() {
     (snapshot) => snapshot.context,
   );
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
+  const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
   const activeRowRef = useRef<HTMLLIElement>(null);
   const boardTheme = useSettings((state) => state.boardTheme);
@@ -35,6 +48,24 @@ export function Board() {
       behavior: "smooth",
     });
   }, [guesses.length]);
+
+  /*
+   * Rejected submit (Enter on an unfinished row): shake the active row. The
+   * Web Animations API restarts on every call, which a CSS class can't do
+   * without a remove/reflow/add dance.
+   */
+  useEffect(() => {
+    const subscription = actor.on("rowIncomplete", () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      activeRowRef.current?.animate(ROW_SHAKE_KEYFRAMES, {
+        duration: 280,
+        easing: "ease-out",
+      });
+    });
+
+    return () => subscription.unsubscribe();
+  }, [actor]);
 
   return (
     <section
@@ -63,7 +94,13 @@ export function Board() {
               ))
             : secret.map((color, index) => (
                 <span key={index} className="contents">
-                  <Peg color={color} />
+                  <Peg
+                    color={color}
+                    className="motion-safe:animate-secret-flip"
+                    style={{
+                      animationDelay: `${index * SECRET_FLIP_STAGGER_MS}ms`,
+                    }}
+                  />
                   <span className="sr-only">{t(`colors.${color}`)}</span>
                 </span>
               ))}
@@ -86,6 +123,7 @@ export function Board() {
               guess={guess}
               isActive={isActive}
               isJustScored={index === guesses.length - 1}
+              isWinning={isWon && index === guesses.length - 1}
               onClearSlot={(slot) =>
                 actor.send({ type: "CLEAR_SLOT", index: slot })
               }

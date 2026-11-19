@@ -46,12 +46,15 @@ export const PEG_CLASS: Record<Color, string> = {
 type Props = {
   color: Color | null;
   className?: string;
+  /* For per-peg animation delays. */
+  style?: React.CSSProperties;
 };
 
-export function Peg({ color, className }: Props) {
+export function Peg({ color, className, style }: Props) {
   return (
     <span
       aria-hidden
+      style={style}
       className={cn(
         PEG_SIZE,
         "block rounded-full",

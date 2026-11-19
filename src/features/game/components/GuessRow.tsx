@@ -3,8 +3,10 @@ import type { Guess } from "@/features/game/machine";
 import { cn } from "@/utils/cn";
 import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { FeedbackPegs } from "./FeedbackPegs";
+import { FeedbackPegs, feedbackRevealMs } from "./FeedbackPegs";
 import { Peg, pickInsertAnimation } from "./Peg";
+
+const SHIMMER_STAGGER_MS = 80;
 import { NUMBER_COLUMN, PEGS_COLUMN, ROW_LAYOUT } from "./rowLayout";
 
 type Props = {
@@ -14,6 +16,8 @@ type Props = {
   isActive?: boolean;
   /* The latest scored row: its feedback pegs pop in. */
   isJustScored?: boolean;
+  /* The row that cracked the code: its pegs shimmer once feedback is in. */
+  isWinning?: boolean;
   onClearSlot?: (index: number) => void;
   ref?: React.Ref<HTMLLIElement>;
 };
@@ -24,6 +28,7 @@ export function GuessRow({
   guess,
   isActive = false,
   isJustScored = false,
+  isWinning = false,
   onClearSlot,
   ref,
 }: Props) {
@@ -79,7 +84,19 @@ export function GuessRow({
               </span>
             </button>
           ) : (
-            <Peg key={index} color={color} />
+            <Peg
+              key={index}
+              color={color}
+              className={cn(isWinning && "motion-safe:animate-peg-shimmer")}
+              style={
+                isWinning
+                  ? {
+                      // Starts after the feedback pegs have popped in.
+                      animationDelay: `${feedbackRevealMs(pegs.length) + index * SHIMMER_STAGGER_MS}ms`,
+                    }
+                  : undefined
+              }
+            />
           ),
         )}
       </div>

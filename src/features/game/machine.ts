@@ -1,4 +1,4 @@
-import { assign, setup } from "xstate";
+import { assign, emit, setup } from "xstate";
 import {
   cryptoRandomInt,
   DIFFICULTIES,
@@ -36,6 +36,9 @@ export type GameEvent =
   | { type: "GIVE_UP" }
   | { type: "NEW_GAME"; difficulty?: Difficulty };
 
+/* Side-channel notices for the UI; they don't change game state. */
+export type GameEmitted = { type: "rowIncomplete" };
+
 function emptyRow(difficulty: Difficulty): null[] {
   return Array(DIFFICULTIES[difficulty].pegs).fill(null);
 }
@@ -64,6 +67,7 @@ export const gameMachine = setup({
     context: {} as GameContext,
     events: {} as GameEvent,
     input: {} as GameInput,
+    emitted: {} as GameEmitted,
   },
   guards: {
     isRowComplete: ({ context }) => isComplete(context.current),
@@ -160,6 +164,8 @@ export const gameMachine = setup({
             actions: ["submitGuess", "markFinished"],
           },
           { guard: "isRowComplete", actions: "submitGuess" },
+          // Rejected submit: lets the board shake the active row.
+          { actions: emit({ type: "rowIncomplete" }) },
         ],
         // Ends the game as a loss so the secret is revealed.
         GIVE_UP: { target: "lost", actions: "markFinished" },

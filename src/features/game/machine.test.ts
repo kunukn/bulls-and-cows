@@ -36,6 +36,19 @@ describe("gameMachine", () => {
     ]);
   });
 
+  it("emits rowIncomplete only for a rejected SUBMIT", () => {
+    const actor = startGame();
+    const onRowIncomplete = vi.fn<() => void>();
+    actor.on("rowIncomplete", onRowIncomplete);
+
+    actor.send({ type: "ADD_PEG", color: "blue" });
+    actor.send({ type: "SUBMIT" });
+    expect(onRowIncomplete).toHaveBeenCalledTimes(1);
+
+    guess(actor, ["blue", "blue", "blue"]);
+    expect(onRowIncomplete).toHaveBeenCalledTimes(1);
+  });
+
   it("edits the current row", () => {
     const actor = startGame();
     guessPegs(actor, ["blue", "green", "yellow"]);

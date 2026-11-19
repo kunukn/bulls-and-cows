@@ -23,6 +23,12 @@ type Props = Partial<Feedback> & {
 };
 
 const FEEDBACK_STAGGER_MS = 70;
+const FEEDBACK_POP_MS = 160;
+
+/* Time until every feedback peg of a row has popped in. */
+export function feedbackRevealMs(pegs: number): number {
+  return (pegs - 1) * FEEDBACK_STAGGER_MS + FEEDBACK_POP_MS;
+}
 
 /* Bulls (black) first, then cows (white), then empty holes. */
 export function FeedbackPegs({
