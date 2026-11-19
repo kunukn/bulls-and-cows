@@ -40,6 +40,43 @@ describe("game persistence", () => {
     expect(restored.getSnapshot().context.guesses).toEqual([]);
   });
 
+  it("rebuilds the slot target for a game saved before targeting", () => {
+    localStorage.setItem(
+      GAME_STORAGE_KEY,
+      JSON.stringify({
+        version: 1,
+        value: "playing",
+        context: {
+          difficulty: "classic",
+          secret: ["red", "blue", "green", "yellow"],
+          guesses: [],
+          current: ["red", "blue", null, null],
+          startedAt: 1,
+          finishedAt: 0,
+        },
+      }),
+    );
+
+    const { context } = loadGame()!;
+
+    expect(context.target).toBe(2);
+    expect(context.placed).toEqual([0, 1]);
+  });
+
+  it("keeps a saved slot target", () => {
+    const actor = createActor(gameMachine, {
+      input: { difficulty: "classic", randomInt: sequence([0]) },
+    }).start();
+    actor.subscribe(saveGame);
+    actor.send({ type: "SELECT_SLOT", index: 3 });
+    actor.send({ type: "ADD_PEG", color: "green" });
+
+    const { context } = loadGame()!;
+
+    expect(context.target).toBe(0);
+    expect(context.placed).toEqual([3]);
+  });
+
   it("restores a finished game in its final state", () => {
     const actor = createActor(gameMachine, {
       input: { difficulty: "classic", randomInt: sequence([0, 1, 2, 3]) },

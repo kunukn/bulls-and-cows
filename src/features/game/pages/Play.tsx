@@ -50,7 +50,10 @@ export function Play() {
     startGame(next);
   }
 
-  /* Keys 1–8 add a colour, Backspace undoes, Enter checks the row. */
+  /*
+   * Keys 1–8 add a colour, ←/→ move the target slot, Backspace undoes,
+   * Enter checks the row.
+   */
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (!isPlaying || event.metaKey || event.ctrlKey || event.altKey) return;
@@ -72,6 +75,19 @@ export function Play() {
           color: palette[digit - 1],
           isAutoSubmit: useSettings.getState().isAutoSubmit,
         });
+      } else if (
+        (event.key === "ArrowLeft" || event.key === "ArrowRight") &&
+        // Arrows already move between the difficulty radios.
+        !target.closest("input")
+      ) {
+        event.preventDefault();
+        const { target: slot, current } = actor.getSnapshot().context;
+        // The row mirrors in RTL, so "right" walks back towards slot 1.
+        const isRtl = document.documentElement.dir === "rtl";
+        const step = (event.key === "ArrowRight") !== isRtl ? 1 : -1;
+        const from = slot ?? (step === 1 ? -1 : current.length);
+        const index = Math.min(Math.max(from + step, 0), current.length - 1);
+        actor.send({ type: "SELECT_SLOT", index });
       } else if (event.key === "Backspace") {
         event.preventDefault();
         actor.send({ type: "REMOVE_PEG" });

@@ -20,6 +20,10 @@ export function Palette() {
   const current = useGameSelector((snapshot) => snapshot.context.current);
   const isRowFull = !current.includes(null);
   const isRowEmpty = current.every((peg) => peg === null);
+  // No target once the row is full; tapping a peg picks one to replace.
+  const hasTarget = useGameSelector(
+    (snapshot) => snapshot.context.target !== null,
+  );
   const palette = paletteFor(difficulty);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const isPegShapes = useSettings((state) => state.isPegShapes);
@@ -41,7 +45,7 @@ export function Palette() {
           <button
             key={color}
             type="button"
-            disabled={isRowFull}
+            disabled={!hasTarget}
             onClick={() =>
               actor.send({
                 type: "ADD_PEG",

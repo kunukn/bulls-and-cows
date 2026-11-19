@@ -61,6 +61,8 @@
     "secret": "Code secret",
     "secretHidden": "Code secret (caché)",
     "slotClear": "Case {{slot}} : {{color}}. Effacer",
+    "slotEmpty": "Case {{slot}}, vide",
+    "slotReplace": "Case {{slot}} : {{color}}. Remplacer",
     "feedback": "{{bulls}}, {{cows}}",
     "bulls_one": "{{count}} taureau",
     "bulls_other": "{{count}} taureaux",

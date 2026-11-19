@@ -6,7 +6,7 @@ import {
   type Color,
   type Difficulty,
 } from "./logic";
-import { gameMachine, type GameContext } from "./machine";
+import { gameMachine, nextEmptySlot, type GameContext } from "./machine";
 
 export const GAME_STORAGE_KEY = "bulls-and-cows:game";
 /* Bump when the saved shape changes; older saves are discarded, not migrated. */
@@ -16,10 +16,14 @@ const STATE_VALUES = ["playing", "won", "lost"] as const;
 
 type StateValue = (typeof STATE_VALUES)[number];
 
+type Placement = Pick<GameContext, "target" | "placed">;
+
+/* Saves from before slot targeting have no placement; it is rebuilt on load. */
 type SavedGame = {
   version: number;
   value: StateValue;
-  context: Omit<GameContext, "randomInt">;
+  context: Omit<GameContext, "randomInt" | keyof Placement> &
+    Partial<Placement>;
 };
 
 type GameSnapshot = SnapshotFrom<typeof gameMachine>;
@@ -56,8 +60,32 @@ export function loadGame(): GameSnapshot | undefined {
 
   return gameMachine.resolveState({
     value: saved.value,
-    context: { ...saved.context, randomInt: cryptoRandomInt },
+    context: {
+      ...saved.context,
+      ...restorePlacement(saved.context),
+      randomInt: cryptoRandomInt,
+    },
   });
+}
+
+/* Keeps a saved placement, or rebuilds one as if filled left to right. */
+function restorePlacement(context: SavedGame["context"]): Placement {
+  if (context.target !== undefined && context.placed !== undefined) {
+    return { target: context.target, placed: context.placed };
+  }
+
+  const { current } = context;
+  const placed = current.flatMap((peg, index) => (peg ? [index] : []));
+
+  return { target: nextEmptySlot(current, current.length - 1), placed };
+}
+
+function isSlot(value: unknown, length: number): value is number {
+  return (
+    Number.isInteger(value) &&
+    (value as number) >= 0 &&
+    (value as number) < length
+  );
 }
 
 function isColorRow(value: unknown, length: number): value is Color[] {
@@ -96,6 +124,12 @@ function isSavedGame(value: unknown): value is SavedGame {
         typeof guess.black === "number" &&
         typeof guess.white === "number",
     ) &&
+    (context.target === undefined ||
+      context.target === null ||
+      isSlot(context.target, pegs)) &&
+    (context.placed === undefined ||
+      (Array.isArray(context.placed) &&
+        context.placed.every((slot) => isSlot(slot, pegs)))) &&
     typeof context.startedAt === "number" &&
     typeof context.finishedAt === "number"
   );

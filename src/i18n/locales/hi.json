@@ -61,6 +61,8 @@
     "secret": "गुप्त कोड",
     "secretHidden": "गुप्त कोड (छिपा हुआ)",
     "slotClear": "खाना {{slot}}: {{color}}। हटाओ",
+    "slotEmpty": "खाना {{slot}}, ख़ाली",
+    "slotReplace": "खाना {{slot}}: {{color}}। बदलो",
     "feedback": "{{bulls}}, {{cows}}",
     "bulls_one": "{{count}} बैल",
     "bulls_other": "{{count}} बैल",

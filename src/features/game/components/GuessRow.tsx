@@ -18,6 +18,9 @@ type Props = {
   isJustScored?: boolean;
   /* The row that cracked the code: its pegs shimmer once feedback is in. */
   isWinning?: boolean;
+  /* Active row: the slot the next colour goes into, null when full. */
+  target?: number | null;
+  onSelectSlot?: (index: number) => void;
   onClearSlot?: (index: number) => void;
   ref?: React.Ref<HTMLLIElement>;
 };
@@ -29,6 +32,8 @@ export function GuessRow({
   isActive = false,
   isJustScored = false,
   isWinning = false,
+  target = null,
+  onSelectSlot,
   onClearSlot,
   ref,
 }: Props) {
@@ -57,32 +62,51 @@ export function GuessRow({
       </span>
       <div className={cn(PEGS_COLUMN, isUpcoming && "opacity-60")}>
         {pegs.map((color, index) =>
-          isActive && color && onClearSlot ? (
-            <button
-              key={index}
-              type="button"
-              onClick={() => onClearSlot(index)}
-              aria-label={t("game.slotClear", {
-                slot: index + 1,
-                color: t(`colors.${color}`),
-              })}
-              className="group relative cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400"
-            >
-              <Peg
-                color={color}
+          isActive && onSelectSlot ? (
+            <span key={index} className="group relative">
+              <button
+                type="button"
+                onClick={() => onSelectSlot(index)}
+                aria-pressed={index === target}
+                aria-label={
+                  color
+                    ? t("game.slotReplace", {
+                        slot: index + 1,
+                        color: t(`colors.${color}`),
+                      })
+                    : t("game.slotEmpty", { slot: index + 1 })
+                }
                 className={cn(
-                  pickInsertAnimation(rowNumber, index, color),
-                  "transition-opacity group-hover:opacity-70",
+                  "block cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400",
+                  // The target hole catches the light: the next colour goes here.
+                  index === target &&
+                    "shadow-board-glow ring-2 ring-board-ring",
                 )}
-              />
-              {/* Touch has no hover, so the badge is always shown there. */}
-              <span
-                aria-hidden
-                className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 pointer-coarse:opacity-100"
               >
-                <X className="size-3" strokeWidth={3} />
-              </span>
-            </button>
+                {/* Keyed by colour so a replaced peg plays its insert again. */}
+                <Peg
+                  key={color ?? "empty"}
+                  color={color}
+                  className={cn(
+                    color && pickInsertAnimation(rowNumber, index, color),
+                  )}
+                />
+              </button>
+              {color && onClearSlot && (
+                <button
+                  type="button"
+                  onClick={() => onClearSlot(index)}
+                  aria-label={t("game.slotClear", {
+                    slot: index + 1,
+                    color: t(`colors.${color}`),
+                  })}
+                  // Touch has no hover, so the badge is always shown there.
+                  className="absolute -end-1 -top-1 grid size-4 cursor-pointer place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-sky-400 pointer-coarse:opacity-100"
+                >
+                  <X className="size-3" strokeWidth={3} />
+                </button>
+              )}
+            </span>
           ) : (
             <Peg
               key={index}

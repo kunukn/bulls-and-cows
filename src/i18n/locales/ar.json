@@ -61,6 +61,8 @@
     "secret": "الرمز السري",
     "secretHidden": "الرمز السري (مخفي)",
     "slotClear": "الخانة {{slot}}: {{color}}. امسح",
+    "slotEmpty": "الخانة {{slot}}، فارغة",
+    "slotReplace": "الخانة {{slot}}: {{color}}. استبدل",
     "feedback": "{{bulls}}، {{cows}}",
     "bulls_zero": "لا ثيران",
     "bulls_one": "ثور واحد",

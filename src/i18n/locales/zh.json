@@ -61,6 +61,8 @@
     "secret": "密码",
     "secretHidden": "密码（已隐藏）",
     "slotClear": "第 {{slot}} 格：{{color}}。清除",
+    "slotEmpty": "第 {{slot}} 格，空",
+    "slotReplace": "第 {{slot}} 格：{{color}}。替换",
     "feedback": "{{bulls}}，{{cows}}",
     "bulls_other": "{{count}} 头公牛",
     "cows_other": "{{count}} 头母牛",

@@ -61,6 +61,8 @@
     "secret": "Geheimer Code",
     "secretHidden": "Geheimer Code (verdeckt)",
     "slotClear": "Feld {{slot}}: {{color}}. Leeren",
+    "slotEmpty": "Feld {{slot}}, leer",
+    "slotReplace": "Feld {{slot}}: {{color}}. Ersetzen",
     "feedback": "{{bulls}}, {{cows}}",
     "bulls_one": "{{count}} Stier",
     "bulls_other": "{{count}} Stiere",

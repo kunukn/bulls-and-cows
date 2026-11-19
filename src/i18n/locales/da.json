@@ -61,6 +61,8 @@
     "secret": "Hemmelig kode",
     "secretHidden": "Hemmelig kode (skjult)",
     "slotClear": "Felt {{slot}}: {{color}}. Ryd",
+    "slotEmpty": "Felt {{slot}}, tomt",
+    "slotReplace": "Felt {{slot}}: {{color}}. Udskift",
     "feedback": "{{bulls}}, {{cows}}",
     "bulls_one": "{{count}} tyr",
     "bulls_other": "{{count}} tyre",

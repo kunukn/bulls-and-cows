@@ -61,6 +61,8 @@
     "secret": "Secret code",
     "secretHidden": "Secret code (hidden)",
     "slotClear": "Slot {{slot}}: {{color}}. Clear",
+    "slotEmpty": "Slot {{slot}}, empty",
+    "slotReplace": "Slot {{slot}}: {{color}}. Replace",
     "feedback": "{{bulls}}, {{cows}}",
     "bulls_one": "{{count}} bull",
     "bulls_other": "{{count}} bulls",

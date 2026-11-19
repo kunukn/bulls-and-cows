@@ -17,6 +17,10 @@ export type GameContext = {
   secret: Color[];
   guesses: Guess[];
   current: (Color | null)[];
+  /* Slot the next colour goes into; null when the row is full. */
+  target: number | null;
+  /* Filled slots in the order they were placed, so undo takes the latest. */
+  placed: number[];
   /* Epoch ms of the first peg placed; 0 until the player starts. */
   startedAt: number;
   finishedAt: number;
@@ -33,6 +37,8 @@ export type GameEvent =
   | { type: "ADD_PEG"; color: Color; isAutoSubmit?: boolean }
   | { type: "REMOVE_PEG" }
   | { type: "CLEAR_SLOT"; index: number }
+  /* Aim the next colour at a slot; a filled slot gets replaced. */
+  | { type: "SELECT_SLOT"; index: number }
   | { type: "SUBMIT" }
   | { type: "AUTO_SUBMIT" }
   | { type: "GIVE_UP" }
@@ -62,9 +68,24 @@ function freshGame(difficulty: Difficulty, randomInt: RandomInt) {
     secret: generateSecret(difficulty, randomInt),
     guesses: [],
     current: emptyRow(difficulty),
+    target: 0,
+    placed: [],
     startedAt: 0,
     finishedAt: 0,
   };
+}
+
+/* First empty slot after `from`, wrapping round; null when the row is full. */
+export function nextEmptySlot(
+  row: (Color | null)[],
+  from: number,
+): number | null {
+  for (let step = 1; step <= row.length; step++) {
+    const index = (from + step) % row.length;
+    if (row[index] === null) return index;
+  }
+
+  return null;
 }
 
 function isComplete(row: (Color | null)[]): row is Color[] {
@@ -96,9 +117,9 @@ export const gameMachine = setup({
     // Runs before the removal, while the slot still holds the peg.
     emitPegRemoved: enqueueActions(({ context, event, enqueue }) => {
       const slot =
-        event.type === "CLEAR_SLOT"
-          ? event.index
-          : context.current.findLastIndex((peg) => peg !== null);
+        event.type === "CLEAR_SLOT" ? event.index : context.placed.at(-1);
+      if (slot === undefined) return;
+
       const color = context.current[slot];
       if (!color) return;
 
@@ -117,33 +138,51 @@ export const gameMachine = setup({
     addPeg: assign(({ context, event }) => {
       if (event.type !== "ADD_PEG") return {};
 
-      const index = context.current.indexOf(null);
-      if (index === -1) return {};
+      const index = context.target;
+      if (index === null) return {};
 
       const current = [...context.current];
       current[index] = event.color;
 
       return {
         current,
+        target: nextEmptySlot(current, index),
+        // A replaced peg counts as the latest placement.
+        placed: [...context.placed.filter((slot) => slot !== index), index],
         startedAt: context.startedAt || Date.now(),
       };
     }),
+    // Undo: takes out the peg placed last, wherever it sits.
     removePeg: assign(({ context }) => {
-      const index = context.current.findLastIndex((peg) => peg !== null);
-      if (index === -1) return {};
+      const index = context.placed.at(-1);
+      if (index === undefined) return {};
 
       const current = [...context.current];
       current[index] = null;
 
-      return { current };
+      return { current, target: index, placed: context.placed.slice(0, -1) };
     }),
     clearSlot: assign(({ context, event }) => {
       if (event.type !== "CLEAR_SLOT") return {};
 
+      // An empty slot has nothing to clear; leave the target alone.
+      if (context.current[event.index] == null) return {};
+
       const current = [...context.current];
       current[event.index] = null;
 
-      return { current };
+      return {
+        current,
+        target: event.index,
+        placed: context.placed.filter((slot) => slot !== event.index),
+      };
+    }),
+    selectSlot: assign(({ context, event }) => {
+      if (event.type !== "SELECT_SLOT") return {};
+
+      const isInRow = event.index >= 0 && event.index < context.current.length;
+
+      return isInRow ? { target: event.index } : {};
     }),
     submitGuess: assign(({ context }) => {
       if (!isComplete(context.current)) return {};
@@ -156,6 +195,8 @@ export const gameMachine = setup({
       return {
         guesses: [...context.guesses, guess],
         current: emptyRow(context.difficulty),
+        target: 0,
+        placed: [],
       };
     }),
     markFinished: assign({ finishedAt: () => Date.now() }),
@@ -184,10 +225,10 @@ export const gameMachine = setup({
       on: {
         ADD_PEG: {
           actions: [
-            // Runs before addPeg, so a full row (no free slot) stays silent.
+            // Runs before addPeg, so a full row with no target stays silent.
             enqueueActions(({ context, event, enqueue }) => {
-              const slot = context.current.indexOf(null);
-              if (slot === -1) return;
+              const slot = context.target;
+              if (slot === null) return;
 
               enqueue.emit({
                 type: "pegPlaced",
@@ -218,6 +259,7 @@ export const gameMachine = setup({
         },
         REMOVE_PEG: { actions: ["emitPegRemoved", "removePeg"] },
         CLEAR_SLOT: { actions: ["emitPegRemoved", "clearSlot"] },
+        SELECT_SLOT: { actions: "selectSlot" },
         // Guards read the pre-submit row; first match wins.
         SUBMIT: [
           {

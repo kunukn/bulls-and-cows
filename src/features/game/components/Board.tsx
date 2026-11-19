@@ -36,6 +36,7 @@ export function Board() {
     (snapshot) => snapshot.context,
   );
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
+  const target = useGameSelector((snapshot) => snapshot.context.target);
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
   const activeRowRef = useRef<HTMLLIElement>(null);
@@ -114,6 +115,10 @@ export function Board() {
               isActive={isActive}
               isJustScored={index === guesses.length - 1}
               isWinning={isWon && index === guesses.length - 1}
+              target={target}
+              onSelectSlot={(slot) =>
+                actor.send({ type: "SELECT_SLOT", index: slot })
+              }
               onClearSlot={(slot) =>
                 actor.send({ type: "CLEAR_SLOT", index: slot })
               }

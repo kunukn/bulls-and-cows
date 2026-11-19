@@ -177,6 +177,127 @@ describe("gameMachine", () => {
     ]);
   });
 
+  describe("slot targeting", () => {
+    function context(actor: ReturnType<typeof startGame>) {
+      return actor.getSnapshot().context;
+    }
+
+    it("fills left to right by default", () => {
+      const actor = startGame();
+      expect(context(actor).target).toBe(0);
+
+      guessPegs(actor, ["red", "blue"]);
+      expect(context(actor).current).toEqual(["red", "blue", null, null]);
+      expect(context(actor).target).toBe(2);
+    });
+
+    it("puts the next peg in a selected slot, then wraps to the next gap", () => {
+      const actor = startGame();
+      guessPegs(actor, ["orange", "yellow"]);
+      actor.send({ type: "SELECT_SLOT", index: 3 });
+      actor.send({ type: "ADD_PEG", color: "green" });
+
+      expect(context(actor).current).toEqual([
+        "orange",
+        "yellow",
+        null,
+        "green",
+      ]);
+      expect(context(actor).target).toBe(2);
+    });
+
+    it("has no target once the row is full, so extra pegs are ignored", () => {
+      const actor = startGame();
+      guessPegs(actor, ["red", "blue", "green", "yellow"]);
+      expect(context(actor).target).toBeNull();
+
+      actor.send({ type: "ADD_PEG", color: "purple" });
+      expect(context(actor).current).toEqual([
+        "red",
+        "blue",
+        "green",
+        "yellow",
+      ]);
+    });
+
+    it("replaces a selected peg", () => {
+      const actor = startGame();
+      const onPegPlaced = vi.fn<(event: GameEmitted) => void>();
+      actor.on("pegPlaced", onPegPlaced);
+      guessPegs(actor, ["red", "blue", "green", "yellow"]);
+
+      actor.send({ type: "SELECT_SLOT", index: 1 });
+      actor.send({ type: "ADD_PEG", color: "purple" });
+
+      expect(context(actor).current).toEqual([
+        "red",
+        "purple",
+        "green",
+        "yellow",
+      ]);
+      expect(context(actor).target).toBeNull();
+      expect(onPegPlaced).toHaveBeenLastCalledWith({
+        type: "pegPlaced",
+        rowNumber: 1,
+        slot: 1,
+        color: "purple",
+      });
+    });
+
+    it("undoes the latest placement, not the rightmost peg", () => {
+      const actor = startGame();
+      actor.send({ type: "SELECT_SLOT", index: 3 });
+      actor.send({ type: "ADD_PEG", color: "green" });
+      actor.send({ type: "ADD_PEG", color: "red" });
+
+      expect(context(actor).current).toEqual(["red", null, null, "green"]);
+
+      actor.send({ type: "REMOVE_PEG" });
+      expect(context(actor).current).toEqual([null, null, null, "green"]);
+      expect(context(actor).target).toBe(0);
+
+      actor.send({ type: "REMOVE_PEG" });
+      expect(context(actor).current).toEqual([null, null, null, null]);
+      expect(context(actor).target).toBe(3);
+    });
+
+    it("counts a replaced peg as the latest placement", () => {
+      const actor = startGame();
+      guessPegs(actor, ["red", "blue", "green"]);
+      actor.send({ type: "SELECT_SLOT", index: 0 });
+      actor.send({ type: "ADD_PEG", color: "yellow" });
+      actor.send({ type: "REMOVE_PEG" });
+
+      expect(context(actor).current).toEqual([null, "blue", "green", null]);
+    });
+
+    it("targets a cleared slot", () => {
+      const actor = startGame();
+      guessPegs(actor, ["red", "blue", "green"]);
+      actor.send({ type: "CLEAR_SLOT", index: 1 });
+
+      expect(context(actor).target).toBe(1);
+      expect(context(actor).placed).toEqual([0, 2]);
+    });
+
+    it("ignores a slot outside the row", () => {
+      const actor = startGame();
+      actor.send({ type: "SELECT_SLOT", index: 4 });
+      actor.send({ type: "SELECT_SLOT", index: -1 });
+
+      expect(context(actor).target).toBe(0);
+    });
+
+    it("starts each new row at the first slot", () => {
+      const actor = startGame();
+      actor.send({ type: "SELECT_SLOT", index: 2 });
+      guess(actor, ["blue", "blue", "blue", "blue"]);
+
+      expect(context(actor).target).toBe(0);
+      expect(context(actor).placed).toEqual([]);
+    });
+  });
+
   it("scores a guess and starts the clock", () => {
     const actor = startGame();
     guess(actor, ["red", "blue", "red", "green"]);
