@@ -1,6 +1,14 @@
 # Supply-chain cooldown: only install package versions published >= 1 day ago (minutes).
 minimumReleaseAge: 1440
 
+# Also install Linux native bindings (Rollup, Oxlint, Lightning CSS, …) so the
+# same node_modules works on the macOS host and inside a Docker Sandbox (sbx),
+# which bind-mounts this folder into a Linux arm64 container.
+supportedArchitectures:
+  os: [current, linux]
+  cpu: [current, arm64]
+  libc: [glibc]
+
 allowBuilds:
   esbuild: false
   # Belt and braces for the `node-pty: "-"` override below: if node-pty ever
