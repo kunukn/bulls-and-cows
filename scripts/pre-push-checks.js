@@ -6,13 +6,18 @@ const isWin = process.platform === "win32";
 const tasks = [
   {
     name: "TS check",
-    cmd: "npx",
+    /*
+     * pnpm exec, not npx: pnpm passes pnpm-only npm_config_* vars to scripts,
+     * and npx (npm) warns "Unknown env config" on them.
+     */
+    cmd: "pnpm",
     /*
      * Use a check-specific tsBuildInfoFile: this run is `--noEmit` while
      * `tsc -b` (pnpm build) emits. Sharing the tsconfig's default path lets
      * one mode's incremental state make the other skip work it still needs.
      */
     args: [
+      "exec",
       "tsc",
       "--project",
       "tsconfig.app.json",
@@ -23,8 +28,8 @@ const tasks = [
   },
   {
     name: "Lint",
-    cmd: "npx",
-    args: ["oxlint"],
+    cmd: "pnpm",
+    args: ["exec", "oxlint"],
   },
 ];
 
