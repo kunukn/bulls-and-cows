@@ -23,7 +23,7 @@ export function Layout() {
   const isPlayPage = useMatch({ path: paths.play, end: true }) !== null;
 
   return (
-    <div className="mx-auto flex min-h-dvh max-w-md flex-col px-4">
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4">
       <header className="flex items-center justify-between gap-2 py-4">
         <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap">
           <BullIcon className="size-7 shrink-0" />

@@ -265,8 +265,22 @@
 }
 
 @layer base {
+  /*
+   * Full-height chain via % + flex instead of dvh: dvh tracks the iOS Safari
+   * toolbar as it collapses/expands, resizing the page mid-scroll (layout
+   * jumps). html 100% resolves to the stable initial containing block; each
+   * level below fills it with flex: 1.
+   */
+  html {
+    @apply h-full;
+  }
+
   body {
-    @apply min-h-dvh bg-background text-foreground antialiased;
+    @apply flex min-h-full flex-col bg-background text-foreground antialiased;
+  }
+
+  #root {
+    @apply flex flex-1 flex-col;
   }
 }
 
