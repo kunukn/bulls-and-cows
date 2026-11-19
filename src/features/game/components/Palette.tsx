@@ -58,22 +58,14 @@ export function Palette() {
               "relative grid aspect-square w-full place-items-center rounded-full shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40",
             )}
           >
-            {isPegShapes ? (
-              <>
-                <PegShape color={color} className="size-3/5" />
-                {/* Digit moves to a corner badge; it is the keyboard shortcut. */}
-                <span
-                  aria-hidden
-                  className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-[0.625rem] font-bold text-slate-200 ring-1 ring-slate-600"
-                >
-                  {index + 1}
-                </span>
-              </>
-            ) : (
-              <span aria-hidden className="text-xs font-bold text-black/50">
-                {index + 1}
-              </span>
-            )}
+            {isPegShapes && <PegShape color={color} className="size-3/5" />}
+            {/* Keyboard shortcut, in a corner badge so the head stays clear. */}
+            <span
+              aria-hidden
+              className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-[0.625rem] font-bold text-slate-200 ring-1 ring-slate-600"
+            >
+              {index + 1}
+            </span>
           </button>
         ))}
       </div>
