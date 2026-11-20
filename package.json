@@ -6,7 +6,7 @@
   "license": "0BSD",
   "type": "module",
   "scripts": {
-    "dev": "vite --port 5176",
+    "dev": "vite --port 5180",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "icons": "node scripts/generate-icons.ts",

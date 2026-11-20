@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 5176;
+const PORT = 5180;
 const isCI = !!process.env.CI;
 
 /** See https://playwright.dev/docs/test-configuration. */

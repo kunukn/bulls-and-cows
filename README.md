@@ -33,7 +33,7 @@ pegs don't say which spot they mean — that's the puzzle.
 
 ```bash
 pnpm install
-pnpm dev        # http://localhost:5176
+pnpm dev        # http://localhost:5180
 pnpm test       # Vitest watch
 pnpm check      # typecheck + lint (oxlint)
 pnpm format     # oxfmt, whole repo

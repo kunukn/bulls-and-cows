@@ -47,8 +47,8 @@ live after `#`.
 
 | Page        | Local dev (`pnpm dev`)                                       |
 | ----------- | ------------------------------------------------------------ |
-| Game        | `http://localhost:5176/#/`                                   |
-| High scores | `http://localhost:5176/#/highscores?difficulty=<difficulty>` |
+| Game        | `http://localhost:5180/#/`                                   |
+| High scores | `http://localhost:5180/#/highscores?difficulty=<difficulty>` |
 
 `<difficulty>` is `easy`, `classic` or `hard`. Without a URL, default to the
 game page. Unknown routes redirect to the game.
@@ -60,7 +60,7 @@ enabled): `https://kunukn.github.io/bulls-and-cows/`.
 
 ### 1. Make sure the dev server is running
 
-Check with `curl -sf http://localhost:5176/ > /dev/null`. If it is not running,
+Check with `curl -sf http://localhost:5180/ > /dev/null`. If it is not running,
 start `pnpm dev` from the repo root as a **background** command with output to
 `.temp/dev.log`, wait for the `Local:` line, then continue. Stop it at the end
 only if this skill started it.
