@@ -86,7 +86,7 @@ export function Peg({ color, className, style }: Props) {
               getPegClass(color, pegStyle),
               "shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)]",
             )
-          : "bg-board-hole shadow-[inset_0_2px_4px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
+          : "bg-board-hole shadow-[inset_0_2px_4px_var(--board-hole-shade)] ring-1 ring-board-hole-ring",
         className,
       )}
     >

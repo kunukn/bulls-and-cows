@@ -32,7 +32,7 @@ export function SecretShield({ pegs, isOpen }: Props) {
       <div
         className={cn(
           ROW_LAYOUT,
-          "size-full rounded-lg py-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_2px_4px_rgb(0_0_0/0.4)] board-shield",
+          "size-full rounded-lg py-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.15),0_2px_4px_var(--board-shield-drop)] board-shield",
         )}
       >
         <span className={NUMBER_COLUMN} />

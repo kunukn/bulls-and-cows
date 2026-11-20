@@ -28,6 +28,7 @@ There are six themes, each with its own hue or lightness: Neon (navy, the defaul
 ## Consequences
 
 - White cow pegs get an outline from a `--board-cow-ring` token, transparent on the dark themes.
+- Board shadows come from tokens so the light boards don't look heavy: `--board-drop` (board) and `--board-shield-drop` (secret shield) are black at 40% on dark themes and a faint slate on Paper, violet on Candy; `--board-hole-shade` (hole inset) is black at 50% on dark themes and 25% on Paper and Candy.
 - On Paper, holes are slate with a darker rim and inset shadow, so they read as holes, not dots. On Candy they are opaque so sprinkles stay out of them.
 - Pegs stand out on Candy because the board is much lighter than they are, even where the hue is close (the purple peg on lavender).
 - Candy's sprinkles are layered CSS gradients in `--board-surface`, no images.

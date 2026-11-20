@@ -72,7 +72,7 @@ export function Board() {
     <section
       aria-label={t("game.board")}
       data-board-theme={boardTheme}
-      className="rounded-2xl p-3 shadow-lg shadow-black/40 board-surface"
+      className="rounded-2xl p-3 shadow-lg shadow-board-drop board-surface"
     >
       <div
         aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}

@@ -257,6 +257,10 @@
   color-scheme: dark;
   /* Outline for white cow pegs; only light boards need one. */
   --board-cow-ring: transparent;
+  /* Board drop shadow; light boards need a much softer one. */
+  --board-drop: oklch(0 0 0 / 40%);
+  --board-shield-drop: oklch(0 0 0 / 40%);
+  --board-hole-shade: oklch(0 0 0 / 50%);
 }
 
 /*
@@ -276,6 +280,7 @@
   --color-board-shield-label: var(--board-shield-label);
   --color-board-shield-edge: var(--board-shield-edge);
   --color-board-cow-ring: var(--board-cow-ring);
+  --color-board-drop: var(--board-drop);
   --shadow-board-glow: var(--board-glow);
 }
 
@@ -412,6 +417,9 @@
   --board-shield-label: oklch(0.446 0.043 257.281); /* slate-600 */
   --board-shield-edge: oklch(0.704 0.04 256.788); /* slate-400 */
   --board-cow-ring: oklch(0.554 0.046 257.417); /* slate-500 */
+  --board-drop: oklch(0.279 0.041 260.031 / 14%); /* slate-800 */
+  --board-shield-drop: var(--board-drop);
+  --board-hole-shade: oklch(0 0 0 / 25%);
 }
 
 /*
@@ -451,6 +459,9 @@
   --board-shield-label: oklch(1 0 0 / 90%);
   --board-shield-edge: oklch(0.541 0.281 293.009); /* violet-600 */
   --board-cow-ring: oklch(0.702 0.183 293.541); /* violet-400 */
+  --board-drop: oklch(0.283 0.141 291.089 / 14%); /* violet-950 */
+  --board-shield-drop: var(--board-drop);
+  --board-hole-shade: oklch(0 0 0 / 25%);
 }
 
 @layer base {

@@ -35,8 +35,8 @@ export function BoardThemePicker({ value, onChange, name, legend }: Props) {
               className="flex h-10 items-center justify-center gap-1.5 rounded-md board-surface"
             >
               <span className="size-4 rounded-full bg-peg-red" />
-              <span className="size-4 rounded-full bg-board-hole shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring" />
-              <span className="size-4 rounded-full bg-board-hole shadow-[inset_0_1px_2px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring" />
+              <span className="size-4 rounded-full bg-board-hole shadow-[inset_0_1px_2px_var(--board-hole-shade)] ring-1 ring-board-hole-ring" />
+              <span className="size-4 rounded-full bg-board-hole shadow-[inset_0_1px_2px_var(--board-hole-shade)] ring-1 ring-board-hole-ring" />
             </span>
             {t(`common.boardThemes.${theme}`)}
           </label>
