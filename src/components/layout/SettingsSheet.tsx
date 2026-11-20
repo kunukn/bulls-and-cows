@@ -17,7 +17,7 @@ import {
 } from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
 import { GitHubIcon } from "@/components/icons/GitHubIcon";
-import { Bug, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
 import { Direction } from "radix-ui";
 import { useTranslation } from "react-i18next";
 
@@ -49,10 +49,6 @@ export function SettingsSheet() {
   // Slide in from the inline end, the side the settings button sits on.
   const side = Direction.useDirection() === "rtl" ? "left" : "right";
   const appVersion = import.meta.env.VITE_APP_VERSION;
-  // Prefill the build so every report says which version it came from.
-  const issueUrl = `${REPO_URL}/issues/new?${new URLSearchParams({
-    body: `${t("common.version")}: ${appVersion}\n\n`,
-  })}`;
 
   return (
     <Sheet>
@@ -274,16 +270,6 @@ export function SettingsSheet() {
           >
             <GitHubIcon className="size-4" />
             {t("common.sourceCode")}
-            <span className="sr-only">{t("common.opensInNewTab")}</span>
-          </a>
-          <a
-            href={issueUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 hover:text-foreground"
-          >
-            <Bug className="size-4" aria-hidden="true" />
-            {t("common.reportIssue")}
             <span className="sr-only">{t("common.opensInNewTab")}</span>
           </a>
         </SheetFooter>
