@@ -10,7 +10,7 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0002](0002-peg-sounds.md)               | Peg sounds are real plastic clicks, off by default           | Default superseded by 0006 |
 | [0003](0003-game-sounds.md)              | Board sounds stay physical; only the game's end gets music   | Accepted                   |
 | [0004](0004-offline-play.md)             | The game works offline and updates silently                  | Accepted                   |
-| [0005](0005-colour-shapes.md)            | Colours can carry a shape too                                | Accepted                   |
+| [0005](0005-colour-shapes.md)            | Colours can carry a shape too                                | Setting superseded by 0014 |
 | [0006](0006-sound-on-by-default.md)      | Sound effects are on by default                              | Accepted                   |
 | [0007](0007-choose-peg-order.md)         | Players choose which hole a peg goes into                    | Accepted                   |
 | [0008](0008-light-mode.md)               | Light mode for the interface, and always light when printing | Accepted                   |
@@ -19,6 +19,7 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0011](0011-felt-replaces-metal.md)      | Felt replaces the Metal board theme                          | Accepted                   |
 | [0012](0012-auto-check-on-by-default.md) | Auto check is on by default                                  | Accepted                   |
 | [0013](0013-game-menu.md)                | New game and Give up share one menu                          | Accepted                   |
+| [0014](0014-shape-only-pegs.md)          | Pegs can be shape only                                       | Accepted                   |
 
 ## Template
 

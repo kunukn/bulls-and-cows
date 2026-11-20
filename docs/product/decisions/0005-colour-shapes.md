@@ -1,6 +1,6 @@
 # 0005 — Colours can carry a shape too
 
-- **Status:** Accepted
+- **Status:** Accepted; setting superseded by 0014
 - **Date:** 2026-11-19
 
 ## Context
