@@ -8,14 +8,7 @@ import { elapsedMs } from "@/features/game/machine";
 import { useSettings } from "@/features/game/store/settings";
 import { qualifies, useHighScores } from "@/features/highscores/store";
 import { formatDuration } from "@/utils/format";
-import {
-  CircleCheck,
-  CircleX,
-  RotateCcw,
-  Save,
-  Trophy,
-  UserRound,
-} from "lucide-react";
+import { CircleCheck, RotateCcw, Save, Trophy, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
@@ -43,12 +36,8 @@ function OutcomeMessage({
     if (!isMinimalText)
       return <p className="text-lg font-semibold">{message}</p>;
 
-    return (
-      <p title={message}>
-        <CircleX aria-hidden className="size-7 text-destructive" />
-        <span className="sr-only">{message}</span>
-      </p>
-    );
+    // The revealed secret already shows the loss; announce it only.
+    return <p className="sr-only">{message}</p>;
   }
 
   const time = formatDuration(elapsedMs);
