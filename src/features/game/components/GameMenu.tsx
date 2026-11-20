@@ -10,6 +10,9 @@ import { useSettings } from "@/features/game/store/settings";
 import { ChevronDown, Flag, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
+// 44px rows on touch screens (Apple's minimum target); mouse keeps it compact.
+const touchItemClass = "pointer-coarse:py-3";
+
 /*
  * Lives in the info row above the board, away from Check, so a missed tap on
  * the main action can't land on it. Opening the menu is the deliberate first
@@ -34,12 +37,20 @@ export function GameMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-auto">
         {/* New game first: the item that keeps the code secret is the easy reach. */}
-        <DropdownMenuItem onSelect={() => actor.send({ type: "NEW_GAME" })}>
+        <DropdownMenuItem
+          onSelect={() => actor.send({ type: "NEW_GAME" })}
+          className={touchItemClass}
+        >
           <RotateCcw />
           {t("result.newGame")}
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onSelect={() => actor.send({ type: "GIVE_UP" })}>
+        <DropdownMenuSeparator className="pointer-coarse:my-2" />
+        {/* Red marks the item that ends the game and reveals the code. */}
+        <DropdownMenuItem
+          variant="destructive"
+          onSelect={() => actor.send({ type: "GIVE_UP" })}
+          className={touchItemClass}
+        >
           <Flag />
           {t("game.giveUp")}
         </DropdownMenuItem>
