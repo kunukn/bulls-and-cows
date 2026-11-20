@@ -1,7 +1,7 @@
 /*
  * Tier order: a difficulty with N colours uses the first N. Six-colour modes
  * leave out blue, which colour-blind players confuse with purple (decision
- * 0016); Hard adds blue and pink.
+ * 0004); Hard adds blue and pink.
  */
 export const COLORS = [
   "red",

@@ -8,7 +8,7 @@ test("starts a game and scores the first guess", async ({ page }) => {
   const checkButton = page.getByRole("button", { name: "Check" });
   await expect(checkButton).toBeDisabled();
 
-  // Auto check is on by default (0012): the fourth peg scores the row.
+  // Auto check is on by default (0008): the fourth peg scores the row.
   for (const color of ["red", "blue", "green", "yellow"]) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }

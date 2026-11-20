@@ -7,7 +7,7 @@ export const COLOR_SCHEMES = ["dark", "light"] as const;
 
 export type ColorScheme = (typeof COLOR_SCHEMES)[number];
 
-/* How colour pegs are told apart: hue, hue + moulded shape (0005), or shape only (0014). */
+/* How colour pegs are told apart: hue, hue + moulded shape, or shape only (0004). */
 export const PEG_STYLES = ["color", "colorShape", "shape"] as const;
 
 export type PegStyle = (typeof PEG_STYLES)[number];
@@ -23,10 +23,10 @@ type SettingsStore = {
   /* Icons instead of words; hidden text stays in aria-label / title. */
   isMinimalText: boolean;
   setMinimalText: (isMinimalText: boolean) => void;
-  /* Check the guess as soon as the last peg is placed; on by default (0012). */
+  /* Check the guess as soon as the last peg is placed; on by default (0008). */
   isAutoSubmit: boolean;
   setAutoSubmit: (isAutoSubmit: boolean) => void;
-  /* Sound effects (pegs, checks, game end); on by default (0006). */
+  /* Sound effects (pegs, checks, game end); on by default (0002). */
   isSoundEnabled: boolean;
   setSoundEnabled: (isSoundEnabled: boolean) => void;
   /* Pink bull pegs instead of black, for players who find black hard to see. */
@@ -34,7 +34,7 @@ type SettingsStore = {
   setPinkBull: (isPinkBull: boolean) => void;
   pegStyle: PegStyle;
   setPegStyle: (pegStyle: PegStyle) => void;
-  /* App interface only; board themes and printing ignore it (0008). */
+  /* App interface only; board themes and printing ignore it (0006). */
   colorScheme: ColorScheme;
   setColorScheme: (colorScheme: ColorScheme) => void;
 };
@@ -65,8 +65,8 @@ export const useSettings = create<SettingsStore>()(
     {
       name: "bulls-and-cows:settings",
       /*
-       * v1: the Metal board ("gunmetal") was replaced by Felt (0011).
-       * v2: the Shapes switch (isPegShapes) became the pegStyle choice (0014).
+       * v1: the Metal board ("gunmetal") was replaced by Felt (0007).
+       * v2: the Shapes switch (isPegShapes) became the pegStyle choice (0004).
        */
       version: 2,
       migrate: (persistedState, version) => {

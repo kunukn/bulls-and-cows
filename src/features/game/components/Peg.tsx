@@ -54,7 +54,7 @@ export const PEG_CLASS: Record<Color, string> = {
 };
 
 /*
- * Shape-only style (0014): every colour shares one ivory plastic, with a thin
+ * Shape-only style (0004): every colour shares one ivory plastic, with a thin
  * ring so the pegs still stand out on light boards and the light app theme.
  */
 const SHAPE_ONLY_PEG_CLASS = "bg-peg-ivory ring-1 ring-black/25";

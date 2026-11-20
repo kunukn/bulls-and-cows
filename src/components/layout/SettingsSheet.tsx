@@ -152,7 +152,7 @@ export function SettingsSheet() {
             aria-describedby="settings-peg-style-description"
           >
             <legend className="mb-2 font-medium">{t("common.pegStyle")}</legend>
-            {/* Three options in one group, so colour and shape can't both be off (0014). */}
+            {/* Three options in one group, so colour and shape can't both be off (0004). */}
             <div className="flex rounded-lg bg-background p-1 ring-1 ring-border">
               {PEG_STYLES.map((style) => (
                 <label
