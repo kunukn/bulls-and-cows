@@ -15,7 +15,7 @@
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "autoSubmit": "Auto check",
     "autoSubmitDescription": "Checks your guess as soon as the last peg is in.",
-    "sound": "Sound effects",
+    "sound": "Sound",
     "soundDescription": "Clicks for pegs, plus a tune when you win or lose.",
     "appearance": "Appearance",
     "appearanceDescription": "The board keeps its theme, and printing is always light.",

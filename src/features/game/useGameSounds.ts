@@ -18,7 +18,7 @@ const SHIELD_OPEN_MS = 500;
 /* Gap between the shield's clack and the jingle, so they don't blur. */
 const JINGLE_GAP_MS = 150;
 
-/* Plays the game's sound effects while the Sound effects setting is on. */
+/* Plays the game's sound effects while the Sound setting is on. */
 export function useGameSounds(): void {
   const actor = useGameActorRef();
   const isSoundEnabled = useSettings((state) => state.isSoundEnabled);

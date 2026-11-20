@@ -13,7 +13,7 @@ Every board action sounds like the board; only winning and losing get music.
 
 - **Board sounds are impacts** (Kenney Impact Sounds): key pegs tick as they pop in (bulls higher than cows, so the score can be heard), a rejected check thuds with the row shake, a removed peg is its own click played lower and quieter, and the shield clacks as it stands upright.
 - **Game end is a short jingle**, a deliberate exception to 0001: a rising pizzicato phrase (D–E–F♯–G) for a win, the same notes falling for a loss. Gentle, since children play too. Giving up counts as a loss.
-- **One setting, "Sound effects"**, covers all of these. Background music, if added, gets its own toggle.
+- **One setting, "Sound"**, covers all of these. Background music, if added, gets its own toggle.
 - **Sounds follow the animations they belong to**: ticks are scheduled on the `feedback-pop` peaks, and the shield clack on the shield's 500 ms lift (at once under reduced motion).
 
 ## Alternatives considered

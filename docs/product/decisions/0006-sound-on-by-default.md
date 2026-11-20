@@ -9,7 +9,7 @@
 
 ## Decision
 
-The Sound effects setting is on for new players. It replaces only 0002's default; everything else in 0002 still holds.
+The Sound setting is on for new players. It replaces only 0002's default; everything else in 0002 still holds.
 
 ## Alternatives considered
 
