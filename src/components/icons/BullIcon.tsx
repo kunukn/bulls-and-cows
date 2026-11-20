@@ -1,4 +1,4 @@
-import { BULL_PATHS, BULL_VIEWBOX } from "./bullMark";
+import { BULL_PATHS, BULL_STROKE_WIDTH, BULL_VIEWBOX } from "./bullMark";
 
 type Props = {
   className?: string;
@@ -10,12 +10,16 @@ export function BullIcon({ className }: Props) {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox={BULL_VIEWBOX}
-      fill="currentColor"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={BULL_STROKE_WIDTH}
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden="true"
       className={className}
     >
-      {BULL_PATHS.map(({ d, isEvenOdd }) => (
-        <path key={d} d={d} fillRule={isEvenOdd ? "evenodd" : undefined} />
+      {BULL_PATHS.map((d) => (
+        <path key={d} d={d} />
       ))}
     </svg>
   );
