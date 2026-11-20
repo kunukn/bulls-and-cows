@@ -1,6 +1,6 @@
 # 0005 — Colours can carry a shape too
 
-- **Status:** Accepted; setting superseded by 0014
+- **Status:** Accepted; setting superseded by 0014; cyan/pink shapes and colour pools superseded by 0015
 - **Date:** 2026-11-19
 
 ## Context
