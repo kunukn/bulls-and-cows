@@ -20,7 +20,8 @@ Records are append-only. To change a decision, add a new record and mark the old
 | [0012](0012-auto-check-on-by-default.md) | Auto check is on by default                                  | Accepted                                                 |
 | [0013](0013-game-menu.md)                | New game and Give up share one menu                          | Accepted                                                 |
 | [0014](0014-shape-only-pegs.md)          | Pegs can be shape only                                       | Accepted                                                 |
-| [0015](0015-colour-blind-palette.md)     | The six-colour palette is picked for colour blindness        | Accepted                                                 |
+| [0015](0015-colour-blind-palette.md)     | The six-colour palette is picked for colour blindness        | Colour set superseded by 0016                            |
+| [0016](0016-purple-over-blue.md)         | Six-colour modes use cyan and purple, not blue               | Accepted                                                 |
 
 ## Template
 

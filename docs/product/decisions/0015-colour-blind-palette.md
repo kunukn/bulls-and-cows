@@ -1,6 +1,6 @@
 # 0015 — The six-colour palette is picked for colour blindness
 
-- **Status:** Accepted
+- **Status:** Accepted; colour set superseded by 0016
 - **Date:** 2026-11-20
 
 ## Context
