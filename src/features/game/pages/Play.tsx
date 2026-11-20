@@ -155,7 +155,7 @@ export function Play() {
       <Board />
       {/* Sticky: on short viewports the board scrolls under the controls. */}
       <div className="dock sticky bottom-0 -mx-4">
-        <div className="bg-background/90 px-4 pt-3 pb-4 dock-shadow backdrop-blur">
+        <div className="dock-surface px-4 pt-3 pb-4">
           {isPlaying ? <Palette /> : <ResultPanel />}
         </div>
       </div>
