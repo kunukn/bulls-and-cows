@@ -9,7 +9,7 @@ test("starts a game and scores the first guess", async ({ page }) => {
   await expect(checkButton).toBeDisabled();
 
   // Auto check is on by default (0008): the fourth peg scores the row.
-  for (const color of ["red", "blue", "green", "yellow"]) {
+  for (const color of ["red", "cyan", "green", "yellow"]) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }
 
