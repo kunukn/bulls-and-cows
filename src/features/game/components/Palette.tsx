@@ -31,17 +31,25 @@ export function Palette() {
   const labelClass = isMinimalText ? "sr-only" : undefined;
 
   return (
-    <section aria-label={t("game.palette")} className="flex flex-col gap-3">
+    <section
+      aria-label={t("game.palette")}
+      className="@container flex flex-col gap-3"
+    >
       {/*
-       * One row, one column per colour: each is at most 2.75rem (44px tap
-       * target) and shrinks only when space runs out, so hard's 8 colours fit
-       * a 320px phone without wrapping. On touch screens leftover width goes
-       * between the columns (gap stays the minimum) to cut finger mis-taps;
-       * a mouse is precise, so the row stays centred there.
+       * One row, one column per colour: each is at most --peg (2.75rem = 44px
+       * tap target) and shrinks only when space runs out, so hard's 8 colours
+       * fit a 320px phone without wrapping. The gap takes the leftover width,
+       * clamped to 6–12px: wide enough against mis-taps, and it gives way to
+       * the pegs before they shrink. The row stays centred.
        */}
       <div
-        style={{ "--colors": palette.length } as React.CSSProperties}
-        className="grid grid-cols-[repeat(var(--colors),minmax(0,2.75rem))] justify-center gap-3 pointer-coarse:justify-between max-sm:pointer-coarse:gap-1.5 desk:grid-cols-[repeat(var(--colors),minmax(0,3rem))]"
+        style={
+          {
+            "--colors": palette.length,
+            gap: "clamp(0.375rem, (100cqi - var(--colors) * var(--peg)) / (var(--colors) - 1), 0.75rem)",
+          } as React.CSSProperties
+        }
+        className="grid grid-cols-[repeat(var(--colors),minmax(0,var(--peg)))] justify-center [--peg:2.75rem] desk:[--peg:3rem]"
       >
         {palette.map((color, index) => (
           <button
