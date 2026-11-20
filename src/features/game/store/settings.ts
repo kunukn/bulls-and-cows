@@ -7,6 +7,11 @@ export const COLOR_SCHEMES = ["dark", "light"] as const;
 
 export type ColorScheme = (typeof COLOR_SCHEMES)[number];
 
+/* How colour pegs are told apart: hue, hue + moulded shape (0005), or shape only (0014). */
+export const PEG_STYLES = ["color", "colorShape", "shape"] as const;
+
+export type PegStyle = (typeof PEG_STYLES)[number];
+
 type SettingsStore = {
   difficulty: Difficulty;
   setDifficulty: (difficulty: Difficulty) => void;
@@ -27,9 +32,8 @@ type SettingsStore = {
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
-  /* A shape on each colour peg, for players who find colours hard to tell apart. */
-  isPegShapes: boolean;
-  setPegShapes: (isPegShapes: boolean) => void;
+  pegStyle: PegStyle;
+  setPegStyle: (pegStyle: PegStyle) => void;
   /* App interface only; board themes and printing ignore it (0008). */
   colorScheme: ColorScheme;
   setColorScheme: (colorScheme: ColorScheme) => void;
@@ -53,20 +57,28 @@ export const useSettings = create<SettingsStore>()(
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
-      isPegShapes: false,
-      setPegShapes: (isPegShapes) => set({ isPegShapes }),
+      pegStyle: "color",
+      setPegStyle: (pegStyle) => set({ pegStyle }),
       colorScheme: "dark",
       setColorScheme: (colorScheme) => set({ colorScheme }),
     }),
     {
       name: "bulls-and-cows:settings",
-      // v1: the Metal board ("gunmetal") was replaced by Felt (0011).
-      version: 1,
+      /*
+       * v1: the Metal board ("gunmetal") was replaced by Felt (0011).
+       * v2: the Shapes switch (isPegShapes) became the pegStyle choice (0014).
+       */
+      version: 2,
       migrate: (persistedState, version) => {
-        const state = persistedState as SettingsStore;
+        const { isPegShapes, ...state } = persistedState as SettingsStore & {
+          isPegShapes?: boolean;
+        };
         const boardTheme: string = state.boardTheme;
         if (version < 1 && boardTheme === "gunmetal") {
-          return { ...state, boardTheme: "felt" };
+          state.boardTheme = "felt";
+        }
+        if (version < 2) {
+          state.pegStyle = isPegShapes ? "colorShape" : "color";
         }
 
         return state;

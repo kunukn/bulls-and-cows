@@ -25,8 +25,13 @@
     },
     "pinkBull": "ثيران وردية",
     "pinkBullDescription": "اعرض الأوتاد في المكان الصحيح باللون الوردي بدل الأسود.",
-    "pegShapes": "الأشكال",
-    "pegShapesDescription": "لكل لون شكل خاص به، لتميّز الألوان بسهولة أكبر.",
+    "pegStyle": "الأوتاد",
+    "pegStyleDescription": "الأشكال تساعدك على تمييز الألوان. اللعب بالأشكال فقط أصعب.",
+    "pegStyles": {
+      "color": "اللون",
+      "colorShape": "كلاهما",
+      "shape": "الشكل"
+    },
     "boardTheme": "اللوحة",
     "boardThemes": {
       "wood": "خشب",

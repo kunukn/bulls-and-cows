@@ -25,8 +25,13 @@
     },
     "pinkBull": "Taureaux roses",
     "pinkBullDescription": "Affiche les pions bien placés en rose plutôt qu’en noir.",
-    "pegShapes": "Formes",
-    "pegShapesDescription": "Chaque couleur a sa propre forme, pour mieux les reconnaître.",
+    "pegStyle": "Pions",
+    "pegStyleDescription": "Les formes aident à reconnaître les couleurs. Avec les formes seules, c’est plus dur.",
+    "pegStyles": {
+      "color": "Couleur",
+      "colorShape": "Les deux",
+      "shape": "Forme"
+    },
     "boardTheme": "Plateau",
     "boardThemes": {
       "wood": "Bois",

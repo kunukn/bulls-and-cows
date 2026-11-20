@@ -25,8 +25,13 @@
     },
     "pinkBull": "गुलाबी बुल",
     "pinkBullDescription": "सही जगह वाली खूँटियाँ काली की जगह गुलाबी दिखाएँ।",
-    "pegShapes": "आकार",
-    "pegShapesDescription": "हर रंग का अपना आकार होता है, ताकि रंग आसानी से पहचान सको।",
+    "pegStyle": "खूँटियाँ",
+    "pegStyleDescription": "आकार से रंग पहचानना आसान होता है। सिर्फ़ आकार से खेलना ज़्यादा मुश्किल है।",
+    "pegStyles": {
+      "color": "रंग",
+      "colorShape": "दोनों",
+      "shape": "आकार"
+    },
     "boardTheme": "बोर्ड",
     "boardThemes": {
       "wood": "लकड़ी",

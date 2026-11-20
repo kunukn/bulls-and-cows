@@ -1,5 +1,5 @@
 import { COLORS, type Color } from "@/features/game/logic";
-import { useSettings } from "@/features/game/store/settings";
+import { type PegStyle, useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
 import { PegShape } from "./PegShape";
 import { PEG_SIZE } from "./rowLayout";
@@ -53,6 +53,17 @@ export const PEG_CLASS: Record<Color, string> = {
   cyan: "bg-peg-cyan",
 };
 
+/*
+ * Shape-only style (0014): every colour shares one ivory plastic, with a thin
+ * ring so the pegs still stand out on light boards and the light app theme.
+ */
+const SHAPE_ONLY_PEG_CLASS = "bg-peg-ivory ring-1 ring-black/25";
+
+/* Fill for a colour peg (board and palette) in the chosen peg style. */
+export function getPegClass(color: Color, pegStyle: PegStyle): string {
+  return pegStyle === "shape" ? SHAPE_ONLY_PEG_CLASS : PEG_CLASS[color];
+}
+
 type Props = {
   color: Color | null;
   className?: string;
@@ -61,7 +72,7 @@ type Props = {
 };
 
 export function Peg({ color, className, style }: Props) {
-  const isPegShapes = useSettings((state) => state.isPegShapes);
+  const pegStyle = useSettings((state) => state.pegStyle);
 
   return (
     <span
@@ -71,12 +82,17 @@ export function Peg({ color, className, style }: Props) {
         PEG_SIZE,
         "grid place-items-center rounded-full",
         color
-          ? cn(PEG_CLASS[color], "shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)]")
+          ? cn(
+              getPegClass(color, pegStyle),
+              "shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)]",
+            )
           : "bg-board-hole shadow-[inset_0_2px_4px_rgb(0_0_0/0.5)] ring-1 ring-board-hole-ring",
         className,
       )}
     >
-      {color && isPegShapes && <PegShape color={color} className="size-3/5" />}
+      {color && pegStyle !== "color" && (
+        <PegShape color={color} className="size-3/5" />
+      )}
     </span>
   );
 }

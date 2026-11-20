@@ -25,8 +25,13 @@
     },
     "pinkBull": "Pinke Bullen",
     "pinkBullDescription": "Zeigt Stifte an der richtigen Stelle pink statt schwarz.",
-    "pegShapes": "Formen",
-    "pegShapesDescription": "Jede Farbe bekommt ihre eigene Form, so kannst du die Farben leichter unterscheiden.",
+    "pegStyle": "Stifte",
+    "pegStyleDescription": "Formen helfen dir, die Farben zu unterscheiden. Nur mit Formen ist es schwerer.",
+    "pegStyles": {
+      "color": "Farbe",
+      "colorShape": "Beides",
+      "shape": "Form"
+    },
     "boardTheme": "Spielbrett",
     "boardThemes": {
       "wood": "Holz",

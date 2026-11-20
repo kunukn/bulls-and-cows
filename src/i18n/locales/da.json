@@ -25,8 +25,13 @@
     },
     "pinkBull": "Lyserøde tyre",
     "pinkBullDescription": "Vis pinde på rigtig plads i lyserød i stedet for sort.",
-    "pegShapes": "Former",
-    "pegShapesDescription": "Hver farve får sin egen form, så farverne er lettere at kende fra hinanden.",
+    "pegStyle": "Pinde",
+    "pegStyleDescription": "Former gør det lettere at kende farverne fra hinanden. Kun former er sværere.",
+    "pegStyles": {
+      "color": "Farve",
+      "colorShape": "Begge",
+      "shape": "Form"
+    },
     "boardTheme": "Spillebræt",
     "boardThemes": {
       "wood": "Træ",

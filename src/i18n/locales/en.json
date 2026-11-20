@@ -25,8 +25,13 @@
     },
     "pinkBull": "Pink bulls",
     "pinkBullDescription": "Show right-spot pegs in pink instead of black.",
-    "pegShapes": "Shapes",
-    "pegShapesDescription": "Each colour gets its own shape, so colours are easier to tell apart.",
+    "pegStyle": "Pegs",
+    "pegStyleDescription": "Shapes help tell colours apart. Shape only is a harder way to play.",
+    "pegStyles": {
+      "color": "Colour",
+      "colorShape": "Both",
+      "shape": "Shape"
+    },
     "boardTheme": "Board",
     "boardThemes": {
       "wood": "Wood",

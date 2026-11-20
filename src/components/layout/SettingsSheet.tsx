@@ -10,7 +10,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Switch } from "@/components/ui/switch";
-import { COLOR_SCHEMES, useSettings } from "@/features/game/store/settings";
+import {
+  COLOR_SCHEMES,
+  PEG_STYLES,
+  useSettings,
+} from "@/features/game/store/settings";
 import { LanguageSelect } from "@/i18n/LanguageSelect";
 import { GitHubIcon } from "@/components/icons/GitHubIcon";
 import { Bug, Settings } from "lucide-react";
@@ -36,8 +40,8 @@ export function SettingsSheet() {
   const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
   const isPinkBull = useSettings((state) => state.isPinkBull);
   const setPinkBull = useSettings((state) => state.setPinkBull);
-  const isPegShapes = useSettings((state) => state.isPegShapes);
-  const setPegShapes = useSettings((state) => state.setPegShapes);
+  const pegStyle = useSettings((state) => state.pegStyle);
+  const setPegStyle = useSettings((state) => state.setPegStyle);
   const colorScheme = useSettings((state) => state.colorScheme);
   const setColorScheme = useSettings((state) => state.setColorScheme);
   const boardTheme = useSettings((state) => state.boardTheme);
@@ -143,25 +147,37 @@ export function SettingsSheet() {
               {t("common.soundDescription")}
             </p>
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-peg-shapes" className="font-medium">
-                {t("common.pegShapes")}
-              </label>
-              <Switch
-                id="settings-peg-shapes"
-                checked={isPegShapes}
-                onCheckedChange={setPegShapes}
-                aria-describedby="settings-peg-shapes-description"
-              />
+          <fieldset
+            className="flex flex-col gap-2"
+            aria-describedby="settings-peg-style-description"
+          >
+            <legend className="mb-2 font-medium">{t("common.pegStyle")}</legend>
+            {/* Three options in one group, so colour and shape can't both be off (0014). */}
+            <div className="flex rounded-lg bg-background p-1 ring-1 ring-border">
+              {PEG_STYLES.map((style) => (
+                <label
+                  key={style}
+                  className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
+                >
+                  <input
+                    type="radio"
+                    name="settings-peg-style"
+                    value={style}
+                    checked={pegStyle === style}
+                    onChange={() => setPegStyle(style)}
+                    className="sr-only"
+                  />
+                  {t(`common.pegStyles.${style}`)}
+                </label>
+              ))}
             </div>
             <p
-              id="settings-peg-shapes-description"
+              id="settings-peg-style-description"
               className="text-sm text-muted-foreground"
             >
-              {t("common.pegShapesDescription")}
+              {t("common.pegStyleDescription")}
             </p>
-          </div>
+          </fieldset>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-minimal-text" className="font-medium">

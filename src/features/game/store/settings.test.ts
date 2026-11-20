@@ -29,3 +29,19 @@ test("moves a saved Metal board to Felt", async () => {
 
   expect(useSettings.getState().boardTheme).toBe("felt");
 });
+
+test("pegs show colour only for new players", () => {
+  expect(useSettings.getState().pegStyle).toBe("color");
+});
+
+test("moves a saved Shapes switch to the colour + shape peg style", async () => {
+  localStorage.setItem(
+    "bulls-and-cows:settings",
+    JSON.stringify({ state: { isPegShapes: true }, version: 1 }),
+  );
+
+  await useSettings.persist.rehydrate();
+
+  expect(useSettings.getState().pegStyle).toBe("colorShape");
+  expect(useSettings.getState()).not.toHaveProperty("isPegShapes");
+});

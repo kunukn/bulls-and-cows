@@ -7,7 +7,7 @@ import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
 import { CornerDownLeft, Delete } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { PEG_CLASS } from "./Peg";
+import { getPegClass } from "./Peg";
 import { PegShape } from "./PegShape";
 
 const actionButtonClass =
@@ -26,7 +26,7 @@ export function Palette() {
   );
   const palette = paletteFor(difficulty);
   const isMinimalText = useSettings((state) => state.isMinimalText);
-  const isPegShapes = useSettings((state) => state.isPegShapes);
+  const pegStyle = useSettings((state) => state.pegStyle);
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
 
@@ -60,11 +60,13 @@ export function Palette() {
               key: index + 1,
             })}
             className={cn(
-              PEG_CLASS[color],
+              getPegClass(color, pegStyle),
               "relative grid aspect-square w-full place-items-center rounded-full shadow-[inset_0_-3px_4px_rgb(0_0_0/0.35)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:scale-95 disabled:cursor-not-allowed disabled:opacity-40",
             )}
           >
-            {isPegShapes && <PegShape color={color} className="size-3/5" />}
+            {pegStyle !== "color" && (
+              <PegShape color={color} className="size-3/5" />
+            )}
             {/* Keyboard shortcut, in a corner badge so the head stays clear. */}
             <span
               aria-hidden

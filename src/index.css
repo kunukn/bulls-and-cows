@@ -17,6 +17,8 @@
   --color-peg-orange: oklch(0.74 0.18 55);
   --color-peg-pink: oklch(0.78 0.14 350);
   --color-peg-cyan: oklch(0.8 0.13 210);
+  /* Shape-only pegs (0014): one ivory plastic, so only the shape tells them apart. */
+  --color-peg-ivory: oklch(0.93 0.03 90);
 
   /*
    * Peg micro-animations: five insert variants, all rigid-body motion (pegs are plastic, not jelly) (picked per slot in Peg.tsx so
