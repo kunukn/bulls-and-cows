@@ -1,3 +1,7 @@
+import {
+  FEEDBACK_POP_MS,
+  FEEDBACK_STAGGER_MS,
+} from "@/features/game/components/FeedbackPegs";
 import { COLORS } from "@/features/game/logic";
 import { describe, expect, it } from "vitest";
 import { pickFeedbackTicks, pickPegRemovedSound, pickPegSound } from "./sound";
@@ -23,7 +27,7 @@ describe("pickPegSound", () => {
     expect(clips.size).toBeGreaterThan(1);
   });
 
-  it("is stable for the same peg", () => {
+  it("is stable for the same peg, without Math.random()", () => {
     expect(pickPegSound(2, 1, "green")).toEqual(pickPegSound(2, 1, "green"));
   });
 });
@@ -46,10 +50,18 @@ describe("pickFeedbackTicks", () => {
     expect(ticks[1].playbackRate).toBeGreaterThan(ticks[2].playbackRate ?? 0);
   });
 
-  it("spaces ticks evenly, in order", () => {
+  it("ticks in order, while each key peg pops", () => {
     const delays = pickFeedbackTicks(1, 3).map((tick) => tick.delayMs ?? 0);
-    expect(delays[1] - delays[0]).toBe(delays[3] - delays[2]);
-    expect(delays[0]).toBeGreaterThan(0);
+
+    for (const [index, delay] of delays.entries()) {
+      // Key peg `index` pops from its animationDelay in FeedbackPegs.
+      const popStart = index * FEEDBACK_STAGGER_MS;
+      expect(delay).toBeGreaterThan(popStart);
+      expect(delay).toBeLessThan(popStart + FEEDBACK_POP_MS);
+    }
+    for (let index = 1; index < delays.length; index++) {
+      expect(delays[index]).toBeGreaterThan(delays[index - 1]);
+    }
   });
 
   it("is silent for no matches", () => {

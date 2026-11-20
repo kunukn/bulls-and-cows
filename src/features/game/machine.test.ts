@@ -1,8 +1,11 @@
 import { createActor } from "xstate";
-import type { Color } from "./logic";
+import { DIFFICULTIES, type Color } from "./logic";
 import { AUTO_SUBMIT_DELAY_MS, gameMachine, type GameEmitted } from "./machine";
 
-/* RNG always returning 0 → classic secret is red×4, easy is red/blue/green/yellow. */
+/*
+ * RNG always returning 0 → classic secret is red×4, easy is
+ * red/orange/yellow/green. Misses use cyan: in every palette, never in red×4.
+ */
 function startGame(difficulty: "easy" | "classic" | "hard" = "classic") {
   const actor = createActor(gameMachine, {
     input: { difficulty, randomInt: () => 0 },
@@ -24,12 +27,12 @@ function guess(actor: ReturnType<typeof startGame>, colors: Color[]) {
 describe("gameMachine", () => {
   it("ignores SUBMIT on an incomplete row", () => {
     const actor = startGame();
-    actor.send({ type: "ADD_PEG", color: "blue" });
+    actor.send({ type: "ADD_PEG", color: "cyan" });
     actor.send({ type: "SUBMIT" });
 
     expect(actor.getSnapshot().context.guesses).toHaveLength(0);
     expect(actor.getSnapshot().context.current).toEqual([
-      "blue",
+      "cyan",
       null,
       null,
       null,
@@ -41,11 +44,11 @@ describe("gameMachine", () => {
     const onRowIncomplete = vi.fn<() => void>();
     actor.on("rowIncomplete", onRowIncomplete);
 
-    actor.send({ type: "ADD_PEG", color: "blue" });
+    actor.send({ type: "ADD_PEG", color: "cyan" });
     actor.send({ type: "SUBMIT" });
     expect(onRowIncomplete).toHaveBeenCalledTimes(1);
 
-    guess(actor, ["blue", "blue", "blue"]);
+    guess(actor, ["cyan", "cyan", "cyan"]);
     expect(onRowIncomplete).toHaveBeenCalledTimes(1);
   });
 
@@ -54,7 +57,7 @@ describe("gameMachine", () => {
     const onPegPlaced = vi.fn<(event: GameEmitted) => void>();
     actor.on("pegPlaced", onPegPlaced);
 
-    guess(actor, ["blue", "blue", "blue", "blue"]);
+    guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
     actor.send({ type: "ADD_PEG", color: "green" });
     expect(onPegPlaced).toHaveBeenLastCalledWith({
       type: "pegPlaced",
@@ -77,11 +80,11 @@ describe("gameMachine", () => {
     actor.send({ type: "CLEAR_SLOT", index: 2 });
     expect(onPegRemoved).not.toHaveBeenCalled();
 
-    guessPegs(actor, ["blue", "green"]);
+    guessPegs(actor, ["cyan", "green"]);
     actor.send({ type: "CLEAR_SLOT", index: 0 });
     actor.send({ type: "REMOVE_PEG" });
     expect(onPegRemoved.mock.calls).toEqual([
-      [{ type: "pegRemoved", rowNumber: 1, slot: 0, color: "blue" }],
+      [{ type: "pegRemoved", rowNumber: 1, slot: 0, color: "cyan" }],
       [{ type: "pegRemoved", rowNumber: 1, slot: 1, color: "green" }],
     ]);
   });
@@ -92,7 +95,7 @@ describe("gameMachine", () => {
     actor.on("*", (event) => events.push(event));
 
     actor.send({ type: "SUBMIT" });
-    guess(actor, ["red", "blue", "red", "green"]);
+    guess(actor, ["red", "cyan", "red", "green"]);
     guess(actor, ["red", "red", "red", "red"]);
     expect(events.filter((event) => event.type !== "pegPlaced")).toEqual([
       { type: "rowIncomplete" },
@@ -123,7 +126,7 @@ describe("gameMachine", () => {
 
     it("does nothing when the flag is off", () => {
       const actor = startGame();
-      guessPegs(actor, ["blue", "blue", "blue", "blue"]);
+      guessPegs(actor, ["cyan", "cyan", "cyan", "cyan"]);
       vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS);
 
       expect(actor.getSnapshot().context.guesses).toHaveLength(0);
@@ -131,7 +134,7 @@ describe("gameMachine", () => {
 
     it("checks a full row after the delay", () => {
       const actor = startGame();
-      addPegs(actor, ["blue", "blue", "blue", "blue"]);
+      addPegs(actor, ["cyan", "cyan", "cyan", "cyan"]);
 
       vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS - 1);
       expect(actor.getSnapshot().context.guesses).toHaveLength(0);
@@ -145,7 +148,7 @@ describe("gameMachine", () => {
       const onRowIncomplete = vi.fn<() => void>();
       actor.on("rowIncomplete", onRowIncomplete);
 
-      addPegs(actor, ["blue", "blue", "blue", "blue"]);
+      addPegs(actor, ["cyan", "cyan", "cyan", "cyan"]);
       actor.send({ type: "REMOVE_PEG" });
       vi.advanceTimersByTime(AUTO_SUBMIT_DELAY_MS);
 
@@ -164,7 +167,7 @@ describe("gameMachine", () => {
 
   it("edits the current row", () => {
     const actor = startGame();
-    guessPegs(actor, ["blue", "green", "yellow"]);
+    guessPegs(actor, ["cyan", "green", "yellow"]);
     actor.send({ type: "REMOVE_PEG" });
     actor.send({ type: "CLEAR_SLOT", index: 0 });
     actor.send({ type: "ADD_PEG", color: "red" });
@@ -186,8 +189,8 @@ describe("gameMachine", () => {
       const actor = startGame();
       expect(context(actor).target).toBe(0);
 
-      guessPegs(actor, ["red", "blue"]);
-      expect(context(actor).current).toEqual(["red", "blue", null, null]);
+      guessPegs(actor, ["red", "cyan"]);
+      expect(context(actor).current).toEqual(["red", "cyan", null, null]);
       expect(context(actor).target).toBe(2);
     });
 
@@ -208,13 +211,13 @@ describe("gameMachine", () => {
 
     it("has no target once the row is full, so extra pegs are ignored", () => {
       const actor = startGame();
-      guessPegs(actor, ["red", "blue", "green", "yellow"]);
+      guessPegs(actor, ["red", "cyan", "green", "yellow"]);
       expect(context(actor).target).toBeNull();
 
       actor.send({ type: "ADD_PEG", color: "purple" });
       expect(context(actor).current).toEqual([
         "red",
-        "blue",
+        "cyan",
         "green",
         "yellow",
       ]);
@@ -224,7 +227,7 @@ describe("gameMachine", () => {
       const actor = startGame();
       const onPegPlaced = vi.fn<(event: GameEmitted) => void>();
       actor.on("pegPlaced", onPegPlaced);
-      guessPegs(actor, ["red", "blue", "green", "yellow"]);
+      guessPegs(actor, ["red", "cyan", "green", "yellow"]);
 
       actor.send({ type: "SELECT_SLOT", index: 1 });
       actor.send({ type: "ADD_PEG", color: "purple" });
@@ -263,21 +266,25 @@ describe("gameMachine", () => {
 
     it("counts a replaced peg as the latest placement", () => {
       const actor = startGame();
-      guessPegs(actor, ["red", "blue", "green"]);
+      guessPegs(actor, ["red", "cyan", "green"]);
       actor.send({ type: "SELECT_SLOT", index: 0 });
       actor.send({ type: "ADD_PEG", color: "yellow" });
       actor.send({ type: "REMOVE_PEG" });
 
-      expect(context(actor).current).toEqual([null, "blue", "green", null]);
+      expect(context(actor).current).toEqual([null, "cyan", "green", null]);
     });
 
     it("targets a cleared slot", () => {
       const actor = startGame();
-      guessPegs(actor, ["red", "blue", "green"]);
+      guessPegs(actor, ["red", "cyan", "green"]);
       actor.send({ type: "CLEAR_SLOT", index: 1 });
 
       expect(context(actor).target).toBe(1);
-      expect(context(actor).placed).toEqual([0, 2]);
+
+      // The cleared peg leaves the undo history: two undos empty the row.
+      actor.send({ type: "REMOVE_PEG" });
+      actor.send({ type: "REMOVE_PEG" });
+      expect(context(actor).current).toEqual([null, null, null, null]);
     });
 
     it("ignores a slot outside the row", () => {
@@ -291,16 +298,19 @@ describe("gameMachine", () => {
     it("starts each new row at the first slot", () => {
       const actor = startGame();
       actor.send({ type: "SELECT_SLOT", index: 2 });
-      guess(actor, ["blue", "blue", "blue", "blue"]);
+      guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
 
       expect(context(actor).target).toBe(0);
-      expect(context(actor).placed).toEqual([]);
+
+      // Undo has nothing to take back from the previous row.
+      actor.send({ type: "REMOVE_PEG" });
+      expect(context(actor).target).toBe(0);
     });
   });
 
   it("scores a guess and starts the clock", () => {
     const actor = startGame();
-    guess(actor, ["red", "blue", "red", "green"]);
+    guess(actor, ["red", "cyan", "red", "green"]);
     const { context } = actor.getSnapshot();
 
     expect(context.guesses[0]).toMatchObject({ black: 2, white: 0 });
@@ -317,19 +327,20 @@ describe("gameMachine", () => {
   });
 
   it("loses after the last guess", () => {
+    const { maxGuesses } = DIFFICULTIES.classic;
     const actor = startGame();
-    for (let turn = 0; turn < 10; turn++) {
-      guess(actor, ["blue", "blue", "blue", "blue"]);
+    for (let turn = 0; turn < maxGuesses; turn++) {
+      guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
     }
 
     expect(actor.getSnapshot().value).toBe("lost");
-    expect(actor.getSnapshot().context.guesses).toHaveLength(10);
+    expect(actor.getSnapshot().context.guesses).toHaveLength(maxGuesses);
   });
 
   it("wins on the last guess instead of losing", () => {
     const actor = startGame();
-    for (let turn = 0; turn < 9; turn++) {
-      guess(actor, ["blue", "blue", "blue", "blue"]);
+    for (let turn = 0; turn < DIFFICULTIES.classic.maxGuesses - 1; turn++) {
+      guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
     }
     guess(actor, ["red", "red", "red", "red"]);
 
@@ -351,7 +362,7 @@ describe("gameMachine", () => {
 
   it("GIVE_UP ends the game as lost and keeps the guesses", () => {
     const actor = startGame();
-    guess(actor, ["blue", "blue", "blue", "blue"]);
+    guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
     actor.send({ type: "GIVE_UP" });
     const { value, context } = actor.getSnapshot();
 

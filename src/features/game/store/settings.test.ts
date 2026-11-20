@@ -1,7 +1,9 @@
 import { useSettings } from "./settings";
 
-afterEach(() => {
-  useSettings.getState().setColorScheme("dark");
+/* Each test starts as a new player: no save, store back to its defaults. */
+beforeEach(() => {
+  localStorage.clear();
+  useSettings.setState(useSettings.getInitialState(), true);
 });
 
 test("starts dark and mirrors the scheme onto <html>", () => {

@@ -1,4 +1,25 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator } from "@playwright/test";
+
+/*
+ * Relative luminance (0 dark … 1 light) of an element's background colour.
+ * Painted to a 1px canvas so any CSS colour format reads as RGB, and the
+ * tests survive palette tweaks instead of pinning an exact oklch() value.
+ */
+function getBackgroundLightness(locator: Locator): Promise<number> {
+  return locator.evaluate((element) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    const context = canvas.getContext("2d");
+    if (!context) throw new Error("No 2D canvas context");
+
+    context.fillStyle = getComputedStyle(element).backgroundColor;
+    context.fillRect(0, 0, 1, 1);
+    const [red, green, blue] = context.getImageData(0, 0, 1, 1).data;
+
+    return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
+  });
+}
 
 test("starts a game and scores the first guess", async ({ page }) => {
   await page.goto("/");
@@ -49,7 +70,9 @@ test("explains the rules from the How it works button", async ({ page }) => {
 
 test("light mode lightens the app but not the board", async ({ page }) => {
   await page.goto("/");
+  const body = page.locator("body");
   const board = page.getByLabel("Board");
+  expect(await getBackgroundLightness(body)).toBeLessThan(0.5);
   const boardBackground = await board.evaluate(
     (element) => getComputedStyle(element).backgroundImage,
   );
@@ -66,10 +89,7 @@ test("light mode lightens the app but not the board", async ({ page }) => {
     "data-color-scheme",
     "light",
   );
-  await expect(page.locator("body")).toHaveCSS(
-    "background-color",
-    "oklch(0.968 0.007 247.896)",
-  );
+  await expect.poll(() => getBackgroundLightness(body)).toBeGreaterThan(0.5);
   expect(
     await board.evaluate(
       (element) => getComputedStyle(element).backgroundImage,
@@ -85,8 +105,7 @@ test("printing is light even in dark mode", async ({ page }) => {
     "data-color-scheme",
     "dark",
   );
-  await expect(page.locator("body")).toHaveCSS(
-    "background-color",
-    "oklch(0.968 0.007 247.896)",
-  );
+  await expect
+    .poll(() => getBackgroundLightness(page.locator("body")))
+    .toBeGreaterThan(0.5);
 });

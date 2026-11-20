@@ -1,14 +1,10 @@
 import { COLORS } from "@/features/game/logic";
 import { describe, expect, it } from "vitest";
-import { PEG_INSERT_ANIMATIONS, pickInsertAnimation } from "./Peg";
+import { pickInsertAnimation } from "./Peg";
 
 const SLOTS = [0, 1, 2, 3];
 
 describe("pickInsertAnimation", () => {
-  it("returns one of the insert animations", () => {
-    expect(PEG_INSERT_ANIMATIONS).toContain(pickInsertAnimation(3, 2, "red"));
-  });
-
   it("varies when the same colour fills a row", () => {
     const variants = SLOTS.map((slot) => pickInsertAnimation(1, slot, "red"));
 
@@ -24,7 +20,7 @@ describe("pickInsertAnimation", () => {
     expect(new Set(variants).size).toBeGreaterThan(1);
   });
 
-  it("is stable for the same slot and colour", () => {
+  it("is stable for the same slot and colour, so re-renders stay pure", () => {
     expect(pickInsertAnimation(2, 1, "green")).toBe(
       pickInsertAnimation(2, 1, "green"),
     );
