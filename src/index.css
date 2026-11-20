@@ -293,8 +293,21 @@
   background: var(--board-shield);
 }
 
+/*
+ * Wood grain: SVG turbulence stretched along the long axis (high x, low y
+ * frequency) reads as grain lines; the colour matrix turns the noise into
+ * dark-brown streaks of varying opacity over a softly shaded amber plank.
+ */
 [data-board-theme="wood"] {
-  --board-surface: oklch(0.473 0.137 46.201); /* amber-800 */
+  --board-surface:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='1200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.16 0.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.06 0 0 0 0 0 0.9 0 0 0 -0.37'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")
+      0 0 / 300px 1200px,
+    linear-gradient(
+      90deg,
+      oklch(0.414 0.112 45.904),
+      oklch(0.5 0.14 50) 30% 70%,
+      oklch(0.414 0.112 45.904)
+    ); /* amber-900 edges, amber-800 centre */
   --board-tray: oklch(0.279 0.077 45.635 / 50%); /* amber-950 */
   --board-hole: oklch(0.279 0.077 45.635 / 60%);
   --board-hole-ring: transparent;
