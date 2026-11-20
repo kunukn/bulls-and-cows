@@ -17,7 +17,9 @@ type Props = {
  * towards the viewer, like the shield on a physical board (see
  * docs/product/decisions/0001-physical-board-motion.md). The plate has a
  * real edge face, so when it stands upright it shows its thickness instead
- * of vanishing. A transition, not a keyframe animation, so a new game closes
+ * of vanishing. The long perspective is a normal viewing distance: a short
+ * one magnifies the raised edge until it overhangs the board's sides.
+ * A transition, not a keyframe animation, so a new game closes
  * it again and a restored finished game shows it open without replaying.
  */
 export function SecretShield({ pegs, isOpen }: Props) {
@@ -25,7 +27,7 @@ export function SecretShield({ pegs, isOpen }: Props) {
     <div
       aria-hidden
       data-open={isOpen}
-      className="pointer-events-none absolute inset-0 origin-top [transform:perspective(600px)_rotateX(0)] transition-transform duration-500 ease-in-out transform-3d data-[open=true]:[transform:perspective(600px)_rotateX(90deg)] motion-reduce:transition-none"
+      className="pointer-events-none absolute inset-0 origin-top [transform:perspective(2400px)_rotateX(0)] transition-transform duration-500 ease-in-out transform-3d data-[open=true]:[transform:perspective(2400px)_rotateX(90deg)] motion-reduce:transition-none"
     >
       <div
         className={cn(
