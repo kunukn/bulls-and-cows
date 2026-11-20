@@ -47,8 +47,8 @@ describe("paletteFor", () => {
       "orange",
       "yellow",
       "green",
+      "cyan",
       "blue",
-      "purple",
     ]);
     expect(paletteFor("hard")).toEqual([
       "red",
@@ -60,6 +60,13 @@ describe("paletteFor", () => {
       "purple",
       "pink",
     ]);
+  });
+
+  it("keeps every colour in the same slot on every difficulty", () => {
+    const hard = paletteFor("hard");
+
+    expect(paletteFor("easy")).toEqual(hard.slice(0, 6));
+    expect(paletteFor("classic")).toEqual(hard.slice(0, 6));
   });
 });
 
@@ -82,6 +89,6 @@ describe("generateSecret", () => {
 
   it("is deterministic with an injected RNG", () => {
     expect(generateSecret("classic", () => 0)).toEqual(codeOf("RRRR"));
-    expect(generateSecret("easy", () => 0)).toEqual(codeOf("RBGY"));
+    expect(generateSecret("easy", () => 0)).toEqual(codeOf("ROYG"));
   });
 });

@@ -211,7 +211,7 @@ describe("gameMachine", () => {
       guessPegs(actor, ["red", "blue", "green", "yellow"]);
       expect(context(actor).target).toBeNull();
 
-      actor.send({ type: "ADD_PEG", color: "purple" });
+      actor.send({ type: "ADD_PEG", color: "cyan" });
       expect(context(actor).current).toEqual([
         "red",
         "blue",
@@ -227,11 +227,11 @@ describe("gameMachine", () => {
       guessPegs(actor, ["red", "blue", "green", "yellow"]);
 
       actor.send({ type: "SELECT_SLOT", index: 1 });
-      actor.send({ type: "ADD_PEG", color: "purple" });
+      actor.send({ type: "ADD_PEG", color: "cyan" });
 
       expect(context(actor).current).toEqual([
         "red",
-        "purple",
+        "cyan",
         "green",
         "yellow",
       ]);
@@ -240,7 +240,7 @@ describe("gameMachine", () => {
         type: "pegPlaced",
         rowNumber: 1,
         slot: 1,
-        color: "purple",
+        color: "cyan",
       });
     });
 
@@ -310,7 +310,7 @@ describe("gameMachine", () => {
 
   it("wins on the correct code", () => {
     const actor = startGame("easy");
-    guess(actor, ["red", "blue", "green", "yellow"]);
+    guess(actor, ["red", "orange", "yellow", "green"]);
 
     expect(actor.getSnapshot().value).toBe("won");
     expect(actor.getSnapshot().context.finishedAt).toBeGreaterThan(0);

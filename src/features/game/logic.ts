@@ -1,12 +1,17 @@
+/*
+ * Rainbow order, which is also tier order: a difficulty with N colours uses
+ * the first N. The first six are the set colour-blind players tell apart best
+ * (decision 0015); Hard adds purple and pink, which end the rainbow.
+ */
 export const COLORS = [
   "red",
-  "blue",
-  "green",
-  "yellow",
-  "purple",
   "orange",
-  "pink",
+  "yellow",
+  "green",
   "cyan",
+  "blue",
+  "purple",
+  "pink",
 ] as const;
 
 export type Color = (typeof COLORS)[number];
@@ -55,30 +60,9 @@ export const cryptoRandomInt: RandomInt = (max) => {
   return buffer[0] % max;
 };
 
-/*
- * Display order, by hue. `COLORS` stays in tier order (hard adds pink and
- * cyan last), so the pool is sliced from it and then sorted by this.
- */
-const RAINBOW_ORDER: readonly Color[] = [
-  "red",
-  "orange",
-  "yellow",
-  "green",
-  "cyan",
-  "blue",
-  "purple",
-  "pink",
-];
-
-function colorPoolFor(difficulty: Difficulty): Color[] {
-  return COLORS.slice(0, DIFFICULTIES[difficulty].colors);
-}
-
 /* The difficulty's colours in rainbow order; digit shortcuts follow it. */
 export function paletteFor(difficulty: Difficulty): Color[] {
-  return colorPoolFor(difficulty).toSorted(
-    (a, b) => RAINBOW_ORDER.indexOf(a) - RAINBOW_ORDER.indexOf(b),
-  );
+  return COLORS.slice(0, DIFFICULTIES[difficulty].colors);
 }
 
 export function generateSecret(
@@ -86,7 +70,7 @@ export function generateSecret(
   randomInt: RandomInt = cryptoRandomInt,
 ): Color[] {
   const { pegs, allowRepeats } = DIFFICULTIES[difficulty];
-  const pool = colorPoolFor(difficulty);
+  const pool = paletteFor(difficulty);
 
   if (allowRepeats) {
     return Array.from({ length: pegs }, () => pool[randomInt(pool.length)]);

@@ -1,8 +1,8 @@
 import type { SnapshotFrom } from "xstate";
 import {
-  COLORS,
   cryptoRandomInt,
   DIFFICULTIES,
+  paletteFor,
   type Color,
   type Difficulty,
 } from "./logic";
@@ -88,11 +88,15 @@ function isSlot(value: unknown, length: number): value is number {
   );
 }
 
-function isColorRow(value: unknown, length: number): value is Color[] {
+function isColorRow(
+  value: unknown,
+  length: number,
+  palette: readonly Color[],
+): value is Color[] {
   return (
     Array.isArray(value) &&
     value.length === length &&
-    value.every((peg) => COLORS.includes(peg))
+    value.every((peg) => palette.includes(peg))
   );
 }
 
@@ -109,18 +113,25 @@ function isSavedGame(value: unknown): value is SavedGame {
 
   if (!Object.hasOwn(DIFFICULTIES, context.difficulty)) return false;
 
-  const { pegs, maxGuesses } = DIFFICULTIES[context.difficulty as Difficulty];
+  const difficulty = context.difficulty as Difficulty;
+  const { pegs, maxGuesses } = DIFFICULTIES[difficulty];
+  /*
+   * Pegs must come from the difficulty's own palette: a save from before the
+   * palettes changed could hold a colour the palette no longer offers, and
+   * that game could never be won.
+   */
+  const palette = paletteFor(difficulty);
 
   return (
-    isColorRow(context.secret, pegs) &&
+    isColorRow(context.secret, pegs, palette) &&
     Array.isArray(context.current) &&
     context.current.length === pegs &&
-    context.current.every((peg) => peg === null || COLORS.includes(peg)) &&
+    context.current.every((peg) => peg === null || palette.includes(peg)) &&
     Array.isArray(context.guesses) &&
     context.guesses.length <= maxGuesses &&
     context.guesses.every(
       (guess) =>
-        isColorRow(guess.pegs, pegs) &&
+        isColorRow(guess.pegs, pegs, palette) &&
         typeof guess.black === "number" &&
         typeof guess.white === "number",
     ) &&

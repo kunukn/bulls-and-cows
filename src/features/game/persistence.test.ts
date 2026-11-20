@@ -13,7 +13,7 @@ beforeEach(() => localStorage.clear());
 describe("game persistence", () => {
   it("restores an in-progress game after a reload", () => {
     const actor = createActor(gameMachine, {
-      input: { difficulty: "classic", randomInt: sequence([0, 1, 2, 3]) },
+      input: { difficulty: "classic", randomInt: sequence([0, 5, 3, 2]) },
     }).start();
     actor.subscribe(saveGame);
     for (const color of ["blue", "red", "green", "yellow"] as const) {
@@ -79,7 +79,7 @@ describe("game persistence", () => {
 
   it("restores a finished game in its final state", () => {
     const actor = createActor(gameMachine, {
-      input: { difficulty: "classic", randomInt: sequence([0, 1, 2, 3]) },
+      input: { difficulty: "classic", randomInt: sequence([0, 5, 3, 2]) },
     }).start();
     actor.subscribe(saveGame);
     for (const color of ["red", "blue", "green", "yellow"] as const) {
@@ -102,6 +102,21 @@ describe("game persistence", () => {
         context: {
           difficulty: "classic",
           secret: ["red"],
+          guesses: [],
+          current: [null, null, null, null],
+          startedAt: 0,
+          finishedAt: 0,
+        },
+      }),
+    ],
+    [
+      "a colour outside the difficulty's palette",
+      JSON.stringify({
+        version: 1,
+        value: "playing",
+        context: {
+          difficulty: "classic",
+          secret: ["red", "blue", "green", "purple"],
           guesses: [],
           current: [null, null, null, null],
           startedAt: 0,
