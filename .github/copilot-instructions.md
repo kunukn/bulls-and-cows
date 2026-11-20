@@ -39,7 +39,7 @@ React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours and the shadc
 - `pnpm e2e:ui` — Playwright UI mode
 - `pnpm licenses:update` — regenerate `THIRD-PARTY-LICENSES.md` from the production bundle; run after dependency changes (CI fails if it's stale or a license isn't allow-listed)
 
-Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/vitest.setup.ts`). Unit tests live alongside source as `*.test.ts(x)`. Note `pnpm check` runs only typecheck + lint, not tests — run tests separately.
+Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/vitest.setup.ts`). Unit tests live alongside source as `*.test.ts(x)`. Note `pnpm check` runs only typecheck + lint, not tests — run tests separately. Rules for writing tests (no tautologies, behaviour over structure, fixtures that match reality, store isolation): [`.github/instructions/testing.instructions.md`](instructions/testing.instructions.md).
 
 ## Conventions
 
