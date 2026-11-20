@@ -13,10 +13,10 @@ beforeEach(() => localStorage.clear());
 describe("game persistence", () => {
   it("restores an in-progress game after a reload", () => {
     const actor = createActor(gameMachine, {
-      input: { difficulty: "classic", randomInt: sequence([0, 5, 3, 2]) },
+      input: { difficulty: "classic", randomInt: sequence([0, 4, 3, 2]) },
     }).start();
     actor.subscribe(saveGame);
-    for (const color of ["blue", "red", "green", "yellow"] as const) {
+    for (const color of ["cyan", "red", "green", "yellow"] as const) {
       actor.send({ type: "ADD_PEG", color });
     }
     actor.send({ type: "SUBMIT" });
@@ -30,7 +30,7 @@ describe("game persistence", () => {
 
     expect(value).toBe("playing");
     expect(context.difficulty).toBe("classic");
-    expect(context.secret).toEqual(["red", "blue", "green", "yellow"]);
+    expect(context.secret).toEqual(["red", "cyan", "green", "yellow"]);
     expect(context.guesses).toHaveLength(1);
     expect(context.current).toEqual(["red", null, null, null]);
     expect(context.startedAt).toBe(actor.getSnapshot().context.startedAt);
@@ -48,9 +48,9 @@ describe("game persistence", () => {
         value: "playing",
         context: {
           difficulty: "classic",
-          secret: ["red", "blue", "green", "yellow"],
+          secret: ["red", "cyan", "green", "yellow"],
           guesses: [],
-          current: ["red", "blue", null, null],
+          current: ["red", "cyan", null, null],
           startedAt: 1,
           finishedAt: 0,
         },
@@ -79,10 +79,10 @@ describe("game persistence", () => {
 
   it("restores a finished game in its final state", () => {
     const actor = createActor(gameMachine, {
-      input: { difficulty: "classic", randomInt: sequence([0, 5, 3, 2]) },
+      input: { difficulty: "classic", randomInt: sequence([0, 4, 3, 2]) },
     }).start();
     actor.subscribe(saveGame);
-    for (const color of ["red", "blue", "green", "yellow"] as const) {
+    for (const color of ["red", "cyan", "green", "yellow"] as const) {
       actor.send({ type: "ADD_PEG", color });
     }
     actor.send({ type: "SUBMIT" });
@@ -116,7 +116,7 @@ describe("game persistence", () => {
         value: "playing",
         context: {
           difficulty: "classic",
-          secret: ["red", "blue", "green", "purple"],
+          secret: ["red", "cyan", "green", "blue"],
           guesses: [],
           current: [null, null, null, null],
           startedAt: 0,

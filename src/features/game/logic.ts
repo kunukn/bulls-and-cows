@@ -1,7 +1,7 @@
 /*
- * Rainbow order, which is also tier order: a difficulty with N colours uses
- * the first N. The first six are the set colour-blind players tell apart best
- * (decision 0015); Hard adds purple and pink, which end the rainbow.
+ * Tier order: a difficulty with N colours uses the first N. Six-colour modes
+ * leave out blue, which colour-blind players confuse with purple (decision
+ * 0016); Hard adds blue and pink.
  */
 export const COLORS = [
   "red",
@@ -9,8 +9,8 @@ export const COLORS = [
   "yellow",
   "green",
   "cyan",
-  "blue",
   "purple",
+  "blue",
   "pink",
 ] as const;
 
@@ -60,9 +60,23 @@ export const cryptoRandomInt: RandomInt = (max) => {
   return buffer[0] % max;
 };
 
+/* Display order, by hue. */
+const RAINBOW_ORDER: readonly Color[] = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "cyan",
+  "blue",
+  "purple",
+  "pink",
+];
+
 /* The difficulty's colours in rainbow order; digit shortcuts follow it. */
 export function paletteFor(difficulty: Difficulty): Color[] {
-  return COLORS.slice(0, DIFFICULTIES[difficulty].colors);
+  return COLORS.slice(0, DIFFICULTIES[difficulty].colors).toSorted(
+    (a, b) => RAINBOW_ORDER.indexOf(a) - RAINBOW_ORDER.indexOf(b),
+  );
 }
 
 export function generateSecret(

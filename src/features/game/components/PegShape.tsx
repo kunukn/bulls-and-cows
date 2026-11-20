@@ -5,8 +5,8 @@ import { cn } from "@/utils/cn";
  * One silhouette per colour (24×24 box), so colours can be told apart without
  * seeing hue. Pairs that colour-blind players mix up get the most different
  * outlines: red ▲ / green ✚, cyan ♥ / blue ◆, blue ◆ / purple ☾,
- * purple ☾ / pink 💧. Hard's extra colours (purple, pink) carry ☾ and 💧, so
- * shapes 1–6 match on every difficulty.
+ * purple ☾ / pink 💧. A colour keeps its shape on every difficulty, even
+ * where its digit differs.
  */
 const SHAPE_PATHS: Record<Color, string> = {
   // Raised 1 unit: halfway between box-centred and centroid-centred.

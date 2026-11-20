@@ -211,7 +211,7 @@ describe("gameMachine", () => {
       guessPegs(actor, ["red", "blue", "green", "yellow"]);
       expect(context(actor).target).toBeNull();
 
-      actor.send({ type: "ADD_PEG", color: "cyan" });
+      actor.send({ type: "ADD_PEG", color: "purple" });
       expect(context(actor).current).toEqual([
         "red",
         "blue",
@@ -227,11 +227,11 @@ describe("gameMachine", () => {
       guessPegs(actor, ["red", "blue", "green", "yellow"]);
 
       actor.send({ type: "SELECT_SLOT", index: 1 });
-      actor.send({ type: "ADD_PEG", color: "cyan" });
+      actor.send({ type: "ADD_PEG", color: "purple" });
 
       expect(context(actor).current).toEqual([
         "red",
-        "cyan",
+        "purple",
         "green",
         "yellow",
       ]);
@@ -240,7 +240,7 @@ describe("gameMachine", () => {
         type: "pegPlaced",
         rowNumber: 1,
         slot: 1,
-        color: "cyan",
+        color: "purple",
       });
     });
 

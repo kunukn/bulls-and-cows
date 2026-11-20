@@ -48,7 +48,7 @@ describe("paletteFor", () => {
       "yellow",
       "green",
       "cyan",
-      "blue",
+      "purple",
     ]);
     expect(paletteFor("hard")).toEqual([
       "red",
@@ -62,11 +62,9 @@ describe("paletteFor", () => {
     ]);
   });
 
-  it("keeps every colour in the same slot on every difficulty", () => {
-    const hard = paletteFor("hard");
-
-    expect(paletteFor("easy")).toEqual(hard.slice(0, 6));
-    expect(paletteFor("classic")).toEqual(hard.slice(0, 6));
+  it("leaves blue out of six-colour palettes", () => {
+    expect(paletteFor("easy")).toEqual(paletteFor("classic"));
+    expect(paletteFor("classic")).not.toContain("blue");
   });
 });
 
