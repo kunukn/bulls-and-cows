@@ -1,7 +1,7 @@
-# 0004 — The game works offline and updates silently
+# 0003 — The game works offline and updates silently
 
 - **Status:** Accepted
-- **Date:** 2026-11-19
+- **Updated:** 2026-11-20
 
 ## Context
 
