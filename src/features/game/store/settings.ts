@@ -63,7 +63,7 @@ export const useSettings = create<SettingsStore>()(
       setColorScheme: (colorScheme) => set({ colorScheme }),
     }),
     {
-      name: "bulls-and-cows:settings",
+      name: "app:settings",
       /*
        * v1: the Metal board ("gunmetal") was replaced by Felt (0007).
        * v2: the Shapes switch (isPegShapes) became the pegStyle choice (0004).

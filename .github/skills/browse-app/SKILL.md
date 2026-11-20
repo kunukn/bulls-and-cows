@@ -99,9 +99,9 @@ only if this skill started it.
 
 `localStorage` keys (Zustand `persist`):
 
-- `bulls-and-cows:highscores`: `{ scores: { easy, classic, hard }, lastName }`,
+- `app:highscores`: `{ scores: { easy, classic, hard }, lastName }`,
   top 10 per difficulty, ranked by fewest guesses then fastest time
-- `bulls-and-cows:settings`: last chosen difficulty
+- `app:settings`: last chosen difficulty
 
 Read them with the evaluate tool. Only clear or modify them if the user asks.
 

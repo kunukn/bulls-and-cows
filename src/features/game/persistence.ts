@@ -8,7 +8,7 @@ import {
 } from "./logic";
 import { gameMachine, nextEmptySlot, type GameContext } from "./machine";
 
-export const GAME_STORAGE_KEY = "bulls-and-cows:game";
+export const GAME_STORAGE_KEY = "app:game";
 /* Bump when the saved shape changes; older saves are discarded, not migrated. */
 const GAME_STORAGE_VERSION = 1;
 

@@ -67,6 +67,6 @@ export const useHighScores = create<HighScoresStore>()(
         }),
       clear: () => set({ scores: emptyBoard() }),
     }),
-    { name: "bulls-and-cows:highscores", version: 1 },
+    { name: "app:highscores", version: 1 },
   ),
 );

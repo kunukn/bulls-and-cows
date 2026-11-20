@@ -34,7 +34,7 @@ export function getDirection(language: string): "ltr" | "rtl" {
 }
 
 /* localStorage key (JSON string), written by LanguageSelect. */
-export const LANGUAGE_STORAGE_KEY = "bulls-and-cows:language";
+export const LANGUAGE_STORAGE_KEY = "app:language";
 
 export function isLanguage(value: unknown): value is Language {
   return LANGUAGE_CODES.includes(value as Language);

@@ -60,7 +60,7 @@ All user-facing text — including `aria-label`, `title`, `placeholder` and `con
 - **Add a key to all seven files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
 - Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`; Arabic needs all six (`_zero`, `_one`, `_two`, `_few`, `_many`, `_other`). Interpolate with `{{name}}`.
 - Format numbers and dates with `Intl` in the active language (`i18n.language`), not a fixed locale.
-- The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`bulls-and-cows:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
+- The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`app:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
 - **New settings go in the Settings drawer**, one stacked section each (label + control), below Language. Labels and descriptions are translated like any other text.
 - Tone rules for the locale files: [`.github/instructions/translation.instructions.md`](instructions/translation.instructions.md).
 

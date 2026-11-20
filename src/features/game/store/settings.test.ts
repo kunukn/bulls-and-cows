@@ -21,7 +21,7 @@ test("switching to light updates <html>", () => {
 
 test("moves a saved Metal board to Felt", async () => {
   localStorage.setItem(
-    "bulls-and-cows:settings",
+    "app:settings",
     JSON.stringify({ state: { boardTheme: "gunmetal" }, version: 0 }),
   );
 
@@ -36,7 +36,7 @@ test("pegs show colour only for new players", () => {
 
 test("moves a saved Shapes switch to the colour + shape peg style", async () => {
   localStorage.setItem(
-    "bulls-and-cows:settings",
+    "app:settings",
     JSON.stringify({ state: { isPegShapes: true }, version: 1 }),
   );
 
