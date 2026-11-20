@@ -35,11 +35,13 @@ export function Palette() {
       {/*
        * One row, one column per colour: each is at most 2.75rem (44px tap
        * target) and shrinks only when space runs out, so hard's 8 colours fit
-       * a 320px phone without wrapping.
+       * a 320px phone without wrapping. On touch screens leftover width goes
+       * between the columns (gap stays the minimum) to cut finger mis-taps;
+       * a mouse is precise, so the row stays centred there.
        */}
       <div
         style={{ "--colors": palette.length } as React.CSSProperties}
-        className="grid grid-cols-[repeat(var(--colors),minmax(0,2.75rem))] justify-center gap-2 max-sm:gap-1.5 desk:grid-cols-[repeat(var(--colors),minmax(0,3rem))]"
+        className="grid grid-cols-[repeat(var(--colors),minmax(0,2.75rem))] justify-center gap-2 max-sm:gap-1.5 pointer-coarse:justify-between desk:grid-cols-[repeat(var(--colors),minmax(0,3rem))]"
       >
         {palette.map((color, index) => (
           <button
