@@ -9,7 +9,7 @@ The code is made only of colours. Players with colour blindness mix up pairs suc
 
 ## Decision
 
-A **Colour shapes** setting (off by default) moulds a shape into the head of every colour peg: on the board, in the revealed code and on the palette buttons. Pegs stay round; only the head carries the shape.
+A **Shapes** setting (off by default) moulds a shape into the head of every colour peg: on the board, in the revealed code and on the palette buttons. Pegs stay round; only the head carries the shape.
 
 | Colour | Shape    |
 | ------ | -------- |
