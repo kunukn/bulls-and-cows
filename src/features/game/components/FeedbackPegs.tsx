@@ -78,14 +78,17 @@ export function FeedbackPegs({
         <span
           key={index}
           aria-hidden
-          className="grid size-3 place-items-center"
+          className="grid size-3 place-items-center desk:size-3.5"
         >
           <span
             className={cn(
               "rounded-full",
-              mark === "black" && cn("size-3", bullPegClass),
+              mark === "black" && cn("size-3 desk:size-3.5", bullPegClass),
               mark === "white" &&
-                cn("size-3 ring-1 ring-board-cow-ring", COW_PEG_CLASS),
+                cn(
+                  "size-3 ring-1 ring-board-cow-ring desk:size-3.5",
+                  COW_PEG_CLASS,
+                ),
               mark === "empty" && "size-1.5 bg-board-label opacity-40",
               isAnimated &&
                 mark !== "empty" &&

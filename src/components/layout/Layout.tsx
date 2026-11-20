@@ -23,7 +23,7 @@ export function Layout() {
   const isPlayPage = useMatch({ path: paths.play, end: true }) !== null;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4">
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg">
       <header className="flex items-center justify-between gap-2 py-4">
         <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap text-heading">
           <BullIcon className="size-7 shrink-0" />
@@ -42,7 +42,7 @@ export function Layout() {
         <div className="flex items-center gap-1">
           {isPlayPage && <HowItWorksPopover />}
           <nav className="flex gap-1">
-            {/* Icon-only: the layout is 448px max, too narrow for every language's
+            {/* Icon-only: the layout is 448px max (512px on desktop), too narrow for every language's
                 labels next to the title. Text stays for screen readers + tooltip. */}
             <NavLink
               to={paths.play}

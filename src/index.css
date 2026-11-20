@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/*
+ * Desktop step-up for the game board: wide and tall windows only, so hard's
+ * 12 rows still fit a short laptop window at the default size.
+ */
+@custom-variant desk (@media (min-width: 64rem) and (min-height: 50rem));
+
 @theme {
   --color-peg-red: oklch(0.63 0.24 27);
   --color-peg-blue: oklch(0.62 0.19 259);
