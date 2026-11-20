@@ -12,7 +12,7 @@ Board themes let players pick the look of the board. Every swatch in the picker 
 There are six themes, each with its own hue or lightness: Neon (navy, the default), Classic (black plastic), Felt (green), Wood (brown), Paper (white) and Candy (pastel). A theme is chosen on its own and is not tied to light mode (0006).
 
 - **Classic** is the plain peg-board look.
-- **Felt** is green card-table felt with a soft vignette, faint fibres and gold trim.
+- **Felt** is green card-table felt with a soft vignette, faint fibres, a fine fuzz and gold trim.
 - **Wood** is an amber plank with dark grain running the length of the board, a little darker at the edges.
 - **Paper** is graph paper in slate and sky, the light counterpart of Neon.
 - **Candy** is aimed at younger players: a pastel lavender-to-mint surface with sprinkle dots, white holes and an amber active row. It is light like Paper and leaves out pink, so pink bulls still stand out.
@@ -34,5 +34,6 @@ There are six themes, each with its own hue or lightness: Neon (navy, the defaul
 - Pegs stand out on Candy because the board is much lighter than they are, even where the hue is close (the purple peg on lavender).
 - Candy's sprinkles are layered CSS gradients in `--board-surface`, no images.
 - Wood's grain is an inline SVG `feTurbulence` noise (a `data:` URI in `--board-surface`), stretched along one axis so it reads as grain; no image file. Plain gradients only gave stripes.
+- Felt's fuzz uses the same SVG noise, fine and with no direction, as dark specks only; grey specks washed the green out.
 - The green peg is a little lower in contrast on Felt than elsewhere; the felt is dark enough (green-800 → green-950) that it still lifts off.
 - The settings store migrates a saved `"gunmetal"` (Metal) to `"felt"`; without it, those players would get a board with no theme tokens. A unit test covers it.

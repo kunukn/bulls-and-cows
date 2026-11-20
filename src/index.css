@@ -345,10 +345,14 @@
 
 /*
  * Green card-table felt: a soft vignette and faint fibres, gold trim. Dark
- * enough that the green peg still lifts off it.
+ * enough that the green peg still lifts off it. The fuzz is fine SVG noise
+ * with the same frequency on both axes, so it has no direction (unlike the
+ * wood grain); dark-only specks, so the green keeps its saturation.
  */
 [data-board-theme="felt"] {
   --board-surface:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0 0 0 -0.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E")
+      0 0 / 200px 200px,
     repeating-linear-gradient(
       45deg,
       oklch(1 0 0 / 2.5%) 0 1px,
