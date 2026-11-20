@@ -41,7 +41,7 @@ export function Palette() {
        */}
       <div
         style={{ "--colors": palette.length } as React.CSSProperties}
-        className="grid grid-cols-[repeat(var(--colors),minmax(0,2.75rem))] justify-center gap-2 pointer-coarse:justify-between max-sm:pointer-coarse:gap-1.5 desk:grid-cols-[repeat(var(--colors),minmax(0,3rem))]"
+        className="grid grid-cols-[repeat(var(--colors),minmax(0,2.75rem))] justify-center gap-3 pointer-coarse:justify-between max-sm:pointer-coarse:gap-1.5 desk:grid-cols-[repeat(var(--colors),minmax(0,3rem))]"
       >
         {palette.map((color, index) => (
           <button
