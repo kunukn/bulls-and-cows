@@ -332,7 +332,16 @@
 
 /* Black plastic, like the retail board. Faint hole rims keep holes visible. */
 [data-board-theme="classic"] {
-  --board-surface: linear-gradient(oklch(0.27 0 0), oklch(0.17 0 0));
+  /* A soft diagonal sheen, like a lamp catching moulded plastic. */
+  --board-surface:
+    linear-gradient(
+      115deg,
+      transparent 10%,
+      oklch(1 0 0 / 4%) 38%,
+      oklch(1 0 0 / 1.5%) 58%,
+      transparent 80%
+    ),
+    linear-gradient(oklch(0.27 0 0), oklch(0.17 0 0));
   --board-tray: oklch(0 0 0 / 50%);
   --board-hole: oklch(0 0 0 / 70%);
   --board-hole-ring: oklch(1 0 0 / 7%);

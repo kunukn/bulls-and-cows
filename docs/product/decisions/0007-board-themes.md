@@ -11,7 +11,7 @@ Board themes let players pick the look of the board. Every swatch in the picker 
 
 There are six themes, each with its own hue or lightness: Neon (navy, the default), Classic (black plastic), Felt (green), Wood (brown), Paper (white) and Candy (pastel). A theme is chosen on its own and is not tied to light mode (0006).
 
-- **Classic** is the plain peg-board look.
+- **Classic** is the plain peg-board look: dark moulded plastic with no texture, only a faint diagonal sheen so it reads as glossy rather than flat.
 - **Felt** is green card-table felt with a soft vignette, faint fibres, a fine fuzz and gold trim.
 - **Wood** is an amber plank with dark grain running the length of the board, a little darker at the edges. The secret shield has the same grain, slightly faded, so it reads as a wooden lid. Candy's shield has its own stripes (see Candy); the rest keep a plain shield, a separate piece from the patterned board.
 - **Paper** is graph paper in slate and sky, the light counterpart of Neon.
