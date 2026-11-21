@@ -1,11 +1,17 @@
+import { paths } from "@/app/paths";
 import { DifficultyPicker } from "@/components/DifficultyPicker";
 import { DIFFICULTY_KEYS, type Difficulty } from "@/features/game/logic";
+import {
+  useGameActorRef,
+  useGameSelector,
+} from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
 import { formatDate, formatDuration } from "@/utils/format";
 import {
   CalendarDays,
   Clock,
+  RotateCcw,
   Rows4,
   Trash2,
   Trophy,
@@ -13,7 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { useHighScores } from "../store";
 
 function isDifficulty(value: string | null): value is Difficulty {
@@ -47,9 +53,27 @@ export function HighScores() {
   const entries = useHighScores((state) => state.scores[difficulty]);
   const clear = useHighScores((state) => state.clear);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const actor = useGameActorRef();
+  const navigate = useNavigate();
+  /*
+   * Offer a new game only once the current one is over, so the CTA can never
+   * throw away a game in progress (the header's Play link resumes that).
+   */
+  const isGameOver = useGameSelector(
+    (snapshot) => snapshot.matches("won") || snapshot.matches("lost"),
+  );
+  // A score's id is its game's start time, so this marks the run just saved.
+  const currentGameId = useGameSelector(
+    (snapshot) => snapshot.context.startedAt,
+  );
 
   function handleClear() {
     if (window.confirm(t("highScores.clearConfirm"))) clear();
+  }
+
+  function handlePlayAgain() {
+    actor.send({ type: "NEW_GAME" });
+    navigate(paths.play);
   }
 
   return (
@@ -118,7 +142,11 @@ export function HighScores() {
           </thead>
           <tbody>
             {entries.map((entry, index) => (
-              <tr key={entry.id} className="border-t border-secondary">
+              <tr
+                key={entry.id}
+                aria-current={entry.id === currentGameId ? "true" : undefined}
+                className="border-t border-secondary aria-current:bg-warning/15"
+              >
                 <td className="px-3 py-2 text-muted-foreground tabular-nums">
                   {index + 1}
                 </td>
@@ -138,6 +166,20 @@ export function HighScores() {
             ))}
           </tbody>
         </table>
+      )}
+
+      {isGameOver && (
+        <button
+          type="button"
+          onClick={handlePlayAgain}
+          title={isMinimalText ? t("result.newGame") : undefined}
+          className="flex items-center gap-1.5 self-center rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          {isMinimalText && <RotateCcw aria-hidden className="size-5" />}
+          <span className={isMinimalText ? "sr-only" : undefined}>
+            {t("result.newGame")}
+          </span>
+        </button>
       )}
 
       <button

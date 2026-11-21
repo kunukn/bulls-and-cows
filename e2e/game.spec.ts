@@ -55,6 +55,27 @@ test("game menu restarts without revealing the code", async ({ page }) => {
   await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
 });
 
+test("high scores offer a new game only once the game is over", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "High scores" }).click();
+  const newGame = page.getByRole("button", { name: "New game" });
+  // Mid-game, the CTA would throw away the game in progress.
+  await expect(newGame).toBeHidden();
+
+  await page.getByRole("link", { name: "Play" }).click();
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "Give up" }).click();
+  await expect(page.getByLabel("Secret code (hidden)")).toBeHidden();
+
+  await page.getByRole("link", { name: "High scores" }).click();
+  await newGame.click();
+
+  await expect(page).toHaveURL(/#\/$/);
+  await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
+});
+
 test("explains the rules from the How it works button", async ({ page }) => {
   await page.goto("/");
 
