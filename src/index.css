@@ -522,20 +522,23 @@
 }
 
 /*
- * Sticky dock (palette / result panel): the frosted background and upward
- * shadow only make sense while the dock floats over board rows. At rest they
- * would paint over the tail of the board's shadow and cut it off flat. Put
- * `dock` on the sticky element and `dock-surface` on its child; browsers with
- * scroll-state queries show the surface only when stuck, others keep it
- * always on and push the dock clear of the board's shadow instead.
+ * Sticky dock (palette / result panel). The frosted background is always
+ * painted: it is what hides the board rows scrolling underneath. Switching it
+ * on "when stuck" (scroll-state query, scroll-driven animation, JS) lands a
+ * frame or more after Chrome's scroll thread has moved the dock, and a fast
+ * flick flashed the rows through, glaring on a light board. At rest it matches
+ * the page behind it; the top margin keeps it off the tail of the board's
+ * shadow, which it would cut off flat.
+ *
+ * Only the upward shadow depends on scroll: at rest it is a stray dark band,
+ * and nobody notices a shadow arriving a frame late. Put `dock` on the sticky
+ * element and `dock-surface` on its child; browsers without scroll-state
+ * queries keep the shadow always on.
  */
 @utility dock {
   container-type: scroll-state;
-
-  @supports not (container-type: scroll-state) {
-    /* Board `shadow-lg` reaches ~22px down; the page gap is 16px. */
-    margin-top: 0.5rem;
-  }
+  /* Board `shadow-lg` reaches ~22px down; the page gap is 16px. */
+  margin-top: 0.5rem;
 }
 
 @utility dock-surface {
@@ -544,22 +547,11 @@
   backdrop-filter: blur(8px);
 
   @supports (container-type: scroll-state) {
-    background-color: transparent;
     box-shadow: none;
-    backdrop-filter: none;
-    transition-property: background-color, box-shadow, backdrop-filter;
-    transition-duration: 150ms;
+    transition: box-shadow 150ms;
 
-    /*
-     * Appear instantly, fade only on the way out: once stuck the dock already
-     * overlaps board rows, and a fast scroll would show them through a
-     * half-faded surface. At rest nothing is underneath, so fading is safe.
-     */
     @container scroll-state(stuck: bottom) {
-      background-color: color-mix(in oklab, var(--background) 90%, transparent);
       box-shadow: 0 -12px 16px -8px var(--dock-shadow);
-      backdrop-filter: blur(8px);
-      transition-duration: 0s;
     }
   }
 }
