@@ -13,7 +13,7 @@ pegs don't say which spot they mean — that's the puzzle.
 
 **[www.tyrko.app](https://www.tyrko.app)** · [kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows)
 
-<img src="docs/qr-live-demo.png" alt="QR code for live demo" width="200" />
+<img src="docs/qr-live-demo.png" alt="QR code for live demo" width="198" />
 
 ## ✨ What's Inside
 
