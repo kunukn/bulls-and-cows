@@ -3,6 +3,9 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, loadEnv, type PluginOption } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+import { paths } from "./src/app/paths";
+
+const SITE_ORIGIN = "https://www.tyrko.app";
 
 /*
  * Dev-only click-to-source (code-inspector-plugin). Opt in with
@@ -45,6 +48,35 @@ function robotsNoindex(isEnabled: boolean): PluginOption {
         injectTo: "head-prepend",
       },
     ],
+  };
+}
+
+/*
+ * sitemap.xml for www.tyrko.app, one entry per route in paths.ts. History
+ * routing builds only: the GitHub Pages mirror uses hash URLs, which search
+ * engines don't treat as separate pages, and is noindex anyway.
+ * public/robots.txt points crawlers here.
+ */
+function sitemap(isEnabled: boolean): PluginOption {
+  if (!isEnabled) return null;
+
+  return {
+    name: "sitemap",
+    apply: "build",
+    generateBundle() {
+      const lastmod = new Date().toISOString().slice(0, 10);
+      const urls = Object.values(paths)
+        .map(
+          (route) =>
+            `  <url>\n    <loc>${SITE_ORIGIN}${route}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`,
+        )
+        .join("\n");
+      this.emitFile({
+        type: "asset",
+        fileName: "sitemap.xml",
+        source: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
+      });
+    },
   };
 }
 
@@ -99,6 +131,7 @@ export default defineConfig(async ({ command, mode }) => {
     plugins: [
       await codeInspector(isCodeInspectorEnabled),
       robotsNoindex(process.env.VITE_ROBOTS_NOINDEX === "1"),
+      sitemap(historyRoutingFlag === "1"),
       tailwindcss(),
       react(),
       /*
