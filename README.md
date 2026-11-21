@@ -11,8 +11,7 @@ pegs don't say which spot they mean — that's the puzzle.
 
 ## 🌐 Try It
 
-**[tyrko.app](https://tyrko.app/)** — hosted on Vercel. Mirror:
-[kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows/).
+**[tyrko.app](https://tyrko.app)** · [kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows)
 
 <img src="docs/qr-live-demo.png" alt="QR code for live demo" width="200" />
 
