@@ -4,7 +4,7 @@ This file provides guidance to AI coding assistants when working with code in th
 
 ## About this app
 
-Bulls & Cows — a single-player code-breaking game inspired by Mastermind. The
+Tyr & Ko — a single-player code-breaking game inspired by Mastermind. The
 computer picks a secret colour code; the player has a limited number of guesses
 to crack it. After each guess the board shows **bulls** (black: right colour,
 right spot) and **cows** (white: right colour, wrong spot).

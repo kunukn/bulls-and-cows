@@ -1,8 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows",
-    "shortTitle": "B & C",
-    "documentTitle": "Bulls & Cows — Jeu gratuit : trouve le code couleur"
+    "title": "Tyr & Ko",
+    "documentTitle": "Tyr & Ko — Jeu gratuit : trouve le code couleur"
   },
   "common": {
     "settings": "Réglages",

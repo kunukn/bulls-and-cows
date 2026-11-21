@@ -1,4 +1,4 @@
-# <img src="public/favicon.svg" width="32" height="32" align="absmiddle" alt="bull logo" /> Bulls & Cows
+# <img src="public/favicon.svg" width="32" height="32" align="absmiddle" alt="bull logo" /> Tyr & Ko
 
 [![License: 0BSD](https://img.shields.io/badge/license-0BSD-green.svg)](LICENSE)
 [![Live](https://img.shields.io/badge/live-tyrko.app-blue)](https://www.tyrko.app/)
@@ -8,6 +8,9 @@
 A code-breaking game inspired by Mastermind. Each guess earns **bulls** (black:
 right colour, right spot) and **cows** (white: right colour, wrong spot). The
 pegs don't say which spot they mean — that's the puzzle.
+
+The name is Danish: _tyr_ is bull, _ko_ is cow — the classic game
+Bulls & Cows, in the language of the maker.
 
 ## 🌐 Try It
 

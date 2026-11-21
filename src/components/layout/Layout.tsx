@@ -30,13 +30,8 @@ export function Layout() {
           {isMinimalText ? (
             <span className="sr-only">{t("app.title")}</span>
           ) : (
-            <>
-              {/* Below 360px the full name and four header icons don't fit. */}
-              <span className="max-[360px]:sr-only">{t("app.title")}</span>
-              <span aria-hidden className="min-[360px]:hidden">
-                {t("app.shortTitle")}
-              </span>
-            </>
+            // Fits beside four header icons at 320px, ~12px to spare.
+            <span>{t("app.title")}</span>
           )}
         </h1>
         <div className="flex items-center gap-1">

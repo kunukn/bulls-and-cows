@@ -1,8 +1,7 @@
 {
   "app": {
-    "title": "Bulls & Cows",
-    "shortTitle": "B & C",
-    "documentTitle": "Bulls & Cows — Gratis spil: knæk farvekoden"
+    "title": "Tyr & Ko",
+    "documentTitle": "Tyr & Ko — Gratis spil: knæk farvekoden"
   },
   "common": {
     "settings": "Indstillinger",

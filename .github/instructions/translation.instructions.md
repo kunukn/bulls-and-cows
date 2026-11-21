@@ -24,7 +24,7 @@ Languages: English (`en.json`, the source of truth), Simplified Chinese (`zh.jso
   - ❌ `Please enter your name`
   - ✅ `Your name`
 - **No parenthetical plurals.** `guess(es)`, `Versuch(e)` read like form letters. Use i18next's `_one` / `_other` keys instead. Chinese has no plural forms: only `_other`. Arabic uses all six: `_zero`, `_one`, `_two`, `_few`, `_many`, `_other`.
-- **Keep game terms consistent.** Bull = right colour in the right spot, cow = right colour in the wrong spot. Use the same word for each everywhere in a file (DE Stier/Kuh, FR taureau/vache, DA tyr/ko, ZH 公牛/母牛, HI बैल/गाय, AR ثور/بقرة). The game name `Bulls & Cows` (`app.title`) is a brand and stays untranslated.
+- **Keep game terms consistent.** Bull = right colour in the right spot, cow = right colour in the wrong spot. Use the same word for each everywhere in a file (DE Stier/Kuh, FR taureau/vache, DA tyr/ko, ZH 公牛/母牛, HI बैल/गाय, AR ثور/بقرة). The game name `Tyr & Ko` (`app.title`) is a brand and stays untranslated in every language, Danish included.
 - **Keep it short.** Strings appear on buttons and in a 448px-wide layout; prefer the shorter of two equally clear phrasings.
 - **Never rename i18n keys to fit copy.** Keys are referenced from code (and type-checked against `en.json`); only edit the string _values_. A key rename is a separate, code-touching change.
 

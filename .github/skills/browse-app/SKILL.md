@@ -1,7 +1,7 @@
 ---
 name: browse-app
 version: 1.0.0
-description: Browse and interact with the running Bulls & Cows game using any available browser MCP tools (Playwright MCP, Chrome DevTools MCP, or similar). Use when the user wants to open the app, inspect a page, play or test a game flow, check the high-score page, or visually debug the UI.
+description: Browse and interact with the running Tyr & Ko game using any available browser MCP tools (Playwright MCP, Chrome DevTools MCP, or similar). Use when the user wants to open the app, inspect a page, play or test a game flow, check the high-score page, or visually debug the UI.
 allowed-tools:
   - Read
   - Bash
@@ -29,7 +29,7 @@ allowed-tools:
 
 # Browse App
 
-Browse and interact with the running Bulls & Cows game (a Mastermind-style
+Browse and interact with the running Tyr & Ko game (a Mastermind-style
 code-breaker) using whichever browser MCP tools are connected in the current
 session (e.g. Playwright MCP, Chrome DevTools MCP).
 

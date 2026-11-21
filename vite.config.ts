@@ -143,8 +143,8 @@ export default defineConfig(async ({ command, mode }) => {
         registerType: "autoUpdate",
         includeAssets: ["favicon.svg", "apple-touch-icon.png"],
         manifest: {
-          name: "Bulls & Cows",
-          short_name: "Bulls & Cows",
+          name: "Tyr & Ko",
+          short_name: "Tyr & Ko",
           description:
             "Free Mastermind-style code-breaking game. Crack the secret colour code from bulls and cows clues.",
           categories: ["games", "puzzle"],
