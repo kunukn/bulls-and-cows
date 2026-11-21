@@ -42,7 +42,8 @@ type SettingsStore = {
 export const useSettings = create<SettingsStore>()(
   persist(
     (set) => ({
-      difficulty: "classic",
+      // Easy for first-time visitors; a saved choice still wins on rehydrate.
+      difficulty: "easy",
       setDifficulty: (difficulty) => set({ difficulty }),
       boardTheme: "neon",
       setBoardTheme: (boardTheme) => set({ boardTheme }),

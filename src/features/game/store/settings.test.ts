@@ -32,6 +32,21 @@ test("moves a saved Metal board to Felt", async () => {
   expect(useSettings.getState().boardTheme).toBe("felt");
 });
 
+test("new players start on Easy", () => {
+  expect(useSettings.getState().difficulty).toBe("easy");
+});
+
+test("a saved difficulty survives rehydrate", async () => {
+  localStorage.setItem(
+    "app:settings",
+    JSON.stringify({ state: { difficulty: "hard" }, version: 2 }),
+  );
+
+  await useSettings.persist.rehydrate();
+
+  expect(useSettings.getState().difficulty).toBe("hard");
+});
+
 test("pegs show colour only for new players", () => {
   expect(useSettings.getState().pegStyle).toBe("color");
 });
