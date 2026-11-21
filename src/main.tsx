@@ -29,8 +29,9 @@ registerSW({
  * is the literal `false`, so the bundler drops the import entirely.
  */
 if (import.meta.env.VITE_IS_VERCEL_BUILD) {
-  void import("@/app/vercelInsights").then(({ injectVercelInsights }) =>
-    injectVercelInsights(),
+  void import("@vercel/analytics").then(({ inject }) => inject());
+  void import("@vercel/speed-insights").then(({ injectSpeedInsights }) =>
+    injectSpeedInsights(),
   );
 }
 

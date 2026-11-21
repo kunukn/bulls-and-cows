@@ -72,7 +72,7 @@ test("high scores offer a new game only once the game is over", async ({
   await page.getByRole("link", { name: "High scores" }).click();
   await newGame.click();
 
-  await expect(page).toHaveURL(/#\/$/);
+  await expect(page).toHaveURL((url) => url.pathname === "/" && !url.hash);
   await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
 });
 

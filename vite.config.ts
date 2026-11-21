@@ -64,6 +64,7 @@ export default defineConfig(async ({ command, mode }) => {
   const isCodeInspectorEnabled =
     command === "serve" &&
     ["1", "true"].includes(env.VITE_CODE_INSPECTOR?.toLowerCase());
+  const historyRoutingFlag = process.env.VITE_USE_HISTORY_ROUTING ?? "1";
 
   return {
     define: {
@@ -72,10 +73,18 @@ export default defineConfig(async ({ command, mode }) => {
       "import.meta.env.VITE_IS_VERCEL_BUILD": JSON.stringify(
         process.env.VERCEL === "1",
       ),
+      /*
+       * "1" = history routing (default: dev, preview, Vercel). The GitHub
+       * Pages workflow sets "0" for hash routing. Inlined as a literal so the
+       * router choice is fixed at build time.
+       */
+      "import.meta.env.VITE_USE_HISTORY_ROUTING":
+        JSON.stringify(historyRoutingFlag),
     },
     /*
-     * Local dev/preview use base `/`. The GitHub Pages deploy serves under
-     * `/bulls-and-cows/`; the deploy workflow sets VITE_BASE_PATH to opt in.
+     * Local dev/preview and Vercel use base `/` with history routing. The
+     * GitHub Pages deploy serves under `/bulls-and-cows/` with hash routing;
+     * the deploy workflow sets VITE_BASE_PATH and VITE_USE_HISTORY_ROUTING=0.
      */
     base: process.env.VITE_BASE_PATH ?? "/",
     cacheDir: "node_modules/.vite",

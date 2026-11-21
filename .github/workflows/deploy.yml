@@ -29,6 +29,8 @@ jobs:
           VITE_BASE_PATH: /bulls-and-cows/
           # Mirror of tyrko.app: keep it out of search results.
           VITE_ROBOTS_NOINDEX: "1"
+          # No SPA fallback on GitHub Pages: use hash URLs (/#/highscores).
+          VITE_USE_HISTORY_ROUTING: "0"
 
       - name: Deploy to gh-pages branch
         run: |

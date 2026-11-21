@@ -42,13 +42,13 @@ session (e.g. Playwright MCP, Chrome DevTools MCP).
 
 ## URLs
 
-The app uses a **hash router** (GitHub Pages has no SPA fallback), so routes
-live after `#`.
+The app uses **history routing** (plain paths) in local dev and on Vercel.
+Only the GitHub Pages mirror uses hash URLs (`/#/highscores`).
 
-| Page        | Local dev (`pnpm dev`)                                       |
-| ----------- | ------------------------------------------------------------ |
-| Game        | `http://localhost:5180/#/`                                   |
-| High scores | `http://localhost:5180/#/highscores?difficulty=<difficulty>` |
+| Page        | Local dev (`pnpm dev`)                                     |
+| ----------- | ---------------------------------------------------------- |
+| Game        | `http://localhost:5180/`                                   |
+| High scores | `http://localhost:5180/highscores?difficulty=<difficulty>` |
 
 `<difficulty>` is `easy`, `classic` or `hard`. Without a URL, default to the
 game page. Unknown routes redirect to the game.
