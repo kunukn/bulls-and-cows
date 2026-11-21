@@ -68,6 +68,10 @@ export default defineConfig(async ({ command, mode }) => {
   return {
     define: {
       "import.meta.env.VITE_APP_VERSION": JSON.stringify(buildStamp()),
+      // Vercel sets VERCEL=1 in its build environment (tyrko.app).
+      "import.meta.env.VITE_IS_VERCEL_BUILD": JSON.stringify(
+        process.env.VERCEL === "1",
+      ),
     },
     /*
      * Local dev/preview use base `/`. The GitHub Pages deploy serves under

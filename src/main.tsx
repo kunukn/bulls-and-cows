@@ -24,6 +24,16 @@ registerSW({
   },
 });
 
+/*
+ * Vercel Web Analytics + Speed Insights on tyrko.app only. Elsewhere the flag
+ * is the literal `false`, so the bundler drops the import entirely.
+ */
+if (import.meta.env.VITE_IS_VERCEL_BUILD) {
+  void import("@/app/vercelInsights").then(({ injectVercelInsights }) =>
+    injectVercelInsights(),
+  );
+}
+
 /* Opt in with VITE_RAINBOW_DEBUG=1 (.env.local) or `?debug_rainbow=1` in the URL. */
 if (
   import.meta.env.VITE_RAINBOW_DEBUG === "1" ||
