@@ -42,4 +42,7 @@ pnpm build
 
 Built with React 19, TypeScript, Vite, Tailwind CSS 4, shadcn/ui and XState.
 
-Deploys to GitHub Pages from `main` via `.github/workflows/deploy.yml`.
+Every push to `main` deploys to Vercel ([www.tyrko.app](https://www.tyrko.app))
+through its GitHub integration; pull requests get preview URLs.
+`.github/workflows/deploy.yml` also publishes a hash-routed mirror to GitHub
+Pages.
