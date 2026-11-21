@@ -10,6 +10,7 @@
     "version": "Version",
     "showTimer": "Timer anzeigen",
     "showTimerDescription": "Die Zeit läuft trotzdem weiter für die Bestenliste.",
+    "highScoresDescription": "Speichert deine besten Siege unter deinem Namen.",
     "minimalText": "Weniger Text",
     "minimalTextDescription": "Symbole statt Wörter. Der ?-Knopf erklärt weiter die Regeln.",
     "autoSubmit": "Automatisch prüfen",

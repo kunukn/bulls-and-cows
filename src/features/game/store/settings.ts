@@ -29,6 +29,9 @@ type SettingsStore = {
   /* Sound effects (pegs, checks, game end); on by default (0002). */
   isSoundEnabled: boolean;
   setSoundEnabled: (isSoundEnabled: boolean) => void;
+  /* Offer to save a qualifying win under a name; on by default (0010). */
+  isHighScoresEnabled: boolean;
+  setHighScoresEnabled: (isHighScoresEnabled: boolean) => void;
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
@@ -56,6 +59,9 @@ export const useSettings = create<SettingsStore>()(
       setAutoSubmit: (isAutoSubmit) => set({ isAutoSubmit }),
       isSoundEnabled: true,
       setSoundEnabled: (isSoundEnabled) => set({ isSoundEnabled }),
+      isHighScoresEnabled: true,
+      setHighScoresEnabled: (isHighScoresEnabled) =>
+        set({ isHighScoresEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
       pegStyle: "color",

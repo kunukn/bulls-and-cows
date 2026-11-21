@@ -10,6 +10,7 @@
     "version": "Version",
     "showTimer": "Afficher le chrono",
     "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores.",
+    "highScoresDescription": "Enregistre tes meilleures victoires sous ton nom.",
     "minimalText": "Moins de texte",
     "minimalTextDescription": "Des icônes à la place des mots. Le bouton ? explique toujours les règles.",
     "autoSubmit": "Vérification auto",

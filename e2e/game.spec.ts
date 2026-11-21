@@ -76,6 +76,41 @@ test("high scores offer a new game only once the game is over", async ({
   await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
 });
 
+test("the High scores switch turns the name prompt off and on", async ({
+  page,
+}) => {
+  await page.goto("/");
+  // The game is saved on its first event; a new game writes one with its secret.
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+  const secret = await page.evaluate<string[]>(
+    () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
+  );
+
+  // Auto check (0008) scores the row on the last peg, which wins the game.
+  for (const color of secret) {
+    await page.getByRole("button", { name: `Add ${color}` }).click();
+  }
+
+  const nameField = page.getByRole("textbox", { name: "Your name" });
+  const highScoresSwitch = page.getByRole("switch", { name: "High scores" });
+  await expect(nameField).toBeVisible();
+
+  await page.getByRole("button", { name: "Settings" }).click();
+  await highScoresSwitch.click();
+  await page.keyboard.press("Escape");
+
+  await expect(nameField).toBeHidden();
+  await expect(page.getByRole("button", { name: "New game" })).toBeVisible();
+
+  // The same win can still be saved once the switch is back on.
+  await page.getByRole("button", { name: "Settings" }).click();
+  await highScoresSwitch.click();
+  await page.keyboard.press("Escape");
+
+  await expect(nameField).toBeVisible();
+});
+
 test("explains the rules from the How it works button", async ({ page }) => {
   await page.goto("/");
 

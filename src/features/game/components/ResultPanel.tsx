@@ -70,13 +70,15 @@ export function ResultPanel() {
   const lastName = useHighScores((state) => state.lastName);
   const addEntry = useHighScores((state) => state.addEntry);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const isHighScoresEnabled = useSettings((state) => state.isHighScoresEnabled);
 
   const run = {
     guesses: context.guesses.length,
     elapsedMs: elapsedMs(context),
   };
   const isRecorded = entries.some((entry) => entry.id === context.startedAt);
-  const canRecord = isWon && !isRecorded && qualifies(entries, run);
+  const canRecord =
+    isHighScoresEnabled && isWon && !isRecorded && qualifies(entries, run);
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
 

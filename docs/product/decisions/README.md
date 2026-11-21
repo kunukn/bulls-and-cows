@@ -23,6 +23,7 @@ Each record states a rule as it holds today, as if it had always been decided th
 | [0007](0007-board-themes.md)             | Six board themes, each clearly different                                              |
 | [0008](0008-auto-check-on-by-default.md) | Auto check is on by default                                                           |
 | [0009](0009-game-menu.md)                | New game and Give up share one menu                                                   |
+| [0010](0010-optional-high-scores.md)     | High scores are optional, on by default                                               |
 
 ## Template
 

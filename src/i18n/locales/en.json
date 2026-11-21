@@ -10,6 +10,7 @@
     "version": "Version",
     "showTimer": "Show timer",
     "showTimerDescription": "The clock still runs for high scores.",
+    "highScoresDescription": "Saves your best wins under your name.",
     "minimalText": "Minimal text",
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "autoSubmit": "Auto check",

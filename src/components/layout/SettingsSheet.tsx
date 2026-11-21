@@ -32,6 +32,10 @@ export function SettingsSheet() {
   const { t } = useTranslation();
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const setTimerVisible = useSettings((state) => state.setTimerVisible);
+  const isHighScoresEnabled = useSettings((state) => state.isHighScoresEnabled);
+  const setHighScoresEnabled = useSettings(
+    (state) => state.setHighScoresEnabled,
+  );
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const setMinimalText = useSettings((state) => state.setMinimalText);
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
@@ -248,6 +252,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.showTimerDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-high-scores" className="font-medium">
+                {t("nav.highScores")}
+              </label>
+              <Switch
+                id="settings-high-scores"
+                checked={isHighScoresEnabled}
+                onCheckedChange={setHighScoresEnabled}
+                aria-describedby="settings-high-scores-description"
+              />
+            </div>
+            <p
+              id="settings-high-scores-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.highScoresDescription")}
             </p>
           </div>
           <BoardThemePicker

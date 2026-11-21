@@ -15,6 +15,10 @@ test("auto check is on for new players", () => {
   expect(useSettings.getState().isAutoSubmit).toBe(true);
 });
 
+test("high scores are on for new players", () => {
+  expect(useSettings.getState().isHighScoresEnabled).toBe(true);
+});
+
 test("switching to light updates <html>", () => {
   useSettings.getState().setColorScheme("light");
 
