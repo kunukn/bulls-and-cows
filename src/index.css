@@ -550,10 +550,16 @@
     transition-property: background-color, box-shadow, backdrop-filter;
     transition-duration: 150ms;
 
+    /*
+     * Appear instantly, fade only on the way out: once stuck the dock already
+     * overlaps board rows, and a fast scroll would show them through a
+     * half-faded surface. At rest nothing is underneath, so fading is safe.
+     */
     @container scroll-state(stuck: bottom) {
       background-color: color-mix(in oklab, var(--background) 90%, transparent);
       box-shadow: 0 -12px 16px -8px var(--dock-shadow);
       backdrop-filter: blur(8px);
+      transition-duration: 0s;
     }
   }
 }
