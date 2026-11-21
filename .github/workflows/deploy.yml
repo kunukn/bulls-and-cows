@@ -27,6 +27,8 @@ jobs:
       - run: pnpm build
         env:
           VITE_BASE_PATH: /bulls-and-cows/
+          # Mirror of tyrko.app: keep it out of search results.
+          VITE_ROBOTS_NOINDEX: "1"
 
       - name: Deploy to gh-pages branch
         run: |

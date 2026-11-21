@@ -29,6 +29,25 @@ async function codeInspector(isEnabled: boolean): Promise<PluginOption> {
   });
 }
 
+/*
+ * The GitHub Pages build mirrors tyrko.app. `noindex` keeps it from competing
+ * with the main domain in search; deploy.yml sets VITE_ROBOTS_NOINDEX=1.
+ */
+function robotsNoindex(isEnabled: boolean): PluginOption {
+  if (!isEnabled) return null;
+
+  return {
+    name: "robots-noindex",
+    transformIndexHtml: () => [
+      {
+        tag: "meta",
+        attrs: { name: "robots", content: "noindex" },
+        injectTo: "head-prepend",
+      },
+    ],
+  };
+}
+
 /* UTC build stamp shown in the Settings popover, e.g. `Y26-11-18_2127`. */
 function buildStamp(date = new Date()): string {
   const pad = (value: number) => String(value).padStart(2, "0");
@@ -66,6 +85,7 @@ export default defineConfig(async ({ command, mode }) => {
     },
     plugins: [
       await codeInspector(isCodeInspectorEnabled),
+      robotsNoindex(process.env.VITE_ROBOTS_NOINDEX === "1"),
       tailwindcss(),
       react(),
       /*

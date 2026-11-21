@@ -1,7 +1,7 @@
 # <img src="public/favicon.svg" width="32" height="32" align="absmiddle" alt="bull logo" /> Bulls & Cows
 
 [![License: 0BSD](https://img.shields.io/badge/license-0BSD-green.svg)](LICENSE)
-[![Live](https://img.shields.io/badge/live-GitHub%20Pages-blue)](https://kunukn.github.io/bulls-and-cows/)
+[![Live](https://img.shields.io/badge/live-tyrko.app-blue)](https://tyrko.app/)
 
 **Crack the computer's secret colour code before you run out of guesses.**
 
@@ -11,7 +11,8 @@ pegs don't say which spot they mean — that's the puzzle.
 
 ## 🌐 Try It
 
-**[kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows/)**
+**[tyrko.app](https://tyrko.app/)** — hosted on Vercel. Mirror:
+[kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows/).
 
 <img src="docs/qr-live-demo.png" alt="QR code for live demo" width="200" />
 

@@ -53,8 +53,8 @@ live after `#`.
 `<difficulty>` is `easy`, `classic` or `hard`. Without a URL, default to the
 game page. Unknown routes redirect to the game.
 
-Deployed build (only if the user asks for it, and only when GitHub Pages is
-enabled): `https://kunukn.github.io/bulls-and-cows/`.
+Deployed build (only if the user asks for it): `https://tyrko.app/` (Vercel).
+Mirror: `https://kunukn.github.io/bulls-and-cows/` (GitHub Pages).
 
 ## Instructions
 
