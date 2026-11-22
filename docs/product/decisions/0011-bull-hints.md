@@ -5,17 +5,25 @@
 
 ## Context
 
-The bull mark in the header was decoration. Players stuck mid-game had no help beyond the rules, and the brand bull (Tyr, the Danish word for bull) had no voice.
+The bull mark in the header was decoration. Players stuck mid-game had no help beyond the rules, and the brand bull (Tyr, the Danish word for bull) had no voice. Hard needs the most help: with five slots and eight colours, the useful facts are counts ("at least two red") and shortlists ("slot 3 is red or blue"), which are tedious to work out by hand.
 
 ## Decision
 
-Clicking the bull opens a speech bubble with a random line, and each further click says something new. While a game is in progress and at least one guess has been scored, the lines are facts that follow from the player's own clues: a colour that's out, colours that are in, a slot that is settled or ruled out, no repeats, and how many codes still fit. When the clues settle nothing yet, the bull says so. Before the first guess it gives general tips. After a game, and on other pages, it chats.
+There are two bulls with separate jobs, so they never say the same thing. Each opens a speech bubble with a random line, and each further click says something new.
 
+- **The header bull chats.** Jokes, and after a game a word on the win or loss. It never helps with the game.
+- **The shield bull helps.** While playing, a bull is moulded into the end of the code shield. Before the first guess it gives general tips. After that it only says facts that follow from the player's own clues:
+  - colours that are in or out, and how many pegs of a colour: exactly, at least, or no more than one;
+  - whether a colour repeats;
+  - slots: settled, a shortlist of two or three colours, or a colour ruled out, and where to look for a colour that's in;
+  - how many codes still fit.
+- **It checks the row being built.** A peg whose colour is out or can't sit in that slot, pegs that don't fit the clues together, a full row that breaks a clue (and which row), or a row that still fits. These come first and then alternate with board facts, because they are what the player can act on right now.
+- When the clues settle nothing yet, the shield bull says so.
 - Hints never name the whole code, even when only one code fits.
 - Hints are free: they don't change the score, the clock or high scores.
 - No hint kind crowds out the others. A random pick chooses the kind first, then a fact of that kind.
-- **The shield bull shows when there's something new.** While playing, a bull is moulded into the end of the code shield, and its indicator light comes on when a guess proves a fact the player hasn't been shown: a colour in or out, a settled slot, no repeats, or one code left. Asking either bull turns it off. Slot exclusions and the code count don't light it, because nearly every guess changes them.
-- **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull, and the header bull gives tips instead of deductions.
+- **The shield bull's light shows when there's something new.** It comes on when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull turns it off. Single slot exclusions, "no more than one" and the code count don't light it, because nearly every guess changes them.
+- **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull.
 
 ## Alternatives considered
 
@@ -25,11 +33,14 @@ Clicking the bull opens a speech bubble with a random line, and each further cli
 - **Clicking again closes the bubble.** Standard popover behaviour, but it makes asking for another hint cost two clicks.
 - **A lightbulb icon on the shield while any hint exists.** Familiar, but it looks like a web widget on a physical board (0001). It would also stay lit from the second guess to the end of the game, so it would stop meaning anything.
 - **Only a dot on the header bull.** No new board element, but the header is out of view while playing.
+- **One bull doing both jobs.** The header bull first gave hints mid-game too, so the two bulls repeated each other and the header's jokes disappeared exactly when a game was on.
+- **Suggesting the next guess.** The strongest help the solver could give, but then the bull plays the game. Checking the player's own row keeps the thinking theirs.
 
 ## Consequences
 
 - Deductions list every code that fits the clues (`src/features/game/hints.ts`). The worst case is Hard: 8⁵ codes, about 20 ms, run on a click and once per scored guess for the indicator.
 - The shield itself is `aria-hidden` and ignores clicks, so `Board.tsx` lays a see-through Hint button over the moulded bull. The bull lifts away with the shield when the game ends.
 - What the player has seen lives in a non-persisted store keyed by the game (`src/features/game/store/hintsSeen.ts`), so a reload lights the indicator again if there's anything to tell.
-- Facts are exact for the codes that are left, so a hint is never wrong. A property test checks every hint against the real secret (`hints.test.ts`).
-- Line choice and its fairness rules live in `src/features/game/bullLines.ts`. The bubble is `src/components/layout/BullBubble.tsx`, and `e2e/game.spec.ts` covers the click flow.
+- Facts are exact for the codes that are left, so a hint is never wrong. A property test checks every hint against the real secret over seeded games on each difficulty (`hints.test.ts`).
+- "Your row fits your clues" makes the bull a checker: a patient player can test pegs one at a time. That's accepted, because it only confirms what the clues already prove.
+- Line choice and its fairness rules live in `src/features/game/bullLines.ts`: `pickChatLine` for the header bull, `pickHintLine` for the shield bull. The bubble is `src/components/layout/BullBubble.tsx`, and `e2e/game.spec.ts` covers the click flow.

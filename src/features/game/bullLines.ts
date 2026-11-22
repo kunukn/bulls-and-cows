@@ -1,4 +1,4 @@
-import { deduceHints, type Hint } from "./hints";
+import { deduceHints, isRowHint, type Hint } from "./hints";
 import {
   cryptoRandomInt,
   type Color,
@@ -20,6 +20,14 @@ export const QUIP_KEYS = [
   "bull.quips.difficulties",
   "bull.quips.cleanPegs",
   "bull.quips.takeTime",
+  "bull.quips.koCounting",
+  "bull.quips.favourite",
+  "bull.quips.seeRed",
+  "bull.quips.goodGuess",
+  "bull.quips.hooves",
+  "bull.quips.soundsEasy",
+  "bull.quips.breathe",
+  "bull.quips.danish",
 ] as const;
 
 export const TIP_KEYS = [
@@ -56,62 +64,40 @@ export type BullLine =
   | { kind: "hint"; hint: Hint }
   | { kind: "noClues" };
 
-export type BullSituation = {
+type GameStatus = "playing" | "won" | "lost";
+
+/* What the header bull needs to know: it chats, and never helps (0011). */
+export type ChatSituation = {
   isPlayPage: boolean;
-  status: "playing" | "won" | "lost";
+  status: GameStatus;
+};
+
+/* What the shield bull needs to know: it only helps with the game in play. */
+export type HintSituation = {
   difficulty: Difficulty;
   guesses: readonly Guess[];
   current: readonly (Color | null)[];
-  /* Settings switch (0011); off, Tyr gives general tips instead of deductions. */
-  isHintsEnabled: boolean;
 };
 
 const toStatic = (keys: readonly StaticKey[]): BullLine[] =>
   keys.map((key) => ({ kind: "static", key }));
 
-/*
- * Lines grouped so each group gets an equal chance: one kind of hint (a
- * colour that's out, a slot that's settled…) can't crowd out the rest just
- * because the clues produce many of them.
- */
-function groupsFor(situation: BullSituation): BullLine[][] {
-  const { isPlayPage, status, difficulty, guesses, current, isHintsEnabled } =
-    situation;
-
-  if (!isPlayPage) return [toStatic(QUIP_KEYS)];
-
-  if (status === "won") return [toStatic(WON_KEYS), toStatic(QUIP_KEYS)];
-
-  if (status === "lost") return [toStatic(LOST_KEYS), toStatic(QUIP_KEYS)];
-
-  if (guesses.length === 0 || !isHintsEnabled) {
-    return [toStatic(TIP_KEYS), toStatic(QUIP_KEYS)];
-  }
-
-  const hints = deduceHints(difficulty, guesses, current);
-  if (hints.length === 0) return [[{ kind: "noClues" }]];
-
-  // Not Map.groupBy: Safari only has it from 17.4.
-  const byKind = new Map<Hint["kind"], BullLine[]>();
-  for (const hint of hints) {
-    const group = byKind.get(hint.kind) ?? [];
-    group.push({ kind: "hint", hint });
-    byKind.set(hint.kind, group);
-  }
-
-  return [...byKind.values()];
-}
+const toHintLines = (hints: readonly Hint[]): BullLine[] =>
+  hints.map((hint) => ({ kind: "hint", hint }));
 
 const isSameLine = (a: BullLine, b: BullLine) =>
   JSON.stringify(a) === JSON.stringify(b);
 
-/* What Tyr says on this click; never the previous line twice in a row when there's a choice. */
-export function pickBullLine(
-  situation: BullSituation,
+/*
+ * Picks a group, then a line in it, so each group gets an equal chance
+ * however long it is. Never the previous line twice in a row when there's a
+ * choice.
+ */
+function pickFrom(
+  groups: BullLine[][],
   previous: BullLine | null,
-  randomInt: RandomInt = cryptoRandomInt,
+  randomInt: RandomInt,
 ): BullLine {
-  const groups = groupsFor(situation);
   const fresh = groups
     .map((group) =>
       group.filter((line) => !previous || !isSameLine(line, previous)),
@@ -121,4 +107,54 @@ export function pickBullLine(
   const group = pool[randomInt(pool.length)];
 
   return group[randomInt(group.length)];
+}
+
+/* The header bull: small talk, plus a word on the game just finished. */
+export function pickChatLine(
+  { isPlayPage, status }: ChatSituation,
+  previous: BullLine | null,
+  randomInt: RandomInt = cryptoRandomInt,
+): BullLine {
+  const groups = [toStatic(QUIP_KEYS)];
+  if (isPlayPage && status === "won") groups.unshift(toStatic(WON_KEYS));
+  if (isPlayPage && status === "lost") groups.unshift(toStatic(LOST_KEYS));
+
+  return pickFrom(groups, previous, randomInt);
+}
+
+/*
+ * The shield bull: general tips before the first guess, then deductions.
+ * A fact about the row being built comes first and then alternates with
+ * board facts: it's the one the player can act on right now, and would
+ * otherwise be one voice among a dozen kinds.
+ */
+export function pickHintLine(
+  { difficulty, guesses, current }: HintSituation,
+  previous: BullLine | null,
+  randomInt: RandomInt = cryptoRandomInt,
+): BullLine {
+  if (guesses.length === 0) {
+    return pickFrom([toStatic(TIP_KEYS)], previous, randomInt);
+  }
+
+  const hints = deduceHints(difficulty, guesses, current);
+  if (hints.length === 0) return { kind: "noClues" };
+
+  const rowHints = hints.filter(isRowHint);
+  const boardHints = hints.filter((hint) => !isRowHint(hint));
+  const wasRowHint = previous?.kind === "hint" && isRowHint(previous.hint);
+  if (rowHints.length > 0 && (!wasRowHint || boardHints.length === 0)) {
+    return pickFrom([toHintLines(rowHints)], previous, randomInt);
+  }
+
+  /*
+   * One group per kind of fact, so the many "slot can't be" facts don't crowd
+   * out a single "at least two red". Not Map.groupBy: Safari has it from 17.4.
+   */
+  const byKind = new Map<Hint["kind"], Hint[]>();
+  for (const hint of boardHints) {
+    byKind.set(hint.kind, [...(byKind.get(hint.kind) ?? []), hint]);
+  }
+
+  return pickFrom([...byKind.values()].map(toHintLines), previous, randomInt);
 }

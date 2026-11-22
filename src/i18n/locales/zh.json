@@ -151,7 +151,15 @@
       "moo": "哞！这是公牛语的“你好”。",
       "difficulties": "简单没有重复颜色，困难有八种颜色，经典在两者之间。",
       "cleanPegs": "小钉干干净净，公牛开开心心。",
-      "takeTime": "慢慢来，小钉不会跑掉的。"
+      "takeTime": "慢慢来，小钉不会跑掉的。",
+      "koCounting": "Ko 向你问好，她正忙着数母牛呢。",
+      "favourite": "我最喜欢黄色的小钉，别告诉其他颜色。",
+      "seeRed": "公牛其实不讨厌红色，我们只是讨厌有东西晃来晃去。",
+      "goodGuess": "好的猜测从来不会白费。",
+      "hooves": "我也想玩，可是我的蹄子太大，拿不住小钉。",
+      "soundsEasy": "几种颜色，几个位置，听起来很简单，对吧？",
+      "breathe": "先深呼吸，再猜。",
+      "danish": "Tyr 在丹麦语里是公牛，Ko 是母牛。"
     },
     "tips": {
       "differentColors": "先用不同的颜色试试，看看哪些在密码里。",
@@ -176,10 +184,21 @@
     "hints": {
       "absent": "密码里没有{{color}}。",
       "present": "密码里有{{colors, list}}。",
+      "exactly_other": "密码里正好有 {{count}} 个{{color}}。",
+      "atLeast_other": "密码里至少有 {{count}} 个{{color}}。",
+      "atMostOne": "密码里最多只有一个{{color}}。",
       "slotIs": "第 {{slot}} 格是{{color}}。",
+      "slotIsOneOf": "第 {{slot}} 格是{{colors, list}}。",
       "slotIsNot": "第 {{slot}} 格不是{{color}}。",
+      "colorInSlots": "去第 {{slots, list}} 格找{{color}}。",
       "noRepeats": "这个密码里没有重复的颜色。",
+      "hasRepeat": "至少有一种颜色出现不止一次。",
       "rowHasAbsent": "你这一行有{{color}}，但密码里没有。",
+      "rowSlotWrong": "你这一行的第 {{slot}} 格放了{{color}}，它不可能在那里。",
+      "rowConflict": "这一行和第 {{row}} 行的线索对不上。",
+      "rowNoFit": "这些小钉合在一起和你的线索对不上，换掉一个吧。",
+      "rowFits": "这一行符合你所有的线索，可能就是密码！",
+      "rowFitsSoFar": "到目前为止，你这一行符合所有线索。",
       "codesLeft_other": "还有 {{count, number}} 个密码符合你的线索。",
       "oneLeft": "只剩一个密码符合了，你能破解它！"
     },

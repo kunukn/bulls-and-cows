@@ -1,43 +1,35 @@
-import { pickBullLine, type BullLine, type BullSituation } from "./bullLines";
-import { paletteFor, type RandomInt } from "./logic";
+import {
+  pickChatLine,
+  pickHintLine,
+  type BullLine,
+  type HintSituation,
+} from "./bullLines";
+import { paletteFor, type Color, type RandomInt } from "./logic";
 import type { Guess } from "./machine";
 
-const palette = paletteFor("classic");
-const [first, second] = palette;
-const emptyRow = [null, null, null, null];
+const [a, b, c, d] = paletteFor("classic");
+const emptyRow: (Color | null)[] = [null, null, null, null];
 
-// Rules out two colours: a clue the bull can always turn into a hint.
-const revealingGuess: Guess = {
-  pegs: [first, first, second, second],
-  black: 0,
-  white: 0,
-};
+/* All four colours right, none in its place: plenty of facts to tell. */
+const fourCows: Guess = { pegs: [a, b, c, d], black: 0, white: 4 };
 
-// One bull, no cows on four colours: settles no fact (see hints.test.ts).
-const silentGuess: Guess = {
-  pegs: palette.slice(0, 4),
-  black: 1,
-  white: 0,
-};
+// Two bulls, no cows on four colours: settles no fact (see hints.test.ts).
+const silentGuess: Guess = { pegs: [a, b, c, d], black: 2, white: 0 };
 
-const situation = (overrides: Partial<BullSituation>): BullSituation => ({
-  isPlayPage: true,
-  status: "playing",
+const hintSituation = (overrides: Partial<HintSituation>): HintSituation => ({
   difficulty: "classic",
   guesses: [],
   current: emptyRow,
-  isHintsEnabled: true,
   ...overrides,
 });
 
-/* Every line the bull could say here, by trying each random choice. */
-function allLines(state: BullSituation): BullLine[] {
+/* Every line a picker could say, by trying each pair of random choices. */
+function allLines(pick: (randomInt: RandomInt) => BullLine): BullLine[] {
   const lines: BullLine[] = [];
   for (let group = 0; group < 20; group++) {
     for (let item = 0; item < 20; item++) {
       const choices = [group, item];
-      const randomInt: RandomInt = (max) => (choices.shift() ?? 0) % max;
-      lines.push(pickBullLine(state, null, randomInt));
+      lines.push(pick((max) => (choices.shift() ?? 0) % max));
     }
   }
 
@@ -47,95 +39,114 @@ function allLines(state: BullSituation): BullLine[] {
 const keysOf = (lines: BullLine[]) =>
   lines.map((line) => (line.kind === "static" ? line.key : line.kind));
 
-describe("pickBullLine", () => {
-  it("only chats on the high-score page, even mid-game", () => {
+const kindOf = (line: BullLine) =>
+  line.kind === "hint" ? line.hint.kind : line.kind;
+
+describe("pickChatLine (the header bull)", () => {
+  it("only chats while a game is in play: no tips, no hints", () => {
     const keys = keysOf(
-      allLines(situation({ isPlayPage: false, guesses: [revealingGuess] })),
+      allLines((randomInt) =>
+        pickChatLine({ isPlayPage: true, status: "playing" }, null, randomInt),
+      ),
     );
 
     expect(keys.every((key) => key.startsWith("bull.quips."))).toBe(true);
   });
 
-  it("gives a deduced hint once the clues settle something", () => {
-    const lines = allLines(situation({ guesses: [revealingGuess] }));
-
-    expect(lines.every((line) => line.kind === "hint")).toBe(true);
-    expect(lines).toContainEqual({
-      kind: "hint",
-      hint: { kind: "absent", color: first },
-    });
-  });
-
-  it("says there aren't enough clues when nothing is settled", () => {
-    expect(allLines(situation({ guesses: [silentGuess] }))).toContainEqual({
-      kind: "noClues",
-    });
-  });
-
-  it("offers tips before the first guess, never a no-clues line", () => {
-    const keys = keysOf(allLines(situation({})));
-
-    expect(keys.some((key) => key.startsWith("bull.tips."))).toBe(true);
-    expect(keys).not.toContain("noClues");
-  });
-
-  it("gives tips, not deductions, when hints are switched off", () => {
-    const keys = keysOf(
-      allLines(situation({ guesses: [revealingGuess], isHintsEnabled: false })),
-    );
-
-    expect(keys.some((key) => key.startsWith("bull.tips."))).toBe(true);
-    expect(keys).not.toContain("hint");
-    expect(keys).not.toContain("noClues");
-  });
-
   it.each(["won", "lost"] as const)(
-    "after a %s game, never hints about the finished board",
+    "has a word for a %s game on the play page",
     (status) => {
       const keys = keysOf(
-        allLines(situation({ status, guesses: [revealingGuess] })),
+        allLines((randomInt) =>
+          pickChatLine({ isPlayPage: true, status }, null, randomInt),
+        ),
       );
 
       expect(keys.some((key) => key.startsWith(`bull.${status}.`))).toBe(true);
-      expect(keys).not.toContain("hint");
-      expect(keys.some((key) => key.startsWith("bull.tips."))).toBe(false);
     },
   );
 
+  it("doesn't bring up the finished game on the high-score page", () => {
+    const keys = keysOf(
+      allLines((randomInt) =>
+        pickChatLine({ isPlayPage: false, status: "won" }, null, randomInt),
+      ),
+    );
+
+    expect(keys.every((key) => key.startsWith("bull.quips."))).toBe(true);
+  });
+
   it("never repeats the previous line when there's another to say", () => {
     const alwaysFirst: RandomInt = () => 0;
-    const state = situation({ isPlayPage: false });
-    const previous = pickBullLine(state, null, alwaysFirst);
+    const situation = { isPlayPage: true, status: "playing" } as const;
+    const previous = pickChatLine(situation, null, alwaysFirst);
 
-    expect(pickBullLine(state, previous, alwaysFirst)).not.toEqual(previous);
+    expect(pickChatLine(situation, previous, alwaysFirst)).not.toEqual(
+      previous,
+    );
+  });
+});
+
+describe("pickHintLine (the shield bull)", () => {
+  it("gives general tips before the first guess, never small talk", () => {
+    const keys = keysOf(
+      allLines((randomInt) => pickHintLine(hintSituation({}), null, randomInt)),
+    );
+
+    expect(keys.every((key) => key.startsWith("bull.tips."))).toBe(true);
   });
 
-  it("repeats the only line rather than say nothing", () => {
-    const state = situation({ guesses: [silentGuess] });
-    const previous = pickBullLine(state, null);
+  it("gives only deductions once the clues settle something", () => {
+    const lines = allLines((randomInt) =>
+      pickHintLine(hintSituation({ guesses: [fourCows] }), null, randomInt),
+    );
 
-    expect(pickBullLine(state, previous)).toEqual({ kind: "noClues" });
+    expect(lines.every((line) => line.kind === "hint")).toBe(true);
+    expect(lines).toContainEqual({ kind: "hint", hint: { kind: "noRepeats" } });
   });
 
-  it("gives each kind of hint a fair chance, however many of one kind", () => {
-    // Four zero-bull cows leave many 'slot can't be' facts, but one 'present'.
-    const pegs = palette.slice(0, 4);
-    const state = situation({ guesses: [{ pegs, black: 0, white: 4 }] });
+  it("says there aren't enough clues when nothing is settled", () => {
+    const situation = hintSituation({ guesses: [silentGuess] });
+    const previous = pickHintLine(situation, null);
+
+    expect(previous).toEqual({ kind: "noClues" });
+    // The only line there is, so it may repeat.
+    expect(pickHintLine(situation, previous)).toEqual({ kind: "noClues" });
+  });
+
+  it("gives each kind of fact a fair chance, however many of one kind", () => {
+    // Four zero-bull cows leave four 'slot can't be' facts, but one 'present'.
+    const situation = hintSituation({ guesses: [fourCows] });
     const kinds: string[] = [];
     // The first random draw picks the group, the second the line within it.
     for (let draw = 0; draw < 5; draw++) {
       const choices = [draw, 0];
-      const line = pickBullLine(
-        state,
+      const line = pickHintLine(
+        situation,
         null,
         (max) => (choices.shift() ?? 0) % max,
       );
-      if (line.kind === "hint") kinds.push(line.hint.kind);
+      kinds.push(kindOf(line));
     }
 
     // Five draws, five different kinds: one kind can't crowd out the rest.
     expect(new Set(kinds)).toEqual(
       new Set(["absent", "present", "slotIsNot", "noRepeats", "codesLeft"]),
     );
+  });
+
+  it("leads with the row being built, then alternates with board facts", () => {
+    // Slot 1 can't be a: the fact the player can act on right now.
+    const situation = hintSituation({
+      guesses: [fourCows],
+      current: [a, null, null, null],
+    });
+    const first = pickHintLine(situation, null);
+    const second = pickHintLine(situation, first);
+    const third = pickHintLine(situation, second);
+
+    expect(kindOf(first)).toBe("rowSlotWrong");
+    expect(kindOf(second)).not.toMatch(/^row/);
+    expect(kindOf(third)).toBe("rowSlotWrong");
   });
 });

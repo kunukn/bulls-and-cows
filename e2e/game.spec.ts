@@ -124,19 +124,23 @@ test("explains the rules from the How it works button", async ({ page }) => {
   await expect(help).toBeHidden();
 });
 
-test("the bull says something new on each click, then hints mid-game", async ({
+/* Lines only the hint bull says after a guess: a deduction, or "not enough clues". */
+const HINT_LINE =
+  /in the code|^The code has|^Slot \d|^Look for|appears (twice|more than once)|your clues?|^Your row|^Only one code|not enough clues/;
+
+test("the header bull chats and the shield bull helps with the game", async ({
   page,
 }) => {
   await page.goto("/");
-  const bull = page.getByRole("button", { name: "Ask Tyr" });
+  const headerBull = page.getByRole("button", { name: "Ask Tyr" });
   const bubble = page.getByRole("dialog", { name: "Tyr says" });
 
-  await bull.click();
+  await headerBull.click();
   await expect(bubble).toBeVisible();
   const firstLine = await bubble.innerText();
 
   // A second click keeps the bubble open with a different line.
-  await bull.click();
+  await headerBull.click();
   await expect(bubble).toBeVisible();
   await expect(bubble).not.toHaveText(firstLine);
 
@@ -151,11 +155,16 @@ test("the bull says something new on each click, then hints mid-game", async ({
     page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
   ).toBeAttached();
 
-  // After a guess, Tyr deduces from the clues or says there aren't enough.
-  await bull.click();
-  await expect(bubble).toHaveText(
-    /^No \S+ in the code|^The code has|^Slot \d|still fits? your clues|^Only one code fits|^Your row has|^No colour appears twice|not enough clues yet/,
-  );
+  // Mid-game the header bull still only chats: hints are the shield bull's job.
+  for (let click = 0; click < 5; click++) {
+    await headerBull.click();
+    await expect(bubble).not.toHaveText(HINT_LINE);
+  }
+  await page.keyboard.press("Escape");
+  await expect(bubble).toBeHidden();
+
+  await page.getByRole("button", { name: /^(New )?hint$/i }).click();
+  await expect(bubble).toHaveText(HINT_LINE);
 });
 
 test("the shield bull lights up for a new hint and can be switched off", async ({
