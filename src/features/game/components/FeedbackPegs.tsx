@@ -8,13 +8,16 @@ import { FEEDBACK_COLUMN } from "./rowLayout";
  * Scored pegs are full size, empty slots a small dot: size, not colour, tells
  * a black bull from an empty hole on every board theme. The bull gets a light
  * rim and a highlight so it reads as a raised peg even on near-black boards.
+ * The cow is lit from the same spot but stays light to its edge (zinc-300):
+ * bulls and cows are told apart by light vs dark (0004).
  * Shared with the legend in Play.
  */
 const BLACK_BULL_PEG_CLASS =
   "bg-[radial-gradient(circle_at_35%_30%,var(--color-zinc-500),var(--color-zinc-950)_65%)] ring-1 ring-zinc-300";
 const PINK_BULL_PEG_CLASS =
   "bg-[radial-gradient(circle_at_35%_30%,var(--color-pink-300),var(--color-pink-600)_65%)] ring-1 ring-pink-200";
-export const COW_PEG_CLASS = "bg-white";
+export const COW_PEG_CLASS =
+  "bg-[radial-gradient(circle_at_35%_30%,var(--color-white),var(--color-zinc-300)_70%)]";
 
 /* The "Pink bulls" setting swaps the black bull for a pink one. */
 export function useBullPegClass(): string {
