@@ -91,82 +91,94 @@ export function HighScores() {
         }
       />
 
-      {entries.length === 0 ? (
-        <p className="flex justify-center rounded-2xl bg-card p-6 text-center text-muted-foreground">
-          {isMinimalText && (
-            <Trophy aria-hidden className="size-10 text-faint" />
-          )}
-          <span className={isMinimalText ? "sr-only" : undefined}>
-            {t("highScores.empty")}
-          </span>
-        </p>
-      ) : (
-        <table className="w-full overflow-hidden rounded-2xl bg-card text-left text-sm">
-          <thead className="bg-secondary/60 text-xs tracking-wide text-subtle uppercase">
-            <tr>
-              <th scope="col" className="px-3 py-2">
-                {t("highScores.rank")}
-              </th>
-              <th scope="col" className="px-3 py-2">
-                <HeaderLabel
-                  label={t("highScores.name")}
-                  icon={UserRound}
-                  isMinimalText={isMinimalText}
-                />
-              </th>
-              <th scope="col" className="px-3 py-2 text-right">
-                <HeaderLabel
-                  label={t("highScores.guesses")}
-                  icon={Rows4}
-                  isMinimalText={isMinimalText}
-                />
-              </th>
-              <th scope="col" className="px-3 py-2 text-right">
-                <HeaderLabel
-                  label={t("highScores.time")}
-                  icon={Clock}
-                  isMinimalText={isMinimalText}
-                />
-              </th>
-              <th
-                scope="col"
-                className="hidden px-3 py-2 text-right sm:table-cell"
+      <table className="w-full overflow-hidden rounded-2xl bg-card text-left text-sm">
+        <thead className="bg-secondary/60 text-xs tracking-wide text-subtle uppercase">
+          <tr>
+            <th scope="col" className="px-3 py-2">
+              {t("highScores.rank")}
+            </th>
+            <th scope="col" className="px-3 py-2">
+              <HeaderLabel
+                label={t("highScores.name")}
+                icon={UserRound}
+                isMinimalText={isMinimalText}
+              />
+            </th>
+            <th scope="col" className="px-3 py-2 text-right">
+              <HeaderLabel
+                label={t("highScores.guesses")}
+                icon={Rows4}
+                isMinimalText={isMinimalText}
+              />
+            </th>
+            <th scope="col" className="px-3 py-2 text-right">
+              <HeaderLabel
+                label={t("highScores.time")}
+                icon={Clock}
+                isMinimalText={isMinimalText}
+              />
+            </th>
+            <th
+              scope="col"
+              className="hidden px-3 py-2 text-right sm:table-cell"
+            >
+              <HeaderLabel
+                label={t("highScores.date")}
+                icon={CalendarDays}
+                isMinimalText={isMinimalText}
+              />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {/*
+           * The empty state is a row of the same table, so the card keeps
+           * the height and headings of a one-entry board.
+           */}
+          {entries.length === 0 && (
+            <tr className="border-t border-secondary">
+              <td
+                colSpan={5}
+                className="px-3 py-2 text-center text-muted-foreground"
               >
-                <HeaderLabel
-                  label={t("highScores.date")}
-                  icon={CalendarDays}
-                  isMinimalText={isMinimalText}
-                />
-              </th>
+                {/* size-5 matches text-sm's 20px line, so the row height holds. */}
+                {isMinimalText && (
+                  <Trophy
+                    aria-hidden
+                    className="mx-auto block size-5 text-faint"
+                  />
+                )}
+                <span className={isMinimalText ? "sr-only" : undefined}>
+                  {t("highScores.empty")}
+                </span>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {entries.map((entry, index) => (
-              <tr
-                key={entry.id}
-                aria-current={entry.id === currentGameId ? "true" : undefined}
-                className="border-t border-secondary aria-current:bg-warning/15"
-              >
-                <td className="px-3 py-2 text-muted-foreground tabular-nums">
-                  {index + 1}
-                </td>
-                <td className="max-w-32 truncate px-3 py-2 font-medium">
-                  {entry.name}
-                </td>
-                <td className="px-3 py-2 text-right tabular-nums">
-                  {entry.guesses}
-                </td>
-                <td className="px-3 py-2 text-right font-mono tabular-nums">
-                  {formatDuration(entry.elapsedMs)}
-                </td>
-                <td className="hidden px-3 py-2 text-right text-muted-foreground sm:table-cell">
-                  {formatDate(entry.achievedAt, i18n.language)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+          )}
+          {entries.map((entry, index) => (
+            <tr
+              key={entry.id}
+              aria-current={entry.id === currentGameId ? "true" : undefined}
+              className="border-t border-secondary aria-current:bg-warning/15"
+            >
+              <td className="px-3 py-2 text-muted-foreground tabular-nums">
+                {index + 1}
+              </td>
+              <td className="max-w-32 truncate px-3 py-2 font-medium">
+                {entry.name}
+              </td>
+              <td className="px-3 py-2 text-right tabular-nums">
+                {entry.guesses}
+              </td>
+              <td className="px-3 py-2 text-right font-mono tabular-nums">
+                {formatDuration(entry.elapsedMs)}
+              </td>
+              <td className="hidden px-3 py-2 text-right text-muted-foreground sm:table-cell">
+                {formatDate(entry.achievedAt, i18n.language)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
 
       {isGameOver && (
         <button
