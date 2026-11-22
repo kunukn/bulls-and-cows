@@ -29,15 +29,19 @@ test("starts a game and scores the first guess", async ({ page }) => {
   const checkButton = page.getByRole("button", { name: "Check" });
   await expect(checkButton).toBeDisabled();
 
-  // Auto check is on by default (0008): the fourth peg scores the row.
+  // Auto check is off by default (0008): a full row waits for Check.
   for (const color of ["red", "cyan", "green", "yellow"]) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }
-
   // Screen-reader summary of the scored row, e.g. "1 bull, 2 cows".
-  await expect(
-    page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
-  ).toBeAttached();
+  const rowSummary = page
+    .getByLabel("Board")
+    .getByText(/bulls?, \d+ cows?|No matches/);
+  await expect(checkButton).toBeEnabled();
+  await expect(rowSummary).toHaveCount(0);
+
+  await checkButton.click();
+  await expect(rowSummary).toBeAttached();
 });
 
 test("game menu restarts without revealing the code", async ({ page }) => {
@@ -87,10 +91,10 @@ test("the High scores switch turns the name prompt off and on", async ({
     () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
   );
 
-  // Auto check (0008) scores the row on the last peg, which wins the game.
   for (const color of secret) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }
+  await page.getByRole("button", { name: "Check" }).click();
 
   const nameField = page.getByRole("textbox", { name: "Your name" });
   const highScoresSwitch = page.getByRole("switch", { name: "High scores" });
@@ -147,10 +151,11 @@ test("the header bull chats and the shield bull helps with the game", async ({
   await page.keyboard.press("Escape");
   await expect(bubble).toBeHidden();
 
-  // Colours every difficulty shares; auto check (0008) scores the row.
+  // Colours every difficulty shares.
   for (const color of ["red", "cyan", "green", "yellow"]) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }
+  await page.getByRole("button", { name: "Check" }).click();
   await expect(
     page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
   ).toBeAttached();
@@ -183,6 +188,7 @@ test("the shield bull lights up for a new hint and can be switched off", async (
   for (const color of [...secret.slice(1), secret[0]]) {
     await page.getByRole("button", { name: `Add ${color}` }).click();
   }
+  await page.getByRole("button", { name: "Check" }).click();
   const newHint = page.getByRole("button", { name: "New hint" });
   await expect(newHint).toBeVisible();
 
