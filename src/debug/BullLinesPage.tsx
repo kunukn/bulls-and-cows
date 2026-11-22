@@ -1,3 +1,4 @@
+import { paths } from "@/app/paths";
 import { BullLineText } from "@/components/layout/BullBubble";
 import {
   LOST_KEYS,
@@ -9,6 +10,7 @@ import {
 import { isRowHint, type Hint } from "@/features/game/hints";
 import { LANGUAGES } from "@/i18n/languages";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
 import { SAMPLE_HINTS } from "./sampleHints";
 
 /*
@@ -82,6 +84,12 @@ export function BullLinesPage() {
     <div className="flex flex-col gap-8 pb-12">
       <meta name="robots" content="noindex" />
       <div className="flex flex-col gap-1">
+        <Link
+          to={paths.debug}
+          className="text-sm text-subtle underline underline-offset-4 hover:text-foreground"
+        >
+          All debug pages
+        </Link>
         <h2 className="text-2xl font-bold tracking-tight text-heading">
           Bull lines
         </h2>

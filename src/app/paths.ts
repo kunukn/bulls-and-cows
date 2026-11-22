@@ -2,7 +2,8 @@
 export const paths = {
   play: "/",
   highScores: "/highscores",
-  // Unlinked developer page: every line the bull can say.
+  // Unlinked developer pages; /debug lists the rest.
+  debug: "/debug",
   debugBullLines: "/debug/bull-lines",
 } as const;
 
