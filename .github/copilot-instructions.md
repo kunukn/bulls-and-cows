@@ -54,7 +54,7 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 
 ## Translations (i18n)
 
-All user-facing text — including `aria-label`, `title`, `placeholder` and `confirm()` messages — goes through `t()` from `react-i18next`. No hard-coded English in components.
+All user-facing text — including `aria-label`, `title`, `placeholder` and `confirm()` messages — goes through `t()` from `react-i18next`. No hard-coded English in components. Exception: unlinked developer pages in `src/debug/` (e.g. `/debug/bull-lines`) may use plain English for their own copy.
 
 - Languages: English (`en`, the source), Simplified Chinese (`zh`), Hindi (`hi`), Arabic (`ar`), French (`fr`), German (`de`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`. All seven are bundled (no lazy loading).
 - **Add a key to all seven files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
