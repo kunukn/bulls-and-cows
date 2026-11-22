@@ -177,7 +177,8 @@ const OR_LIST = {
   slots: { slots: { type: "disjunction" } },
 } as const;
 
-function BullLineText({ line }: { line: BullLine }) {
+/* Also rendered by the bull-lines debug page (src/debug), to show real output. */
+export function BullLineText({ line }: { line: BullLine }) {
   const { t } = useTranslation();
   const colorName = (color: Color) => t(`colors.${color}`);
 

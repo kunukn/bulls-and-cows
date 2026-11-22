@@ -24,6 +24,19 @@ const routes: RouteObject[] = [
     children: [
       ...gameRoutes,
       ...highScoreRoutes,
+      /*
+       * Lazy, so players never download the debug page's code. On a direct
+       * visit, the empty fallback fills the gap while that code loads.
+       */
+      {
+        path: paths.debugBullLines,
+        HydrateFallback: () => null,
+        lazy: async () => {
+          const { BullLinesPage } = await import("@/debug/BullLinesPage");
+
+          return { Component: BullLinesPage };
+        },
+      },
       { path: "*", element: <Navigate to={paths.play} replace /> },
     ],
   },
