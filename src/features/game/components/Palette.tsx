@@ -84,10 +84,13 @@ export function Palette() {
             {pegStyle !== "color" && (
               <PegShape color={color} className="size-3/5" />
             )}
-            {/* Keyboard shortcut, in a corner badge so the head stays clear. */}
+            {/*
+             * Keyboard shortcut, in a corner badge so the head stays clear.
+             * Hidden on touch screens, like the shortcuts in How it works.
+             */}
             <span
               aria-hidden
-              className="absolute -end-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-slate-900 text-xs font-bold text-slate-200 ring-1 ring-slate-600"
+              className="absolute -end-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-slate-900 text-xs font-bold text-slate-200 ring-1 ring-slate-600 pointer-coarse:hidden"
             >
               {index + 1}
             </span>
