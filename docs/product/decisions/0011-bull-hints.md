@@ -23,7 +23,7 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - Hints are free: they don't change the score, the clock or high scores.
 - No hint kind crowds out the others. A random pick chooses the kind first, then a fact of that kind.
 - **Help never asks to be used.** The player should try to solve the game first. The shield bull is smaller and dimmer than the header bull, and nothing about it glows, pulses or uses an alert colour.
-- **A quiet marker shows when there's something new.** A small dot in the bull's own colour appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them.
+- **A quiet marker shows when there's something new.** A small pale-blue dot appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them.
 - **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull.
 
 ## Alternatives considered
@@ -33,6 +33,8 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - **Marking hinted scores, or hints that cost a guess.** Fairer for high scores, but it needs a store migration or a rules change, and it turns a friendly mascot into a penalty.
 - **Clicking again closes the bubble.** Standard popover behaviour, but it makes asking for another hint cost two clicks.
 - **A lightbulb icon on the shield while any hint exists.** Familiar, but it looks like a web widget on a physical board (0001). It would also stay lit from the second guess to the end of the game, so it would stop meaning anything.
+- **A marker in the bull's own colour, or in grey.** The bull's colour isn't distinct from the bull, and on Felt it is yellow. A light grey vanishes on the Candy and Paper shields, a dark grey on the three dark ones. Pale blue is distinct on all six.
+- **An ivory marker.** Distinct on dark shields, but it is the cow peg's colour and sits beside the feedback column.
 - **A glowing yellow light for new hints.** Easy to notice, but it reads as a notification and pulls the player into clicking before they've thought for themselves.
 - **Only a dot on the header bull.** No new board element, but the header is out of view while playing.
 - **One bull doing both jobs.** The header bull first gave hints mid-game too, so the two bulls repeated each other and the header's jokes disappeared exactly when a game was on.

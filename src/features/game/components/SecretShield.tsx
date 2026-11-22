@@ -64,13 +64,14 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
                */}
               <BullIcon className="size-6 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
               {/*
-               * A quiet marker for a new fact, in the bull's own colour with
-               * no glow: it informs without asking to be clicked. It fades
-               * rather than pops, for the same reason.
+               * A quiet marker for a new fact: pale blue with no glow, so it
+               * informs without asking to be clicked, and fades rather than
+               * pops for the same reason. The hairline keeps its edge on
+               * light shields.
                */}
               <span
                 data-lit={hasNewHint}
-                className="absolute -end-1 -top-1 size-2 rounded-full bg-board-shield-label opacity-0 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
+                className="absolute -end-1 -top-1 size-2 rounded-full bg-hint-marker opacity-0 ring-1 ring-black/30 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
               />
             </span>
           )}
