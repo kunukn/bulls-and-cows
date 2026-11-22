@@ -13,7 +13,7 @@ type Props = {
   isOpen: boolean;
   /* The bull moulded into the shield's end; Board lays the Hint button over it. */
   hasBull: boolean;
-  /* Lights the bull's indicator: a guess has proved something not yet shown. */
+  /* Shows the bull's marker: a guess has proved something not yet shown. */
   hasNewHint: boolean;
 };
 
@@ -63,10 +63,14 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
                * don't read as the same button and help stays in the background.
                */}
               <BullIcon className="size-6 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
-              {/* An indicator light, so it fades on and off rather than popping. */}
+              {/*
+               * A quiet marker for a new fact, in the bull's own colour with
+               * no glow: it informs without asking to be clicked. It fades
+               * rather than pops, for the same reason.
+               */}
               <span
                 data-lit={hasNewHint}
-                className="absolute -end-1 -top-1 size-2.5 rounded-full bg-peg-yellow opacity-0 shadow-[0_0_6px_var(--color-peg-yellow)] transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
+                className="absolute -end-1 -top-1 size-2 rounded-full bg-board-shield-label opacity-0 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
               />
             </span>
           )}

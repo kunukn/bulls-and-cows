@@ -255,7 +255,7 @@ const NEWSWORTHY_KINDS: ReadonlySet<Hint["kind"]> = new Set<Hint["kind"]>([
 ]);
 
 /*
- * Facts worth lighting the "new hint" dot for, as stable keys. Leaves out the
+ * Facts worth showing the "new hint" dot for, as stable keys. Leaves out the
  * code count (it changes every guess), single slot exclusions and "at most"
  * facts (nearly every guess adds some) and row checks (they follow the pegs,
  * not the clues).
