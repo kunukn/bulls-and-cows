@@ -130,7 +130,7 @@ export function GuessRow({
         pegs={pegs.length}
         isScored={Boolean(guess)}
         isAnimated={isJustScored}
-        className={cn(isUpcoming && "opacity-60")}
+        className={cn("justify-items-center", isUpcoming && "opacity-60")}
       />
     </li>
   );
