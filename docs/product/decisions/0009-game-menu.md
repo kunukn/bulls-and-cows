@@ -1,7 +1,7 @@
 # 0009 — New game and Give up share one menu
 
 - **Status:** Accepted
-- **Updated:** 2026-11-20
+- **Updated:** 2026-11-22
 
 ## Context
 
@@ -9,12 +9,13 @@ A player needs two ways out of a game in progress: start over on the same diffic
 
 ## Decision
 
-The info row has one menu trigger, labelled Give up with a chevron, that opens New game and Give up. Menu items act at once; opening the menu is the confirmation. Switching difficulty mid-game asks first, because it is a single tap on a radio.
+The info row has one menu trigger, labelled Give up with a chevron, that opens New game and Reveal code. The trigger names the act; each item names its outcome, so the menu never repeats "Give up". Menu items act at once; opening the menu is the confirmation. Switching difficulty mid-game asks first, because it is a single tap on a radio.
 
 ## Alternatives considered
 
 - **Re-tap the selected difficulty to restart.** A checked radio fires no change event and can't be reached by keyboard, and nobody would discover it.
 - **Separate New game button with its own confirm dialog.** Appearing after the first peg shifts the layout, and two buttons crowd the legend on narrow screens.
+- **"Give up and show the code" as the item.** Repeats the trigger and runs long in German and French in a narrow menu.
 - **Icon-only (⋯) or "Game" trigger.** Hides Give up behind a vaguer label, and needs a new string in every locale.
 
 ## Consequences

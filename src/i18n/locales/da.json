@@ -90,6 +90,7 @@
     "check": "Tjek",
     "abandonConfirm": "Opgiv det nuværende spil?",
     "giveUp": "Giv op",
+    "revealCode": "Vis koden",
     "giveUpConfirm": "Vil du give op?",
     "giveUpDescription": "Den hemmelige kode bliver vist.",
     "abandon": "Opgiv",

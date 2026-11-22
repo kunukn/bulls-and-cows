@@ -90,6 +90,7 @@
     "check": "Check",
     "abandonConfirm": "Abandon the current game?",
     "giveUp": "Give up",
+    "revealCode": "Reveal code",
     "giveUpConfirm": "Give up?",
     "giveUpDescription": "The secret code will be shown.",
     "abandon": "Abandon",

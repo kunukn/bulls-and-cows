@@ -90,6 +90,7 @@
     "check": "Vérifier",
     "abandonConfirm": "Abandonner la partie en cours ?",
     "giveUp": "Abandonner",
+    "revealCode": "Voir le code",
     "giveUpConfirm": "Tu abandonnes ?",
     "giveUpDescription": "Le code secret sera révélé.",
     "abandon": "Abandonner",

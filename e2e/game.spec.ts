@@ -70,7 +70,7 @@ test("high scores offer a new game only once the game is over", async ({
 
   await page.getByRole("link", { name: "Play" }).click();
   await page.getByRole("button", { name: "Give up" }).click();
-  await page.getByRole("menuitem", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "Reveal code" }).click();
   await expect(page.getByLabel("Secret code (hidden)")).toBeHidden();
 
   await page.getByRole("link", { name: "High scores" }).click();

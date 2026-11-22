@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useGameActorRef } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
-import { ChevronDown, Flag, RotateCcw } from "lucide-react";
+import { ChevronDown, Eye, Flag, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 // 44px rows on touch screens (Apple's minimum target); mouse keeps it compact.
@@ -51,8 +51,8 @@ export function GameMenu() {
           onSelect={() => actor.send({ type: "GIVE_UP" })}
           className={touchItemClass}
         >
-          <Flag />
-          {t("game.giveUp")}
+          <Eye />
+          {t("game.revealCode")}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
