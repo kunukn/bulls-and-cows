@@ -33,9 +33,21 @@ type Props =
 type Placement = {
   side: "top" | "right" | "bottom" | "left";
   align: "start" | "center" | "end";
+  alignOffset?: number;
 };
 
 const HEADER_PLACEMENT: Placement = { side: "bottom", align: "start" };
+
+/*
+ * Above the shield, the bubble's end would line up with the bull's and cover
+ * the game menu's chevron in the header row. Inset it towards the start so the
+ * menu still reads as a dropdown; the arrow keeps pointing at the bull.
+ */
+const ABOVE_PLACEMENT: Placement = {
+  side: "top",
+  align: "end",
+  alignOffset: 8,
+};
 
 const ARROW_WIDTH = 14;
 const ARROW_HEIGHT = 7;
@@ -60,7 +72,7 @@ function shieldPlacement(trigger: HTMLElement): Placement {
   const viewportWidth = document.documentElement.clientWidth;
   const room = isRtl ? rect.left : viewportWidth - rect.right;
 
-  if (room < SIDE_ROOM_PX) return { side: "top", align: "end" };
+  if (room < SIDE_ROOM_PX) return ABOVE_PLACEMENT;
 
   return { side: isRtl ? "left" : "right", align: "center" };
 }
@@ -134,6 +146,7 @@ export function BullBubble(props: Props) {
       <PopoverContent
         side={placement.side}
         align={placement.align}
+        alignOffset={placement.alignOffset}
         sideOffset={8}
         collisionPadding={16}
         aria-label={t("bull.says")}
