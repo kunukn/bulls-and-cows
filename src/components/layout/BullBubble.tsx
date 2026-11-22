@@ -128,16 +128,17 @@ export function BullBubble(props: Props) {
         <PopoverAnchor asChild>
           {/*
            * What the shield bubble attaches to: the button's box (Board makes
-           * its parent `relative`). Above the shield it slides 10px inwards,
-           * bubble and arrow together, so the arrow points at the inner horn
-           * and the bubble clears the game menu's chevron in the header row.
+           * its parent `relative`). Above the shield it slides 10px inwards
+           * and 10px down, bubble and arrow together, so the arrow points at
+           * the inner horn and the bubble clears the game menu's chevron in
+           * the header row.
            */}
           <span
             aria-hidden
             className={cn(
               "pointer-events-none absolute inset-0",
               placement.side === "top" &&
-                "-translate-x-2.5 rtl:translate-x-2.5",
+                "-translate-x-2.5 translate-y-2.5 rtl:translate-x-2.5",
             )}
           />
         </PopoverAnchor>
