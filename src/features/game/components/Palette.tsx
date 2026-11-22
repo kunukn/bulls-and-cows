@@ -10,8 +10,12 @@ import { useTranslation } from "react-i18next";
 import { getPegClass } from "./Peg";
 import { PegShape } from "./PegShape";
 
+/*
+ * min-w/min-h keep the tap target the same size whether the label shows or
+ * is hidden by Minimal text (icon-only would otherwise shrink to ~48×36px).
+ */
 const actionButtonClass =
-  "flex items-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-40";
+  "flex min-h-11 min-w-24 items-center justify-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-40";
 
 export function Palette() {
   const { t } = useTranslation();
