@@ -11,6 +11,8 @@
     "showTimer": "टाइमर दिखाओ",
     "showTimerDescription": "हाई स्कोर के लिए घड़ी फिर भी चलती रहती है।",
     "highScoresDescription": "तुम्हारी सबसे अच्छी जीतें तुम्हारे नाम से सेव करता है।",
+    "hints": "संकेत",
+    "hintsDescription": "Tyr बताता है कि तुम्हारे सुराग अब तक क्या साबित करते हैं।",
     "minimalText": "कम शब्द",
     "minimalTextDescription": "शब्दों की जगह आइकन। ? बटन फिर भी नियम समझाता है।",
     "autoSubmit": "अपने-आप जाँचो",
@@ -138,6 +140,8 @@
   },
   "bull": {
     "button": "Tyr से पूछो",
+    "hintButton": "संकेत",
+    "hintButtonNew": "नया संकेत",
     "says": "Tyr कहता है",
     "quips": {
       "hello": "मूँ मूँ… चलो एक खेल खेलें!",

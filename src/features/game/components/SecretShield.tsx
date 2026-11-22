@@ -1,3 +1,4 @@
+import { BullIcon } from "@/components/icons/BullIcon";
 import { cn } from "@/utils/cn";
 import {
   FEEDBACK_COLUMN,
@@ -10,6 +11,10 @@ import {
 type Props = {
   pegs: number;
   isOpen: boolean;
+  /* The bull moulded into the shield's end; Board lays the Hint button over it. */
+  hasBull: boolean;
+  /* Lights the bull's indicator: a guess has proved something not yet shown. */
+  hasNewHint: boolean;
 };
 
 /*
@@ -22,7 +27,7 @@ type Props = {
  * A transition, not a keyframe animation, so a new game closes
  * it again and a restored finished game shows it open without replaying.
  */
-export function SecretShield({ pegs, isOpen }: Props) {
+export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
   return (
     <div
       aria-hidden
@@ -49,7 +54,19 @@ export function SecretShield({ pegs, isOpen }: Props) {
             </span>
           ))}
         </div>
-        <span className={FEEDBACK_COLUMN} />
+        <span className={cn(FEEDBACK_COLUMN, "grid place-items-center")}>
+          {hasBull && (
+            <span className="relative">
+              {/* Embossed: the label colour plus a highlight under each ridge. */}
+              <BullIcon className="size-7 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
+              {/* An indicator light, so it fades on and off rather than popping. */}
+              <span
+                data-lit={hasNewHint}
+                className="absolute -end-1 -top-1 size-2.5 rounded-full bg-peg-yellow opacity-0 shadow-[0_0_6px_var(--color-peg-yellow)] transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
+              />
+            </span>
+          )}
+        </span>
       </div>
       {/* Front edge: hangs from the free edge down to the board. */}
       <div className="absolute inset-x-0 top-full h-1.5 origin-top [transform:rotateX(-90deg)] rounded-b-sm bg-board-shield-edge" />

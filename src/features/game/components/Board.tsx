@@ -1,11 +1,14 @@
+import { BullBubble } from "@/components/layout/BullBubble";
+import { newsworthyHintKeys } from "@/features/game/hints";
 import { DIFFICULTIES } from "@/features/game/logic";
 import {
   useGameActorRef,
   useGameSelector,
 } from "@/features/game/machine-context";
+import { useHintsSeen } from "@/features/game/store/hintsSeen";
 import { useSettings } from "@/features/game/store/settings";
 import { useGameSounds } from "@/features/game/useGameSounds";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
@@ -17,6 +20,9 @@ import {
 } from "./rowLayout";
 import { Peg } from "./Peg";
 import { SecretShield } from "./SecretShield";
+
+/* Stable, so the seen-hints selector doesn't hand back a new array each call. */
+const NOTHING_SEEN: readonly string[] = [];
 
 /* Symmetric, so it needs no RTL counterpart. */
 const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
@@ -41,6 +47,18 @@ export function Board() {
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
   const activeRowRef = useRef<HTMLLIElement>(null);
   const boardTheme = useSettings((state) => state.boardTheme);
+  const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
+  const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
+  const hasShieldBull = isPlaying && isHintsEnabled;
+  // Deducing takes up to ~20 ms on Hard; redo it only when a guess is scored.
+  const hintKeys = useMemo(
+    () => (hasShieldBull ? newsworthyHintKeys(difficulty, guesses) : []),
+    [hasShieldBull, difficulty, guesses],
+  );
+  const seen = useHintsSeen((state) =>
+    state.gameId === startedAt ? state.keys : NOTHING_SEEN,
+  );
+  const hasNewHint = hintKeys.some((key) => !seen.includes(key));
 
   /* Keep the active row visible on small screens as the board grows. */
   useEffect(() => {
@@ -95,8 +113,18 @@ export function Board() {
                 </span>
               ))}
         </div>
-        <span aria-hidden className={FEEDBACK_COLUMN} />
-        <SecretShield pegs={pegs} isOpen={!isPlaying} />
+        {/* Above the shield (z-10), so the moulded bull it covers is clickable. */}
+        <span className={cn(FEEDBACK_COLUMN, "relative z-10 self-stretch")}>
+          {hasShieldBull && (
+            <BullBubble variant="shield" hasNewHint={hasNewHint} />
+          )}
+        </span>
+        <SecretShield
+          pegs={pegs}
+          isOpen={!isPlaying}
+          hasBull={hasShieldBull}
+          hasNewHint={hasNewHint}
+        />
       </div>
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {

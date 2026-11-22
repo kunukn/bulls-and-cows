@@ -27,7 +27,7 @@ export function Layout() {
       <header className="flex items-center justify-between gap-2 py-4">
         {/* The bull is a button, so it sits beside the heading, not in its name. */}
         <div className="flex items-center gap-2">
-          <BullBubble />
+          <BullBubble variant="header" />
           <h1 className="text-lg font-bold tracking-tight whitespace-nowrap text-heading">
             {isMinimalText ? (
               <span className="sr-only">{t("app.title")}</span>

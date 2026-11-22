@@ -11,6 +11,8 @@
     "showTimer": "Show timer",
     "showTimerDescription": "The clock still runs for high scores.",
     "highScoresDescription": "Saves your best wins under your name.",
+    "hints": "Hints",
+    "hintsDescription": "Tyr points out what your clues prove so far.",
     "minimalText": "Minimal text",
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "autoSubmit": "Auto check",
@@ -138,6 +140,8 @@
   },
   "bull": {
     "button": "Ask Tyr",
+    "hintButton": "Hint",
+    "hintButtonNew": "New hint",
     "says": "Tyr says",
     "quips": {
       "hello": "Moo moo… let's play a game!",

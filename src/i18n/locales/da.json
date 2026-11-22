@@ -11,6 +11,8 @@
     "showTimer": "Vis tid",
     "showTimerDescription": "Tiden tæller stadig med på toplisten.",
     "highScoresDescription": "Gemmer dine bedste sejre under dit navn.",
+    "hints": "Tips",
+    "hintsDescription": "Tyr viser, hvad dine spor allerede beviser.",
     "minimalText": "Mindre tekst",
     "minimalTextDescription": "Ikoner i stedet for ord. Knappen ? forklarer stadig reglerne.",
     "autoSubmit": "Tjek automatisk",
@@ -138,6 +140,8 @@
   },
   "bull": {
     "button": "Spørg Tyr",
+    "hintButton": "Tip",
+    "hintButtonNew": "Nyt tip",
     "says": "Tyr siger",
     "quips": {
       "hello": "Muh muh… lad os spille!",

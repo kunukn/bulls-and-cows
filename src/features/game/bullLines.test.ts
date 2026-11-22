@@ -26,6 +26,7 @@ const situation = (overrides: Partial<BullSituation>): BullSituation => ({
   difficulty: "classic",
   guesses: [],
   current: emptyRow,
+  isHintsEnabled: true,
   ...overrides,
 });
 
@@ -75,6 +76,16 @@ describe("pickBullLine", () => {
     const keys = keysOf(allLines(situation({})));
 
     expect(keys.some((key) => key.startsWith("bull.tips."))).toBe(true);
+    expect(keys).not.toContain("noClues");
+  });
+
+  it("gives tips, not deductions, when hints are switched off", () => {
+    const keys = keysOf(
+      allLines(situation({ guesses: [revealingGuess], isHintsEnabled: false })),
+    );
+
+    expect(keys.some((key) => key.startsWith("bull.tips."))).toBe(true);
+    expect(keys).not.toContain("hint");
     expect(keys).not.toContain("noClues");
   });
 

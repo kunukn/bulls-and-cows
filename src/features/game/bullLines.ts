@@ -62,6 +62,8 @@ export type BullSituation = {
   difficulty: Difficulty;
   guesses: readonly Guess[];
   current: readonly (Color | null)[];
+  /* Settings switch (0011); off, Tyr gives general tips instead of deductions. */
+  isHintsEnabled: boolean;
 };
 
 const toStatic = (keys: readonly StaticKey[]): BullLine[] =>
@@ -73,7 +75,8 @@ const toStatic = (keys: readonly StaticKey[]): BullLine[] =>
  * because the clues produce many of them.
  */
 function groupsFor(situation: BullSituation): BullLine[][] {
-  const { isPlayPage, status, difficulty, guesses, current } = situation;
+  const { isPlayPage, status, difficulty, guesses, current, isHintsEnabled } =
+    situation;
 
   if (!isPlayPage) return [toStatic(QUIP_KEYS)];
 
@@ -81,7 +84,9 @@ function groupsFor(situation: BullSituation): BullLine[][] {
 
   if (status === "lost") return [toStatic(LOST_KEYS), toStatic(QUIP_KEYS)];
 
-  if (guesses.length === 0) return [toStatic(TIP_KEYS), toStatic(QUIP_KEYS)];
+  if (guesses.length === 0 || !isHintsEnabled) {
+    return [toStatic(TIP_KEYS), toStatic(QUIP_KEYS)];
+  }
 
   const hints = deduceHints(difficulty, guesses, current);
   if (hints.length === 0) return [[{ kind: "noClues" }]];

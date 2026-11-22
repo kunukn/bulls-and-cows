@@ -11,6 +11,8 @@
     "showTimer": "إظهار المؤقت",
     "showTimerDescription": "الساعة تبقى تعمل من أجل أفضل النتائج.",
     "highScoresDescription": "يحفظ أفضل انتصاراتك باسمك.",
+    "hints": "التلميحات",
+    "hintsDescription": "يخبرك Tyr بما تثبته أدلتك حتى الآن.",
     "minimalText": "نص أقل",
     "minimalTextDescription": "أيقونات بدل الكلمات. زر ? يشرح القواعد دائمًا.",
     "autoSubmit": "تحقق تلقائي",
@@ -154,6 +156,8 @@
   },
   "bull": {
     "button": "اسأل Tyr",
+    "hintButton": "تلميح",
+    "hintButtonNew": "تلميح جديد",
     "says": "Tyr يقول",
     "quips": {
       "hello": "موو موو… هيا نلعب!",

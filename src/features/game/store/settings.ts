@@ -32,6 +32,9 @@ type SettingsStore = {
   /* Offer to save a qualifying win under a name; on by default (0010). */
   isHighScoresEnabled: boolean;
   setHighScoresEnabled: (isHighScoresEnabled: boolean) => void;
+  /* Tyr's deduced hints and the shield bull; on by default (0011). */
+  isHintsEnabled: boolean;
+  setHintsEnabled: (isHintsEnabled: boolean) => void;
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
@@ -62,6 +65,8 @@ export const useSettings = create<SettingsStore>()(
       isHighScoresEnabled: true,
       setHighScoresEnabled: (isHighScoresEnabled) =>
         set({ isHighScoresEnabled }),
+      isHintsEnabled: true,
+      setHintsEnabled: (isHintsEnabled) => set({ isHintsEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
       pegStyle: "color",

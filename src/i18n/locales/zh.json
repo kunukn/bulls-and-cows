@@ -11,6 +11,8 @@
     "showTimer": "显示计时器",
     "showTimerDescription": "隐藏后仍会计时，用于排行榜。",
     "highScoresDescription": "用你的名字保存最好的成绩。",
+    "hints": "提示",
+    "hintsDescription": "Tyr 会告诉你，你的线索已经证明了什么。",
     "minimalText": "精简文字",
     "minimalTextDescription": "用图标代替文字。? 按钮仍会讲解规则。",
     "autoSubmit": "自动检查",
@@ -134,6 +136,8 @@
   },
   "bull": {
     "button": "问问 Tyr",
+    "hintButton": "提示",
+    "hintButtonNew": "新提示",
     "says": "Tyr 说",
     "quips": {
       "hello": "哞哞……我们来玩个游戏吧！",

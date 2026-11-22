@@ -1,4 +1,9 @@
-import { consistentCodes, deduceHints, type Hint } from "./hints";
+import {
+  consistentCodes,
+  deduceHints,
+  newsworthyHintKeys,
+  type Hint,
+} from "./hints";
 import {
   DIFFICULTIES,
   DIFFICULTY_KEYS,
@@ -170,4 +175,20 @@ describe("deduceHints", () => {
       }
     },
   );
+});
+
+describe("newsworthyHintKeys", () => {
+  it("lights the dot for proven colours, not for slot exclusions or the count", () => {
+    const palette = paletteFor("classic");
+    const pegs = palette.slice(0, 4);
+    const guesses: Guess[] = [{ pegs, black: 0, white: 4 }];
+    const keys = newsworthyHintKeys("classic", guesses);
+
+    // Four colours in, two out, no repeats: and nothing else.
+    expect(keys).toContain(JSON.stringify({ kind: "present", colors: pegs }));
+    expect(keys).toContain(JSON.stringify({ kind: "noRepeats" }));
+    expect(keys).toHaveLength(4);
+    // The same clues give many more facts in the bubble itself.
+    expect(deduceHints("classic", guesses, []).length).toBeGreaterThan(4);
+  });
 });

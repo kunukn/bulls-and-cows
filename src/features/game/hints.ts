@@ -118,3 +118,22 @@ export function deduceHints(
 
   return hints;
 }
+
+/*
+ * Facts worth lighting the "new hint" dot for, as stable keys. Leaves out the
+ * code count (it changes every guess), slot exclusions (nearly every guess adds
+ * some) and row warnings (they follow the pegs, not the clues).
+ */
+export function newsworthyHintKeys(
+  difficulty: Difficulty,
+  guesses: readonly Guess[],
+): string[] {
+  return deduceHints(difficulty, guesses, [])
+    .filter(
+      (hint) =>
+        hint.kind !== "codesLeft" &&
+        hint.kind !== "slotIsNot" &&
+        hint.kind !== "rowHasAbsent",
+    )
+    .map((hint) => JSON.stringify(hint));
+}

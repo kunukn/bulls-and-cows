@@ -11,6 +11,8 @@
     "showTimer": "Afficher le chrono",
     "showTimerDescription": "Le chrono tourne quand même pour les meilleurs scores.",
     "highScoresDescription": "Enregistre tes meilleures victoires sous ton nom.",
+    "hints": "Indices",
+    "hintsDescription": "Tyr te montre ce que tes essais prouvent déjà.",
     "minimalText": "Moins de texte",
     "minimalTextDescription": "Des icônes à la place des mots. Le bouton ? explique toujours les règles.",
     "autoSubmit": "Vérification auto",
@@ -138,6 +140,8 @@
   },
   "bull": {
     "button": "Demande à Tyr",
+    "hintButton": "Indice",
+    "hintButtonNew": "Nouvel indice",
     "says": "Tyr dit",
     "quips": {
       "hello": "Meuh meuh… on joue ?",

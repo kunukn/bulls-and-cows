@@ -158,6 +158,39 @@ test("the bull says something new on each click, then hints mid-game", async ({
   );
 });
 
+test("the shield bull lights up for a new hint and can be switched off", async ({
+  page,
+}) => {
+  await page.goto("/");
+  // The game is saved on its first event; a new game writes one with its secret.
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+  const secret = await page.evaluate<string[]>(
+    () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
+  );
+  await expect(page.getByRole("button", { name: "Hint" })).toBeVisible();
+
+  // Easy never repeats, so the code rotated by one is all cows: colours proven.
+  for (const color of [...secret.slice(1), secret[0]]) {
+    await page.getByRole("button", { name: `Add ${color}` }).click();
+  }
+  const newHint = page.getByRole("button", { name: "New hint" });
+  await expect(newHint).toBeVisible();
+
+  // Asking Tyr marks it seen.
+  await newHint.click();
+  await expect(page.getByRole("dialog", { name: "Tyr says" })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Hint" })).toBeVisible();
+
+  await page.getByRole("button", { name: "Settings" }).click();
+  await page.getByRole("switch", { name: "Hints" }).click();
+  await page.keyboard.press("Escape");
+  await expect(
+    page.getByRole("button", { name: /^(New )?hint$/i }),
+  ).toBeHidden();
+});
+
 test("light mode lightens the app but not the board", async ({ page }) => {
   await page.goto("/");
   const body = page.locator("body");
