@@ -261,8 +261,12 @@
  */
 [data-board-theme] {
   color-scheme: dark;
-  /* Outline for white cow pegs; only light boards need one. */
-  --board-cow-ring: transparent;
+  /*
+   * Outline for every key peg (bull and cow alike), in a colour that stands
+   * out from the board: only an outline that shows adds to a peg's apparent
+   * size, so a shared one keeps bulls and cows looking the same size.
+   */
+  --board-key-ring: oklch(0.871 0.006 286.286); /* zinc-300 */
   /* Board drop shadow; light boards need a much softer one. */
   --board-drop: oklch(0 0 0 / 40%);
   --board-shield-drop: oklch(0 0 0 / 40%);
@@ -285,7 +289,7 @@
   --color-board-shield-cap: var(--board-shield-cap);
   --color-board-shield-label: var(--board-shield-label);
   --color-board-shield-edge: var(--board-shield-edge);
-  --color-board-cow-ring: var(--board-cow-ring);
+  --color-board-key-ring: var(--board-key-ring);
   --color-board-drop: var(--board-drop);
   --shadow-board-glow: var(--board-glow);
 }
@@ -425,7 +429,7 @@
 }
 
 /*
- * Graph paper: Neon inverted for light mode. Slate holes and a ringed cow peg
+ * Graph paper: Neon inverted for light mode. Slate holes and slate key-peg rings
  * keep white cows and empty holes readable on the light surface.
  */
 [data-board-theme="paper"] {
@@ -454,7 +458,7 @@
   --board-shield-cap: oklch(0.704 0.04 256.788); /* slate-400 */
   --board-shield-label: oklch(0.446 0.043 257.281); /* slate-600 */
   --board-shield-edge: oklch(0.704 0.04 256.788); /* slate-400 */
-  --board-cow-ring: oklch(0.704 0.04 256.788); /* slate-400 */
+  --board-key-ring: oklch(0.704 0.04 256.788); /* slate-400 */
   --board-drop: oklch(0.279 0.041 260.031 / 14%); /* slate-800 */
   --board-shield-drop: var(--board-drop);
   --board-hole-shade: oklch(0 0 0 / 25%);
@@ -462,7 +466,7 @@
 
 /*
  * Pastel lavender-to-mint with sprinkles, for younger players. Light like
- * Paper, so it reuses the cow outline; no pink, so pink bulls still stand out.
+ * Paper, so it gets a darker key-peg outline; no pink, so pink bulls still stand out.
  */
 [data-board-theme="candy"] {
   color-scheme: light;
@@ -501,7 +505,7 @@
   --board-shield-cap: oklch(0.606 0.25 292.717); /* violet-500 */
   --board-shield-label: oklch(1 0 0 / 90%);
   --board-shield-edge: oklch(0.541 0.281 293.009); /* violet-600 */
-  --board-cow-ring: oklch(0.811 0.111 293.571); /* violet-300 */
+  --board-key-ring: oklch(0.811 0.111 293.571); /* violet-300 */
   --board-drop: oklch(0.283 0.141 291.089 / 14%); /* violet-950 */
   --board-shield-drop: var(--board-drop);
   --board-hole-shade: oklch(0 0 0 / 25%);
