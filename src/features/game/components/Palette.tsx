@@ -43,7 +43,7 @@ export function Palette() {
        * One row, one column per colour: each is at most --peg (2.75rem = 44px
        * tap target) and shrinks only when space runs out, so hard's 8 colours
        * fit a 320px phone without wrapping. The gap takes the leftover width,
-       * clamped to 8–16px: wide enough against mis-taps, and it gives way to
+       * clamped to 8–20px: wide enough against mis-taps, and it gives way to
        * the pegs before they shrink. The row stays centred. When full-size
        * pegs with 8px gaps don't fit, the row widens by up to 8px per side
        * (--bleed) into the dock's inline padding before the pegs shrink.
@@ -55,7 +55,7 @@ export function Palette() {
             "--bleed":
               "clamp(0px, (var(--colors) * var(--peg) + (var(--colors) - 1) * 0.5rem - 100cqi) / 2, 0.5rem)",
             marginInline: "calc(-1 * var(--bleed))",
-            gap: "clamp(0.5rem, (100cqi + 2 * var(--bleed) - var(--colors) * var(--peg)) / (var(--colors) - 1), 1rem)",
+            gap: "clamp(0.5rem, (100cqi + 2 * var(--bleed) - var(--colors) * var(--peg)) / (var(--colors) - 1), 1.25rem)",
           } as React.CSSProperties
         }
         className="grid grid-cols-[repeat(var(--colors),minmax(0,var(--peg)))] justify-center [--peg:2.75rem] desk:[--peg:3rem]"
