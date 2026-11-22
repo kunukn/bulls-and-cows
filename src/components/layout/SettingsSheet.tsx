@@ -33,11 +33,11 @@ export function SettingsSheet() {
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const setTimerVisible = useSettings((state) => state.setTimerVisible);
   const isHighScoresEnabled = useSettings((state) => state.isHighScoresEnabled);
-  const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
-  const setHintsEnabled = useSettings((state) => state.setHintsEnabled);
   const setHighScoresEnabled = useSettings(
     (state) => state.setHighScoresEnabled,
   );
+  const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
+  const setHintsEnabled = useSettings((state) => state.setHintsEnabled);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const setMinimalText = useSettings((state) => state.setMinimalText);
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
@@ -201,6 +201,25 @@ export function SettingsSheet() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-hints" className="font-medium">
+                {t("common.hints")}
+              </label>
+              <Switch
+                id="settings-hints"
+                checked={isHintsEnabled}
+                onCheckedChange={setHintsEnabled}
+                aria-describedby="settings-hints-description"
+              />
+            </div>
+            <p
+              id="settings-hints-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.hintsDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-auto-submit" className="font-medium">
                 {t("common.autoSubmit")}
               </label>
@@ -273,25 +292,6 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.highScoresDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-hints" className="font-medium">
-                {t("common.hints")}
-              </label>
-              <Switch
-                id="settings-hints"
-                checked={isHintsEnabled}
-                onCheckedChange={setHintsEnabled}
-                aria-describedby="settings-hints-description"
-              />
-            </div>
-            <p
-              id="settings-hints-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.hintsDescription")}
             </p>
           </div>
           <BoardThemePicker

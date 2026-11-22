@@ -193,7 +193,7 @@ test("the shield bull lights up for a new hint and can be switched off", async (
   await expect(page.getByRole("button", { name: "Hint" })).toBeVisible();
 
   await page.getByRole("button", { name: "Settings" }).click();
-  await page.getByRole("switch", { name: "Hints" }).click();
+  await page.getByRole("switch", { name: "Game hints" }).click();
   await page.keyboard.press("Escape");
   await expect(
     page.getByRole("button", { name: /^(New )?hint$/i }),
