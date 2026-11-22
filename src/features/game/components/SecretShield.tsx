@@ -64,7 +64,7 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
                */}
               <BullIcon className="size-6 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
               {/*
-               * A quiet marker for a new fact: pale blue with no glow, so it
+               * A quiet marker for a new fact: dimmed yellow, no glow, so it
                * informs without asking to be clicked, and fades rather than
                * pops for the same reason. The hairline keeps its edge on
                * light shields.

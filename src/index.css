@@ -20,12 +20,11 @@
   /* Shape-only pegs (0004): one ivory plastic, so only the shape tells them apart. */
   --color-peg-ivory: oklch(0.93 0.03 90);
   /*
-   * The hint bull's "something new" dot (0011). A pale blue reads as
-   * information, not an alert, and is the one tone that stays distinct from
-   * the bull on all six shields: greys vanish on either the dark or the light
-   * ones. Paler than the cyan peg, so it isn't taken for one.
+   * The hint bull's "something new" dot (0011). A dimmed yellow: warm like a
+   * small lamp, but muted and unglowing so it informs rather than alerts.
+   * Less saturated than the yellow peg, so it isn't taken for one.
    */
-  --color-hint-marker: oklch(0.78 0.08 235);
+  --color-hint-marker: oklch(0.8 0.1 90);
 
   /*
    * Peg micro-animations: five insert variants, all rigid-body motion (pegs are plastic, not jelly) (picked per slot in Peg.tsx so
