@@ -174,6 +174,8 @@ export default defineConfig(async ({ command, mode }) => {
         },
         workbox: {
           globPatterns: ["**/*.{js,css,html,svg,png,wav,mp3}"],
+          // Link-preview card for crawlers only; the app never shows it.
+          globIgnores: ["social-preview.png"],
         },
       }),
     ],
