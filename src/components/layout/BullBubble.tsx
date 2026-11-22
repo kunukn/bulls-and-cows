@@ -37,8 +37,15 @@ type Placement = {
 
 const HEADER_PLACEMENT: Placement = { side: "bottom", align: "start" };
 
-/* Bubble max width (18rem, as in its class) + sideOffset + collisionPadding. */
-const SIDE_ROOM_PX = 288 + 8 + 16;
+const ARROW_WIDTH = 14;
+const ARROW_HEIGHT = 7;
+
+/*
+ * Bubble max width (18rem, as in its class) + sideOffset + arrow +
+ * collisionPadding. Radix adds the arrow height to sideOffset, so leaving it
+ * out lets its flip move a "right" bubble onto the board.
+ */
+const SIDE_ROOM_PX = 288 + 8 + ARROW_HEIGHT + 16;
 
 /*
  * The shield bubble must never cover the clue rows below it, which the player
@@ -49,7 +56,9 @@ const SIDE_ROOM_PX = 288 + 8 + 16;
 function shieldPlacement(trigger: HTMLElement): Placement {
   const rect = trigger.getBoundingClientRect();
   const isRtl = document.documentElement.dir === "rtl";
-  const room = isRtl ? rect.left : window.innerWidth - rect.right;
+  // clientWidth, not innerWidth: a classic scrollbar isn't room, as Radix sees it.
+  const viewportWidth = document.documentElement.clientWidth;
+  const room = isRtl ? rect.left : viewportWidth - rect.right;
 
   if (room < SIDE_ROOM_PX) return { side: "top", align: "end" };
 
@@ -136,7 +145,7 @@ export function BullBubble(props: Props) {
             <BullLineText line={line} />
           </p>
         )}
-        <PopoverArrow width={14} height={7} />
+        <PopoverArrow width={ARROW_WIDTH} height={ARROW_HEIGHT} />
       </PopoverContent>
     </Popover>
   );
