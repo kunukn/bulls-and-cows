@@ -2,6 +2,7 @@ import { paths } from "@/app/paths";
 import { BullIcon } from "@/components/icons/BullIcon";
 import {
   Popover,
+  PopoverAnchor,
   PopoverArrow,
   PopoverContent,
   PopoverTrigger,
@@ -33,21 +34,9 @@ type Props =
 type Placement = {
   side: "top" | "right" | "bottom" | "left";
   align: "start" | "center" | "end";
-  alignOffset?: number;
 };
 
 const HEADER_PLACEMENT: Placement = { side: "bottom", align: "start" };
-
-/*
- * Above the shield, the bubble's end would line up with the bull's and cover
- * the game menu's chevron in the header row. Inset it towards the start so the
- * menu still reads as a dropdown; the arrow keeps pointing at the bull.
- */
-const ABOVE_PLACEMENT: Placement = {
-  side: "top",
-  align: "end",
-  alignOffset: 8,
-};
 
 const ARROW_WIDTH = 14;
 const ARROW_HEIGHT = 7;
@@ -72,7 +61,7 @@ function shieldPlacement(trigger: HTMLElement): Placement {
   const viewportWidth = document.documentElement.clientWidth;
   const room = isRtl ? rect.left : viewportWidth - rect.right;
 
-  if (room < SIDE_ROOM_PX) return ABOVE_PLACEMENT;
+  if (room < SIDE_ROOM_PX) return { side: "top", align: "end" };
 
   return { side: isRtl ? "left" : "right", align: "center" };
 }
@@ -135,6 +124,24 @@ export function BullBubble(props: Props) {
           {!isShield && <BullIcon className="size-7" />}
         </button>
       </PopoverTrigger>
+      {isShield && (
+        <PopoverAnchor asChild>
+          {/*
+           * What the shield bubble attaches to: the button's box (Board makes
+           * its parent `relative`). Above the shield it slides 10px inwards,
+           * bubble and arrow together, so the arrow points at the inner horn
+           * and the bubble clears the game menu's chevron in the header row.
+           */}
+          <span
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute inset-0",
+              placement.side === "top" &&
+                "-translate-x-2.5 rtl:translate-x-2.5",
+            )}
+          />
+        </PopoverAnchor>
+      )}
       {/*
        * Focus stays on the bull so Enter or Space asks again. The bubble is
        * mounted fresh on open, too late for its own live region, so the
@@ -146,7 +153,6 @@ export function BullBubble(props: Props) {
       <PopoverContent
         side={placement.side}
         align={placement.align}
-        alignOffset={placement.alignOffset}
         sideOffset={8}
         collisionPadding={16}
         aria-label={t("bull.says")}
