@@ -130,25 +130,6 @@ export function SettingsSheet() {
               {t("common.appearanceDescription")}
             </p>
           </fieldset>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-sound" className="font-medium">
-                {t("common.sound")}
-              </label>
-              <Switch
-                id="settings-sound"
-                checked={isSoundEnabled}
-                onCheckedChange={setSoundEnabled}
-                aria-describedby="settings-sound-description"
-              />
-            </div>
-            <p
-              id="settings-sound-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.soundDescription")}
-            </p>
-          </div>
           <fieldset
             className="flex flex-col gap-2"
             aria-describedby="settings-peg-style-description"
@@ -182,6 +163,25 @@ export function SettingsSheet() {
           </fieldset>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-sound" className="font-medium">
+                {t("common.sound")}
+              </label>
+              <Switch
+                id="settings-sound"
+                checked={isSoundEnabled}
+                onCheckedChange={setSoundEnabled}
+                aria-describedby="settings-sound-description"
+              />
+            </div>
+            <p
+              id="settings-sound-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.soundDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-minimal-text" className="font-medium">
                 {t("common.minimalText")}
               </label>
@@ -197,25 +197,6 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.minimalTextDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-hints" className="font-medium">
-                {t("common.hints")}
-              </label>
-              <Switch
-                id="settings-hints"
-                checked={isHintsEnabled}
-                onCheckedChange={setHintsEnabled}
-                aria-describedby="settings-hints-description"
-              />
-            </div>
-            <p
-              id="settings-hints-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.hintsDescription")}
             </p>
           </div>
           <div className="flex flex-col gap-2">
@@ -292,6 +273,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.highScoresDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-hints" className="font-medium">
+                {t("common.hints")}
+              </label>
+              <Switch
+                id="settings-hints"
+                checked={isHintsEnabled}
+                onCheckedChange={setHintsEnabled}
+                aria-describedby="settings-hints-description"
+              />
+            </div>
+            <p
+              id="settings-hints-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.hintsDescription")}
             </p>
           </div>
           <BoardThemePicker
