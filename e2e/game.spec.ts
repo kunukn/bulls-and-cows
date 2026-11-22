@@ -124,6 +124,40 @@ test("explains the rules from the How it works button", async ({ page }) => {
   await expect(help).toBeHidden();
 });
 
+test("the bull says something new on each click, then hints mid-game", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const bull = page.getByRole("button", { name: "Ask Tyr" });
+  const bubble = page.getByRole("dialog", { name: "Tyr says" });
+
+  await bull.click();
+  await expect(bubble).toBeVisible();
+  const firstLine = await bubble.innerText();
+
+  // A second click keeps the bubble open with a different line.
+  await bull.click();
+  await expect(bubble).toBeVisible();
+  await expect(bubble).not.toHaveText(firstLine);
+
+  await page.keyboard.press("Escape");
+  await expect(bubble).toBeHidden();
+
+  // Colours every difficulty shares; auto check (0008) scores the row.
+  for (const color of ["red", "cyan", "green", "yellow"]) {
+    await page.getByRole("button", { name: `Add ${color}` }).click();
+  }
+  await expect(
+    page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
+  ).toBeAttached();
+
+  // After a guess, Tyr deduces from the clues or says there aren't enough.
+  await bull.click();
+  await expect(bubble).toHaveText(
+    /^No \S+ in the code|^The code has|^Slot \d|still fits? your clues|^Only one code fits|^Your row has|^No colour appears twice|not enough clues yet/,
+  );
+});
+
 test("light mode lightens the app but not the board", async ({ page }) => {
   await page.goto("/");
   const body = page.locator("body");

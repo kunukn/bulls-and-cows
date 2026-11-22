@@ -135,5 +135,55 @@
     "date": "Date",
     "clear": "Tout effacer",
     "clearConfirm": "Effacer les scores de toutes les difficultés ?"
+  },
+  "bull": {
+    "button": "Demande à Tyr",
+    "says": "Tyr dit",
+    "quips": {
+      "hello": "Meuh meuh… on joue ?",
+      "names": "Je suis Tyr. La vache, c'est Ko. On garde le code.",
+      "spots": "Les taureaux sont à la bonne place. Les vaches se promènent.",
+      "memory": "Je n'oublie jamais une couleur. Enfin, presque jamais.",
+      "chewing": "Je rumine un code difficile. Laisse-moi une minute.",
+      "history": "Taureaux et vaches se jouait avec un crayon et du papier, bien avant les pions.",
+      "secret": "Psst… je n'ai pas le droit de te dire le code.",
+      "everyGuess": "Chaque essai t'apprend quelque chose, même un mauvais.",
+      "moo": "Meuh ! Ça veut dire « salut » en taureau.",
+      "difficulties": "Facile : pas de répétition. Difficile : huit couleurs. Classique : entre les deux.",
+      "cleanPegs": "Pions propres, taureau content.",
+      "takeTime": "Prends ton temps. Les pions ne vont pas s'envoler."
+    },
+    "tips": {
+      "differentColors": "Commence avec des couleurs différentes pour voir lesquelles sont dans le code.",
+      "noMatches": "Ni taureau ni vache ? Alors aucune de ces couleurs n'est dans le code.",
+      "keepColors": "Garde les couleurs que tu connais et change-les de place.",
+      "oneChange": "Change une seule chose à la fois pour voir ce qu'elle fait.",
+      "fitClues": "Essaie seulement des codes qui collent à tous tes indices.",
+      "doubles": "En Classique et Difficile, les couleurs peuvent se répéter. Pense aux doubles !",
+      "countPegs": "Taureaux plus vaches : c'est le nombre de tes couleurs qui sont dans le code.",
+      "newColor": "Bloqué ? Essaie une couleur que tu n'as pas encore utilisée."
+    },
+    "won": {
+      "cracked": "Meuh-gnifique ! Tu l'as trouvé.",
+      "impressed": "Bravo. Même Ko est impressionnée.",
+      "again": "Prêt pour une autre partie ?"
+    },
+    "lost": {
+      "close": "Presque ! Tu veux réessayer ?",
+      "nextOne": "Le code a gagné cette fois. Le prochain est pour toi.",
+      "lesson": "Chaque partie perdue t'apprend une nouvelle astuce."
+    },
+    "hints": {
+      "absent": "Aucun pion {{color}} dans le code.",
+      "present": "Le code contient : {{colors, list}}.",
+      "slotIs": "La case {{slot}} a un pion {{color}}.",
+      "slotIsNot": "Pas de pion {{color}} dans la case {{slot}}.",
+      "noRepeats": "Aucune couleur ne revient deux fois dans ce code.",
+      "rowHasAbsent": "Ta rangée a un pion {{color}}, mais le code n'en a aucun.",
+      "codesLeft_one": "{{count, number}} code colle encore à tes indices.",
+      "codesLeft_other": "{{count, number}} codes collent encore à tes indices.",
+      "oneLeft": "Un seul code colle encore. Tu peux le trouver !"
+    },
+    "noClues": "Hmm, pas encore assez d'indices. Fais un autre essai !"
   }
 }

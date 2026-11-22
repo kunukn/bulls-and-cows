@@ -135,5 +135,55 @@
     "date": "Date",
     "clear": "Clear all scores",
     "clearConfirm": "Delete all high scores for every difficulty?"
+  },
+  "bull": {
+    "button": "Ask Tyr",
+    "says": "Tyr says",
+    "quips": {
+      "hello": "Moo moo… let's play a game!",
+      "names": "I'm Tyr. The cow is Ko. We guard the code.",
+      "spots": "Bulls sit in the right spot. Cows just wander about.",
+      "memory": "I never forget a colour. Well, almost never.",
+      "chewing": "Chewing on a tricky code. Give me a minute.",
+      "history": "Bulls and Cows was a pencil-and-paper game long before pegs.",
+      "secret": "Psst… I'm not allowed to tell you the code.",
+      "everyGuess": "Every guess tells you something, even a bad one.",
+      "moo": "Moo! That's “hello” in bull.",
+      "difficulties": "Easy has no repeats. Hard has eight colours. Classic is in between.",
+      "cleanPegs": "Clean pegs, happy bull.",
+      "takeTime": "Take your time. The pegs aren't going anywhere."
+    },
+    "tips": {
+      "differentColors": "Start with different colours to find out which ones are in.",
+      "noMatches": "No bulls and no cows? Then none of those colours are in the code.",
+      "keepColors": "Keep the colours you know, and move them to new spots.",
+      "oneChange": "Change one thing at a time to see what it does.",
+      "fitClues": "Only try codes that fit all your clues so far.",
+      "doubles": "In Classic and Hard, colours can repeat. Watch out for doubles!",
+      "countPegs": "Bulls plus cows tells you how many of your colours are in the code.",
+      "newColor": "Stuck? Try a colour you haven't used yet."
+    },
+    "won": {
+      "cracked": "Moo-velous! You cracked it.",
+      "impressed": "Nice work. Even Ko is impressed.",
+      "again": "Ready for another round?"
+    },
+    "lost": {
+      "close": "So close! Want to try again?",
+      "nextOne": "The code won this time. The next one is yours.",
+      "lesson": "Every lost game teaches a new trick."
+    },
+    "hints": {
+      "absent": "No {{color}} in the code.",
+      "present": "The code has {{colors, list}}.",
+      "slotIs": "Slot {{slot}} is {{color}}.",
+      "slotIsNot": "Slot {{slot}} can't be {{color}}.",
+      "noRepeats": "No colour appears twice in this code.",
+      "rowHasAbsent": "Your row has {{color}}, but the code has none.",
+      "codesLeft_one": "{{count, number}} code still fits your clues.",
+      "codesLeft_other": "{{count, number}} codes still fit your clues.",
+      "oneLeft": "Only one code fits now. You can crack it!"
+    },
+    "noClues": "Hmm, not enough clues yet. Make another guess!"
   }
 }

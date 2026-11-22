@@ -1,7 +1,7 @@
 import { paths } from "@/app/paths";
-import { BullIcon } from "@/components/icons/BullIcon";
 import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
+import { BullBubble } from "./BullBubble";
 import { HowItWorksPopover } from "./HowItWorksPopover";
 import { SettingsSheet } from "./SettingsSheet";
 import { Gamepad2, Trophy } from "lucide-react";
@@ -25,15 +25,18 @@ export function Layout() {
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg">
       <header className="flex items-center justify-between gap-2 py-4">
-        <h1 className="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap text-heading">
-          <BullIcon className="size-7 shrink-0 text-subtle" />
-          {isMinimalText ? (
-            <span className="sr-only">{t("app.title")}</span>
-          ) : (
-            // Fits beside four header icons at 320px, ~12px to spare.
-            <span>{t("app.title")}</span>
-          )}
-        </h1>
+        {/* The bull is a button, so it sits beside the heading, not in its name. */}
+        <div className="flex items-center gap-2">
+          <BullBubble />
+          <h1 className="text-lg font-bold tracking-tight whitespace-nowrap text-heading">
+            {isMinimalText ? (
+              <span className="sr-only">{t("app.title")}</span>
+            ) : (
+              // Fits beside four header icons at 320px, ~12px to spare.
+              <span>{t("app.title")}</span>
+            )}
+          </h1>
+        </div>
         <div className="flex items-center gap-1">
           {isPlayPage && <HowItWorksPopover />}
           <nav className="flex gap-1">

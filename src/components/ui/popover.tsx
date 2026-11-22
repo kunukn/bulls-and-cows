@@ -42,6 +42,20 @@ function PopoverAnchor({
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />;
 }
 
+/* Speech-bubble tail; Radix keeps it pointing at the trigger after collisions. */
+function PopoverArrow({
+  className,
+  ...props
+}: React.ComponentProps<typeof PopoverPrimitive.Arrow>) {
+  return (
+    <PopoverPrimitive.Arrow
+      data-slot="popover-arrow"
+      className={cn("fill-popover", className)}
+      {...props}
+    />
+  );
+}
+
 function PopoverHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
@@ -78,6 +92,7 @@ function PopoverDescription({
 export {
   Popover,
   PopoverAnchor,
+  PopoverArrow,
   PopoverContent,
   PopoverDescription,
   PopoverHeader,

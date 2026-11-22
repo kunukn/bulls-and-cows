@@ -131,5 +131,54 @@
     "date": "日期",
     "clear": "清除所有成绩",
     "clearConfirm": "删除所有难度的成绩？"
+  },
+  "bull": {
+    "button": "问问 Tyr",
+    "says": "Tyr 说",
+    "quips": {
+      "hello": "哞哞……我们来玩个游戏吧！",
+      "names": "我是 Tyr，母牛叫 Ko。我们一起守护密码。",
+      "spots": "公牛站在正确的位置，母牛只会到处乱逛。",
+      "memory": "我从不忘记颜色。嗯，几乎从不。",
+      "chewing": "我在慢慢嚼一个难解的密码，等我一下。",
+      "history": "早在有小钉之前，人们就用纸和笔玩公牛和母牛了。",
+      "secret": "嘘……我不能告诉你密码。",
+      "everyGuess": "每次猜测都会告诉你一些信息，就算猜得不好也一样。",
+      "moo": "哞！这是公牛语的“你好”。",
+      "difficulties": "简单没有重复颜色，困难有八种颜色，经典在两者之间。",
+      "cleanPegs": "小钉干干净净，公牛开开心心。",
+      "takeTime": "慢慢来，小钉不会跑掉的。"
+    },
+    "tips": {
+      "differentColors": "先用不同的颜色试试，看看哪些在密码里。",
+      "noMatches": "没有公牛也没有母牛？那这些颜色都不在密码里。",
+      "keepColors": "保留你确定的颜色，把它们换到新的位置。",
+      "oneChange": "一次只改一处，看看会有什么变化。",
+      "fitClues": "只试符合你所有线索的密码。",
+      "doubles": "在经典和困难模式里，颜色可以重复，别忘了这一点！",
+      "countPegs": "公牛加母牛的数量，就是你有几个颜色在密码里。",
+      "newColor": "卡住了？试试一个还没用过的颜色。"
+    },
+    "won": {
+      "cracked": "哞——太棒了！你破解了！",
+      "impressed": "干得好，连 Ko 都佩服你。",
+      "again": "再来一局吗？"
+    },
+    "lost": {
+      "close": "就差一点！要再试一次吗？",
+      "nextOne": "这次密码赢了，下次就轮到你了。",
+      "lesson": "每输一局，都能学到一个新技巧。"
+    },
+    "hints": {
+      "absent": "密码里没有{{color}}。",
+      "present": "密码里有{{colors, list}}。",
+      "slotIs": "第 {{slot}} 格是{{color}}。",
+      "slotIsNot": "第 {{slot}} 格不是{{color}}。",
+      "noRepeats": "这个密码里没有重复的颜色。",
+      "rowHasAbsent": "你这一行有{{color}}，但密码里没有。",
+      "codesLeft_other": "还有 {{count, number}} 个密码符合你的线索。",
+      "oneLeft": "只剩一个密码符合了，你能破解它！"
+    },
+    "noClues": "嗯，线索还不够。再猜一次吧！"
   }
 }

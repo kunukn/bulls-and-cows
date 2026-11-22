@@ -135,5 +135,55 @@
     "date": "Datum",
     "clear": "Alle löschen",
     "clearConfirm": "Alle Einträge für jede Schwierigkeit löschen?"
+  },
+  "bull": {
+    "button": "Frag Tyr",
+    "says": "Tyr sagt",
+    "quips": {
+      "hello": "Muh muh… lass uns spielen!",
+      "names": "Ich bin Tyr. Die Kuh heißt Ko. Wir bewachen den Code.",
+      "spots": "Stiere stehen an der richtigen Stelle. Kühe laufen nur herum.",
+      "memory": "Ich vergesse nie eine Farbe. Na ja, fast nie.",
+      "chewing": "Ich kaue an einem kniffligen Code. Gib mir eine Minute.",
+      "history": "Lange vor dem Brett spielte man Stiere und Kühe mit Papier und Bleistift.",
+      "secret": "Psst… den Code darf ich dir nicht verraten.",
+      "everyGuess": "Jeder Versuch verrät dir etwas, sogar ein schlechter.",
+      "moo": "Muh! Das heißt „Hallo“ auf Stierisch.",
+      "difficulties": "Leicht hat keine doppelten Farben. Schwer hat acht Farben. Klassisch liegt dazwischen.",
+      "cleanPegs": "Saubere Stifte, glücklicher Stier.",
+      "takeTime": "Lass dir Zeit. Die Stifte laufen nicht weg."
+    },
+    "tips": {
+      "differentColors": "Fang mit verschiedenen Farben an, um zu sehen, welche dabei sind.",
+      "noMatches": "Keine Stiere und keine Kühe? Dann ist keine dieser Farben im Code.",
+      "keepColors": "Behalte die Farben, die du kennst, und setz sie an neue Stellen.",
+      "oneChange": "Ändere immer nur eine Sache, um zu sehen, was sie bewirkt.",
+      "fitClues": "Probier nur Codes, die zu all deinen Hinweisen passen.",
+      "doubles": "In Klassisch und Schwer dürfen Farben doppelt vorkommen. Denk daran!",
+      "countPegs": "Stiere plus Kühe: So viele deiner Farben sind im Code.",
+      "newColor": "Kommst du nicht weiter? Probier eine Farbe, die du noch nicht hattest."
+    },
+    "won": {
+      "cracked": "Muh! Du hast den Code geknackt.",
+      "impressed": "Gut gemacht. Sogar Ko staunt.",
+      "again": "Lust auf noch eine Runde?"
+    },
+    "lost": {
+      "close": "So knapp! Noch mal versuchen?",
+      "nextOne": "Diesmal hat der Code gewonnen. Der nächste gehört dir.",
+      "lesson": "Jedes verlorene Spiel bringt dir einen neuen Trick bei."
+    },
+    "hints": {
+      "absent": "Kein {{color}} im Code.",
+      "present": "Im Code sind {{colors, list}}.",
+      "slotIs": "Feld {{slot}} ist {{color}}.",
+      "slotIsNot": "Feld {{slot}} ist nicht {{color}}.",
+      "noRepeats": "In diesem Code kommt keine Farbe doppelt vor.",
+      "rowHasAbsent": "In deiner Reihe ist {{color}}, aber nicht im Code.",
+      "codesLeft_one": "{{count, number}} Code passt noch zu deinen Hinweisen.",
+      "codesLeft_other": "{{count, number}} Codes passen noch zu deinen Hinweisen.",
+      "oneLeft": "Nur noch ein Code passt. Du schaffst das!"
+    },
+    "noClues": "Hmm, noch zu wenig Hinweise. Rate noch einmal!"
   }
 }

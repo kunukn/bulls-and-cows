@@ -135,5 +135,55 @@
     "date": "Dato",
     "clear": "Ryd alle scores",
     "clearConfirm": "Slet alle scores for alle sværhedsgrader?"
+  },
+  "bull": {
+    "button": "Spørg Tyr",
+    "says": "Tyr siger",
+    "quips": {
+      "hello": "Muh muh… lad os spille!",
+      "names": "Jeg er Tyr. Koen hedder Ko. Vi passer på koden.",
+      "spots": "Tyre står på den rigtige plads. Køer vandrer bare rundt.",
+      "memory": "Jeg glemmer aldrig en farve. Næsten aldrig, i hvert fald.",
+      "chewing": "Jeg tygger på en svær kode. Giv mig et øjeblik.",
+      "history": "Tyre og køer blev spillet med papir og blyant, længe før pindene.",
+      "secret": "Psst… jeg må ikke sige koden.",
+      "everyGuess": "Hvert gæt fortæller dig noget, også et dårligt.",
+      "moo": "Muh! Det betyder »hej« på tyresprog.",
+      "difficulties": "Let har ingen gentagelser. Svær har otte farver. Klassisk ligger midt imellem.",
+      "cleanPegs": "Rene pinde, glad tyr.",
+      "takeTime": "Tag dig god tid. Pindene løber ingen vegne."
+    },
+    "tips": {
+      "differentColors": "Start med forskellige farver for at finde ud af, hvilke der er med.",
+      "noMatches": "Ingen tyre og ingen køer? Så er ingen af de farver i koden.",
+      "keepColors": "Behold de farver, du kender, og flyt dem til nye pladser.",
+      "oneChange": "Skift én ting ad gangen for at se, hvad den gør.",
+      "fitClues": "Prøv kun koder, der passer med alle dine spor.",
+      "doubles": "I Klassisk og Svær kan farver gentages. Husk dobbelte!",
+      "countPegs": "Tyre plus køer er antallet af dine farver, der er i koden.",
+      "newColor": "Sidder du fast? Prøv en farve, du ikke har brugt endnu."
+    },
+    "won": {
+      "cracked": "Muh-vældigt! Du knækkede den.",
+      "impressed": "Flot klaret. Selv Ko er imponeret.",
+      "again": "Klar til en runde mere?"
+    },
+    "lost": {
+      "close": "Så tæt på! Vil du prøve igen?",
+      "nextOne": "Koden vandt denne gang. Den næste er din.",
+      "lesson": "Hvert tabt spil lærer dig et nyt trick."
+    },
+    "hints": {
+      "absent": "Ingen {{color}} pind i koden.",
+      "present": "Koden har {{colors, list}}.",
+      "slotIs": "Felt {{slot}} er {{color}}.",
+      "slotIsNot": "Felt {{slot}} kan ikke være {{color}}.",
+      "noRepeats": "Ingen farve er med to gange i denne kode.",
+      "rowHasAbsent": "Din række har {{color}}, men koden har ingen.",
+      "codesLeft_one": "{{count, number}} kode passer stadig med dine spor.",
+      "codesLeft_other": "{{count, number}} koder passer stadig med dine spor.",
+      "oneLeft": "Kun én kode passer nu. Du kan godt knække den!"
+    },
+    "noClues": "Hmm, ikke nok spor endnu. Gæt igen!"
   }
 }
