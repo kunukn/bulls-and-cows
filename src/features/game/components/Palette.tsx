@@ -87,7 +87,7 @@ export function Palette() {
             {/* Keyboard shortcut, in a corner badge so the head stays clear. */}
             <span
               aria-hidden
-              className="absolute -end-1 -top-1 grid size-4 place-items-center rounded-full bg-slate-900 text-[0.625rem] font-bold text-slate-200 ring-1 ring-slate-600"
+              className="absolute -end-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-slate-900 text-xs font-bold text-slate-200 ring-1 ring-slate-600"
             >
               {index + 1}
             </span>
