@@ -57,8 +57,12 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
         <span className={cn(FEEDBACK_COLUMN, "grid place-items-center")}>
           {hasBull && (
             <span className="relative">
-              {/* Embossed: the label colour plus a highlight under each ridge. */}
-              <BullIcon className="size-7 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
+              {/*
+               * Embossed: the label colour plus a highlight under each ridge.
+               * A size down from the header's brand bull (size-7), so the two
+               * don't read as the same button and help stays in the background.
+               */}
+              <BullIcon className="size-6 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
               {/* An indicator light, so it fades on and off rather than popping. */}
               <span
                 data-lit={hasNewHint}
