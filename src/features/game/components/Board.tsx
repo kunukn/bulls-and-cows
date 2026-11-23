@@ -130,7 +130,7 @@ export function Board() {
         />
       </div>
       {hasStartHint && (
-        <p className="mb-2 text-center text-xs text-board-label">
+        <p className="mb-2 text-center text-xs leading-none text-board-label">
           {isAutoSubmit
             ? t("game.startHintAuto", { count: pegs })
             : t("game.startHint", { count: pegs })}
