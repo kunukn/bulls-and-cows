@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, loadEnv, type PluginOption } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
-import { paths } from "./src/app/paths";
+import { paths } from "./src/app/paths.ts";
 
 const SITE_ORIGIN = "https://www.tyrko.app";
 
