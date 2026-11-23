@@ -48,6 +48,9 @@ export function Board() {
   const activeRowRef = useRef<HTMLLIElement>(null);
   const boardTheme = useSettings((state) => state.boardTheme);
   const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
+  const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
+  // Until the first guess is scored, say what to do: nothing else on the board does.
+  const hasStartHint = isPlaying && guesses.length === 0;
   const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
   const hasShieldBull = isPlaying && isHintsEnabled;
   // Deducing takes up to ~20 ms on Hard; redo it only when a guess is scored.
@@ -126,6 +129,13 @@ export function Board() {
           hasNewHint={hasNewHint}
         />
       </div>
+      {hasStartHint && (
+        <p className="mb-2 text-center text-xs text-board-label">
+          {isAutoSubmit
+            ? t("game.startHintAuto", { count: pegs })
+            : t("game.startHint", { count: pegs })}
+        </p>
+      )}
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {
           const guess = guesses[index];

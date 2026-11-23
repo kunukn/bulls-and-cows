@@ -87,6 +87,8 @@
     "addColor": "添加{{color}}（按键 {{key}}）",
     "undo": "撤销",
     "check": "检查",
+    "startHint_other": "选 {{count}} 种颜色，再按“检查”。",
+    "startHintAuto_other": "选 {{count}} 种颜色。",
     "abandonConfirm": "放弃当前这一局？",
     "giveUp": "放弃",
     "revealCode": "显示密码",
