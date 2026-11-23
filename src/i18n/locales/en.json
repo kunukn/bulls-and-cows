@@ -150,6 +150,7 @@
     "oneTry": "1 try",
     "share": "Share",
     "copied": "Copied",
+    "postOn": "Post on {{network}}",
     "shareHeading": "{{app}} · Daily code #{{number, number}} · {{score}}"
   },
   "highScores": {

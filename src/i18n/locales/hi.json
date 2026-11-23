@@ -150,6 +150,7 @@
     "oneTry": "बस एक मौका",
     "share": "शेयर करो",
     "copied": "कॉपी हो गया",
+    "postOn": "{{network}} पर पोस्ट करो",
     "shareHeading": "{{app}} · आज का कोड #{{number, number}} · {{score}}"
   },
   "highScores": {

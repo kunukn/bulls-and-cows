@@ -102,6 +102,13 @@ test("share copies the result without the code", async ({ page, context }) => {
       new URL("/daily", page.url()).href,
     ].join("\n"),
   );
+
+  // The post links fill in the same text, ready for the player to confirm.
+  for (const site of ["X", "Threads", "Bluesky"]) {
+    const link = page.getByRole("link", { name: `Post on ${site}` });
+    const href = await link.getAttribute("href");
+    expect(new URL(href ?? "").searchParams.get("text")).toBe(text);
+  }
 });
 
 test("a new day brings a new code and the streak carries on", async ({

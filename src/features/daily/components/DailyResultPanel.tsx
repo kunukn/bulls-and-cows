@@ -5,7 +5,14 @@ import {
   msUntilNextDaily,
   nextDailyEvent,
 } from "@/features/daily/daily";
-import { shareText } from "@/features/daily/share";
+import { BlueskyIcon } from "@/components/icons/BlueskyIcon";
+import { ThreadsIcon } from "@/components/icons/ThreadsIcon";
+import { XIcon } from "@/components/icons/XIcon";
+import {
+  composeUrl,
+  shareText,
+  type ShareNetwork,
+} from "@/features/daily/share";
 import { summarize, useDailyResults } from "@/features/daily/store";
 import { OutcomeMessage } from "@/features/game/components/ResultPanel";
 import { DIFFICULTIES } from "@/features/game/logic";
@@ -29,7 +36,7 @@ import {
   Trophy,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHref } from "react-router";
 
@@ -102,6 +109,58 @@ function ShareButton({ text, isMinimalText }: ShareButtonProps) {
         {isCopied ? t("daily.copied") : ""}
       </span>
     </>
+  );
+}
+
+type PostSite = {
+  network: ShareNetwork;
+  // Brand names stay as they are in every language.
+  name: string;
+  icon: ComponentType<{ className?: string }>;
+};
+
+const POST_SITES: PostSite[] = [
+  { network: "x", name: "X", icon: XIcon },
+  { network: "threads", name: "Threads", icon: ThreadsIcon },
+  { network: "bluesky", name: "Bluesky", icon: BlueskyIcon },
+];
+
+type PostLinksProps = {
+  text: string;
+  isMinimalText: boolean;
+};
+
+/*
+ * One tap to a filled-in post on the sites players share to most (0012).
+ * Plain links, so they work without a share sheet or clipboard, and open the
+ * site's app on phones where it's installed.
+ */
+function PostLinks({ text, isMinimalText }: PostLinksProps) {
+  const { t } = useTranslation();
+
+  return (
+    <div className="grid w-full grid-cols-3 gap-2">
+      {POST_SITES.map(({ network, name, icon: Icon }) => {
+        const label = t("daily.postOn", { network: name });
+
+        return (
+          <a
+            key={network}
+            href={composeUrl(network, text)}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            title={isMinimalText ? label : undefined}
+            className={cn(SECONDARY_BUTTON_CLASS, "justify-center")}
+          >
+            <Icon className="size-4 shrink-0" />
+            <span className={isMinimalText ? "sr-only" : undefined}>
+              {name}
+            </span>
+          </a>
+        );
+      })}
+    </div>
   );
 }
 
@@ -292,6 +351,8 @@ export function DailyResultPanel() {
         highlightedGuesses={isWon ? guesses : null}
         isMinimalText={isMinimalText}
       />
+
+      <PostLinks text={share} isMinimalText={isMinimalText} />
 
       <div className="flex w-full flex-wrap items-center justify-between gap-2">
         {isNextReady ? (

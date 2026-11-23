@@ -150,6 +150,7 @@
     "oneTry": "1 forsøg",
     "share": "Del",
     "copied": "Kopieret",
+    "postOn": "Slå op på {{network}}",
     "shareHeading": "{{app}} · Dagens kode #{{number, number}} · {{score}}"
   },
   "highScores": {

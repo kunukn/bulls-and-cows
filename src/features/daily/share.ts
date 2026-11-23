@@ -31,3 +31,23 @@ export function shareText({ heading, guesses, pegs, url }: ShareInput): string {
 
   return [heading, "", ...lines, "", url].join("\n");
 }
+
+export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
+
+export type ShareNetwork = (typeof SHARE_NETWORKS)[number];
+
+/* Each site's documented "compose a post" link; the player still confirms. */
+const COMPOSE_URLS: Record<ShareNetwork, string> = {
+  x: "https://x.com/intent/post",
+  threads: "https://www.threads.com/intent/post",
+  bluesky: "https://bsky.app/intent/compose",
+};
+
+/*
+ * A link that opens the site's post box with the whole result filled in.
+ * encodeURIComponent, not URLSearchParams: the latter writes spaces as "+",
+ * which not every site's composer turns back into a space.
+ */
+export function composeUrl(network: ShareNetwork, text: string): string {
+  return `${COMPOSE_URLS[network]}?text=${encodeURIComponent(text)}`;
+}

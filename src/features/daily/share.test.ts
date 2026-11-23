@@ -1,4 +1,4 @@
-import { shareText } from "@/features/daily/share";
+import { composeUrl, SHARE_NETWORKS, shareText } from "@/features/daily/share";
 import { DIFFICULTIES } from "@/features/game/logic";
 import { expect, test } from "vitest";
 import { DAILY_DIFFICULTY } from "./daily";
@@ -29,3 +29,16 @@ test("one line per guess, bulls then cows then misses", () => {
     ].join("\n"),
   );
 });
+
+test.each(SHARE_NETWORKS)(
+  "the %s post link carries the whole result, intact",
+  (network) => {
+    // "&" would end the parameter, "+" would read as a space if left raw.
+    const text = "Tyr & Ko · 1+1\n\n⚫⚪◽◽\n\nhttps://www.tyrko.app/daily";
+    const url = new URL(composeUrl(network, text));
+
+    expect([...url.searchParams.keys()]).toEqual(["text"]);
+    // Decoded the strict way, so a "+" written for a space shows up here.
+    expect(decodeURIComponent(url.search.slice("?text=".length))).toBe(text);
+  },
+);

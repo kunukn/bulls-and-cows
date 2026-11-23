@@ -144,6 +144,7 @@
     "oneTry": "仅一次机会",
     "share": "分享",
     "copied": "已复制",
+    "postOn": "发到 {{network}}",
     "shareHeading": "{{app}} · 每日密码 #{{number, number}} · {{score}}"
   },
   "highScores": {

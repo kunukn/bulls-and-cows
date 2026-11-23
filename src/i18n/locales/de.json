@@ -150,6 +150,7 @@
     "oneTry": "1 Versuch",
     "share": "Teilen",
     "copied": "Kopiert",
+    "postOn": "Auf {{network}} posten",
     "shareHeading": "{{app}} · Tagescode #{{number, number}} · {{score}}"
   },
   "highScores": {
