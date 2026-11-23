@@ -1,10 +1,26 @@
 import type { Feedback } from "@/features/game/logic";
 
-const BULL = "⚫";
-const COW = "⚪";
-const MISS = "◽";
+export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
 
-type ShareInput = {
+export type ShareNetwork = (typeof SHARE_NETWORKS)[number];
+
+type PegSymbols = { bull: string; cow: string; miss: string };
+
+// Emoji are drawn one width apart, so the rows line up as a grid.
+const EMOJI_SYMBOLS: PegSymbols = { bull: "⚫", cow: "⚪", miss: "◽" };
+
+/*
+ * Threads' compose link turns every emoji into "�" (0012). These text
+ * shapes come through, and are one width in its font so the rows still line
+ * up; the dotted and small circles aren't.
+ */
+const TEXT_SYMBOLS: PegSymbols = { bull: "●", cow: "◎", miss: "○" };
+
+const NETWORK_SYMBOLS: Partial<Record<ShareNetwork, PegSymbols>> = {
+  threads: TEXT_SYMBOLS,
+};
+
+export type ShareInput = {
   /* First line, e.g. "Tyr & Ko · Daily code #18 · 4/10". */
   heading: string;
   /*
@@ -14,6 +30,8 @@ type ShareInput = {
   guesses: readonly Feedback[];
   pegs: number;
   url: string;
+  // The site the text is for; left out for the share sheet and clipboard.
+  network?: ShareNetwork;
 };
 
 /*
@@ -21,20 +39,24 @@ type ShareInput = {
  * how many, not which slot, so the line is sorted the way the board shows
  * them rather than laid out per slot like a Wordle grid.
  */
-export function shareText({ heading, guesses, pegs, url }: ShareInput): string {
+export function shareText({
+  heading,
+  guesses,
+  pegs,
+  url,
+  network,
+}: ShareInput): string {
+  const { bull, cow, miss } =
+    (network && NETWORK_SYMBOLS[network]) ?? EMOJI_SYMBOLS;
   const lines = guesses.map(
     ({ black, white }) =>
-      BULL.repeat(black) +
-      COW.repeat(white) +
-      MISS.repeat(pegs - black - white),
+      bull.repeat(black) +
+      cow.repeat(white) +
+      miss.repeat(pegs - black - white),
   );
 
   return [heading, "", ...lines, "", url].join("\n");
 }
-
-export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
-
-export type ShareNetwork = (typeof SHARE_NETWORKS)[number];
 
 /* Each site's documented "compose a post" link; the player still confirms. */
 const COMPOSE_URLS: Record<ShareNetwork, string> = {

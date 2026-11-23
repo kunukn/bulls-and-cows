@@ -11,6 +11,7 @@ import { XIcon } from "@/components/icons/XIcon";
 import {
   composeUrl,
   shareText,
+  type ShareInput,
   type ShareNetwork,
 } from "@/features/daily/share";
 import { summarize, useDailyResults } from "@/features/daily/store";
@@ -126,7 +127,8 @@ const POST_SITES: PostSite[] = [
 ];
 
 type PostLinksProps = {
-  text: string;
+  // Each site gets its own text: Threads can't take emoji (0012).
+  shareInput: ShareInput;
   isMinimalText: boolean;
 };
 
@@ -135,7 +137,7 @@ type PostLinksProps = {
  * Plain links, so they work without a share sheet or clipboard, and open the
  * site's app on phones where it's installed.
  */
-function PostLinks({ text, isMinimalText }: PostLinksProps) {
+function PostLinks({ shareInput, isMinimalText }: PostLinksProps) {
   const { t } = useTranslation();
 
   return (
@@ -146,7 +148,7 @@ function PostLinks({ text, isMinimalText }: PostLinksProps) {
         return (
           <a
             key={network}
-            href={composeUrl(network, text)}
+            href={composeUrl(network, shareText({ ...shareInput, network }))}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
@@ -288,7 +290,7 @@ export function DailyResultPanel() {
   const numberFormat = new Intl.NumberFormat(i18n.language);
   // "X" for a loss, as in other daily games; a loss has no guess count to show.
   const score = `${isWon ? numberFormat.format(guesses) : "X"}/${numberFormat.format(maxGuesses)}`;
-  const share = shareText({
+  const shareInput: ShareInput = {
     heading: t("daily.shareHeading", {
       app: t("app.title"),
       number: context.dailyNumber ?? today,
@@ -297,7 +299,7 @@ export function DailyResultPanel() {
     guesses: context.guesses,
     pegs,
     url: new URL(dailyHref, window.location.href).href,
-  });
+  };
   const percentFormat = new Intl.NumberFormat(i18n.language, {
     style: "percent",
   });
@@ -352,7 +354,7 @@ export function DailyResultPanel() {
         isMinimalText={isMinimalText}
       />
 
-      <PostLinks text={share} isMinimalText={isMinimalText} />
+      <PostLinks shareInput={shareInput} isMinimalText={isMinimalText} />
 
       <div className="flex w-full flex-wrap items-center justify-between gap-2">
         {isNextReady ? (
@@ -387,7 +389,10 @@ export function DailyResultPanel() {
           </p>
         )}
         <div className="ms-auto flex gap-2">
-          <ShareButton text={share} isMinimalText={isMinimalText} />
+          <ShareButton
+            text={shareText(shareInput)}
+            isMinimalText={isMinimalText}
+          />
           <Link
             to={paths.play}
             title={isMinimalText ? t("daily.practice") : undefined}
