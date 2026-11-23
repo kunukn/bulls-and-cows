@@ -1,5 +1,5 @@
 import { createActor } from "xstate";
-import { DIFFICULTIES, type Color } from "./logic";
+import { DIFFICULTIES, paletteFor, type Color } from "./logic";
 import { AUTO_SUBMIT_DELAY_MS, gameMachine, type GameEmitted } from "./machine";
 
 /*
@@ -369,5 +369,91 @@ describe("gameMachine", () => {
     expect(value).toBe("lost");
     expect(context.guesses).toHaveLength(1);
     expect(context.finishedAt).toBeGreaterThan(0);
+  });
+});
+
+/*
+ * A daily game on day 1, dealt red×4 like startGame. The next day's RNG
+ * always returns 1, so its code is the palette's second colour ×4.
+ */
+describe("gameMachine, daily game", () => {
+  const nextColor = paletteFor("classic")[1];
+  const nextDay = {
+    type: "NEXT_DAILY",
+    dailyNumber: 2,
+    randomInt: () => 1,
+  } as const;
+
+  function startDaily() {
+    return createActor(gameMachine, {
+      input: { difficulty: "classic", randomInt: () => 0, dailyNumber: 1 },
+    }).start();
+  }
+
+  it("ignores NEW_GAME: a daily code gets one attempt", () => {
+    const actor = startDaily();
+    guess(actor, ["red", "red", "red", "red"]);
+    actor.send({ type: "NEW_GAME" });
+    const { value, context } = actor.getSnapshot();
+
+    expect(value).toBe("won");
+    expect(context.guesses).toHaveLength(1);
+  });
+
+  it("moves on to a later day's code once the game is over", () => {
+    const actor = startDaily();
+    guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
+    actor.send({ type: "GIVE_UP" });
+    actor.send(nextDay);
+    const { value, context } = actor.getSnapshot();
+
+    expect(value).toBe("playing");
+    expect(context.dailyNumber).toBe(2);
+    expect(context.secret).toEqual(
+      Array(DIFFICULTIES.classic.pegs).fill(nextColor),
+    );
+    expect(context.guesses).toHaveLength(0);
+    expect(context.startedAt).toBe(0);
+
+    // Still a daily game: the new day gets one attempt too.
+    guess(actor, Array(DIFFICULTIES.classic.pegs).fill(nextColor));
+    actor.send({ type: "NEW_GAME" });
+    expect(actor.getSnapshot().value).toBe("won");
+  });
+
+  it("moves an untouched board on to a later day", () => {
+    const actor = startDaily();
+    actor.send(nextDay);
+
+    expect(actor.getSnapshot().context.dailyNumber).toBe(2);
+  });
+
+  it("never replaces a game under way", () => {
+    const actor = startDaily();
+    actor.send({ type: "ADD_PEG", color: "cyan" });
+    actor.send(nextDay);
+    const { context } = actor.getSnapshot();
+
+    expect(context.dailyNumber).toBe(1);
+    expect(context.current[0]).toBe("cyan");
+  });
+
+  it("ignores the same or an earlier day", () => {
+    const actor = startDaily();
+    actor.send({ type: "GIVE_UP" });
+    actor.send({ ...nextDay, dailyNumber: 1 });
+    actor.send({ ...nextDay, dailyNumber: 0 });
+
+    expect(actor.getSnapshot().value).toBe("lost");
+    expect(actor.getSnapshot().context.dailyNumber).toBe(1);
+  });
+
+  it("is ignored by a practice game", () => {
+    const actor = startGame();
+    actor.send({ type: "GIVE_UP" });
+    actor.send(nextDay);
+
+    expect(actor.getSnapshot().value).toBe("lost");
+    expect(actor.getSnapshot().context.dailyNumber).toBeNull();
   });
 });

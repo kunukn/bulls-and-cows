@@ -63,6 +63,35 @@ describe("game persistence", () => {
     expect(context.placed).toEqual([0, 1]);
   });
 
+  it("loads a game saved before the daily code as a practice game", () => {
+    localStorage.setItem(
+      GAME_STORAGE_KEY,
+      JSON.stringify({
+        version: 1,
+        value: "lost",
+        context: {
+          difficulty: "classic",
+          secret: ["red", "cyan", "green", "yellow"],
+          guesses: [],
+          current: [null, null, null, null],
+          target: 0,
+          placed: [],
+          startedAt: 1,
+          finishedAt: 2,
+        },
+      }),
+    );
+
+    const restored = createActor(gameMachine, {
+      input: { difficulty: "classic" },
+      snapshot: loadGame(),
+    }).start();
+    // Only a practice game can be restarted.
+    restored.send({ type: "NEW_GAME" });
+
+    expect(restored.getSnapshot().value).toBe("playing");
+  });
+
   it("keeps a saved slot target", () => {
     const actor = createActor(gameMachine, {
       input: { difficulty: "classic", randomInt: sequence([0]) },
@@ -121,6 +150,22 @@ describe("game persistence", () => {
           current: [null, null, null, null],
           startedAt: 0,
           finishedAt: 0,
+        },
+      }),
+    ],
+    [
+      "a daily number that isn't a whole number",
+      JSON.stringify({
+        version: 1,
+        value: "playing",
+        context: {
+          difficulty: "classic",
+          secret: ["red", "cyan", "green", "yellow"],
+          guesses: [],
+          current: [null, null, null, null],
+          startedAt: 0,
+          finishedAt: 0,
+          dailyNumber: "today",
         },
       }),
     ],

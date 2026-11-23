@@ -6,6 +6,8 @@ import { useSettings } from "./store/settings";
 
 const GameContext = createActorContext(gameMachine);
 
+/* For a second game with its own input and save, like the daily code. */
+export const GameActorProvider = GameContext.Provider;
 export const useGameSelector = GameContext.useSelector;
 export const useGameActorRef = GameContext.useActorRef;
 

@@ -18,12 +18,16 @@ type StateValue = (typeof STATE_VALUES)[number];
 
 type Placement = Pick<GameContext, "target" | "placed">;
 
-/* Saves from before slot targeting have no placement; it is rebuilt on load. */
+/*
+ * Saves from before slot targeting have no placement; it is rebuilt on load.
+ * Saves from before the daily code have no `dailyNumber`; they are practice
+ * games.
+ */
 type SavedGame = {
   version: number;
   value: StateValue;
-  context: Omit<GameContext, "randomInt" | keyof Placement> &
-    Partial<Placement>;
+  context: Omit<GameContext, "randomInt" | "dailyNumber" | keyof Placement> &
+    Partial<Placement & Pick<GameContext, "dailyNumber">>;
 };
 
 type GameSnapshot = SnapshotFrom<typeof gameMachine>;
@@ -33,7 +37,10 @@ type GameSnapshot = SnapshotFrom<typeof gameMachine>;
  * snapshot shape, so an XState upgrade can't invalidate stored games.
  * `randomInt` is a function and is re-attached on load.
  */
-export function saveGame(snapshot: GameSnapshot): void {
+export function saveGame(
+  snapshot: GameSnapshot,
+  storageKey = GAME_STORAGE_KEY,
+): void {
   const { randomInt: _randomInt, ...context } = snapshot.context;
   const saved: SavedGame = {
     version: GAME_STORAGE_VERSION,
@@ -42,17 +49,19 @@ export function saveGame(snapshot: GameSnapshot): void {
   };
 
   try {
-    localStorage.setItem(GAME_STORAGE_KEY, JSON.stringify(saved));
+    localStorage.setItem(storageKey, JSON.stringify(saved));
   } catch {
     // Storage full or blocked (private mode): the game still plays, unsaved.
   }
 }
 
 /* Returns a restorable snapshot, or undefined to start a fresh game. */
-export function loadGame(): GameSnapshot | undefined {
+export function loadGame(
+  storageKey = GAME_STORAGE_KEY,
+): GameSnapshot | undefined {
   let saved: unknown;
   try {
-    saved = JSON.parse(localStorage.getItem(GAME_STORAGE_KEY) ?? "null");
+    saved = JSON.parse(localStorage.getItem(storageKey) ?? "null");
   } catch {
     return undefined;
   }
@@ -63,6 +72,7 @@ export function loadGame(): GameSnapshot | undefined {
     context: {
       ...saved.context,
       ...restorePlacement(saved.context),
+      dailyNumber: saved.context.dailyNumber ?? null,
       randomInt: cryptoRandomInt,
     },
   });
@@ -142,6 +152,9 @@ function isSavedGame(value: unknown): value is SavedGame {
       (Array.isArray(context.placed) &&
         context.placed.every((slot) => isSlot(slot, pegs)))) &&
     typeof context.startedAt === "number" &&
-    typeof context.finishedAt === "number"
+    typeof context.finishedAt === "number" &&
+    (context.dailyNumber === undefined ||
+      context.dailyNumber === null ||
+      Number.isInteger(context.dailyNumber))
   );
 }

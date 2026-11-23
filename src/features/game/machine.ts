@@ -1,4 +1,4 @@
-import { assign, emit, enqueueActions, raise, setup } from "xstate";
+import { and, assign, emit, enqueueActions, raise, setup } from "xstate";
 import {
   cryptoRandomInt,
   DIFFICULTIES,
@@ -25,11 +25,14 @@ export type GameContext = {
   startedAt: number;
   finishedAt: number;
   randomInt: RandomInt;
+  /* The day's number in a daily game (0012); null in a practice game. */
+  dailyNumber: number | null;
 };
 
 export type GameInput = {
   difficulty: Difficulty;
   randomInt?: RandomInt;
+  dailyNumber?: number;
 };
 
 export type GameEvent =
@@ -42,7 +45,10 @@ export type GameEvent =
   | { type: "SUBMIT" }
   | { type: "AUTO_SUBMIT" }
   | { type: "GIVE_UP" }
-  | { type: "NEW_GAME"; difficulty?: Difficulty };
+  /* Practice only: a daily code gets one attempt (0012). */
+  | { type: "NEW_GAME"; difficulty?: Difficulty }
+  /* Daily only: move on to a later day's code, dealt by `randomInt`. */
+  | { type: "NEXT_DAILY"; dailyNumber: number; randomInt: RandomInt };
 
 /* Side-channel notices for the UI; they don't change game state. */
 export type GameEmitted =
@@ -104,6 +110,12 @@ export const gameMachine = setup({
     emitted: {} as GameEmitted,
   },
   guards: {
+    isPractice: ({ context }) => context.dailyNumber === null,
+    isLaterDaily: ({ context, event }) =>
+      event.type === "NEXT_DAILY" &&
+      context.dailyNumber !== null &&
+      event.dailyNumber > context.dailyNumber,
+    hasNotStarted: ({ context }) => context.startedAt === 0,
     isRowComplete: ({ context }) => isComplete(context.current),
     isWinningGuess: ({ context }) =>
       isComplete(context.current) &&
@@ -208,17 +220,30 @@ export const gameMachine = setup({
 
       return freshGame(difficulty, context.randomInt);
     }),
+    startNextDaily: assign(({ context, event }) => {
+      if (event.type !== "NEXT_DAILY") return {};
+
+      return {
+        ...freshGame(context.difficulty, event.randomInt),
+        randomInt: event.randomInt,
+        dailyNumber: event.dailyNumber,
+      };
+    }),
   },
 }).createMachine({
   id: "game",
   context: ({ input }) => {
     const randomInt = input.randomInt ?? cryptoRandomInt;
 
-    return { ...freshGame(input.difficulty, randomInt), randomInt };
+    return {
+      ...freshGame(input.difficulty, randomInt),
+      randomInt,
+      dailyNumber: input.dailyNumber ?? null,
+    };
   },
   initial: "playing",
   on: {
-    NEW_GAME: { target: ".playing", actions: "resetGame" },
+    NEW_GAME: { guard: "isPractice", target: ".playing", actions: "resetGame" },
   },
   states: {
     playing: {
@@ -278,9 +303,33 @@ export const gameMachine = setup({
         ],
         // Ends the game as a loss so the secret is revealed.
         GIVE_UP: { target: "lost", actions: "markFinished" },
+        // An untouched board may move on; a game under way is never replaced.
+        NEXT_DAILY: {
+          guard: and(["isLaterDaily", "hasNotStarted"]),
+          target: "playing",
+          actions: "startNextDaily",
+        },
       },
     },
-    won: { entry: emit({ type: "gameOver", isWon: true }) },
-    lost: { entry: emit({ type: "gameOver", isWon: false }) },
+    won: {
+      entry: emit({ type: "gameOver", isWon: true }),
+      on: {
+        NEXT_DAILY: {
+          guard: "isLaterDaily",
+          target: "playing",
+          actions: "startNextDaily",
+        },
+      },
+    },
+    lost: {
+      entry: emit({ type: "gameOver", isWon: false }),
+      on: {
+        NEXT_DAILY: {
+          guard: "isLaterDaily",
+          target: "playing",
+          actions: "startNextDaily",
+        },
+      },
+    },
   },
 });
