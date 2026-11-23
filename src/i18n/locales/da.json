@@ -127,6 +127,21 @@
     "newGame": "Nyt spil",
     "gaveUp": "Du gav op — koden er vist øverst"
   },
+  "daily": {
+    "title": "Dagens kode",
+    "numbered": "Dagens kode #{{number, number}}",
+    "description": "Én kode om dagen, den samme for alle. Klassiske regler, ét forsøg.",
+    "solved": "Løst",
+    "notSolved": "Ikke løst",
+    "played": "Spillet",
+    "winRate": "Vundet",
+    "streak": "I træk",
+    "bestStreak": "Bedst i træk",
+    "distribution": "Sejre efter antal gæt",
+    "nextIn": "Næste kode om {{time}}",
+    "playToday": "Spil dagens kode",
+    "practice": "Øvespil"
+  },
   "highScores": {
     "title": "Topliste",
     "showFor": "Vis topliste for",

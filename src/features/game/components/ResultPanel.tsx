@@ -22,7 +22,7 @@ type OutcomeMessageProps = {
 };
 
 /* Win/loss line; minimal text keeps the full sentence for screen readers. */
-function OutcomeMessage({
+export function OutcomeMessage({
   isWon,
   hasGivenUp,
   guesses,

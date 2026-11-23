@@ -127,6 +127,21 @@
     "newGame": "Nouvelle partie",
     "gaveUp": "Tu as abandonné — le code est révélé en haut"
   },
+  "daily": {
+    "title": "Code du jour",
+    "numbered": "Code du jour n° {{number, number}}",
+    "description": "Un code par jour, le même pour tout le monde. Règles classiques, un seul essai.",
+    "solved": "Trouvé",
+    "notSolved": "Pas trouvé",
+    "played": "Parties",
+    "winRate": "Victoires",
+    "streak": "Série",
+    "bestStreak": "Meilleure série",
+    "distribution": "Victoires par nombre d'essais",
+    "nextIn": "Prochain code dans {{time}}",
+    "playToday": "Jouer le code du jour",
+    "practice": "Partie d'entraînement"
+  },
   "highScores": {
     "title": "Meilleurs scores",
     "showFor": "Voir les scores pour",

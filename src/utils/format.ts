@@ -7,6 +7,19 @@ export function formatDuration(ms: number): string {
   return `${minutes}:${seconds}`;
 }
 
+/* 15_153_000 → "4:12:33" */
+export function formatCountdown(ms: number): string {
+  const totalSeconds = Math.ceil(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = String(Math.floor((totalSeconds % 3600) / 60)).padStart(
+    2,
+    "0",
+  );
+  const seconds = String(totalSeconds % 60).padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 /* Medium date in the UI language, e.g. "18 Nov 2026" / "18. Nov. 2026". */
 export function formatDate(epochMs: number, locale: string): string {
   return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(

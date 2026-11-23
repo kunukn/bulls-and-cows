@@ -1,5 +1,8 @@
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { DifficultyPicker } from "@/components/DifficultyPicker";
+import { DailyHeader } from "@/features/daily/components/DailyHeader";
+import { DailyLink } from "@/features/daily/components/DailyLink";
+import { DailyResultPanel } from "@/features/daily/components/DailyResultPanel";
 import { paletteFor, type Difficulty } from "@/features/game/logic";
 import {
   useGameActorRef,
@@ -20,6 +23,10 @@ export function Play() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
   const difficulty = useGameSelector((snapshot) => snapshot.context.difficulty);
+  // Set when this is the daily code's game instead of a practice game (0012).
+  const dailyNumber = useGameSelector(
+    (snapshot) => snapshot.context.dailyNumber,
+  );
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
   const hasProgress = useGameSelector(
     (snapshot) => snapshot.context.startedAt > 0,
@@ -110,12 +117,19 @@ export function Play() {
 
   return (
     <div className="flex flex-col gap-4">
-      <DifficultyPicker
-        name="difficulty"
-        legend={t("difficulty.legend")}
-        value={difficulty}
-        onChange={changeDifficulty}
-      />
+      {dailyNumber === null ? (
+        <>
+          <DailyLink />
+          <DifficultyPicker
+            name="difficulty"
+            legend={t("difficulty.legend")}
+            value={difficulty}
+            onChange={changeDifficulty}
+          />
+        </>
+      ) : (
+        <DailyHeader number={dailyNumber} />
+      )}
       <ConfirmDialog
         isOpen={pendingDifficulty !== null}
         onOpenChange={(isOpen) => {
@@ -156,7 +170,9 @@ export function Play() {
       {/* Sticky: on short viewports the board scrolls under the controls. */}
       <div className="dock sticky bottom-0 -mx-4">
         <div className="dock-surface px-4 pt-3 pb-4">
-          {isPlaying ? <Palette /> : <ResultPanel />}
+          {isPlaying && <Palette />}
+          {!isPlaying &&
+            (dailyNumber === null ? <ResultPanel /> : <DailyResultPanel />)}
         </div>
       </div>
     </div>

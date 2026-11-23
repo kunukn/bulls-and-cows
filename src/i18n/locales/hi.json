@@ -127,6 +127,21 @@
     "newGame": "नया खेल",
     "gaveUp": "तुमने हार मान ली — कोड ऊपर दिखा दिया गया"
   },
+  "daily": {
+    "title": "आज का कोड",
+    "numbered": "आज का कोड #{{number, number}}",
+    "description": "हर दिन एक कोड, सबके लिए एक जैसा। क्लासिक नियम, एक ही मौका।",
+    "solved": "हल हो गया",
+    "notSolved": "हल नहीं हुआ",
+    "played": "खेले",
+    "winRate": "जीत",
+    "streak": "लगातार जीत",
+    "bestStreak": "सबसे ज़्यादा",
+    "distribution": "कितनी कोशिशों में जीते",
+    "nextIn": "अगला कोड {{time}} में",
+    "playToday": "आज का कोड खेलो",
+    "practice": "अभ्यास खेल"
+  },
   "highScores": {
     "title": "हाई स्कोर",
     "showFor": "इसके हाई स्कोर दिखाओ",

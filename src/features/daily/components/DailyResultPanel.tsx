@@ -1,0 +1,252 @@
+import { paths } from "@/app/paths";
+import {
+  DAILY_DIFFICULTY,
+  dailyNumber,
+  msUntilNextDaily,
+  nextDailyEvent,
+} from "@/features/daily/daily";
+import { summarize, useDailyResults } from "@/features/daily/store";
+import { OutcomeMessage } from "@/features/game/components/ResultPanel";
+import { DIFFICULTIES } from "@/features/game/logic";
+import { elapsedMs } from "@/features/game/machine";
+import {
+  useGameActorRef,
+  useGameSelector,
+} from "@/features/game/machine-context";
+import { useSettings } from "@/features/game/store/settings";
+import { cn } from "@/utils/cn";
+import { formatCountdown } from "@/utils/format";
+import {
+  Award,
+  CalendarCheck,
+  CalendarDays,
+  Flame,
+  Gamepad2,
+  Hourglass,
+  Trophy,
+  type LucideIcon,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router";
+
+type StatProps = {
+  label: string;
+  value: string;
+  icon: LucideIcon;
+  isMinimalText: boolean;
+};
+
+/* One number with its name; minimal text swaps the name for an icon. */
+function Stat({ label, value, icon: Icon, isMinimalText }: StatProps) {
+  return (
+    // Reversed for the eye, number first; justify-end keeps the numbers level.
+    <div className="flex flex-col-reverse items-center justify-end gap-0.5">
+      <dt
+        title={isMinimalText ? label : undefined}
+        className="text-xs leading-tight text-balance text-muted-foreground"
+      >
+        {isMinimalText && <Icon aria-hidden className="size-4" />}
+        <span className={isMinimalText ? "sr-only" : undefined}>{label}</span>
+      </dt>
+      <dd className="text-xl leading-tight font-semibold tabular-nums">
+        {value}
+      </dd>
+    </div>
+  );
+}
+
+type DistributionProps = {
+  /* Wins per guess count: index 0 is a win on the first guess. */
+  distribution: number[];
+  /* Guess count of the game on the board, when it was won. */
+  highlightedGuesses: number | null;
+  isMinimalText: boolean;
+};
+
+/* Column chart of wins by guess count; the game just won stands out. */
+function Distribution({
+  distribution,
+  highlightedGuesses,
+  isMinimalText,
+}: DistributionProps) {
+  const { t, i18n } = useTranslation();
+  const numberFormat = new Intl.NumberFormat(i18n.language);
+  const mostWins = Math.max(...distribution, 1);
+  const caption = t("daily.distribution");
+
+  return (
+    <figure className="flex w-full flex-col gap-1">
+      <figcaption
+        className={isMinimalText ? "sr-only" : "text-xs text-muted-foreground"}
+      >
+        {caption}
+      </figcaption>
+      <ol
+        aria-label={caption}
+        title={isMinimalText ? caption : undefined}
+        className="flex h-12 items-stretch"
+      >
+        {distribution.map((wins, index) => {
+          const guesses = index + 1;
+          const isHighlighted = guesses === highlightedGuesses;
+          const reading = `${numberFormat.format(guesses)}: ${numberFormat.format(wins)}`;
+
+          return (
+            <li
+              key={index}
+              title={reading}
+              className="flex flex-1 flex-col justify-end gap-0.5"
+            >
+              <span className="sr-only">{reading}</span>
+              {/* An empty column keeps a sliver, so the row reads as a baseline. */}
+              <span
+                aria-hidden
+                style={{ height: `${(wins / mostWins) * 100}%` }}
+                className={cn(
+                  "mx-1 min-h-0.5 rounded-t-sm",
+                  isHighlighted ? "bg-foreground" : "bg-faint",
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "text-[0.625rem] leading-none tabular-nums",
+                  isHighlighted
+                    ? "font-semibold text-foreground"
+                    : "text-muted-foreground",
+                )}
+              >
+                {numberFormat.format(guesses)}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </figure>
+  );
+}
+
+/* Shown in place of the palette once the daily game is over (0012). */
+export function DailyResultPanel() {
+  const { t, i18n } = useTranslation();
+  const actor = useGameActorRef();
+  const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
+  const context = useGameSelector((snapshot) => snapshot.context);
+  const results = useDailyResults((state) => state.results);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
+  const [now, setNow] = useState(() => new Date());
+
+  // Drives the countdown, and notices midnight while the panel is open.
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  const today = dailyNumber(now);
+  const isNextReady =
+    context.dailyNumber !== null && today > context.dailyNumber;
+  const summary = summarize(results, today);
+  const guesses = context.guesses.length;
+  const numberFormat = new Intl.NumberFormat(i18n.language);
+  const percentFormat = new Intl.NumberFormat(i18n.language, {
+    style: "percent",
+  });
+  const winRate = summary.played === 0 ? 0 : summary.won / summary.played;
+  const countdown = formatCountdown(msUntilNextDaily(now));
+  // Icon-only buttons keep their name for screen readers and as a tooltip.
+  const labelClass = isMinimalText ? "sr-only" : undefined;
+
+  return (
+    <section className="flex flex-col items-center gap-3 rounded-2xl bg-card p-4 text-center">
+      {/* Only the outcome is announced; the countdown would talk every second. */}
+      <div aria-live="polite">
+        <OutcomeMessage
+          isWon={isWon}
+          hasGivenUp={
+            !isWon && guesses < DIFFICULTIES[DAILY_DIFFICULTY].maxGuesses
+          }
+          guesses={guesses}
+          elapsedMs={elapsedMs(context)}
+          isMinimalText={isMinimalText}
+        />
+      </div>
+
+      <dl className="grid w-full grid-cols-4 gap-2">
+        <Stat
+          label={t("daily.played")}
+          value={numberFormat.format(summary.played)}
+          icon={CalendarCheck}
+          isMinimalText={isMinimalText}
+        />
+        <Stat
+          label={t("daily.winRate")}
+          value={percentFormat.format(winRate)}
+          icon={Trophy}
+          isMinimalText={isMinimalText}
+        />
+        <Stat
+          label={t("daily.streak")}
+          value={numberFormat.format(summary.currentStreak)}
+          icon={Flame}
+          isMinimalText={isMinimalText}
+        />
+        <Stat
+          label={t("daily.bestStreak")}
+          value={numberFormat.format(summary.bestStreak)}
+          icon={Award}
+          isMinimalText={isMinimalText}
+        />
+      </dl>
+
+      <Distribution
+        distribution={summary.distribution}
+        highlightedGuesses={isWon ? guesses : null}
+        isMinimalText={isMinimalText}
+      />
+
+      <div className="flex w-full flex-wrap items-center justify-between gap-2">
+        {isNextReady ? (
+          <button
+            type="button"
+            onClick={() => actor.send(nextDailyEvent(today))}
+            title={isMinimalText ? t("daily.playToday") : undefined}
+            className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          >
+            {isMinimalText && <CalendarDays aria-hidden className="size-5" />}
+            <span className={labelClass}>{t("daily.playToday")}</span>
+          </button>
+        ) : (
+          <p
+            role="timer"
+            title={
+              isMinimalText ? t("daily.nextIn", { time: countdown }) : undefined
+            }
+            className="flex items-center gap-1.5 text-sm text-muted-foreground tabular-nums"
+          >
+            {isMinimalText ? (
+              <>
+                <Hourglass aria-hidden className="size-4" />
+                <span aria-hidden>{countdown}</span>
+                <span className="sr-only">
+                  {t("daily.nextIn", { time: countdown })}
+                </span>
+              </>
+            ) : (
+              t("daily.nextIn", { time: countdown })
+            )}
+          </p>
+        )}
+        <Link
+          to={paths.play}
+          title={isMinimalText ? t("daily.practice") : undefined}
+          className="ms-auto flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        >
+          {isMinimalText && <Gamepad2 aria-hidden className="size-5" />}
+          <span className={labelClass}>{t("daily.practice")}</span>
+        </Link>
+      </div>
+    </section>
+  );
+}

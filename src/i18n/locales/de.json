@@ -127,6 +127,21 @@
     "newGame": "Neues Spiel",
     "gaveUp": "Du hast aufgegeben – der Code steht oben"
   },
+  "daily": {
+    "title": "Tagescode",
+    "numbered": "Tagescode #{{number, number}}",
+    "description": "Ein Code pro Tag, für alle derselbe. Klassische Regeln, ein Versuch.",
+    "solved": "Gelöst",
+    "notSolved": "Nicht gelöst",
+    "played": "Gespielt",
+    "winRate": "Gewonnen",
+    "streak": "Serie",
+    "bestStreak": "Beste Serie",
+    "distribution": "Siege nach Anzahl der Versuche",
+    "nextIn": "Nächster Code in {{time}}",
+    "playToday": "Heutigen Code spielen",
+    "practice": "Übungsspiel"
+  },
   "highScores": {
     "title": "Bestenliste",
     "showFor": "Bestenliste zeigen für",

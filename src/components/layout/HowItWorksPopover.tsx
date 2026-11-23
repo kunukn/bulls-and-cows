@@ -109,6 +109,11 @@ export function HowItWorksPopover() {
             })}
           </dl>
         </section>
+
+        <section>
+          <h3 className="mb-1 font-semibold">{t("daily.title")}</h3>
+          <p className="text-muted-foreground">{t("daily.description")}</p>
+        </section>
       </PopoverContent>
     </Popover>
   );

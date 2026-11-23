@@ -123,6 +123,21 @@
     "newGame": "新游戏",
     "gaveUp": "你放弃了——密码已在上方揭晓"
   },
+  "daily": {
+    "title": "每日密码",
+    "numbered": "每日密码 #{{number, number}}",
+    "description": "每天一个密码，所有人都一样。经典规则，只有一次机会。",
+    "solved": "已破解",
+    "notSolved": "未破解",
+    "played": "已玩",
+    "winRate": "胜率",
+    "streak": "连胜",
+    "bestStreak": "最长连胜",
+    "distribution": "各猜测次数的获胜局数",
+    "nextIn": "下一个密码：{{time}} 后",
+    "playToday": "玩今天的密码",
+    "practice": "练习游戏"
+  },
   "highScores": {
     "title": "排行榜",
     "showFor": "显示排行榜",

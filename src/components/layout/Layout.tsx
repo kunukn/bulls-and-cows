@@ -20,7 +20,9 @@ export function Layout() {
   const { t } = useTranslation();
   const isMinimalText = useSettings((state) => state.isMinimalText);
   // The rules only help while playing, not on the high scores page.
-  const isPlayPage = useMatch({ path: paths.play, end: true }) !== null;
+  const isPracticePage = useMatch({ path: paths.play, end: true }) !== null;
+  const isDailyPage = useMatch(paths.daily) !== null;
+  const isPlayPage = isPracticePage || isDailyPage;
 
   return (
     <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg">

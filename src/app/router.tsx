@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layout/Layout";
+import { dailyRoutes } from "@/features/daily/routes";
 import { GameMachineProvider } from "@/features/game/machine-context";
 import { gameRoutes } from "@/features/game/routes";
 import { highScoreRoutes } from "@/features/highscores/routes";
@@ -23,6 +24,7 @@ const routes: RouteObject[] = [
     ),
     children: [
       ...gameRoutes,
+      ...dailyRoutes,
       ...highScoreRoutes,
       /*
        * Debug pages are lazy, so players never download their code. On a

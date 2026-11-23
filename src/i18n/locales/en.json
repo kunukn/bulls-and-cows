@@ -127,6 +127,21 @@
     "newGame": "New game",
     "gaveUp": "You gave up — code revealed above"
   },
+  "daily": {
+    "title": "Daily code",
+    "numbered": "Daily code #{{number, number}}",
+    "description": "One code a day, the same for everyone. Classic rules, one try.",
+    "solved": "Solved",
+    "notSolved": "Not solved",
+    "played": "Played",
+    "winRate": "Win rate",
+    "streak": "Streak",
+    "bestStreak": "Best streak",
+    "distribution": "Wins by number of guesses",
+    "nextIn": "Next code in {{time}}",
+    "playToday": "Play today's code",
+    "practice": "Practice game"
+  },
   "highScores": {
     "title": "High scores",
     "showFor": "Show high scores for",

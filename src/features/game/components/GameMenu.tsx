@@ -5,7 +5,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGameActorRef } from "@/features/game/machine-context";
+import {
+  useGameActorRef,
+  useGameSelector,
+} from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { ChevronDown, Eye, Flag, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -22,6 +25,10 @@ export function GameMenu() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  // A daily code gets one attempt, so there is no New game to offer (0012).
+  const isDaily = useGameSelector(
+    (snapshot) => snapshot.context.dailyNumber !== null,
+  );
 
   return (
     <DropdownMenu>
@@ -37,14 +44,18 @@ export function GameMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-auto">
         {/* New game first: the item that keeps the code secret is the easy reach. */}
-        <DropdownMenuItem
-          onSelect={() => actor.send({ type: "NEW_GAME" })}
-          className={touchItemClass}
-        >
-          <RotateCcw />
-          {t("result.newGame")}
-        </DropdownMenuItem>
-        <DropdownMenuSeparator className="pointer-coarse:my-2" />
+        {!isDaily && (
+          <>
+            <DropdownMenuItem
+              onSelect={() => actor.send({ type: "NEW_GAME" })}
+              className={touchItemClass}
+            >
+              <RotateCcw />
+              {t("result.newGame")}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="pointer-coarse:my-2" />
+          </>
+        )}
         {/* Red marks the item that ends the game and reveals the code. */}
         <DropdownMenuItem
           variant="destructive"
