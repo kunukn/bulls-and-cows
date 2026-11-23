@@ -184,6 +184,25 @@ export function SettingsSheet() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-daily" className="font-medium">
+                {t("daily.title")}
+              </label>
+              <Switch
+                id="settings-daily"
+                checked={isDailyEnabled}
+                onCheckedChange={setDailyEnabled}
+                aria-describedby="settings-daily-description"
+              />
+            </div>
+            <p
+              id="settings-daily-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.dailyDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
               <label htmlFor="settings-minimal-text" className="font-medium">
                 {t("common.minimalText")}
               </label>
@@ -275,25 +294,6 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.hintsDescription")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between gap-3">
-              <label htmlFor="settings-daily" className="font-medium">
-                {t("daily.title")}
-              </label>
-              <Switch
-                id="settings-daily"
-                checked={isDailyEnabled}
-                onCheckedChange={setDailyEnabled}
-                aria-describedby="settings-daily-description"
-              />
-            </div>
-            <p
-              id="settings-daily-description"
-              className="text-sm text-muted-foreground"
-            >
-              {t("common.dailyDescription")}
             </p>
           </div>
           <div className="flex flex-col gap-2">
