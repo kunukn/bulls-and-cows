@@ -122,11 +122,30 @@ export default defineConfig(async ({ command, mode }) => {
     cacheDir: "node_modules/.vite",
     build: {
       /*
-       * Single ~620 kB app chunk (React, React Router, XState, i18next, Radix)
-       * exceeds Vite's 500 kB default. Accepted on purpose: the PWA precaches
-       * it once, so splitting isn't worth the extra config.
+       * Dependencies go in their own chunks so a deploy doesn't make returning
+       * players download them again. The app chunk's hash changes on every
+       * build (it inlines the build stamp); `react` and `vendor` keep theirs
+       * until a dependency changes, so the service worker reuses its copies.
+       * workbox-window stays out of `vendor`: it is loaded lazily.
        */
-      chunkSizeWarningLimit: 800,
+      rolldownOptions: {
+        output: {
+          codeSplitting: {
+            groups: [
+              {
+                name: "react",
+                test: /node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+                priority: 20,
+              },
+              {
+                name: "vendor",
+                test: /node_modules[\\/](?!.*workbox-window)/,
+                priority: 10,
+              },
+            ],
+          },
+        },
+      },
     },
     plugins: [
       await codeInspector(isCodeInspectorEnabled),
