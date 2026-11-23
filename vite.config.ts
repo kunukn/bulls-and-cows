@@ -52,7 +52,8 @@ function robotsNoindex(isEnabled: boolean): PluginOption {
 }
 
 /*
- * sitemap.xml for www.tyrko.app, one entry per route in paths.ts. History
+ * sitemap.xml for www.tyrko.app, one entry per public route in paths.ts
+ * (private pages start with "/_", like the debug pages). History
  * routing builds only: the GitHub Pages mirror uses hash URLs, which search
  * engines don't treat as separate pages, and is noindex anyway.
  * public/robots.txt points crawlers here.
@@ -66,6 +67,7 @@ function sitemap(isEnabled: boolean): PluginOption {
     generateBundle() {
       const lastmod = new Date().toISOString().slice(0, 10);
       const urls = Object.values(paths)
+        .filter((route) => !route.startsWith("/_"))
         .map(
           (route) =>
             `  <url>\n    <loc>${SITE_ORIGIN}${route}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`,
