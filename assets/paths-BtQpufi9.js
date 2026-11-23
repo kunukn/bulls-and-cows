@@ -1,0 +1,1 @@
+var e={play:`/`,daily:`/daily`,highScores:`/highscores`,debug:`/_debug`,debugBullLines:`/_debug/bull-lines`,debugShare:`/_debug/share`};export{e as t};
