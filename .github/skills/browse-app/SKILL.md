@@ -1,6 +1,6 @@
 ---
 name: browse-app
-version: 1.0.0
+version: 1.1.0
 description: Browse and interact with the running Tyr & Ko game using any available browser MCP tools (Playwright MCP, Chrome DevTools MCP, or similar). Use when the user wants to open the app, inspect a page, play or test a game flow, check the high-score page, or visually debug the UI.
 allowed-tools:
   - Read
@@ -37,6 +37,7 @@ session (e.g. Playwright MCP, Chrome DevTools MCP).
 
 - Open the app, or a specific page, and describe it
 - Play or test a game flow (guess, win, lose, switch difficulty)
+- Open or play the daily code
 - Check the high-score page or persisted data
 - Debug the UI visually, including the mobile layout
 
@@ -48,6 +49,7 @@ Only the GitHub Pages mirror uses hash URLs (`/#/highscores`).
 | Page        | Local dev (`pnpm dev`)                                     |
 | ----------- | ---------------------------------------------------------- |
 | Game        | `http://localhost:5180/`                                   |
+| Daily code  | `http://localhost:5180/daily`                              |
 | High scores | `http://localhost:5180/highscores?difficulty=<difficulty>` |
 
 `<difficulty>` is `easy`, `classic` or `hard`. Without a URL, default to the
@@ -69,16 +71,20 @@ only if this skill started it.
 
 1. Navigate to the URL and wait for it to load.
 2. Take an accessibility snapshot (preferred for interaction) and a screenshot.
-3. Describe the page: difficulty picker, board (hidden secret row, guess rows,
-   bull/cow feedback), colour palette, timer, or the high-score table.
+3. Describe the page: the daily code row, difficulty picker, board (hidden
+   secret row, guess rows, bull/cow feedback), colour palette, timer, or the
+   high-score table. The page restores a saved game, so the board may already
+   hold guesses.
 
 ### 3. Interact with the game
 
-- **Input:** keys `1`–`8` add a colour (`1` red, `2` blue, `3` green,
-  `4` yellow, `5` purple, `6` orange, `7` pink, `8` cyan; the palette has 6
-  colours on easy/classic, 8 on hard). `Backspace` undoes, `Enter` checks the
-  row. Clicking palette buttons works too; clicking a filled peg in the active
-  row clears it.
+- **Input:** number keys add a colour, in the palette's left-to-right order.
+  Easy and Classic have 6 colours: `1` red, `2` orange, `3` yellow, `4` green,
+  `5` cyan, `6` purple. Hard has 8: `1` red, `2` orange, `3` yellow, `4` green,
+  `5` cyan, `6` blue, `7` purple, `8` pink. Each palette button's name states
+  its key (`Add cyan (key 5)`), so read the snapshot when unsure. `←`/`→` move
+  the target slot, `Backspace` undoes, `Enter` checks the row. Clicking palette
+  buttons works too; clicking a filled peg in the active row clears it.
 - **Reading feedback:** each scored row has screen-reader text such as
   `2 bulls, 1 cow` or `No matches`. Read it from the snapshot rather than
   counting dots in a screenshot.
@@ -89,23 +95,54 @@ only if this skill started it.
   Playwright code run is far faster than one tool call per key.
 - **Losing:** submit the same wrong row until guesses run out (10 on
   easy/classic, 12 on hard); the secret is then revealed.
-- **Switching difficulty mid-game** opens a native `confirm()` ("Abandon the
-  current game?"). Handle it with the dialog tool, or the page blocks.
+- **Give up menu:** the `Give up` button above the board opens a menu with
+  `New game` and `Reveal code`. Both act at once, with no confirm step.
+- **Switching difficulty mid-game** opens an in-page dialog ("Abandon the
+  current game?") once a peg has been placed. Click its `Abandon` or `Cancel`
+  button; the browser dialog tool doesn't apply.
 - **Winning** shows a name field, autofocused and prefilled with the last name
-  used, if the run makes the top 10. Saving navigates to the high-score page.
-- **Reload ends the current game**: game state is in memory only.
+  used, if the run makes the top 10 and the High scores setting is on. Saving
+  navigates to the high-score page.
+- **Clearing high scores** opens a native `confirm()`. Handle it with the
+  dialog tool, or the page blocks.
+- **A reload keeps the current game**: it is saved to `localStorage` on every
+  move and restored on load, finished games included.
 
-### 4. Inspect persisted data
+### 4. Play the daily code
 
-`localStorage` keys (Zustand `persist`):
+`/daily` is the same board on a second, separate game: one code per local
+calendar day, Classic rules. The `Daily code #N` row on the game page links to
+it and shows whether today's code is solved.
 
+- **One attempt per day.** The `Give up` menu holds only `Reveal code`, and
+  there is no `New game`. Winning, losing or revealing the code uses up the day
+  for this browser profile, so say so before finishing a daily game the user
+  didn't ask you to finish.
+- **After the game** the panel shows stats (played, win rate, streak, best
+  streak), a small chart of wins by number of guesses, a countdown to the next
+  code, and a `Practice game` link back to the game page.
+- **Another day:** use the browser's clock control (Playwright:
+  `page.clock.setFixedTime(date)`) and reload. Don't edit the saved data to
+  fake a date.
+
+### 5. Inspect persisted data
+
+`localStorage` keys:
+
+- `app:game`: the practice game, in progress or finished
+  (`{ version, value, context }`; `value` is `playing`, `won` or `lost`)
+- `app:daily-game`: the daily game, in the same shape, with
+  `context.dailyNumber`
+- `app:daily`: daily results per day number,
+  `{ results: { [number]: { isWon, guesses, elapsedMs } } }`
 - `app:highscores`: `{ scores: { easy, classic, hard }, lastName }`,
   top 10 per difficulty, ranked by fewest guesses then fastest time
-- `app:settings`: last chosen difficulty
+- `app:settings`: every Settings choice, plus the last chosen difficulty
+- `app:language`: the interface language
 
 Read them with the evaluate tool. Only clear or modify them if the user asks.
 
-### 5. Check the mobile layout
+### 6. Check the mobile layout
 
 The layout is mobile-first. When layout matters, resize to **360×780** and take
 a full-page screenshot; the board must fit without horizontal scrolling.
@@ -123,7 +160,8 @@ Write screenshots, snapshots, logs and scripts to the repo's `.temp/` folder onl
 ## Tips
 
 - Check the console messages for errors after interacting; a clean run has only
-  the React DevTools info line.
+  the React DevTools info line, plus the click-to-source key hints when
+  `VITE_CODE_INSPECTOR=1` is set.
 - Prefer accessibility snapshots over screenshots when you need to interact.
 - Hover styles can linger in screenshots (e.g. a nav link looking active).
   Confirm active state via `aria-current="page"` before calling it a bug.
