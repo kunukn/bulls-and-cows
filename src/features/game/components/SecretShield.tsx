@@ -67,8 +67,7 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
                * A quiet marker for a new fact: dimmed yellow, no glow, so it
                * informs without asking to be clicked, and fades rather than
                * pops for the same reason. The hairline keeps its edge on
-               * light shields. At the inner horn, where the bubble's arrow
-               * points when it opens above the shield (BullBubble).
+               * light shields. At the inner horn.
                */}
               <span
                 data-lit={hasNewHint}

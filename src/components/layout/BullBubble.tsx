@@ -49,9 +49,9 @@ const HEADER_PLACEMENT: Placement = { side: "bottom", align: "start" };
 const ARROW_WIDTH = 14;
 const ARROW_HEIGHT = 7;
 
-// Gap to the anchor; beside the board the bubble's arrow meets the shield's edge.
+// Gap between the anchor and the bubble's arrow tip.
 const SIDE_OFFSET = 8;
-const BESIDE_SIDE_OFFSET = 0;
+const BESIDE_SIDE_OFFSET = 12;
 
 /*
  * Bubble max width (18rem, as in its class) + sideOffset + arrow +
@@ -174,17 +174,18 @@ export function BullBubble(props: Props) {
         <PopoverAnchor asChild>
           {/*
            * What the shield bubble attaches to: the button's box (Board makes
-           * its parent `relative`). Above the shield it slides 8px inwards
-           * and 10px down, bubble and arrow together, so the arrow points at
-           * the inner horn and the bubble clears the game menu's chevron in
-           * the header row.
+           * its parent `relative`). Translating it moves bubble and arrow
+           * together. Above the shield it slides 4px up, so the arrow tip
+           * clears the shield's top edge. Beside the board it stays put; a
+           * non-zero x needs a negated `rtl:` counterpart.
            */}
           <span
             aria-hidden
             className={cn(
               "pointer-events-none absolute inset-0",
-              placement.side === "top" &&
-                "-translate-x-2 translate-y-2.5 rtl:translate-x-2",
+              placement.side === "top"
+                ? "-translate-y-1"
+                : "translate-x-0 translate-y-0",
             )}
           />
         </PopoverAnchor>
