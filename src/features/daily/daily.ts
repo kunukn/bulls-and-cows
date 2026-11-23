@@ -9,6 +9,15 @@ import type { GameEvent, GameInput } from "@/features/game/machine";
 /* The daily code always plays by one difficulty's rules (0012). */
 export const DAILY_DIFFICULTY: Difficulty = "classic";
 
+/*
+ * Set on builds of a mirror site: where the daily code is played instead.
+ * Each site keeps its own save, so a second site would be a second attempt
+ * and a second streak (0012).
+ */
+export function mainSiteDailyUrl(): string | undefined {
+  return import.meta.env.VITE_DAILY_URL || undefined;
+}
+
 const MS_PER_DAY = 86_400_000;
 
 /*
