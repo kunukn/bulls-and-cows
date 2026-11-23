@@ -1,7 +1,7 @@
 # 0009 — New game and Give up share one menu
 
 - **Status:** Accepted
-- **Updated:** 2026-11-22
+- **Updated:** 2026-11-23
 
 ## Context
 
@@ -9,7 +9,7 @@ A player needs two ways out of a game in progress: start over on the same diffic
 
 ## Decision
 
-The info row has one menu trigger, labelled Give up with a chevron, that opens New game and Reveal code. The trigger names the act; each item names its outcome, so the menu never repeats "Give up". Menu items act at once; opening the menu is the confirmation. Switching difficulty mid-game asks first, because it is a single tap on a radio.
+The info row has one menu trigger, labelled Give up with a chevron, that opens New game and Reveal code. The trigger names the act; each item names its outcome, so the menu never repeats "Give up". Menu items act at once; opening the menu is the confirmation. Switching difficulty mid-game asks first, because it is a single tap on a radio. In a daily game the menu holds only Reveal code, because a daily code gets one attempt (0012).
 
 ## Alternatives considered
 

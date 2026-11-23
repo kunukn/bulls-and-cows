@@ -26,6 +26,8 @@ Bulls & Cows, in the language of the maker.
 | Classic    | 4    | 6       | 10      | Yes     |
 | Hard       | 5    | 8       | 12      | Yes     |
 
+- 📅 **Daily code** — one code a day, the same for everyone, with one try.
+  Streaks and stats are stored locally in your browser.
 - 🏆 **High scores** — top 10 per difficulty, ranked by fewest guesses, then
   fastest time. Stored locally in your browser.
 - 🌍 **Seven languages** — English, 简体中文, हिन्दी, العربية (right-to-left), Français, Deutsch, Dansk.

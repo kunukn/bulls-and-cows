@@ -14,7 +14,8 @@ right spot) and **cows** (white: right colour, wrong spot).
   [`src/features/game/logic.ts`](../src/features/game/logic.ts).
 - **High scores:** top 10 per difficulty in `localStorage`, ranked by fewest
   guesses, then fastest time.
-- **Pages:** game (`/`) and high scores (`/highscores`). History routing (`createBrowserRouter`); the GitHub Pages mirror builds with hash routing (`VITE_USE_HISTORY_ROUTING=0` in `deploy.yml`) because it has no SPA fallback.
+- **Daily code:** one code per local calendar day, the same for every player, seeded from the date (no server). Classic rules, one attempt, its own save and stats. Lives in [`src/features/daily/`](../src/features/daily/daily.ts); rules in decision 0012.
+- **Pages:** game (`/`), daily code (`/daily`) and high scores (`/highscores`). History routing (`createBrowserRouter`); the GitHub Pages mirror builds with hash routing (`VITE_USE_HISTORY_ROUTING=0` in `deploy.yml`) because it has no SPA fallback.
 
 Pure rules (secret generation, scoring) live in `logic.ts`. The XState machine
 in [`src/features/game/machine.ts`](../src/features/game/machine.ts) owns game

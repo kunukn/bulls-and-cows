@@ -1,7 +1,7 @@
 # 0010 — High scores are optional, on by default
 
 - **Status:** Accepted
-- **Updated:** 2026-11-21
+- **Updated:** 2026-11-23
 
 ## Context
 
@@ -9,7 +9,7 @@ A win that makes the top 10 asks for a name and, once saved, opens the High scor
 
 ## Decision
 
-A High scores switch in Settings, on for new players, controls the name prompt. When it is off, a win is not recorded and nothing asks for a name. The trophy link, the High scores page and the scores already saved stay as they are.
+A High scores switch in Settings, on for new players, controls the name prompt. When it is off, a win is not recorded and nothing asks for a name. The trophy link, the High scores page and the scores already saved stay as they are. A daily code win never asks for a name, whatever the switch says; the daily game keeps its own stats (0012).
 
 ## Alternatives considered
 
