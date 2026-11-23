@@ -4,6 +4,7 @@ import {
   Popover,
   PopoverAnchor,
   PopoverArrow,
+  PopoverClose,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
@@ -24,6 +25,7 @@ import {
 } from "@/features/game/machine-context";
 import { useHintsSeen } from "@/features/game/store/hintsSeen";
 import { cn } from "@/utils/cn";
+import { XIcon } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMatch } from "react-router";
@@ -206,13 +208,22 @@ export function BullBubble(props: Props) {
         collisionPadding={16}
         aria-label={t("bull.says")}
         onOpenAutoFocus={(event) => event.preventDefault()}
-        className="w-auto max-w-[min(18rem,calc(100vw-2rem))] px-3 py-2 text-pretty"
+        className="relative w-auto max-w-[min(18rem,calc(100vw-2rem))] py-2 ps-3 pe-8 text-pretty"
       >
         {line && (
           <p>
             <BullLineText line={line} />
           </p>
         )}
+        {/* Touch screens have no Esc, and a tap outside isn't obvious. */}
+        <PopoverClose
+          aria-label={t("common.close")}
+          title={t("common.close")}
+          className="absolute end-1 top-1 grid size-6 cursor-pointer place-items-center rounded-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          <XIcon className="size-3.5" />
+        </PopoverClose>
+
         <PopoverArrow width={ARROW_WIDTH} height={ARROW_HEIGHT} />
       </PopoverContent>
     </Popover>

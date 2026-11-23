@@ -9,7 +9,7 @@ The bull mark in the header was decoration. Players stuck mid-game had no help b
 
 ## Decision
 
-There are two bulls with separate jobs, so they never say the same thing. Each opens a speech bubble with a random line, and each further click says something new.
+There are two bulls with separate jobs, so they never say the same thing. Each opens a speech bubble with a random line, and each further click says something new. A small × in the bubble's corner closes it, for touch screens, which have no Esc.
 
 - **The header bull chats.** Jokes, and after a game a word on the win or loss. It never helps with the game.
 - **The shield bull helps.** While playing, a bull is moulded into the end of the code shield. Before the first guess it gives general tips. After that it only says facts that follow from the player's own clues:
