@@ -19,14 +19,28 @@ import { SAMPLE_HINTS } from "./sampleHints";
 
 /*
  * Developer page, unlinked: every line both bulls can say, in the active
- * language, rendered by the bubble's own component. Copy is English only on
- * purpose (see copilot-instructions.md). Switch language in Settings.
+ * language, rendered by the bubble's own component, grouped by the page the
+ * player hears them on. Copy is English only on purpose (see
+ * copilot-instructions.md). Switch language in Settings.
  */
 
 type Group = {
   title: string;
   when: string;
   lines: BullLine[];
+};
+
+type BullProps = {
+  title: string;
+  labels: [string, string][];
+  groups: Group[];
+};
+
+type PageProps = {
+  id: string;
+  title: string;
+  path: string;
+  bulls: BullProps[];
 };
 
 const toStatic = <Key extends Extract<BullLine, { kind: "static" }>["key"]>(
@@ -40,17 +54,22 @@ const toHintLines = (hints: Hint[]): BullLine[] =>
 const toDailyLines = (facts: DailyFact[]): BullLine[] =>
   facts.map((fact) => ({ kind: "daily", fact }));
 
-const HEADER_GROUPS: Group[] = [
-  { title: "Quips", when: "Always", lines: toStatic(QUIP_KEYS) },
-  { title: "After a win", when: "Play page · won", lines: toStatic(WON_KEYS) },
-  {
-    title: "After a loss",
-    when: "Play page · lost",
-    lines: toStatic(LOST_KEYS),
-  },
+const QUIPS: Group = {
+  title: "Quips",
+  when: "Always",
+  lines: toStatic(QUIP_KEYS),
+};
+
+const PRACTICE_HEADER_GROUPS: Group[] = [
+  QUIPS,
+  { title: "After a win", when: "Game won", lines: toStatic(WON_KEYS) },
+  { title: "After a loss", when: "Game lost", lines: toStatic(LOST_KEYS) },
 ];
 
-const SHIELD_GROUPS: Group[] = [
+// pickChatLine only talks about a finished game on the play page itself.
+const DAILY_HEADER_GROUPS: Group[] = [QUIPS];
+
+const PRACTICE_SHIELD_GROUPS: Group[] = [
   { title: "Tips", when: "Before the first guess", lines: toStatic(TIP_KEYS) },
   {
     title: "No clues yet",
@@ -70,7 +89,7 @@ const SHIELD_GROUPS: Group[] = [
 ];
 
 // Sample numbers: the real ones come from the clock and the player's results.
-const DAILY_GROUPS: Group[] = [
+const DAILY_SHIELD_GROUPS: Group[] = [
   { title: "Calm", when: "Always", lines: toStatic(CALM_KEYS) },
   {
     title: "How it works",
@@ -129,11 +148,55 @@ export function BullLinesPage() {
   const language =
     LANGUAGES.find(({ code }) => code === i18n.resolvedLanguage)?.label ??
     i18n.resolvedLanguage;
-  const lineCount = [
-    ...HEADER_GROUPS,
-    ...SHIELD_GROUPS,
-    ...DAILY_GROUPS,
-  ].reduce((total, group) => total + group.lines.length, 0);
+  const pages: PageProps[] = [
+    {
+      id: "practice",
+      title: "Practice game",
+      path: paths.play,
+      bulls: [
+        {
+          title: "Header bull",
+          labels: [
+            ["Button", t("bull.button")],
+            ["Bubble", t("bull.says")],
+          ],
+          groups: PRACTICE_HEADER_GROUPS,
+        },
+        {
+          title: "Shield bull",
+          labels: [
+            ["Button", t("bull.hintButton")],
+            ["Button, new fact", t("bull.hintButtonNew")],
+            ["Bubble", t("bull.says")],
+          ],
+          groups: PRACTICE_SHIELD_GROUPS,
+        },
+      ],
+    },
+    {
+      id: "daily",
+      title: "Daily code",
+      path: paths.daily,
+      bulls: [
+        {
+          title: "Header bull",
+          labels: [
+            ["Button", t("bull.button")],
+            ["Bubble", t("bull.says")],
+          ],
+          groups: DAILY_HEADER_GROUPS,
+        },
+        {
+          title: "Shield bull",
+          labels: [
+            ["Button", t("bull.dailyButton")],
+            ["Bubble", t("bull.says")],
+          ],
+          groups: DAILY_SHIELD_GROUPS,
+        },
+      ],
+    },
+  ];
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -149,49 +212,71 @@ export function BullLinesPage() {
           Bull lines
         </h2>
         <p className="text-sm text-subtle">
-          {lineCount} lines in {language}. Change the language in Settings.
+          Lines in {language}, by the page they're said on. Change the language
+          in Settings.
         </p>
+        <nav className="flex gap-4 text-sm">
+          {pages.map((page) => (
+            <a
+              key={page.id}
+              href={`#${page.id}`}
+              className="underline underline-offset-4 hover:text-foreground"
+            >
+              {page.title}
+            </a>
+          ))}
+        </nav>
       </div>
 
-      <Bull
-        title="Header bull"
-        labels={[
-          ["Button", t("bull.button")],
-          ["Bubble", t("bull.says")],
-        ]}
-        groups={HEADER_GROUPS}
-      />
-      <Bull
-        title="Shield bull"
-        labels={[
-          ["Button", t("bull.hintButton")],
-          ["Button, new fact", t("bull.hintButtonNew")],
-          ["Bubble", t("bull.says")],
-        ]}
-        groups={SHIELD_GROUPS}
-      />
-      <Bull
-        title="Shield bull, daily code"
-        labels={[
-          ["Button", t("bull.dailyButton")],
-          ["Bubble", t("bull.says")],
-        ]}
-        groups={DAILY_GROUPS}
-      />
+      {pages.map((page) => (
+        <Page key={page.id} {...page} />
+      ))}
     </div>
   );
 }
 
-type BullProps = {
-  title: string;
-  labels: [string, string][];
-  groups: Group[];
-};
+const countLines = (groups: Group[]) =>
+  groups.reduce((total, group) => total + group.lines.length, 0);
+
+function Page({ id, title, path, bulls }: PageProps) {
+  const lineCount = bulls.reduce(
+    (total, bull) => total + countLines(bull.groups),
+    0,
+  );
+
+  return (
+    <section
+      id={id}
+      className="flex scroll-mt-4 flex-col gap-6 border-t border-border pt-6"
+    >
+      <div className="flex flex-col gap-1">
+        <h3 className="text-2xl font-bold text-heading">{title}</h3>
+        <p className="text-sm text-subtle">
+          <Link
+            to={path}
+            className="font-mono underline underline-offset-4 hover:text-foreground"
+          >
+            {path}
+          </Link>{" "}
+          · {lineCount} lines
+        </p>
+      </div>
+      {bulls.map((bull) => (
+        <Bull key={bull.title} {...bull} />
+      ))}
+    </section>
+  );
+}
 
 function Bull({ title, labels, groups }: BullProps) {
   return (
     <section className="flex flex-col gap-4">
-      <h3 className="text-xl font-bold text-heading">{title}</h3>
+      <h4 className="text-xl font-bold text-heading">
+        {title}{" "}
+        <span className="text-sm font-normal text-subtle tabular-nums">
+          {countLines(groups)}
+        </span>
+      </h4>
       <dl className="grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 rounded-lg bg-card p-3 text-sm">
         {labels.map(([where, text]) => (
           <div key={where} className="contents">
@@ -203,12 +288,12 @@ function Bull({ title, labels, groups }: BullProps) {
       {groups.map((group) => (
         <section key={group.title} className="flex flex-col gap-2">
           <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-            <h4 className="font-semibold text-heading">
+            <h5 className="font-semibold text-heading">
               {group.title}{" "}
               <span className="text-sm font-normal text-subtle tabular-nums">
                 {group.lines.length}
               </span>
-            </h4>
+            </h5>
             <span className="text-xs text-subtle">{group.when}</span>
           </div>
           <ol className="divide-y divide-border rounded-lg bg-card">
