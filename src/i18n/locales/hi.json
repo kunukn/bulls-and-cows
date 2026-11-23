@@ -140,7 +140,10 @@
     "distribution": "कितनी कोशिशों में जीते",
     "nextIn": "अगला कोड {{time}} में",
     "playToday": "आज का कोड खेलो",
-    "practice": "अभ्यास खेल"
+    "practice": "अभ्यास खेल",
+    "share": "शेयर करो",
+    "copied": "कॉपी हो गया",
+    "shareHeading": "{{app}} · आज का कोड #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "हाई स्कोर",

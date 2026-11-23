@@ -140,7 +140,10 @@
     "distribution": "Siege nach Anzahl der Versuche",
     "nextIn": "Nächster Code in {{time}}",
     "playToday": "Heutigen Code spielen",
-    "practice": "Übungsspiel"
+    "practice": "Übungsspiel",
+    "share": "Teilen",
+    "copied": "Kopiert",
+    "shareHeading": "{{app}} · Tagescode #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "Bestenliste",

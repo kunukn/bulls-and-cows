@@ -77,6 +77,33 @@ test("the daily code gets one attempt and leaves practice alone", async ({
   await expect(practiceSlot).toHaveAccessibleName(practiceRow ?? "");
 });
 
+test("share copies the result without the code", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  // Take the clipboard path: whether a headless browser has a share sheet varies.
+  await page.addInitScript(() => {
+    Reflect.deleteProperty(Navigator.prototype, "share");
+  });
+  await page.clock.setFixedTime(DAY);
+  await openDaily(page);
+  const number = await readDailyNumber(page);
+  await winDaily(page);
+
+  await page.getByRole("button", { name: "Share" }).click();
+  await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
+
+  const text = await page.evaluate(() => navigator.clipboard.readText());
+  // A win on the first guess: one line, every peg a bull (Classic: 4 of 10).
+  expect(text).toBe(
+    [
+      `Tyr & Ko · Daily code #${number} · 1/10`,
+      "",
+      "⚫⚫⚫⚫",
+      "",
+      new URL("/daily", page.url()).href,
+    ].join("\n"),
+  );
+});
+
 test("a new day brings a new code and the streak carries on", async ({
   page,
 }) => {

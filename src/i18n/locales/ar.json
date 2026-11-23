@@ -156,7 +156,10 @@
     "distribution": "مرات الفوز حسب عدد المحاولات",
     "nextIn": "الرمز التالي بعد {{time}}",
     "playToday": "العب رمز اليوم",
-    "practice": "لعبة تدريب"
+    "practice": "لعبة تدريب",
+    "share": "شارك",
+    "copied": "تم النسخ",
+    "shareHeading": "{{app}} · رمز اليوم #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "أفضل النتائج",

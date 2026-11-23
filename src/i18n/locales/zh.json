@@ -136,7 +136,10 @@
     "distribution": "各猜测次数的获胜局数",
     "nextIn": "下一个密码：{{time}} 后",
     "playToday": "玩今天的密码",
-    "practice": "练习游戏"
+    "practice": "练习游戏",
+    "share": "分享",
+    "copied": "已复制",
+    "shareHeading": "{{app}} · 每日密码 #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "排行榜",

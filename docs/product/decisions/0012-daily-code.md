@@ -18,6 +18,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Its own save.** A daily game never replaces a practice game in progress, and a practice game never replaces the daily one.
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
+- **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
 - **Hints work as in practice** (0011).
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
 - **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
@@ -33,6 +34,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Daily wins on the high score lists.** One list fewer to explain, but the name prompt would sit on top of the stats, which are the daily game's own score.
 - **The daily code on the mirror as well.** Nothing to build, but a player could solve the day on one site and replay it on the other, and stats would split between the two.
 - **A code the player can't work out.** Needs a server. The code follows from the date and the source, and changing the device clock or clearing site data allows another go. That is fine for a friendly game.
+- **Coloured squares in the shared result.** Familiar from word games, but they read as one square per slot, which the feedback pegs don't mean.
+- **Bull and cow emoji in the shared result.** On theme, but wider than the circles, and harder to read at a glance.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.
 
 ## Consequences

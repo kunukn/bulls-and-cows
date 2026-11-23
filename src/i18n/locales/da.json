@@ -140,7 +140,10 @@
     "distribution": "Sejre efter antal gæt",
     "nextIn": "Næste kode om {{time}}",
     "playToday": "Spil dagens kode",
-    "practice": "Øvespil"
+    "practice": "Øvespil",
+    "share": "Del",
+    "copied": "Kopieret",
+    "shareHeading": "{{app}} · Dagens kode #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "Topliste",

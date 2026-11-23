@@ -5,6 +5,7 @@ import {
   msUntilNextDaily,
   nextDailyEvent,
 } from "@/features/daily/daily";
+import { shareText } from "@/features/daily/share";
 import { summarize, useDailyResults } from "@/features/daily/store";
 import { OutcomeMessage } from "@/features/game/components/ResultPanel";
 import { DIFFICULTIES } from "@/features/game/logic";
@@ -20,15 +21,89 @@ import {
   Award,
   CalendarCheck,
   CalendarDays,
+  Check,
   Flame,
   Gamepad2,
   Hourglass,
+  Share2,
   Trophy,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router";
+import { Link, useHref } from "react-router";
+
+const SECONDARY_BUTTON_CLASS =
+  "flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+// How long the button reads "Copied" before it goes back to "Share".
+const COPIED_MS = 2000;
+
+type ShareButtonProps = {
+  text: string;
+  isMinimalText: boolean;
+};
+
+/*
+ * The device's share sheet where there is one (phones, most desktops), the
+ * clipboard otherwise. Hidden when the browser offers neither, e.g. on a
+ * page served over plain http.
+ */
+function ShareButton({ text, isMinimalText }: ShareButtonProps) {
+  const { t } = useTranslation();
+  const [isCopied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!isCopied) return;
+
+    const id = setTimeout(() => setCopied(false), COPIED_MS);
+
+    return () => clearTimeout(id);
+  }, [isCopied]);
+
+  if (!("share" in navigator) && !("clipboard" in navigator)) return null;
+
+  async function handleShare() {
+    if ("share" in navigator) {
+      try {
+        await navigator.share({ text });
+
+        return;
+      } catch (error) {
+        // The player closed the share sheet; that's an answer, not a failure.
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return;
+        }
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+    } catch {
+      // The clipboard was refused too; there's nowhere left to put the text.
+    }
+  }
+
+  const label = isCopied ? t("daily.copied") : t("daily.share");
+  const Icon = isCopied ? Check : Share2;
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => void handleShare()}
+        title={isMinimalText ? label : undefined}
+        className={SECONDARY_BUTTON_CLASS}
+      >
+        {isMinimalText && <Icon aria-hidden className="size-5" />}
+        <span className={isMinimalText ? "sr-only" : undefined}>{label}</span>
+      </button>
+      <span aria-live="polite" className="sr-only">
+        {isCopied ? t("daily.copied") : ""}
+      </span>
+    </>
+  );
+}
 
 type StatProps = {
   label: string;
@@ -136,6 +211,7 @@ export function DailyResultPanel() {
   const results = useDailyResults((state) => state.results);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const [now, setNow] = useState(() => new Date());
+  const dailyHref = useHref(paths.daily);
 
   // Drives the countdown, and notices midnight while the panel is open.
   useEffect(() => {
@@ -149,7 +225,20 @@ export function DailyResultPanel() {
     context.dailyNumber !== null && today > context.dailyNumber;
   const summary = summarize(results, today);
   const guesses = context.guesses.length;
+  const { pegs, maxGuesses } = DIFFICULTIES[DAILY_DIFFICULTY];
   const numberFormat = new Intl.NumberFormat(i18n.language);
+  // "X" for a loss, as in other daily games; a loss has no guess count to show.
+  const score = `${isWon ? numberFormat.format(guesses) : "X"}/${numberFormat.format(maxGuesses)}`;
+  const share = shareText({
+    heading: t("daily.shareHeading", {
+      app: t("app.title"),
+      number: context.dailyNumber ?? today,
+      score,
+    }),
+    guesses: context.guesses,
+    pegs,
+    url: new URL(dailyHref, window.location.href).href,
+  });
   const percentFormat = new Intl.NumberFormat(i18n.language, {
     style: "percent",
   });
@@ -164,9 +253,7 @@ export function DailyResultPanel() {
       <div aria-live="polite">
         <OutcomeMessage
           isWon={isWon}
-          hasGivenUp={
-            !isWon && guesses < DIFFICULTIES[DAILY_DIFFICULTY].maxGuesses
-          }
+          hasGivenUp={!isWon && guesses < maxGuesses}
           guesses={guesses}
           elapsedMs={elapsedMs(context)}
           isMinimalText={isMinimalText}
@@ -238,14 +325,17 @@ export function DailyResultPanel() {
             )}
           </p>
         )}
-        <Link
-          to={paths.play}
-          title={isMinimalText ? t("daily.practice") : undefined}
-          className="ms-auto flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        >
-          {isMinimalText && <Gamepad2 aria-hidden className="size-5" />}
-          <span className={labelClass}>{t("daily.practice")}</span>
-        </Link>
+        <div className="ms-auto flex gap-2">
+          <ShareButton text={share} isMinimalText={isMinimalText} />
+          <Link
+            to={paths.play}
+            title={isMinimalText ? t("daily.practice") : undefined}
+            className={SECONDARY_BUTTON_CLASS}
+          >
+            {isMinimalText && <Gamepad2 aria-hidden className="size-5" />}
+            <span className={labelClass}>{t("daily.practice")}</span>
+          </Link>
+        </div>
       </div>
     </section>
   );

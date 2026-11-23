@@ -140,7 +140,10 @@
     "distribution": "Victoires par nombre d'essais",
     "nextIn": "Prochain code dans {{time}}",
     "playToday": "Jouer le code du jour",
-    "practice": "Partie d'entraînement"
+    "practice": "Partie d'entraînement",
+    "share": "Partager",
+    "copied": "Copié",
+    "shareHeading": "{{app}} · Code du jour n° {{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "Meilleurs scores",

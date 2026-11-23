@@ -140,7 +140,10 @@
     "distribution": "Wins by number of guesses",
     "nextIn": "Next code in {{time}}",
     "playToday": "Play today's code",
-    "practice": "Practice game"
+    "practice": "Practice game",
+    "share": "Share",
+    "copied": "Copied",
+    "shareHeading": "{{app}} · Daily code #{{number, number}} · {{score}}"
   },
   "highScores": {
     "title": "High scores",
