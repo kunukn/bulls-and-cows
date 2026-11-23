@@ -25,6 +25,15 @@ export function DebugPage() {
           </span>
         </li>
         <li className="flex flex-col gap-0.5">
+          <Link to={paths.debugShare} className={linkClass}>
+            Share preview
+          </Link>
+          <span className="text-sm text-subtle">
+            A finished daily game with made-up guesses, to try Share, X, Threads
+            and Bluesky without using up today's code.
+          </span>
+        </li>
+        <li className="flex flex-col gap-0.5">
           {/*
            * A full page load, not a <Link>: main.tsx checks for the flag only
            * at startup. It matches anywhere in the URL, so this works with

@@ -6,6 +6,7 @@ export const paths = {
   // Unlinked developer pages; /debug lists the rest.
   debug: "/debug",
   debugBullLines: "/debug/bull-lines",
+  debugShare: "/debug/share",
 } as const;
 
 export type AppPath = (typeof paths)[keyof typeof paths];

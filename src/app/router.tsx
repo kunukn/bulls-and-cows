@@ -48,6 +48,15 @@ const routes: RouteObject[] = [
           return { Component: BullLinesPage };
         },
       },
+      {
+        path: paths.debugShare,
+        HydrateFallback: () => null,
+        lazy: async () => {
+          const { SharePreviewPage } = await import("@/debug/SharePreviewPage");
+
+          return { Component: SharePreviewPage };
+        },
+      },
       { path: "*", element: <Navigate to={paths.play} replace /> },
     ],
   },
