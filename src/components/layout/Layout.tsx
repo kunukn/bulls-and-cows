@@ -23,16 +23,9 @@ export function Layout() {
   const isPracticePage = useMatch({ path: paths.play, end: true }) !== null;
   const isDailyPage = useMatch(paths.daily) !== null;
   const isPlayPage = isPracticePage || isDailyPage;
-  // Developer pages compare long lists side by side; players never see them.
-  const isDebugPage = useMatch(`${paths.debug}/*`) !== null;
 
   return (
-    <div
-      className={cn(
-        "mx-auto flex w-full flex-1 flex-col px-4",
-        isDebugPage ? "max-w-6xl" : "max-w-md desk:max-w-lg",
-      )}
-    >
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg">
       <header className="flex items-center justify-between gap-2 py-4">
         {/* The bull is a button, so it sits beside the heading, not in its name. */}
         <div className="flex items-center gap-2">

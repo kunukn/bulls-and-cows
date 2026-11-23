@@ -231,9 +231,11 @@ export function BullLinesPage() {
       {/*
        * Wide screens: one column per page. Filled column by column, one row
        * per block (title, then each bull), so each bull lines up with its
-       * counterpart on the other page.
+       * counterpart on the other page. Only this grid leaves the layout's
+       * narrow column: it takes its own width and a negative inline-start
+       * margin to stay centred, so the header keeps the app's width.
        */}
-      <div className="flex flex-col gap-8 lg:grid lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-[repeat(3,auto)] lg:gap-x-10">
+      <div className="flex flex-col gap-8 lg:ms-[calc((100%-var(--wide))/2)] lg:grid lg:w-(--wide) lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-[repeat(3,auto)] lg:gap-x-10 lg:[--wide:min(72rem,calc(100vw-2rem))]">
         {pages.map((page) => (
           <Page key={page.id} {...page} />
         ))}
