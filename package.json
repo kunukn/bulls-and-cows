@@ -21,7 +21,8 @@
     "e2e:ui": "playwright install chromium && playwright test --ui",
     "check": "node scripts/pre-push-checks.js",
     "prepare": "husky",
-    "licenses:update": "node scripts/third-party-licenses.ts"
+    "licenses:update": "node scripts/third-party-licenses.ts",
+    "analyze": "node scripts/bundle-analysis.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
@@ -59,6 +60,7 @@
     "lint-staged": "^17.6.1",
     "oxfmt": "0.79.0",
     "oxlint": "1.94.0",
+    "rollup-plugin-visualizer": "^7.1.3",
     "shadcn": "4.23.0",
     "tailwindcss": "^4.3.5",
     "tw-animate-css": "1.4.0",

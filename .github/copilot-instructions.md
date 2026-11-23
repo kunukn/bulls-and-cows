@@ -39,6 +39,7 @@ React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours and the shadc
 - `pnpm e2e` — Playwright E2E tests in `e2e/` (headless Chromium; starts Vite or reuses a running `pnpm dev`)
 - `pnpm e2e:ui` — Playwright UI mode
 - `pnpm licenses:update` — regenerate `THIRD-PARTY-LICENSES.md` from the production bundle; run after dependency changes (CI fails if it's stale or a license isn't allow-listed)
+- `pnpm analyze` — build into `.temp/bundle-analysis/`, print per-chunk sizes (raw/gzip/brotli) and open a treemap of what each chunk contains (`--no-open` to skip the browser)
 
 Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/vitest.setup.ts`). Unit tests live alongside source as `*.test.ts(x)`. Note `pnpm check` runs only typecheck + lint, not tests — run tests separately. Rules for writing tests (no tautologies, behaviour over structure, fixtures that match reality, store isolation): [`.github/instructions/testing.instructions.md`](instructions/testing.instructions.md).
 
