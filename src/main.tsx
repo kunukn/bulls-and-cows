@@ -27,11 +27,13 @@ registerSW({
 /*
  * Vercel Web Analytics + Speed Insights on tyrko.app only. Elsewhere the flag
  * is the literal `false`, so the bundler drops the import entirely.
+ * Speed Insights samples 1 page view in 20: Hobby includes 10,000 data points
+ * per 30 days, which a few hundred visitors a day would use up.
  */
 if (import.meta.env.VITE_IS_VERCEL_BUILD) {
   void import("@vercel/analytics").then(({ inject }) => inject());
   void import("@vercel/speed-insights").then(({ injectSpeedInsights }) =>
-    injectSpeedInsights(),
+    injectSpeedInsights({ sampleRate: 0.05 }),
   );
 }
 
