@@ -176,16 +176,13 @@ export function BullBubble(props: Props) {
            * What the shield bubble attaches to: the button's box (Board makes
            * its parent `relative`). Translating it moves bubble and arrow
            * together. Above the shield it slides 4px up, so the arrow tip
-           * clears the shield's top edge. Beside the board it stays put; a
-           * non-zero x needs a negated `rtl:` counterpart.
+           * clears the shield's top edge. Beside the board it stays put.
            */}
           <span
             aria-hidden
             className={cn(
               "pointer-events-none absolute inset-0",
-              placement.side === "top"
-                ? "-translate-y-1"
-                : "translate-x-0 translate-y-0",
+              placement.side === "top" && "-translate-y-1",
             )}
           />
         </PopoverAnchor>
