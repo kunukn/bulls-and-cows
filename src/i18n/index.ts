@@ -72,13 +72,17 @@ void i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false }, // React already escapes.
 });
 
+/* Developer-only marker, so a localhost tab stands apart from tyrko.app; not translated. */
+const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const titlePrefix = LOCAL_HOSTNAMES.has(location.hostname) ? "(local) " : "";
+
 /* Keep <html lang>, <html dir> and the tab title in sync with the active language. */
 function syncDocument(language: string) {
   document.documentElement.lang = isLanguage(language)
     ? HTML_LANG[language]
     : language;
   document.documentElement.dir = getDirection(language);
-  document.title = i18n.t("app.documentTitle");
+  document.title = titlePrefix + i18n.t("app.documentTitle");
 }
 
 syncDocument(i18n.language);
