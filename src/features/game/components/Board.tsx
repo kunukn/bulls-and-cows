@@ -68,12 +68,27 @@ export function Board() {
   );
   const hasNewHint = hintKeys.some((key) => !seen.includes(key));
 
-  /* Keep the active row visible on small screens as the board grows. */
+  /*
+   * Keep the active row visible on small screens as the board grows, clear
+   * of the sticky dock by the row's scroll-margin. Measured by hand rather
+   * than scrollIntoView: iOS Safari's "nearest" stopped with row 9 of 10
+   * behind the dock although the page could scroll further. innerHeight is
+   * the viewport not covered by Safari's toolbars, which the dock sticks to.
+   */
   useEffect(() => {
-    activeRowRef.current?.scrollIntoView({
-      block: "nearest",
-      behavior: "smooth",
-    });
+    const row = activeRowRef.current;
+    if (!row) return;
+
+    const { top, bottom } = row.getBoundingClientRect();
+    const { scrollMarginTop, scrollMarginBottom } = getComputedStyle(row);
+    const overshootBelow =
+      bottom + parseFloat(scrollMarginBottom) - window.innerHeight;
+    const overshootAbove = parseFloat(scrollMarginTop) - top;
+    const distance =
+      overshootBelow > 0 ? overshootBelow : -Math.max(0, overshootAbove);
+    if (distance === 0) return;
+
+    window.scrollBy({ top: distance, behavior: "smooth" });
   }, [guesses.length]);
 
   /*

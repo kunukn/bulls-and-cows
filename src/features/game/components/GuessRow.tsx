@@ -46,7 +46,7 @@ export function GuessRow({
       ref={ref}
       aria-current={isActive ? "step" : undefined}
       className={cn(
-        // scroll-mb keeps the active row clear of the sticky palette on scrollIntoView.
+        // scroll-mb: the gap Board keeps between the active row and the sticky palette.
         ROW_LAYOUT,
         "scroll-mb-40 rounded-lg py-1",
         isActive && "bg-board-active shadow-board-glow ring-2 ring-board-ring",
