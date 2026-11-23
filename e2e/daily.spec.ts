@@ -122,8 +122,18 @@ test("a new day brings a new code and the streak carries on", async ({
   const stats = page.getByRole("main");
   await expect(stats).toContainText(/Streak\s*1/);
 
-  // Midnight passes with the finished board still on screen.
+  /*
+   * Midnight passes. Yesterday's board stays, to share, through a reload and
+   * a return to the tab, until the player moves on (0012).
+   */
   await page.clock.setFixedTime(JUST_AFTER_MIDNIGHT);
+  await page.reload();
+  await page.evaluate(() =>
+    document.dispatchEvent(new Event("visibilitychange")),
+  );
+  await expect(page.getByText(/Cracked in 1 guess/)).toBeVisible();
+  await expect(page.getByRole("link", { name: "Post on X" })).toBeVisible();
+  expect(await readDailyNumber(page)).toBe(firstNumber);
   await page.getByRole("button", { name: "Play today's code" }).click();
 
   await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();

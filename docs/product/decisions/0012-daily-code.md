@@ -14,7 +14,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **The date picks the code.** The day's number (#1 is 23 November 2026) seeds a small generator, so every device deals the same code without a server.
 - **The day changes at the player's local midnight.**
 - **Classic rules:** 4 pegs, 6 colours, repeats, 10 guesses.
-- **One attempt.** There is no New game, and Reveal code counts as a loss. The finished board stays until the next day.
+- **One attempt.** There is no New game, and Reveal code counts as a loss. The finished board stays until the player starts the next day's code.
 - **Its own save.** A daily game never replaces a practice game in progress, and a practice game never replaces the daily one.
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
@@ -25,7 +25,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **The daily header shows what makes the day different.** It takes the difficulty picker's place and height, and shows the date, the rules, "1 try", the current streak (when there is one) and a link back to practice.
 - **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
 - **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
-- **A new day never interrupts a game.** A finished or untouched board moves on to today's code when the app comes back into view, or from the Play today's code button. A game under way stays until it's finished or the page is reloaded.
+- **A new day never interrupts a game, or a result still to share.** An untouched board moves on to today's code when the app comes back into view. A finished board stays, through a reload or a reboot too, so the result can still be shared the next day. Play today's code moves on. Only yesterday's board is kept: an older finished board, or an unfinished one from an earlier day, gives way to today's code when the page loads. A game under way stays until it's finished or the page is reloaded.
 
 ## Alternatives considered
 
@@ -46,6 +46,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Only the share sheet, as Wordle does.** One button, but on a desktop the sheet rarely lists X, Threads or Bluesky, so the player has to copy, open the site and paste.
 - **The three sites behind a Share menu.** Tidier, but two taps, and the sites players want most are hidden until they open it.
 - **Logo-only buttons in the bottom row.** Compact, but the targets are small and the row is easy to miss.
+- **Move a finished board on when the app comes back into view.** Lands the player straight on the new code, but a player who reopens the app the next morning to share finds the result gone.
+- **Keep the last finished board, however old.** Shareable for longer, but a player back after a week lands on an old result instead of today's code.
 - **The time in the shared result.** The daily code scores guesses, not time. A shared time would also reward Auto check (0008), count interruptions, and turn a casual game into a race.
 - **Also block `/daily` when switched off.** Tidier, but a shared link would land on nothing, and a game under way would be stranded.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.

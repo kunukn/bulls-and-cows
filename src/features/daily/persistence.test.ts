@@ -2,7 +2,12 @@ import { DIFFICULTIES, paletteFor, type Color } from "@/features/game/logic";
 import { gameMachine } from "@/features/game/machine";
 import { GAME_STORAGE_KEY, loadGame } from "@/features/game/persistence";
 import { createActor } from "xstate";
-import { DAILY_DIFFICULTY, dailyGameInput, dailySecret } from "./daily";
+import {
+  DAILY_DIFFICULTY,
+  dailyGameInput,
+  dailySecret,
+  nextDailyEvent,
+} from "./daily";
 import { loadDailyGame, recordDailyResult, saveDailyGame } from "./persistence";
 import { useDailyResults } from "./store";
 
@@ -62,13 +67,38 @@ describe("daily game save", () => {
     expect(restored.getSnapshot().value).toBe("won");
   });
 
-  it("starts fresh the next day", () => {
+  it("starts fresh the next day when the last game wasn't finished", () => {
     guess(startDailyGame(), wrongGuess());
 
     const { context } = startDailyGame(TODAY + 1).getSnapshot();
 
     expect(context.guesses).toHaveLength(0);
     expect(context.secret).toEqual(dailySecret(TODAY + 1));
+  });
+
+  it("keeps yesterday's finished game, to share, until today's code starts", () => {
+    guess(startDailyGame(), dailySecret(TODAY));
+
+    const tomorrow = startDailyGame(TODAY + 1);
+    expect(tomorrow.getSnapshot().value).toBe("won");
+    expect(tomorrow.getSnapshot().context.dailyNumber).toBe(TODAY);
+
+    // Play today's code replaces it, and a reload doesn't bring it back.
+    tomorrow.send(nextDailyEvent(TODAY + 1));
+    const { value, context } = startDailyGame(TODAY + 1).getSnapshot();
+
+    expect(value).toBe("playing");
+    expect(context.dailyNumber).toBe(TODAY + 1);
+    expect(context.secret).toEqual(dailySecret(TODAY + 1));
+  });
+
+  it("lets a finished game older than yesterday go", () => {
+    guess(startDailyGame(), dailySecret(TODAY));
+
+    const { value, context } = startDailyGame(TODAY + 2).getSnapshot();
+
+    expect(value).toBe("playing");
+    expect(context.dailyNumber).toBe(TODAY + 2);
   });
 
   it("leaves the practice game's save alone", () => {

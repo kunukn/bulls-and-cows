@@ -14,12 +14,19 @@ export function saveDailyGame(snapshot: GameSnapshot): void {
 
 /*
  * Today's saved game, in progress or finished. A finished one is what keeps
- * the day to a single attempt. A save from an earlier day is left behind.
+ * the day to a single attempt. Yesterday's finished game is kept too, so its
+ * result can still be shared until the player starts today's code (0012).
+ * An unfinished or older save is left behind.
  */
 export function loadDailyGame(today: number): GameSnapshot | undefined {
   const snapshot = loadGame(DAILY_GAME_STORAGE_KEY);
+  if (!snapshot) return undefined;
 
-  return snapshot?.context.dailyNumber === today ? snapshot : undefined;
+  const { dailyNumber } = snapshot.context;
+  const isYesterdayFinished =
+    dailyNumber === today - 1 && !snapshot.matches("playing");
+
+  return dailyNumber === today || isYesterdayFinished ? snapshot : undefined;
 }
 
 /* Adds a finished daily game to the stats; a game in progress is ignored. */

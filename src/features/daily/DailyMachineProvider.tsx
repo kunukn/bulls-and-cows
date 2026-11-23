@@ -42,12 +42,15 @@ function DailySync() {
     });
 
     /*
-     * An installed app is resumed, not reloaded, so yesterday's finished
+     * An installed app is resumed, not reloaded, so yesterday's untouched
      * board would still be showing. The machine ignores this for a game
-     * under way and when the day hasn't changed.
+     * under way and when the day hasn't changed. A finished board stays, so
+     * its result can still be shared: Play today's code moves on (0012).
      */
     function startTodayWhenVisible() {
       if (document.visibilityState !== "visible") return;
+
+      if (!actorRef.getSnapshot().matches("playing")) return;
 
       actorRef.send(nextDailyEvent(dailyNumber()));
     }
