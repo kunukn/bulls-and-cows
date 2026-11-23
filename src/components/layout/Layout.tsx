@@ -40,7 +40,7 @@ export function Layout() {
           </h1>
         </div>
         <div className="flex items-center gap-1">
-          {isPlayPage && <HowItWorksPopover />}
+          {isPlayPage && <HowItWorksPopover isDailyPage={isDailyPage} />}
           <nav className="flex gap-1">
             {/* Icon-only: the layout is 448px max (512px on desktop), too narrow for every language's
                 labels next to the title. Text stays for screen readers + tooltip. */}

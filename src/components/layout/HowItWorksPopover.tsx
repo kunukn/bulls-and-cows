@@ -7,7 +7,9 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DAILY_DIFFICULTY } from "@/features/daily/daily";
 import { DIFFICULTIES, DIFFICULTY_KEYS } from "@/features/game/logic";
+import type { Difficulty } from "@/features/game/logic";
 import { useSettings } from "@/features/game/store/settings";
 import { CircleHelp } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -29,14 +31,30 @@ const KEYBOARD_KEYS = [
   "help.keyboardCheck",
 ] as const;
 
+type HowItWorksPopoverProps = {
+  isDailyPage: boolean;
+};
+
 /*
  * Game rules in a popover, modelled on singing-experience's
  * ProgramHelpButton: title, one-line description, numbered steps. The
  * difficulty list reads DIFFICULTIES so it can't drift from the real rules.
+ * On the daily page the daily section leads and the difficulty list gives way
+ * to the daily's own rules: there is no difficulty to pick there.
  */
-export function HowItWorksPopover() {
+export function HowItWorksPopover({ isDailyPage }: HowItWorksPopoverProps) {
   const { t } = useTranslation();
   const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
+
+  const formatRules = (difficulty: Difficulty) => {
+    const config = DIFFICULTIES[difficulty];
+
+    return [
+      t("difficulty.details", { pegs: config.pegs, colors: config.colors }),
+      t("help.guesses", { count: config.maxGuesses }),
+      config.allowRepeats ? t("help.repeats") : t("help.noRepeats"),
+    ].join(" · ");
+  };
 
   return (
     <Popover>
@@ -64,6 +82,16 @@ export function HowItWorksPopover() {
           <PopoverDescription>{t("help.description")}</PopoverDescription>
         </PopoverHeader>
 
+        {isDailyPage && (
+          <section>
+            <h3 className="mb-1 font-semibold">{t("daily.title")}</h3>
+            <p>{t("daily.description")}</p>
+            <p className="text-muted-foreground">
+              {formatRules(DAILY_DIFFICULTY)}
+            </p>
+          </section>
+        )}
+
         <section>
           <h3 className="mb-1 font-semibold">{t("help.stepsTitle")}</h3>
           <ol className="list-decimal space-y-1 ps-5">
@@ -83,36 +111,27 @@ export function HowItWorksPopover() {
           </ul>
         </section>
 
-        <section>
-          <h3 className="mb-1 font-semibold">{t("help.difficultiesTitle")}</h3>
-          <dl className="space-y-2">
-            {DIFFICULTY_KEYS.map((difficulty) => {
-              const config = DIFFICULTIES[difficulty];
-
-              return (
+        {!isDailyPage && (
+          <section>
+            <h3 className="mb-1 font-semibold">
+              {t("help.difficultiesTitle")}
+            </h3>
+            <dl className="space-y-2">
+              {DIFFICULTY_KEYS.map((difficulty) => (
                 <div key={difficulty}>
                   <dt className="font-medium">
                     {t(`difficulty.${difficulty}`)}
                   </dt>
                   <dd className="text-muted-foreground">
-                    {[
-                      t("difficulty.details", {
-                        pegs: config.pegs,
-                        colors: config.colors,
-                      }),
-                      t("help.guesses", { count: config.maxGuesses }),
-                      config.allowRepeats
-                        ? t("help.repeats")
-                        : t("help.noRepeats"),
-                    ].join(" · ")}
+                    {formatRules(difficulty)}
                   </dd>
                 </div>
-              );
-            })}
-          </dl>
-        </section>
+              ))}
+            </dl>
+          </section>
+        )}
 
-        {isDailyEnabled && (
+        {!isDailyPage && isDailyEnabled && (
           <section>
             <h3 className="mb-1 font-semibold">{t("daily.title")}</h3>
             <p className="text-muted-foreground">{t("daily.description")}</p>
