@@ -20,6 +20,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
 - **Hints work as in practice** (0011).
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
+- **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
 - **A new day never interrupts a game.** A finished or untouched board moves on to today's code when the app comes back into view, or from the Play today's code button. A game under way stays until it's finished or the page is reloaded.
 
 ## Alternatives considered
@@ -30,6 +31,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A header icon.** The header has room for four icons at 320px, and it has four.
 - **One save shared with practice.** Less code, but starting either game would throw away the other, and the finished daily board is what keeps the day to one attempt.
 - **Daily wins on the high score lists.** One list fewer to explain, but the name prompt would sit on top of the stats, which are the daily game's own score.
+- **The daily code on the mirror as well.** Nothing to build, but a player could solve the day on one site and replay it on the other, and stats would split between the two.
 - **A code the player can't work out.** Needs a server. The code follows from the date and the source, and changing the device clock or clearing site data allows another go. That is fine for a friendly game.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.
 
@@ -38,4 +40,5 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - Changing the first day, the generator, `generateSecret` or Classic's palette changes codes players are comparing. `src/features/daily/daily.test.ts` pins four days and fails when that happens.
 - Stats live in one browser: clearing site data clears them, and they don't follow the player to another device.
 - A day that was started but never finished counts as missed.
+- A new mirror has to set `VITE_DAILY_URL` in its build, as `deploy.yml` does; without it the mirror hosts its own daily game.
 - Guarded by the tests in `src/features/daily/`, the daily cases in `src/features/game/machine.test.ts`, and `e2e/daily.spec.ts`.
