@@ -21,6 +21,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
 - **Hints work as in practice** (0011).
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
+- **The daily header shows what makes the day different.** It takes the difficulty picker's place and height, and shows the date, the rules, "1 try", the current streak (when there is one) and a link back to practice.
 - **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
 - **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
 - **A new day never interrupts a game.** A finished or untouched board moves on to today's code when the app comes back into view, or from the Play today's code button. A game under way stays until it's finished or the page is reloaded.
@@ -30,6 +31,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **The UTC day.** Everyone switches at the same moment, but for most players the code would change in the middle of the day.
 - **A daily code per difficulty.** More to play, but three results to compare instead of one.
 - **Daily as a fourth choice in the difficulty picker.** No extra row, but four segments don't fit the German and French labels at 320px.
+- **An accent colour for the daily code.** Sets it apart at a glance, but a warm accent read as an orange theme against the app's slate look.
+- **Tint the board for the daily game.** Most visible, but it would override the board theme the player picked (0007).
 - **A header icon.** The header has room for four icons at 320px, and it has four.
 - **One save shared with practice.** Less code, but starting either game would throw away the other, and the finished daily board is what keeps the day to one attempt.
 - **Daily wins on the high score lists.** One list fewer to explain, but the name prompt would sit on top of the stats, which are the daily game's own score.

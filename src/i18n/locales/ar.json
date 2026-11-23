@@ -170,6 +170,8 @@
     "nextIn": "الرمز التالي بعد {{time}}",
     "playToday": "العب رمز اليوم",
     "practice": "لعبة تدريب",
+    "backToPractice": "تدريب",
+    "oneTry": "محاولة واحدة",
     "share": "شارك",
     "copied": "تم النسخ",
     "shareHeading": "{{app}} · رمز اليوم #{{number, number}} · {{score}}"

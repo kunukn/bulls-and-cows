@@ -146,6 +146,8 @@
     "nextIn": "Prochain code dans {{time}}",
     "playToday": "Jouer le code du jour",
     "practice": "Partie d'entraînement",
+    "backToPractice": "Entraînement",
+    "oneTry": "1 essai",
     "share": "Partager",
     "copied": "Copié",
     "shareHeading": "{{app}} · Code du jour n° {{number, number}} · {{score}}"

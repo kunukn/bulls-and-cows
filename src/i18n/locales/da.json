@@ -146,6 +146,8 @@
     "nextIn": "Næste kode om {{time}}",
     "playToday": "Spil dagens kode",
     "practice": "Øvespil",
+    "backToPractice": "Øvespil",
+    "oneTry": "1 forsøg",
     "share": "Del",
     "copied": "Kopieret",
     "shareHeading": "{{app}} · Dagens kode #{{number, number}} · {{score}}"

@@ -146,6 +146,8 @@
     "nextIn": "अगला कोड {{time}} में",
     "playToday": "आज का कोड खेलो",
     "practice": "अभ्यास खेल",
+    "backToPractice": "अभ्यास",
+    "oneTry": "बस एक मौका",
     "share": "शेयर करो",
     "copied": "कॉपी हो गया",
     "shareHeading": "{{app}} · आज का कोड #{{number, number}} · {{score}}"
