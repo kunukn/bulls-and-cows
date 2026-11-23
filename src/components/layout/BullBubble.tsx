@@ -41,12 +41,16 @@ const HEADER_PLACEMENT: Placement = { side: "bottom", align: "start" };
 const ARROW_WIDTH = 14;
 const ARROW_HEIGHT = 7;
 
+// Gap to the anchor; beside the board the bubble's arrow meets the shield's edge.
+const SIDE_OFFSET = 8;
+const BESIDE_SIDE_OFFSET = 0;
+
 /*
  * Bubble max width (18rem, as in its class) + sideOffset + arrow +
  * collisionPadding. Radix adds the arrow height to sideOffset, so leaving it
  * out lets its flip move a "right" bubble onto the board.
  */
-const SIDE_ROOM_PX = 288 + 8 + ARROW_HEIGHT + 16;
+const SIDE_ROOM_PX = 288 + BESIDE_SIDE_OFFSET + ARROW_HEIGHT + 16;
 
 /*
  * The shield bubble must never cover the clue rows below it, which the player
@@ -154,7 +158,11 @@ export function BullBubble(props: Props) {
       <PopoverContent
         side={placement.side}
         align={placement.align}
-        sideOffset={8}
+        sideOffset={
+          placement.side === "right" || placement.side === "left"
+            ? BESIDE_SIDE_OFFSET
+            : SIDE_OFFSET
+        }
         collisionPadding={16}
         aria-label={t("bull.says")}
         onOpenAutoFocus={(event) => event.preventDefault()}
