@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DIFFICULTIES, DIFFICULTY_KEYS } from "@/features/game/logic";
+import { useSettings } from "@/features/game/store/settings";
 import { CircleHelp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -35,6 +36,7 @@ const KEYBOARD_KEYS = [
  */
 export function HowItWorksPopover() {
   const { t } = useTranslation();
+  const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
 
   return (
     <Popover>
@@ -110,10 +112,12 @@ export function HowItWorksPopover() {
           </dl>
         </section>
 
-        <section>
-          <h3 className="mb-1 font-semibold">{t("daily.title")}</h3>
-          <p className="text-muted-foreground">{t("daily.description")}</p>
-        </section>
+        {isDailyEnabled && (
+          <section>
+            <h3 className="mb-1 font-semibold">{t("daily.title")}</h3>
+            <p className="text-muted-foreground">{t("daily.description")}</p>
+          </section>
+        )}
       </PopoverContent>
     </Popover>
   );

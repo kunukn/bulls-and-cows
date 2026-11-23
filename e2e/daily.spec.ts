@@ -126,3 +126,23 @@ test("a new day brings a new code and the streak carries on", async ({
   await expect(stats).toContainText(/Streak\s*2/);
   await expect(stats).toContainText(/Played\s*2/);
 });
+
+test("the Daily code switch hides the way in but keeps the page", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const dailyLink = page.getByRole("link", { name: "Daily code" });
+  await expect(dailyLink).toBeVisible();
+
+  await page.getByRole("button", { name: "Settings" }).click();
+  await page.getByRole("switch", { name: "Daily code" }).click();
+  await page.keyboard.press("Escape");
+
+  await expect(dailyLink).toBeHidden();
+  await page.getByRole("button", { name: "How it works" }).click();
+  await expect(page.getByRole("heading", { name: "Daily code" })).toBeHidden();
+
+  // A shared link still opens the day's code.
+  await page.goto("/daily");
+  await expect(page.getByRole("heading", { name: /Daily code/ })).toBeVisible();
+});

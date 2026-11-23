@@ -34,6 +34,7 @@ export function Play() {
   const setDifficulty = useSettings((state) => state.setDifficulty);
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
   const bullPegClass = useBullPegClass();
   // Hidden only while playing; the final time shows once the game ends.
   const isTimerShown = isTimerVisible || !isPlaying;
@@ -119,7 +120,7 @@ export function Play() {
     <div className="flex flex-col gap-4">
       {dailyNumber === null ? (
         <>
-          <DailyLink />
+          {isDailyEnabled && <DailyLink />}
           <DifficultyPicker
             name="difficulty"
             legend={t("difficulty.legend")}

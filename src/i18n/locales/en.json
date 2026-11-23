@@ -13,6 +13,7 @@
     "highScoresDescription": "Saves your best wins under your name.",
     "hints": "Game hints",
     "hintsDescription": "Tyr points out what your clues prove so far.",
+    "dailyDescription": "Shows one code a day, the same for everyone.",
     "minimalText": "Minimal text",
     "minimalTextDescription": "Icons instead of words. The ? button still explains the rules.",
     "autoSubmit": "Auto check",

@@ -13,6 +13,7 @@
     "highScoresDescription": "Speichert deine besten Siege unter deinem Namen.",
     "hints": "Spieltipps",
     "hintsDescription": "Tyr zeigt dir, was deine Hinweise schon beweisen.",
+    "dailyDescription": "Zeigt einen Code pro Tag, für alle gleich.",
     "minimalText": "Weniger Text",
     "minimalTextDescription": "Symbole statt Wörter. Der ?-Knopf erklärt weiter die Regeln.",
     "autoSubmit": "Automatisch prüfen",

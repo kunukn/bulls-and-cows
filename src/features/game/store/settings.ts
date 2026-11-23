@@ -35,6 +35,9 @@ type SettingsStore = {
   /* Tyr's deduced hints and the shield bull; on by default (0011). */
   isHintsEnabled: boolean;
   setHintsEnabled: (isHintsEnabled: boolean) => void;
+  /* The daily code's row and help; /daily stays reachable (0012). */
+  isDailyEnabled: boolean;
+  setDailyEnabled: (isDailyEnabled: boolean) => void;
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
@@ -67,6 +70,8 @@ export const useSettings = create<SettingsStore>()(
         set({ isHighScoresEnabled }),
       isHintsEnabled: true,
       setHintsEnabled: (isHintsEnabled) => set({ isHintsEnabled }),
+      isDailyEnabled: true,
+      setDailyEnabled: (isDailyEnabled) => set({ isDailyEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
       pegStyle: "color",

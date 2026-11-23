@@ -21,6 +21,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
 - **Hints work as in practice** (0011).
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
+- **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
 - **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
 - **A new day never interrupts a game.** A finished or untouched board moves on to today's code when the app comes back into view, or from the Play today's code button. A game under way stays until it's finished or the page is reloaded.
 
@@ -38,6 +39,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Bull and cow emoji in the shared result.** On theme, but wider than the circles, and harder to read at a glance.
 - **The number of hints in the shared result.** Fairer to players who solved alone, but it puts a public mark on asking for help, which 0011 keeps free. A count is also a poor measure: one click can be a general tip or "only one code fits".
 - **The time in the shared result.** The daily code scores guesses, not time. A shared time would also reward Auto check (0008), count interruptions, and turn a casual game into a race.
+- **Also block `/daily` when switched off.** Tidier, but a shared link would land on nothing, and a game under way would be stranded.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.
 
 ## Consequences
@@ -46,4 +48,4 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - Stats live in one browser: clearing site data clears them, and they don't follow the player to another device.
 - A day that was started but never finished counts as missed.
 - A new mirror has to set `VITE_DAILY_URL` in its build, as `deploy.yml` does; without it the mirror hosts its own daily game.
-- Guarded by the tests in `src/features/daily/`, the daily cases in `src/features/game/machine.test.ts`, and `e2e/daily.spec.ts`.
+- Guarded by the tests in `src/features/daily/`, the daily cases in `src/features/game/machine.test.ts`, the daily default in `src/features/game/store/settings.test.ts`, and `e2e/daily.spec.ts`.

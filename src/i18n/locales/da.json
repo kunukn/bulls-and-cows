@@ -13,6 +13,7 @@
     "highScoresDescription": "Gemmer dine bedste sejre under dit navn.",
     "hints": "Spiltips",
     "hintsDescription": "Tyr viser, hvad dine spor allerede beviser.",
+    "dailyDescription": "Viser én kode om dagen, den samme for alle.",
     "minimalText": "Mindre tekst",
     "minimalTextDescription": "Ikoner i stedet for ord. Knappen ? forklarer stadig reglerne.",
     "autoSubmit": "Tjek automatisk",

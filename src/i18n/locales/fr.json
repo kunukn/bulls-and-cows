@@ -13,6 +13,7 @@
     "highScoresDescription": "Enregistre tes meilleures victoires sous ton nom.",
     "hints": "Indices de jeu",
     "hintsDescription": "Tyr te montre ce que tes essais prouvent déjà.",
+    "dailyDescription": "Affiche un code par jour, le même pour tous.",
     "minimalText": "Moins de texte",
     "minimalTextDescription": "Des icônes à la place des mots. Le bouton ? explique toujours les règles.",
     "autoSubmit": "Vérification auto",

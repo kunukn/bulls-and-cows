@@ -23,6 +23,10 @@ test("hints are on for new players (0011)", () => {
   expect(useSettings.getState().isHintsEnabled).toBe(true);
 });
 
+test("the daily code is on for new players (0012)", () => {
+  expect(useSettings.getState().isDailyEnabled).toBe(true);
+});
+
 test("switching to light updates <html>", () => {
   useSettings.getState().setColorScheme("light");
 

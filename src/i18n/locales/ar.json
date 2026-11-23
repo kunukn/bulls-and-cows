@@ -13,6 +13,7 @@
     "highScoresDescription": "يحفظ أفضل انتصاراتك باسمك.",
     "hints": "تلميحات اللعبة",
     "hintsDescription": "يخبرك Tyr بما تثبته أدلتك حتى الآن.",
+    "dailyDescription": "يعرض رمزًا واحدًا كل يوم، وهو نفسه للجميع.",
     "minimalText": "نص أقل",
     "minimalTextDescription": "أيقونات بدل الكلمات. زر ? يشرح القواعد دائمًا.",
     "autoSubmit": "تحقق تلقائي",

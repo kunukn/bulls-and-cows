@@ -44,6 +44,8 @@ export function SettingsSheet() {
   const setAutoSubmit = useSettings((state) => state.setAutoSubmit);
   const isSoundEnabled = useSettings((state) => state.isSoundEnabled);
   const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
+  const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
+  const setDailyEnabled = useSettings((state) => state.setDailyEnabled);
   const isPinkBull = useSettings((state) => state.isPinkBull);
   const setPinkBull = useSettings((state) => state.setPinkBull);
   const pegStyle = useSettings((state) => state.pegStyle);
@@ -273,6 +275,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.hintsDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-daily" className="font-medium">
+                {t("daily.title")}
+              </label>
+              <Switch
+                id="settings-daily"
+                checked={isDailyEnabled}
+                onCheckedChange={setDailyEnabled}
+                aria-describedby="settings-daily-description"
+              />
+            </div>
+            <p
+              id="settings-daily-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.dailyDescription")}
             </p>
           </div>
           <div className="flex flex-col gap-2">

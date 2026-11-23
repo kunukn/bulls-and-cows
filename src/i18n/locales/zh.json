@@ -13,6 +13,7 @@
     "highScoresDescription": "用你的名字保存最好的成绩。",
     "hints": "游戏提示",
     "hintsDescription": "Tyr 会告诉你，你的线索已经证明了什么。",
+    "dailyDescription": "每天显示一个密码，每个人都一样。",
     "minimalText": "精简文字",
     "minimalTextDescription": "用图标代替文字。? 按钮仍会讲解规则。",
     "autoSubmit": "自动检查",
