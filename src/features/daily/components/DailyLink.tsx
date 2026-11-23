@@ -12,6 +12,7 @@ import {
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
+// 36px tall; the High scores heading matches it (min-h-9) to avoid a jump.
 const linkClass =
   "flex items-center gap-2 rounded-lg bg-card px-3 py-2 text-sm font-medium text-subtle transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring";
 const endClass =

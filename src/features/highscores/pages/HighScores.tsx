@@ -78,8 +78,17 @@ export function HighScores() {
 
   return (
     <div className="flex flex-col gap-4 pb-8">
-      {/* The active trophy tab already says where you are. */}
-      <h2 className={isMinimalText ? "sr-only" : "text-xl font-bold"}>
+      {/*
+       * The active trophy tab already says where you are. min-h-9 matches
+       * DailyLink's height on Play so the picker doesn't jump between pages.
+       */}
+      <h2
+        className={
+          isMinimalText
+            ? "sr-only"
+            : "flex min-h-9 items-center text-xl font-bold"
+        }
+      >
         {t("highScores.title")}
       </h2>
       <DifficultyPicker
