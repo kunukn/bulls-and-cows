@@ -33,7 +33,7 @@ export function DailyHeader({ number }: Props) {
   const practiceLabel = t("daily.backToPractice");
 
   return (
-    <header className="grid grid-cols-[auto_1fr_auto] items-center gap-x-2.5 rounded-lg bg-card px-3 py-2.5">
+    <header className="grid grid-cols-[auto_1fr_auto] items-center gap-x-2.5 rounded-lg bg-card px-3 py-2.5 ring-1 ring-border">
       <CalendarDays aria-hidden className="row-span-2 size-5" />
       <h2
         className="text-sm leading-5 font-semibold"
