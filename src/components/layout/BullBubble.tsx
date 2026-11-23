@@ -14,7 +14,10 @@ import {
 } from "@/features/game/bullLines";
 import { newsworthyHintKeys } from "@/features/game/hints";
 import type { Color } from "@/features/game/logic";
-import { useGameActorRef } from "@/features/game/machine-context";
+import {
+  useGameActorRef,
+  useGameSelector,
+} from "@/features/game/machine-context";
 import { useHintsSeen } from "@/features/game/store/hintsSeen";
 import { cn } from "@/utils/cn";
 import { useState } from "react";
@@ -84,6 +87,19 @@ export function BullBubble(props: Props) {
   const [line, setLine] = useState<BullLine | null>(null);
   const [placement, setPlacement] = useState(HEADER_PLACEMENT);
   const isShield = props.variant === "shield";
+
+  /*
+   * A line is about the game it was asked in, so a new game closes the
+   * bubble. Only a new game replaces the secret array, which makes its
+   * reference the game's identity (startedAt is 0 until the first peg). The
+   * secret itself is never read here.
+   */
+  const secret = useGameSelector((snapshot) => snapshot.context.secret);
+  const [lineGame, setLineGame] = useState(secret);
+  if (lineGame !== secret) {
+    setLineGame(secret);
+    setIsOpen(false);
+  }
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     // Radix would close an open bubble; here a click asks for a new line.

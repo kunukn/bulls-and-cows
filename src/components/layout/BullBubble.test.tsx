@@ -1,0 +1,58 @@
+import { paletteFor } from "@/features/game/logic";
+import type { gameMachine } from "@/features/game/machine";
+import {
+  GameActorProvider,
+  useGameActorRef,
+} from "@/features/game/machine-context";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router";
+import type { ActorRefFrom } from "xstate";
+import { BullBubble } from "./BullBubble";
+
+type GameActor = ActorRefFrom<typeof gameMachine>;
+
+function renderShieldBull() {
+  let actor: GameActor | undefined;
+  function GrabActor() {
+    actor = useGameActorRef();
+
+    return null;
+  }
+  render(
+    <MemoryRouter>
+      <GameActorProvider options={{ input: { difficulty: "classic" } }}>
+        <GrabActor />
+        <BullBubble variant="shield" hasNewHint={false} />
+      </GameActorProvider>
+    </MemoryRouter>,
+  );
+  if (!actor) throw new Error("No game actor");
+
+  fireEvent.click(screen.getByRole("button", { name: "Hint" }));
+  expect(screen.getByRole("dialog", { name: "Tyr says" })).toBeVisible();
+
+  return actor;
+}
+
+beforeEach(() => {
+  localStorage.clear();
+});
+
+describe("shield bull bubble", () => {
+  it("closes on a new game: its line was about the old one", () => {
+    const actor = renderShieldBull();
+
+    act(() => actor.send({ type: "NEW_GAME" }));
+
+    expect(screen.queryByRole("dialog", { name: "Tyr says" })).toBeNull();
+  });
+
+  it("stays open while the same game goes on", () => {
+    const actor = renderShieldBull();
+    const [color] = paletteFor("classic");
+
+    act(() => actor.send({ type: "ADD_PEG", color }));
+
+    expect(screen.getByRole("dialog", { name: "Tyr says" })).toBeVisible();
+  });
+});
