@@ -215,7 +215,7 @@ export function BullLinesPage() {
           Lines in {language}, by the page they're said on. Change the language
           in Settings.
         </p>
-        <nav className="flex gap-4 text-sm">
+        <nav className="flex gap-4 text-sm lg:hidden">
           {pages.map((page) => (
             <a
               key={page.id}
@@ -228,9 +228,16 @@ export function BullLinesPage() {
         </nav>
       </div>
 
-      {pages.map((page) => (
-        <Page key={page.id} {...page} />
-      ))}
+      {/*
+       * Wide screens: one column per page. Filled column by column, one row
+       * per block (title, then each bull), so each bull lines up with its
+       * counterpart on the other page.
+       */}
+      <div className="flex flex-col gap-8 lg:grid lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-[repeat(3,auto)] lg:gap-x-10">
+        {pages.map((page) => (
+          <Page key={page.id} {...page} />
+        ))}
+      </div>
     </div>
   );
 }
@@ -245,11 +252,12 @@ function Page({ id, title, path, bulls }: PageProps) {
   );
 
   return (
-    <section
-      id={id}
-      className="flex scroll-mt-4 flex-col gap-6 border-t border-border pt-6"
-    >
-      <div className="flex flex-col gap-1">
+    // Its blocks join the parent's grid on wide screens (`contents`).
+    <section className="flex flex-col gap-6 lg:contents">
+      <div
+        id={id}
+        className="flex scroll-mt-4 flex-col gap-1 border-t border-border pt-6"
+      >
         <h3 className="text-2xl font-bold text-heading">{title}</h3>
         <p className="text-sm text-subtle">
           <Link
