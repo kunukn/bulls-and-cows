@@ -36,6 +36,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A code the player can't work out.** Needs a server. The code follows from the date and the source, and changing the device clock or clearing site data allows another go. That is fine for a friendly game.
 - **Coloured squares in the shared result.** Familiar from word games, but they read as one square per slot, which the feedback pegs don't mean.
 - **Bull and cow emoji in the shared result.** On theme, but wider than the circles, and harder to read at a glance.
+- **The number of hints in the shared result.** Fairer to players who solved alone, but it puts a public mark on asking for help, which 0011 keeps free. A count is also a poor measure: one click can be a general tip or "only one code fits".
+- **The time in the shared result.** The daily code scores guesses, not time. A shared time would also reward Auto check (0008), count interruptions, and turn a casual game into a race.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.
 
 ## Consequences
