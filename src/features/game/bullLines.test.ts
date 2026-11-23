@@ -1,7 +1,10 @@
 import {
   pickChatLine,
+  pickDailyLine,
   pickHintLine,
   type BullLine,
+  type DailySituation,
+  type DailyStats,
   type HintSituation,
 } from "./bullLines";
 import { paletteFor, type Color, type RandomInt } from "./logic";
@@ -148,5 +151,118 @@ describe("pickHintLine (the shield bull)", () => {
     expect(kindOf(first)).toBe("rowSlotWrong");
     expect(kindOf(second)).not.toMatch(/^row/);
     expect(kindOf(third)).toBe("rowSlotWrong");
+  });
+});
+
+const NEW_PLAYER: DailyStats = {
+  played: 0,
+  won: 0,
+  bestStreak: 0,
+  distribution: [],
+};
+
+const dailySituation = (stats: DailyStats): DailySituation => ({
+  dailyNumber: 3,
+  msUntilNext: 5 * 3_600_000,
+  stats,
+});
+
+const dailyFactsOf = (lines: BullLine[]) =>
+  lines.flatMap((line) => (line.kind === "daily" ? [line.fact] : []));
+
+describe("pickDailyLine (the shield bull on the daily code)", () => {
+  it("never tips or deduces: everyone solves the shared code alone", () => {
+    const lines = allLines((randomInt) =>
+      pickDailyLine(dailySituation(NEW_PLAYER), null, randomInt),
+    );
+
+    expect(lines.some((line) => line.kind === "hint")).toBe(false);
+    expect(lines.some((line) => line.kind === "noClues")).toBe(false);
+    expect(keysOf(lines).some((key) => key.startsWith("bull.tips."))).toBe(
+      false,
+    );
+  });
+
+  it("tells a new player how the day works, and calms them down", () => {
+    const lines = allLines((randomInt) =>
+      pickDailyLine(dailySituation(NEW_PLAYER), null, randomInt),
+    );
+    const keys = keysOf(lines);
+
+    expect(keys.some((key) => key.startsWith("bull.calm."))).toBe(true);
+    expect(dailyFactsOf(lines)).toContainEqual({
+      kind: "nextCode",
+      msUntilNext: 5 * 3_600_000,
+    });
+    expect(dailyFactsOf(lines)).toContainEqual({
+      kind: "seed",
+      dailyNumber: 3,
+    });
+    // Classic: 6 colours in 4 slots.
+    expect(dailyFactsOf(lines)).toContainEqual({
+      kind: "codeCount",
+      codes: 1296,
+    });
+  });
+
+  it("has no stats of yours before your first finished day", () => {
+    const kinds = dailyFactsOf(
+      allLines((randomInt) =>
+        pickDailyLine(dailySituation(NEW_PLAYER), null, randomInt),
+      ),
+    ).map((fact) => fact.kind);
+
+    expect(kinds).not.toContain("wins");
+    expect(kinds).not.toContain("averageWin");
+    expect(kinds).not.toContain("bestStreak");
+  });
+
+  it("averages your wins by guesses, after you've played", () => {
+    // Won in 3 and in 5 guesses, lost once.
+    const stats: DailyStats = {
+      played: 3,
+      won: 2,
+      bestStreak: 1,
+      distribution: [0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+    };
+    const facts = dailyFactsOf(
+      allLines((randomInt) =>
+        pickDailyLine(dailySituation(stats), null, randomInt),
+      ),
+    );
+
+    expect(facts).toContainEqual({ kind: "wins", won: 2, played: 3 });
+    expect(facts).toContainEqual({ kind: "averageWin", guesses: 4 });
+    expect(facts).toContainEqual({ kind: "bestStreak", days: 1 });
+  });
+
+  it("has no average while every day so far was lost", () => {
+    const stats: DailyStats = { ...NEW_PLAYER, played: 2 };
+    const kinds = dailyFactsOf(
+      allLines((randomInt) =>
+        pickDailyLine(dailySituation(stats), null, randomInt),
+      ),
+    ).map((fact) => fact.kind);
+
+    expect(kinds).toContain("wins");
+    expect(kinds).not.toContain("averageWin");
+  });
+
+  it("doesn't repeat the countdown just because its time moved on", () => {
+    // Draws: group 1 (how the day works), then line 5 in it, the countdown.
+    const draws =
+      (...choices: number[]): RandomInt =>
+      (max) =>
+        (choices.shift() ?? 0) % max;
+    const first = pickDailyLine(dailySituation(NEW_PLAYER), null, draws(1, 5));
+    expect(first).toMatchObject({ kind: "daily", fact: { kind: "nextCode" } });
+
+    const aMinuteLeft = { ...dailySituation(NEW_PLAYER), msUntilNext: 60_000 };
+    const second = pickDailyLine(aMinuteLeft, first, draws(1, 5));
+
+    expect(second).not.toMatchObject({
+      kind: "daily",
+      fact: { kind: "nextCode" },
+    });
   });
 });

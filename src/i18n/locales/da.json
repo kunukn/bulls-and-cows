@@ -168,6 +168,7 @@
     "button": "Spørg Tyr",
     "hintButton": "Tip",
     "hintButtonNew": "Nyt tip",
+    "dailyButton": "Spørg Tyr om dagens kode",
     "says": "Tyr siger",
     "quips": {
       "hello": "Muh muh… lad os spille!",
@@ -235,6 +236,35 @@
       "codesLeft_other": "{{count, number}} koder passer stadig med dine spor.",
       "oneLeft": "Kun én kode passer nu. Du kan godt knække den!"
     },
-    "noClues": "Hmm, ikke nok spor endnu. Gæt igen!"
+    "noClues": "Hmm, ikke nok spor endnu. Gæt igen!",
+    "calm": {
+      "breatheSlowly": "Træk vejret langsomt ind… og ud igen. Pindene kan godt vente.",
+      "thinkFirst": "Tag dig et øjeblik til at tænke, før du sætter en pind.",
+      "shoulders": "Skuldrene ned, kæben løs. Kig så igen.",
+      "closeEyes": "Luk øjnene i et enkelt åndedrag. Læs så dine spor.",
+      "feet": "Mærk dine fødder mod gulvet. Her er ingen hast.",
+      "stretch": "Rul skuldrene, stræk nakken. Tyre gør det også.",
+      "noRush": "Du har hele dagen: koden bliver til midnat."
+    },
+    "daily": {
+      "oneTry": "Ét forsøg om dagen. Din plade er gemt i denne browser, så du får ikke et nyt forsøg ved at genindlæse.",
+      "sameCode": "Alle har den samme kode i dag. Del dit resultat og sammenlign.",
+      "reveal": "I dag tæller det som et nederlag at vise koden.",
+      "streak": "Vind dage i træk. En glemt dag eller et nederlag starter tællingen forfra.",
+      "noHints": "Ingen tips til dagens kode. I dag er det dig og dine spor.",
+      "nextCode": "En ny kode kommer ved midnat, din tid. Altså {{time}}.",
+      "seed": "Dagens kode er ikke gemt nogen steder. Den regnes ud fra datoen (dag nr. {{number, number}}), så alle enheder får den samme.",
+      "rules": "Klassiske regler i dag ({{details}}). Farver kan gentages, og du har {{guesses, number}} forsøg."
+    },
+    "facts": {
+      "knuth": "I 1977 viste Donald Knuth, at enhver klassisk kode kan knækkes på højst fem forsøg.",
+      "perfectAverage": "Med perfekt spil tager en klassisk kode omkring 4,3 forsøg i snit.",
+      "codeCount": "Klassisk har {{codes, number}} mulige koder."
+    },
+    "stats": {
+      "wins": "Vundne dagskoder: {{won, number}} af {{played, number}}.",
+      "averageWin": "Forsøg pr. vundet dagskode i snit: {{guesses, number(maximumFractionDigits: 1)}}.",
+      "bestStreak": "Din bedste række: {{days, number}} i træk."
+    }
   }
 }

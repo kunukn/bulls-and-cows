@@ -19,7 +19,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
 - **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
-- **Hints work as in practice** (0011).
+- **No hints on the daily code.** Everyone solves the same code, so the shield bull (0011) doesn't read the clues or give tips there, and shows no new-hint dot. It talks about the day instead: calm, breathing-style lines; how the daily code works (one try saved in this browser, the same code for everyone from the date, a new code at local midnight with the time left, Classic rules, Reveal code as a loss, streaks); facts about Classic (1,296 codes, Knuth's five-guess proof, about 4.3 guesses on average with perfect play); and, once the player has finished a daily code, their own wins, average guesses per win and best streak. Its button says "Ask Tyr about today's code", not "Hint". Each group gets an equal chance, as in 0011.
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
 - **The daily header shows what makes the day different.** It takes the difficulty picker's place and height, and shows the date, the rules, "1 try", the current streak (when there is one) and a link back to practice.
 - **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
@@ -40,6 +40,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A code the player can't work out.** Needs a server. The code follows from the date and the source, and changing the device clock or clearing site data allows another go. That is fine for a friendly game.
 - **Coloured squares in the shared result.** Familiar from word games, but they read as one square per slot, which the feedback pegs don't mean.
 - **Bull and cow emoji in the shared result.** On theme, but wider than the circles, and harder to read at a glance.
+- **Hints as in practice.** One shared code with deductions on tap would turn comparing results into comparing who asked the bull. Calm words and how the day works keep the bull's voice without solving anything.
 - **The number of hints in the shared result.** Fairer to players who solved alone, but it puts a public mark on asking for help, which 0011 keeps free. A count is also a poor measure: one click can be a general tip or "only one code fits".
 - **The time in the shared result.** The daily code scores guesses, not time. A shared time would also reward Auto check (0008), count interruptions, and turn a casual game into a race.
 - **Also block `/daily` when switched off.** Tidier, but a shared link would land on nothing, and a game under way would be stranded.
@@ -51,4 +52,5 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - Stats live in one browser: clearing site data clears them, and they don't follow the player to another device.
 - A day that was started but never finished counts as missed.
 - A new mirror has to set `VITE_DAILY_URL` in its build, as `deploy.yml` does; without it the mirror hosts its own daily game.
-- Guarded by the tests in `src/features/daily/`, the daily cases in `src/features/game/machine.test.ts`, the daily default in `src/features/game/store/settings.test.ts`, and `e2e/daily.spec.ts`.
+- Daily bull lines are picked by `pickDailyLine` in `src/features/game/bullLines.ts`. The averages in its facts are published results for Classic (Knuth 1977; Koyama and Lai 1993), not measured in the app.
+- Guarded by the tests in `src/features/daily/`, `pickDailyLine` in `src/features/game/bullLines.test.ts`, the daily cases in `src/features/game/machine.test.ts`, the daily default in `src/features/game/store/settings.test.ts`, and `e2e/daily.spec.ts`.

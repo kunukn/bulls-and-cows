@@ -7,13 +7,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DAILY_DIFFICULTY, msUntilNextDaily } from "@/features/daily/daily";
+import { summarize, useDailyResults } from "@/features/daily/store";
 import {
   pickChatLine,
+  pickDailyLine,
   pickHintLine,
   type BullLine,
+  type DailyFact,
 } from "@/features/game/bullLines";
 import { newsworthyHintKeys } from "@/features/game/hints";
-import type { Color } from "@/features/game/logic";
+import { DIFFICULTIES, type Color } from "@/features/game/logic";
 import {
   useGameActorRef,
   useGameSelector,
@@ -30,7 +34,8 @@ type Props =
   /*
    * The hint bull: a see-through button over the bull moulded into the code
    * shield, which draws the bull and its dot itself (it is aria-hidden and
-   * ignores clicks). Board only renders it while a game is in play.
+   * ignores clicks). Board only renders it while a game is in play. On the
+   * daily code it gives no hints, only calm words, the day's rules and stats.
    */
   | { variant: "shield"; hasNewHint: boolean };
 
@@ -87,6 +92,9 @@ export function BullBubble(props: Props) {
   const [line, setLine] = useState<BullLine | null>(null);
   const [placement, setPlacement] = useState(HEADER_PLACEMENT);
   const isShield = props.variant === "shield";
+  const isDaily = useGameSelector(
+    (snapshot) => snapshot.context.dailyNumber !== null,
+  );
 
   /*
    * A line is about the game it was asked in, so a new game closes the
@@ -106,7 +114,8 @@ export function BullBubble(props: Props) {
     event.preventDefault();
     // Read at click time: the bubble doesn't need to re-render on every peg.
     const snapshot = actor.getSnapshot();
-    const { difficulty, guesses, current, startedAt } = snapshot.context;
+    const { difficulty, guesses, current, startedAt, dailyNumber } =
+      snapshot.context;
     setIsOpen(true);
 
     if (!isShield) {
@@ -115,16 +124,33 @@ export function BullBubble(props: Props) {
       return;
     }
 
-    setLine(pickHintLine({ difficulty, guesses, current }, line));
     // Measured per click, so a resized or rotated window gets a fresh choice.
     setPlacement(shieldPlacement(event.currentTarget));
+
+    // One shared code a day: the bull keeps the solving to the player (0012).
+    if (dailyNumber !== null) {
+      const { results } = useDailyResults.getState();
+      const stats = summarize(results, dailyNumber);
+      setLine(
+        pickDailyLine(
+          { dailyNumber, msUntilNext: msUntilNextDaily(), stats },
+          line,
+        ),
+      );
+
+      return;
+    }
+
+    setLine(pickHintLine({ difficulty, guesses, current }, line));
     // Asking the hint bull counts as having seen what there is.
     markSeen(startedAt, newsworthyHintKeys(difficulty, guesses));
   }
 
-  const label = isShield
-    ? t(props.hasNewHint ? "bull.hintButtonNew" : "bull.hintButton")
-    : t("bull.button");
+  let label = t("bull.button");
+  if (isShield && isDaily) label = t("bull.dailyButton");
+  else if (isShield) {
+    label = t(props.hasNewHint ? "bull.hintButtonNew" : "bull.hintButton");
+  }
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
@@ -210,6 +236,8 @@ export function BullLineText({ line }: { line: BullLine }) {
 
   if (line.kind === "noClues") return t("bull.noClues");
 
+  if (line.kind === "daily") return <DailyFactText fact={line.fact} />;
+
   const { hint } = line;
   switch (hint.kind) {
     case "absent":
@@ -292,5 +320,52 @@ export function BullLineText({ line }: { line: BullLine }) {
 
     case "oneLeft":
       return t("bull.hints.oneLeft");
+  }
+}
+
+/*
+ * Rounded to whole hours, or minutes in the last hour. Intl.RelativeTimeFormat
+ * gives "in 3 hours" with each language's own plurals.
+ */
+function formatTimeUntil(ms: number, locale: string): string {
+  const format = new Intl.RelativeTimeFormat(locale);
+  const hours = Math.round(ms / 3_600_000);
+  if (hours >= 1) return format.format(hours, "hour");
+
+  return format.format(Math.max(1, Math.ceil(ms / 60_000)), "minute");
+}
+
+function DailyFactText({ fact }: { fact: DailyFact }) {
+  const { t, i18n } = useTranslation();
+
+  switch (fact.kind) {
+    case "nextCode":
+      return t("bull.daily.nextCode", {
+        time: formatTimeUntil(fact.msUntilNext, i18n.language),
+      });
+
+    case "seed":
+      return t("bull.daily.seed", { number: fact.dailyNumber });
+
+    case "rules": {
+      const { pegs, colors, maxGuesses } = DIFFICULTIES[DAILY_DIFFICULTY];
+
+      return t("bull.daily.rules", {
+        details: t("difficulty.details", { pegs, colors }),
+        guesses: maxGuesses,
+      });
+    }
+
+    case "codeCount":
+      return t("bull.facts.codeCount", { codes: fact.codes });
+
+    case "wins":
+      return t("bull.stats.wins", { won: fact.won, played: fact.played });
+
+    case "averageWin":
+      return t("bull.stats.averageWin", { guesses: fact.guesses });
+
+    case "bestStreak":
+      return t("bull.stats.bestStreak", { days: fact.days });
   }
 }

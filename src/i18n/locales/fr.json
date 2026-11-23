@@ -168,6 +168,7 @@
     "button": "Demande à Tyr",
     "hintButton": "Indice",
     "hintButtonNew": "Nouvel indice",
+    "dailyButton": "Parle à Tyr du code du jour",
     "says": "Tyr dit",
     "quips": {
       "hello": "Meuh meuh… on joue ?",
@@ -235,6 +236,35 @@
       "codesLeft_other": "{{count, number}} codes collent encore à tes indices.",
       "oneLeft": "Un seul code colle encore. Tu peux le trouver !"
     },
-    "noClues": "Hmm, pas encore assez d'indices. Fais un autre essai !"
+    "noClues": "Hmm, pas encore assez d'indices. Fais un autre essai !",
+    "calm": {
+      "breatheSlowly": "Inspire lentement… puis expire. Les pions peuvent attendre.",
+      "thinkFirst": "Prends un moment pour réfléchir avant de poser un pion.",
+      "shoulders": "Épaules basses, mâchoire détendue. Maintenant, regarde encore.",
+      "closeEyes": "Ferme les yeux le temps d'une respiration. Puis relis tes indices.",
+      "feet": "Sens tes pieds sur le sol. Rien ne presse ici.",
+      "stretch": "Roule des épaules, étire ton cou. Les taureaux le font aussi.",
+      "noRush": "Tu as toute la journée : le code reste jusqu'à minuit."
+    },
+    "daily": {
+      "oneTry": "Un essai par jour. Ta grille est gardée dans ce navigateur, donc recharger la page ne donne pas un autre essai.",
+      "sameCode": "Tout le monde a le même code aujourd'hui. Partage ton résultat et compare.",
+      "reveal": "Aujourd'hui, révéler le code compte comme une défaite.",
+      "streak": "Gagne plusieurs jours de suite pour une série. Un jour manqué ou une défaite la remet à zéro.",
+      "noHints": "Pas d'aide pour le code du jour. Aujourd'hui, c'est toi et tes indices.",
+      "nextCode": "Un nouveau code arrive à minuit, chez toi. C'est {{time}}.",
+      "seed": "Le code du jour n'est gardé nulle part. Il est calculé à partir de la date (jour n° {{number, number}}), donc chaque appareil a le même.",
+      "rules": "Règles classiques aujourd'hui ({{details}}). Les couleurs peuvent se répéter, et tu as {{guesses, number}} essais."
+    },
+    "facts": {
+      "knuth": "En 1977, Donald Knuth a montré qu'on peut trouver n'importe quel code Classique en cinq essais ou moins.",
+      "perfectAverage": "En jouant parfaitement, un code Classique demande environ 4,3 essais en moyenne.",
+      "codeCount": "Le Classique compte {{codes, number}} codes possibles."
+    },
+    "stats": {
+      "wins": "Codes du jour gagnés : {{won, number}} sur {{played, number}}.",
+      "averageWin": "Essais par victoire du jour, en moyenne : {{guesses, number(maximumFractionDigits: 1)}}.",
+      "bestStreak": "Ta meilleure série : {{days, number}} d'affilée."
+    }
   }
 }

@@ -1,11 +1,15 @@
 import { paths } from "@/app/paths";
 import { BullLineText } from "@/components/layout/BullBubble";
 import {
+  CALM_KEYS,
+  DAILY_KEYS,
+  FACT_KEYS,
   LOST_KEYS,
   QUIP_KEYS,
   TIP_KEYS,
   WON_KEYS,
   type BullLine,
+  type DailyFact,
 } from "@/features/game/bullLines";
 import { isRowHint, type Hint } from "@/features/game/hints";
 import { LANGUAGES } from "@/i18n/languages";
@@ -32,6 +36,9 @@ const toStatic = <Key extends Extract<BullLine, { kind: "static" }>["key"]>(
 const allHints: Hint[] = Object.values(SAMPLE_HINTS).flat();
 const toHintLines = (hints: Hint[]): BullLine[] =>
   hints.map((hint) => ({ kind: "hint", hint }));
+
+const toDailyLines = (facts: DailyFact[]): BullLine[] =>
+  facts.map((fact) => ({ kind: "daily", fact }));
 
 const HEADER_GROUPS: Group[] = [
   { title: "Quips", when: "Always", lines: toStatic(QUIP_KEYS) },
@@ -62,10 +69,57 @@ const SHIELD_GROUPS: Group[] = [
   },
 ];
 
+// Sample numbers: the real ones come from the clock and the player's results.
+const DAILY_GROUPS: Group[] = [
+  { title: "Calm", when: "Always", lines: toStatic(CALM_KEYS) },
+  {
+    title: "How it works",
+    when: "Always",
+    lines: [
+      ...toStatic(DAILY_KEYS),
+      ...toDailyLines([
+        { kind: "nextCode", msUntilNext: 3.4 * 3_600_000 },
+        { kind: "nextCode", msUntilNext: 25 * 60_000 },
+        { kind: "seed", dailyNumber: 12 },
+        { kind: "rules" },
+      ]),
+    ],
+  },
+  {
+    title: "Facts",
+    when: "Always",
+    lines: [
+      ...toStatic(FACT_KEYS),
+      ...toDailyLines([{ kind: "codeCount", codes: 1296 }]),
+    ],
+  },
+  {
+    title: "Your stats",
+    when: "After a finished daily code",
+    lines: toDailyLines([
+      { kind: "wins", won: 7, played: 9 },
+      { kind: "averageWin", guesses: 31 / 7 },
+      { kind: "bestStreak", days: 4 },
+    ]),
+  },
+];
+
+const DAILY_FACT_KEYS: Record<DailyFact["kind"], string> = {
+  nextCode: "bull.daily.nextCode",
+  seed: "bull.daily.seed",
+  rules: "bull.daily.rules",
+  codeCount: "bull.facts.codeCount",
+  wins: "bull.stats.wins",
+  averageWin: "bull.stats.averageWin",
+  bestStreak: "bull.stats.bestStreak",
+};
+
 function keyOf(line: BullLine): string {
   if (line.kind === "static") return line.key;
 
   if (line.kind === "noClues") return "bull.noClues";
+
+  if (line.kind === "daily") return DAILY_FACT_KEYS[line.fact.kind];
 
   return `bull.hints.${line.hint.kind}`;
 }
@@ -75,10 +129,11 @@ export function BullLinesPage() {
   const language =
     LANGUAGES.find(({ code }) => code === i18n.resolvedLanguage)?.label ??
     i18n.resolvedLanguage;
-  const lineCount = [...HEADER_GROUPS, ...SHIELD_GROUPS].reduce(
-    (total, group) => total + group.lines.length,
-    0,
-  );
+  const lineCount = [
+    ...HEADER_GROUPS,
+    ...SHIELD_GROUPS,
+    ...DAILY_GROUPS,
+  ].reduce((total, group) => total + group.lines.length, 0);
 
   return (
     <div className="flex flex-col gap-8 pb-12">
@@ -114,6 +169,14 @@ export function BullLinesPage() {
           ["Bubble", t("bull.says")],
         ]}
         groups={SHIELD_GROUPS}
+      />
+      <Bull
+        title="Shield bull, daily code"
+        labels={[
+          ["Button", t("bull.dailyButton")],
+          ["Bubble", t("bull.says")],
+        ]}
+        groups={DAILY_GROUPS}
       />
     </div>
   );

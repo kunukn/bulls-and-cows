@@ -1,6 +1,8 @@
+import { DAILY_DIFFICULTY } from "@/features/daily/daily";
 import { deduceHints, isRowHint, type Hint } from "./hints";
 import {
   cryptoRandomInt,
+  DIFFICULTIES,
   type Color,
   type Difficulty,
   type RandomInt,
@@ -53,15 +55,55 @@ export const LOST_KEYS = [
   "bull.lost.lesson",
 ] as const;
 
+/* The daily bull: calm, and nothing that steers the solve (0012). */
+export const CALM_KEYS = [
+  "bull.calm.breatheSlowly",
+  "bull.calm.thinkFirst",
+  "bull.calm.shoulders",
+  "bull.calm.closeEyes",
+  "bull.calm.feet",
+  "bull.calm.stretch",
+  "bull.calm.noRush",
+] as const;
+
+/* How the daily code works, in words that don't change from day to day. */
+export const DAILY_KEYS = [
+  "bull.daily.oneTry",
+  "bull.daily.sameCode",
+  "bull.daily.reveal",
+  "bull.daily.streak",
+  "bull.daily.noHints",
+] as const;
+
+/* Facts about Classic, the daily code's rules (DAILY_DIFFICULTY). */
+export const FACT_KEYS = [
+  "bull.facts.knuth",
+  "bull.facts.perfectAverage",
+] as const;
+
 type StaticKey =
   | (typeof QUIP_KEYS)[number]
   | (typeof TIP_KEYS)[number]
   | (typeof WON_KEYS)[number]
-  | (typeof LOST_KEYS)[number];
+  | (typeof LOST_KEYS)[number]
+  | (typeof CALM_KEYS)[number]
+  | (typeof DAILY_KEYS)[number]
+  | (typeof FACT_KEYS)[number];
+
+/* Daily lines worked out at click time: they carry what they say. */
+export type DailyFact =
+  | { kind: "nextCode"; msUntilNext: number }
+  | { kind: "seed"; dailyNumber: number }
+  | { kind: "rules" }
+  | { kind: "codeCount"; codes: number }
+  | { kind: "wins"; won: number; played: number }
+  | { kind: "averageWin"; guesses: number }
+  | { kind: "bestStreak"; days: number };
 
 export type BullLine =
   | { kind: "static"; key: StaticKey }
   | { kind: "hint"; hint: Hint }
+  | { kind: "daily"; fact: DailyFact }
   | { kind: "noClues" };
 
 type GameStatus = "playing" | "won" | "lost";
@@ -79,14 +121,45 @@ export type HintSituation = {
   current: readonly (Color | null)[];
 };
 
+/*
+ * The player's own daily results, as `summarize` in
+ * src/features/daily/store.ts reports them.
+ */
+export type DailyStats = {
+  played: number;
+  won: number;
+  bestStreak: number;
+  /* Wins per guess count: index 0 is a win on the first guess. */
+  distribution: readonly number[];
+};
+
+/*
+ * What the daily shield bull needs to know. Never the guesses: on the daily
+ * code it talks about the day, not the clues (0012).
+ */
+export type DailySituation = {
+  dailyNumber: number;
+  msUntilNext: number;
+  stats: DailyStats;
+};
+
 const toStatic = (keys: readonly StaticKey[]): BullLine[] =>
   keys.map((key) => ({ kind: "static", key }));
 
 const toHintLines = (hints: readonly Hint[]): BullLine[] =>
   hints.map((hint) => ({ kind: "hint", hint }));
 
+const toDailyLines = (facts: readonly DailyFact[]): BullLine[] =>
+  facts.map((fact) => ({ kind: "daily", fact }));
+
+/*
+ * A daily fact is the same line whatever its numbers: the countdown differs
+ * on every click, and would otherwise count as new each time.
+ */
 const isSameLine = (a: BullLine, b: BullLine) =>
-  JSON.stringify(a) === JSON.stringify(b);
+  a.kind === "daily" && b.kind === "daily"
+    ? a.fact.kind === b.fact.kind
+    : JSON.stringify(a) === JSON.stringify(b);
 
 /*
  * Picks a group, then a line in it, so each group gets an equal chance
@@ -157,4 +230,58 @@ export function pickHintLine(
   }
 
   return pickFrom([...byKind.values()].map(toHintLines), previous, randomInt);
+}
+
+/* The player's own numbers, once they have finished a daily code. */
+function statFacts({
+  played,
+  won,
+  bestStreak,
+  distribution,
+}: DailyStats): DailyFact[] {
+  if (played === 0) return [];
+
+  const facts: DailyFact[] = [{ kind: "wins", won, played }];
+  if (won > 0) {
+    const totalGuesses = distribution.reduce(
+      (total, wins, index) => total + wins * (index + 1),
+      0,
+    );
+    facts.push({ kind: "averageWin", guesses: totalGuesses / won });
+  }
+  if (bestStreak > 0) facts.push({ kind: "bestStreak", days: bestStreak });
+
+  return facts;
+}
+
+/*
+ * The shield bull on the daily code: calm words, how the day works, and
+ * numbers. Never tips or deductions, so everyone solves the shared code on
+ * their own (0012).
+ */
+export function pickDailyLine(
+  { dailyNumber, msUntilNext, stats }: DailySituation,
+  previous: BullLine | null,
+  randomInt: RandomInt = cryptoRandomInt,
+): BullLine {
+  const { pegs, colors } = DIFFICULTIES[DAILY_DIFFICULTY];
+  const groups = [
+    toStatic(CALM_KEYS),
+    [
+      ...toStatic(DAILY_KEYS),
+      ...toDailyLines([
+        { kind: "nextCode", msUntilNext },
+        { kind: "seed", dailyNumber },
+        { kind: "rules" },
+      ]),
+    ],
+    [
+      ...toStatic(FACT_KEYS),
+      ...toDailyLines([{ kind: "codeCount", codes: colors ** pegs }]),
+    ],
+  ];
+  const yours = toDailyLines(statFacts(stats));
+  if (yours.length > 0) groups.push(yours);
+
+  return pickFrom(groups, previous, randomInt);
 }

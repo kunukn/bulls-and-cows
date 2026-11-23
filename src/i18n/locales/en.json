@@ -168,6 +168,7 @@
     "button": "Ask Tyr",
     "hintButton": "Hint",
     "hintButtonNew": "New hint",
+    "dailyButton": "Ask Tyr about today's code",
     "says": "Tyr says",
     "quips": {
       "hello": "Moo moo… let's play a game!",
@@ -235,6 +236,35 @@
       "codesLeft_other": "{{count, number}} codes still fit your clues.",
       "oneLeft": "Only one code fits now. You can crack it!"
     },
-    "noClues": "Hmm, not enough clues yet. Make another guess!"
+    "noClues": "Hmm, not enough clues yet. Make another guess!",
+    "calm": {
+      "breatheSlowly": "Breathe in slowly… and out. The pegs can wait.",
+      "thinkFirst": "Take a moment to think before you place a peg.",
+      "shoulders": "Shoulders down, jaw loose. Now look again.",
+      "closeEyes": "Close your eyes for one breath. Then read your clues.",
+      "feet": "Feel your feet on the floor. Nothing here is in a hurry.",
+      "stretch": "Roll your shoulders, stretch your neck. Bulls do it too.",
+      "noRush": "You have all day: the code stays until midnight."
+    },
+    "daily": {
+      "oneTry": "One try a day. Your board is saved in this browser, so reloading won't give you another go.",
+      "sameCode": "Everyone gets the same code today. Share your result and compare.",
+      "reveal": "Revealing the code today counts as a loss.",
+      "streak": "Win days in a row for a streak. A missed day or a loss starts it over.",
+      "noHints": "No hints on the daily code. Today it's you and your clues.",
+      "nextCode": "A new code comes at midnight, your time. That's {{time}}.",
+      "seed": "Today's code isn't stored anywhere. It's worked out from the date (day #{{number, number}}), so every device gets the same one.",
+      "rules": "Today's rules are Classic ({{details}}). Colours can repeat, and you get {{guesses, number}} guesses."
+    },
+    "facts": {
+      "knuth": "In 1977, Donald Knuth showed any Classic code can be cracked in five guesses or fewer.",
+      "perfectAverage": "With perfect play, a Classic code takes about 4.3 guesses on average.",
+      "codeCount": "Classic has {{codes, number}} possible codes."
+    },
+    "stats": {
+      "wins": "Daily codes won: {{won, number}} of {{played, number}}.",
+      "averageWin": "Average guesses per daily win: {{guesses, number(maximumFractionDigits: 1)}}.",
+      "bestStreak": "Your best streak: {{days, number}} in a row."
+    }
   }
 }

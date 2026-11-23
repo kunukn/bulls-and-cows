@@ -162,6 +162,7 @@
     "button": "问问 Tyr",
     "hintButton": "提示",
     "hintButtonNew": "新提示",
+    "dailyButton": "问问 Tyr 每日密码的事",
     "says": "Tyr 说",
     "quips": {
       "hello": "哞哞……我们来玩个游戏吧！",
@@ -226,6 +227,35 @@
       "codesLeft_other": "还有 {{count, number}} 个密码符合你的线索。",
       "oneLeft": "只剩一个密码符合了，你能破解它！"
     },
-    "noClues": "嗯，线索还不够。再猜一次吧！"
+    "noClues": "嗯，线索还不够。再猜一次吧！",
+    "calm": {
+      "breatheSlowly": "慢慢吸气……再慢慢呼气。小钉可以等。",
+      "thinkFirst": "放小钉之前，先想一想。",
+      "shoulders": "放松肩膀，放松下巴。再看一遍。",
+      "closeEyes": "闭上眼睛，呼吸一次。然后再看你的线索。",
+      "feet": "感受双脚踩在地上。这里不用着急。",
+      "stretch": "转转肩膀，伸伸脖子。公牛也这样做。",
+      "noRush": "你有一整天：密码到午夜才换。"
+    },
+    "daily": {
+      "oneTry": "每天只有一次机会。你的棋盘保存在这个浏览器里，刷新页面也不会多一次机会。",
+      "sameCode": "今天大家的密码都一样。分享你的结果，比一比吧。",
+      "reveal": "今天揭晓密码就算输。",
+      "streak": "连续几天都赢就是连胜。错过一天或输一次，就从头开始。",
+      "noHints": "每日密码没有提示。今天全靠你和你的线索。",
+      "nextCode": "新密码在你当地的午夜出现，也就是{{time}}。",
+      "seed": "今天的密码没有存在任何地方。它是根据日期（第 {{number, number}} 天）算出来的，所以每台设备都一样。",
+      "rules": "今天用经典规则（{{details}}）。颜色可以重复，你有 {{guesses, number}} 次机会。"
+    },
+    "facts": {
+      "knuth": "1977 年，高德纳（Donald Knuth）证明：任何经典密码都能在五次以内猜出。",
+      "perfectAverage": "如果每一步都完美，经典密码平均大约要猜 4.3 次。",
+      "codeCount": "经典模式共有 {{codes, number}} 种可能的密码。"
+    },
+    "stats": {
+      "wins": "赢下的每日密码：{{won, number}} / {{played, number}}。",
+      "averageWin": "每次赢下每日密码平均用了 {{guesses, number(maximumFractionDigits: 1)}} 次。",
+      "bestStreak": "你的最佳连胜：{{days, number}} 天。"
+    }
   }
 }

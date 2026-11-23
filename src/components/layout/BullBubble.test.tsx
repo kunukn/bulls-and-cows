@@ -1,3 +1,5 @@
+import { dailyGameInput } from "@/features/daily/daily";
+import { TIP_KEYS } from "@/features/game/bullLines";
 import { paletteFor } from "@/features/game/logic";
 import type { gameMachine } from "@/features/game/machine";
 import {
@@ -5,6 +7,7 @@ import {
   useGameActorRef,
 } from "@/features/game/machine-context";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { i18n } from "@/i18n";
 import { MemoryRouter } from "react-router";
 import type { ActorRefFrom } from "xstate";
 import { BullBubble } from "./BullBubble";
@@ -54,5 +57,27 @@ describe("shield bull bubble", () => {
     act(() => actor.send({ type: "ADD_PEG", color }));
 
     expect(screen.getByRole("dialog", { name: "Tyr says" })).toBeVisible();
+  });
+});
+
+describe("shield bull bubble on the daily code", () => {
+  it("offers to talk about the day instead of a hint", () => {
+    render(
+      <MemoryRouter>
+        <GameActorProvider options={{ input: dailyGameInput(1) }}>
+          <BullBubble variant="shield" hasNewHint={false} />
+        </GameActorProvider>
+      </MemoryRouter>,
+    );
+
+    expect(screen.queryByRole("button", { name: "Hint" })).toBeNull();
+    fireEvent.click(
+      screen.getByRole("button", { name: "Ask Tyr about today's code" }),
+    );
+
+    // Before the first guess a practice game gives tips; the daily code never.
+    const tips = TIP_KEYS.map((key) => i18n.t(key));
+    const bubble = screen.getByRole("dialog", { name: "Tyr says" });
+    expect(tips).not.toContain(bubble.textContent);
   });
 });

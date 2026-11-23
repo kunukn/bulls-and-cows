@@ -1,7 +1,7 @@
 # 0011 — The bull gives hints from the player's own clues
 
 - **Status:** Accepted
-- **Updated:** 2026-11-22
+- **Updated:** 2026-11-23
 
 ## Context
 
@@ -25,6 +25,7 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - **Help never asks to be used.** The player should try to solve the game first. The shield bull is smaller and dimmer than the header bull, and nothing about it glows, pulses or uses an alert colour.
 - **A quiet marker shows when there's something new.** A small dimmed-yellow dot appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them.
 - **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull.
+- **The daily code is the exception.** There the shield bull gives no hints or tips, only calm words, how the day works and stats (0012).
 
 ## Alternatives considered
 
@@ -48,4 +49,4 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - What the player has seen lives in a non-persisted store keyed by the game (`src/features/game/store/hintsSeen.ts`), so a reload shows the marker again if there's anything to tell.
 - Facts are exact for the codes that are left, so a hint is never wrong. A property test checks every hint against the real secret over seeded games on each difficulty (`hints.test.ts`).
 - "Your row fits your clues" makes the bull a checker: a patient player can test pegs one at a time. That's accepted, because it only confirms what the clues already prove.
-- Line choice and its fairness rules live in `src/features/game/bullLines.ts`: `pickChatLine` for the header bull, `pickHintLine` for the shield bull. The bubble is `src/components/layout/BullBubble.tsx`, and `e2e/game.spec.ts` covers the click flow.
+- Line choice and its fairness rules live in `src/features/game/bullLines.ts`: `pickChatLine` for the header bull, `pickHintLine` for the shield bull, `pickDailyLine` for the shield bull on the daily code. The bubble is `src/components/layout/BullBubble.tsx`, and `e2e/game.spec.ts` covers the click flow.

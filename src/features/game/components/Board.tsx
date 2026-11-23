@@ -53,10 +53,15 @@ export function Board() {
   const hasStartHint = isPlaying && guesses.length === 0;
   const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
   const hasShieldBull = isPlaying && isHintsEnabled;
+  // The daily bull never reads the clues (0012), so it has no news to flag.
+  const isDaily = useGameSelector(
+    (snapshot) => snapshot.context.dailyNumber !== null,
+  );
+  const hasHints = hasShieldBull && !isDaily;
   // Deducing takes up to ~20 ms on Hard; redo it only when a guess is scored.
   const hintKeys = useMemo(
-    () => (hasShieldBull ? newsworthyHintKeys(difficulty, guesses) : []),
-    [hasShieldBull, difficulty, guesses],
+    () => (hasHints ? newsworthyHintKeys(difficulty, guesses) : []),
+    [hasHints, difficulty, guesses],
   );
   const seen = useHintsSeen((state) =>
     state.gameId === startedAt ? state.keys : NOTHING_SEEN,
