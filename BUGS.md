@@ -15,3 +15,10 @@ Expected: Candy holes stay opaque so sprinkles don't show inside them (decision 
 Actual: Upcoming rows put `opacity-60` on the whole pegs column (line 63), so the opaque holes turn 60% see-through and the board's sprinkles show inside every hole below the active row
 Repro: Settings → Board theme → Candy; look at the holes in rows 2–10
 Workaround: none
+
+2026-11-23
+Component: vite.config.ts (`sitemap` plugin)
+Expected: sitemap.xml lists only the pages players should find (`/`, `/daily`, `/highscores`)
+Actual: It lists every value in `paths`, so the unlinked developer pages `/debug` and `/debug/bull-lines` are advertised to search engines
+Repro: `curl https://www.tyrko.app/sitemap.xml`
+Workaround: none
