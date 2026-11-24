@@ -1,5 +1,6 @@
 import { BullIcon } from "@/components/icons/BullIcon";
 import { cn } from "@/utils/cn";
+import type { Ref } from "react";
 import {
   FEEDBACK_COLUMN,
   NUMBER_COLUMN,
@@ -15,6 +16,13 @@ type Props = {
   hasBull: boolean;
   /* Shows the bull's marker: a guess has proved something not yet shown. */
   hasNewHint: boolean;
+  /*
+   * On the daily code the bull gives no hints, only talk (0012), so it may
+   * invite a click at full size.
+   */
+  isDaily: boolean;
+  /* The hinged plate, for the idle knock (useShieldKnock). */
+  ref?: Ref<HTMLDivElement>;
 };
 
 /*
@@ -27,9 +35,17 @@ type Props = {
  * A transition, not a keyframe animation, so a new game closes
  * it again and a restored finished game shows it open without replaying.
  */
-export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
+export function SecretShield({
+  pegs,
+  isOpen,
+  hasBull,
+  hasNewHint,
+  isDaily,
+  ref,
+}: Props) {
   return (
     <div
+      ref={ref}
       aria-hidden
       data-open={isOpen}
       className="pointer-events-none absolute inset-0 origin-top [transform:perspective(2400px)_rotateX(0)] transition-transform duration-500 ease-in-out transform-3d data-[open=true]:[transform:perspective(2400px)_rotateX(90deg)] motion-reduce:transition-none"
@@ -56,23 +72,37 @@ export function SecretShield({ pegs, isOpen, hasBull, hasNewHint }: Props) {
         </div>
         <span className={cn(FEEDBACK_COLUMN, "grid place-items-center")}>
           {hasBull && (
-            <span className="relative">
-              {/*
-               * Embossed: the label colour plus a highlight under each ridge.
-               * A size down from the header's brand bull (size-7), so the two
-               * don't read as the same button and help stays in the background.
-               */}
-              <BullIcon className="size-6 text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]" />
-              {/*
-               * A quiet marker for a new fact: dimmed yellow, no glow, so it
-               * informs without asking to be clicked, and fades rather than
-               * pops for the same reason. The hairline keeps its edge on
-               * light shields. At the inner horn.
-               */}
-              <span
-                data-lit={hasNewHint}
-                className="absolute -start-1 -top-1 size-2 rounded-full bg-hint-marker opacity-0 ring-1 ring-black/30 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
-              />
+            /*
+             * A raised round pad in the shield's own plastic, so the bull
+             * reads as a button, not an engraving (0011). The shield ignores
+             * clicks, so it follows Board's see-through Hint button through
+             * the tray: lighter on hover, pushed down 1px while pressed.
+             */
+            <span className="grid size-9 place-items-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_2px_3px_var(--board-shield-drop)] transition-[translate,box-shadow,filter] duration-75 board-shield group-has-[[data-shield-bull]:active]/tray:translate-y-px group-has-[[data-shield-bull]:active]/tray:shadow-[inset_0_1px_0_rgb(255_255_255/0.1),0_1px_1px_var(--board-shield-drop)] group-has-[[data-shield-bull]:hover]/tray:brightness-110 motion-reduce:transition-none desk:size-11">
+              <span className="relative">
+                {/*
+                 * Embossed: the label colour plus a highlight under each ridge.
+                 * In practice a size down from the header's brand bull
+                 * (size-7), so the two don't read as the same button and help
+                 * stays in the background (0011).
+                 */}
+                <BullIcon
+                  className={cn(
+                    "text-board-shield-label drop-shadow-[0_1px_0_rgb(255_255_255/0.2)]",
+                    isDaily ? "size-7" : "size-6",
+                  )}
+                />
+                {/*
+                 * A quiet marker for a new fact: dimmed yellow, no glow, so it
+                 * informs without asking to be clicked, and fades rather than
+                 * pops for the same reason. The hairline keeps its edge on
+                 * light shields. At the inner horn.
+                 */}
+                <span
+                  data-lit={hasNewHint}
+                  className="absolute -start-1 -top-1 size-2 rounded-full bg-hint-marker opacity-0 ring-1 ring-black/30 transition-opacity duration-300 data-[lit=true]:opacity-100 motion-reduce:transition-none"
+                />
+              </span>
             </span>
           )}
         </span>

@@ -6,8 +6,10 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useHintsSeen } from "@/features/game/store/hintsSeen";
+import { useShieldBullFound } from "@/features/game/store/shieldBullFound";
 import { useSettings } from "@/features/game/store/settings";
 import { useGameSounds } from "@/features/game/useGameSounds";
+import { useShieldKnock } from "@/features/game/useShieldKnock";
 import { useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
@@ -69,6 +71,18 @@ export function Board() {
   const hasNewHint = hintKeys.some((key) => !seen.includes(key));
 
   /*
+   * Until the player first asks the shield bull, an idle shield knocks to
+   * show it's there (0011). Not on the daily code: its bull says "Ask Tyr".
+   */
+  const shieldRef = useRef<HTMLDivElement>(null);
+  const hasFoundShieldBull = useShieldBullFound((state) => state.hasFound);
+  useShieldKnock(shieldRef, {
+    isActive: hasHints && !hasFoundShieldBull,
+    current,
+    guesses,
+  });
+
+  /*
    * Keep the active row visible on small screens as the board grows, clear
    * of the sticky dock by the row's scroll-margin. Measured by hand rather
    * than scrollIntoView: iOS Safari's "nearest" stopped with row 9 of 10
@@ -119,7 +133,8 @@ export function Board() {
         aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}
         className={cn(
           ROW_LAYOUT,
-          "relative mb-3 rounded-lg bg-board-tray py-2",
+          // group/tray: the shield's bull pad follows the Hint button's state.
+          "group/tray relative mb-3 rounded-lg bg-board-tray py-2",
         )}
       >
         <span aria-hidden className={NUMBER_COLUMN} />
@@ -143,10 +158,12 @@ export function Board() {
           )}
         </span>
         <SecretShield
+          ref={shieldRef}
           pegs={pegs}
           isOpen={!isPlaying}
           hasBull={hasShieldBull}
           hasNewHint={hasNewHint}
+          isDaily={isDaily}
         />
       </div>
       {hasStartHint && (

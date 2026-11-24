@@ -24,6 +24,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useHintsSeen } from "@/features/game/store/hintsSeen";
+import { useShieldBullFound } from "@/features/game/store/shieldBullFound";
 import { cn } from "@/utils/cn";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
@@ -90,6 +91,7 @@ export function BullBubble(props: Props) {
   const actor = useGameActorRef();
   const isPlayPage = useMatch({ path: paths.play, end: true }) !== null;
   const markSeen = useHintsSeen((state) => state.markSeen);
+  const markShieldBullFound = useShieldBullFound((state) => state.markFound);
   const [isOpen, setIsOpen] = useState(false);
   const [line, setLine] = useState<BullLine | null>(null);
   const [placement, setPlacement] = useState(HEADER_PLACEMENT);
@@ -128,6 +130,8 @@ export function BullBubble(props: Props) {
 
     // Measured per click, so a resized or rotated window gets a fresh choice.
     setPlacement(shieldPlacement(event.currentTarget));
+    // Found once, the shield stops knocking for good (useShieldKnock).
+    markShieldBullFound();
 
     // One shared code a day: the bull keeps the solving to the player (0012).
     if (dailyNumber !== null) {
@@ -161,12 +165,12 @@ export function BullBubble(props: Props) {
           type="button"
           aria-label={label}
           title={label}
+          // The shield's raised pad shows this button's hover and press.
+          data-shield-bull={isShield || undefined}
           onClick={handleClick}
           className={cn(
             "shrink-0 cursor-pointer rounded-md transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-            isShield
-              ? "size-full hover:bg-white/10"
-              : "text-subtle hover:text-foreground",
+            isShield ? "size-full" : "text-subtle hover:text-foreground",
           )}
         >
           {!isShield && <BullIcon className="size-7" shouldBlink />}
