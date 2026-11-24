@@ -10,6 +10,7 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "icons": "node scripts/generate-icons.ts",
+    "social-preview": "playwright install chromium && node scripts/generate-social-preview.ts",
     "lint": "node scripts/lint-with-timing.js",
     "typecheck": "node scripts/tscheck-with-timing.js",
     "format": "oxfmt",
