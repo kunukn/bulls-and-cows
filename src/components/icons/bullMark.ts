@@ -16,6 +16,9 @@ export const BULL_COLOR = "#f1f5f9";
 
 export const TILE_COLOR = "#0f172a";
 
+/* Separate so the header bull can blink (BullIcon). */
+export const BULL_EYE_PATHS = ["M10 11h.01", "M14 11h.01"];
+
 export const BULL_PATHS: string[] = [
   // Horns, mirrored around x = 12.
   "M7 8C4.4 8 2.5 6.3 2.5 3.5",
@@ -23,8 +26,7 @@ export const BULL_PATHS: string[] = [
   // Head narrowing into a rounded muzzle.
   "M7 8h10l-1.3 6.2c1.9.8 2.3 2.4 2.3 3.3 0 2-2.2 3.5-6 3.5s-6-1.5-6-3.5c0-.9.4-2.5 2.3-3.3Z",
   // Eyes and nostrils: zero-length segments drawn as dots by the round caps.
-  "M10 11h.01",
-  "M14 11h.01",
+  ...BULL_EYE_PATHS,
   "M10.5 17.8h.01",
   "M13.5 17.8h.01",
 ];

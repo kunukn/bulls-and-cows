@@ -38,6 +38,26 @@
   --animate-feedback-pop: feedback-pop 160ms ease-out backwards;
   /* Win: a bright wave across the winning row. */
   --animate-peg-shimmer: peg-shimmer 420ms ease-in-out backwards;
+  /* The header bull blinks now and then (0001). */
+  --animate-bull-blink: bull-blink 31s linear 5s infinite;
+
+  /* Two blinks apart, then a double blink: irregular, like a real one. */
+  @keyframes bull-blink {
+    0%,
+    0.6%,
+    55%,
+    55.6%,
+    56.4%,
+    57%,
+    100% {
+      transform: scaleY(1);
+    }
+    0.3%,
+    55.3%,
+    56.7% {
+      transform: scaleY(0.1);
+    }
+  }
 
   @keyframes peg-shimmer {
     0%,

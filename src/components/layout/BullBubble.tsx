@@ -169,7 +169,7 @@ export function BullBubble(props: Props) {
               : "text-subtle hover:text-foreground",
           )}
         >
-          {!isShield && <BullIcon className="size-7" />}
+          {!isShield && <BullIcon className="size-7" shouldBlink />}
         </button>
       </PopoverTrigger>
       {isShield && (
