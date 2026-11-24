@@ -1,7 +1,7 @@
 # 0012 — One daily code, the same for everyone
 
 - **Status:** Accepted
-- **Updated:** 2026-11-23
+- **Updated:** 2026-11-24
 
 ## Context
 
@@ -24,7 +24,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
 - **The daily header shows what makes the day different.** It takes the difficulty picker's place and height, and shows the date, the rules, "1 try", the current streak (when there is one) and a link back to practice.
 - **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
-- **It is played on www.tyrko.app only.** The GitHub Pages mirror shows the same row, but it links to the main site, and the mirror's own daily URL goes there too. Each site keeps its own save, so a second site would be a second attempt and a second streak.
+- **It is played on every site.** The GitHub Pages mirror and the itch.io embed host the daily code too, so nobody is sent away from the site they chose. Each site keeps its own save, so a second site is a second attempt and a second streak; that is accepted, since results are shared, not ranked. A shared result always links to www.tyrko.app/daily, wherever it was played.
 - **A new day never interrupts a game, or a result still to share.** An untouched board moves on to today's code when the app comes back into view. A finished board stays, through a reload or a reboot too, so the result can still be shared the next day. Play today's code moves on. Only yesterday's board is kept: an older finished board, or an unfinished one from an earlier day, gives way to today's code when the page loads. A game under way stays until it's finished or the page is reloaded.
 
 ## Alternatives considered
@@ -37,7 +37,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A header icon.** The header has room for four icons at 320px, and it has four.
 - **One save shared with practice.** Less code, but starting either game would throw away the other, and the finished daily board is what keeps the day to one attempt.
 - **Daily wins on the high score lists.** One list fewer to explain, but the name prompt would sit on top of the stats, which are the daily game's own score.
-- **The daily code on the mirror as well.** Nothing to build, but a player could solve the day on one site and replay it on the other, and stats would split between the two.
+- **The daily code on www.tyrko.app only.** Mirrors linking there keeps one attempt and one streak per player, but it sends players away from the site they chose. Inside the itch.io embed the link would load the main site in the game frame, where browsers keep its storage apart from a visit to www.tyrko.app, so it wouldn't prevent a second attempt anyway.
+- **A shared link to the site it was played on.** Needs no constant, but a mirror's link advertises the copy, and an embed's own address isn't a page anyone can open.
 - **A code the player can't work out.** Needs a server. The code follows from the date and the source, and changing the device clock or clearing site data allows another go. That is fine for a friendly game.
 - **Coloured squares in the shared result.** Familiar from word games, but they read as one square per slot, which the feedback pegs don't mean.
 - **Bull and cow emoji in the shared result.** On theme, but wider than the circles, and harder to read at a glance.
@@ -58,6 +59,6 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - The post links are each site's documented compose URL (`composeUrl` in `src/features/daily/share.ts`). If a site moves its URL, only that table changes. Logos come from Simple Icons (CC0) and are drawn in the text colour.
 - Stats live in one browser: clearing site data clears them, and they don't follow the player to another device.
 - A day that was started but never finished counts as missed.
-- A new mirror has to set `VITE_DAILY_URL` in its build, as `deploy.yml` does; without it the mirror hosts its own daily game.
+- The shared link is `SHARE_DAILY_URL` in `src/features/daily/daily.ts`. If the main site moves, change it there.
 - Daily bull lines are picked by `pickDailyLine` in `src/features/game/bullLines.ts`. The averages in its facts are published results for Classic (Knuth 1977; Koyama and Lai 1993), not measured in the app.
 - Guarded by the tests in `src/features/daily/`, `pickDailyLine` in `src/features/game/bullLines.test.ts`, the daily cases in `src/features/game/machine.test.ts`, the daily default in `src/features/game/store/settings.test.ts`, and `e2e/daily.spec.ts`.

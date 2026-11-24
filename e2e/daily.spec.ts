@@ -99,7 +99,8 @@ test("share copies the result without the code", async ({ page, context }) => {
       "",
       "⚫⚫⚫⚫",
       "",
-      new URL("/daily", page.url()).href,
+      // The main site, wherever the day was played.
+      "https://www.tyrko.app/daily",
     ].join("\n"),
   );
 

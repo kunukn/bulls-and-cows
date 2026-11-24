@@ -9,6 +9,4 @@ interface ImportMetaEnv {
   readonly VITE_IS_VERCEL_BUILD: boolean;
   /* "1" = history routing, "0" = hash routing (GitHub Pages); see vite.config.ts. */
   readonly VITE_USE_HISTORY_ROUTING: "0" | "1";
-  /* Mirror builds only: the main site's daily page, e.g. https://www.tyrko.app/daily. */
-  readonly VITE_DAILY_URL?: string;
 }

@@ -10,13 +10,10 @@ import type { GameEvent, GameInput } from "@/features/game/machine";
 export const DAILY_DIFFICULTY: Difficulty = "classic";
 
 /*
- * Set on builds of a mirror site: where the daily code is played instead.
- * Each site keeps its own save, so a second site would be a second attempt
- * and a second streak (0012).
+ * Where a shared result links, whichever site it was played on: the main
+ * site, never a mirror or an embed's own address (0012).
  */
-export function mainSiteDailyUrl(): string | undefined {
-  return import.meta.env.VITE_DAILY_URL || undefined;
-}
+export const SHARE_DAILY_URL = "https://www.tyrko.app/daily";
 
 const MS_PER_DAY = 86_400_000;
 

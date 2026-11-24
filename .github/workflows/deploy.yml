@@ -31,9 +31,6 @@ jobs:
           VITE_ROBOTS_NOINDEX: "1"
           # No SPA fallback on GitHub Pages: use hash URLs (/#/highscores).
           VITE_USE_HISTORY_ROUTING: "0"
-          # The daily code is played on tyrko.app only: each site has its own
-          # save, so a second site would be a second attempt (decision 0012).
-          VITE_DAILY_URL: https://www.tyrko.app/daily
 
       # Vercel reads vercel.json from the pushed branch, so main's config can't stop gh-pages builds.
       - name: Disable Vercel builds for the gh-pages branch

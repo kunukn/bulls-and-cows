@@ -1,14 +1,8 @@
 import { paths } from "@/app/paths";
-import { dailyNumber, mainSiteDailyUrl } from "@/features/daily/daily";
+import { dailyNumber } from "@/features/daily/daily";
 import { useDailyResults } from "@/features/daily/store";
 import { useSettings } from "@/features/game/store/settings";
-import {
-  CalendarDays,
-  ChevronRight,
-  CircleCheck,
-  CircleX,
-  ExternalLink,
-} from "lucide-react";
+import { CalendarDays, ChevronRight, CircleCheck, CircleX } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -26,9 +20,13 @@ export function DailyLink() {
   const result = useDailyResults((state) => state.results[today]);
   const title = t("daily.numbered", { number: today });
   const StatusIcon = result?.isWon ? CircleCheck : CircleX;
-  const mainSiteUrl = mainSiteDailyUrl();
-  const name = (
-    <>
+
+  return (
+    <Link
+      to={paths.daily}
+      title={isMinimalText ? title : undefined}
+      className={linkClass}
+    >
       <CalendarDays aria-hidden className="size-4 shrink-0" />
       {isMinimalText ? (
         <>
@@ -40,36 +38,6 @@ export function DailyLink() {
       ) : (
         title
       )}
-    </>
-  );
-
-  /*
-   * A mirror site sends the player to the main site, and says so: results
-   * live there, so this site has no solved state to show.
-   */
-  if (mainSiteUrl) {
-    return (
-      <a
-        href={mainSiteUrl}
-        title={isMinimalText ? title : undefined}
-        className={linkClass}
-      >
-        {name}
-        <span className={endClass}>
-          {new URL(mainSiteUrl).host}
-          <ExternalLink aria-hidden className="size-4" />
-        </span>
-      </a>
-    );
-  }
-
-  return (
-    <Link
-      to={paths.daily}
-      title={isMinimalText ? title : undefined}
-      className={linkClass}
-    >
-      {name}
       <span className={endClass}>
         {result ? (
           <>

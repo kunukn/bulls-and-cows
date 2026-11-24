@@ -4,6 +4,7 @@ import {
   dailyNumber,
   msUntilNextDaily,
   nextDailyEvent,
+  SHARE_DAILY_URL,
 } from "@/features/daily/daily";
 import { BlueskyIcon } from "@/components/icons/BlueskyIcon";
 import { ThreadsIcon } from "@/components/icons/ThreadsIcon";
@@ -39,7 +40,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useHref } from "react-router";
+import { Link } from "react-router";
 
 const SECONDARY_BUTTON_CLASS =
   "flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
@@ -272,7 +273,6 @@ export function DailyResultPanel() {
   const results = useDailyResults((state) => state.results);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const [now, setNow] = useState(() => new Date());
-  const dailyHref = useHref(paths.daily);
 
   // Drives the countdown, and notices midnight while the panel is open.
   useEffect(() => {
@@ -298,7 +298,7 @@ export function DailyResultPanel() {
     }),
     guesses: context.guesses,
     pegs,
-    url: new URL(dailyHref, window.location.href).href,
+    url: SHARE_DAILY_URL,
   };
   const percentFormat = new Intl.NumberFormat(i18n.language, {
     style: "percent",

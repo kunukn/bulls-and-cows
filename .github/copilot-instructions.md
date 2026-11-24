@@ -14,7 +14,7 @@ right spot) and **cows** (white: right colour, wrong spot).
   [`src/features/game/logic.ts`](../src/features/game/logic.ts).
 - **High scores:** top 10 per difficulty in `localStorage`, ranked by fewest
   guesses, then fastest time.
-- **Daily code:** one code per local calendar day, the same for every player, seeded from the date (no server). Classic rules, one attempt, its own save and stats. Lives in [`src/features/daily/`](../src/features/daily/daily.ts); rules in decision 0012. Played on tyrko.app only: the GitHub Pages build sets `VITE_DAILY_URL` (in `deploy.yml`), which turns its daily row and `/daily` route into links to the main site.
+- **Daily code:** one code per local calendar day, the same for every player, seeded from the date (no server). Classic rules, one attempt, its own save and stats. Lives in [`src/features/daily/`](../src/features/daily/daily.ts); rules in decision 0012. Played on every site (tyrko.app, the GitHub Pages mirror, the itch.io embed), each with its own save; a shared result always links to tyrko.app (`SHARE_DAILY_URL`).
 - **Pages:** game (`/`), daily code (`/daily`) and high scores (`/highscores`). History routing (`createBrowserRouter`); the GitHub Pages mirror builds with hash routing (`VITE_USE_HISTORY_ROUTING=0` in `deploy.yml`) because it has no SPA fallback.
 
 Pure rules (secret generation, scoring) live in `logic.ts`. The XState machine
