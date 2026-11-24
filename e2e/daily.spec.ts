@@ -91,24 +91,28 @@ test("share copies the result without the code", async ({ page, context }) => {
   await page.getByRole("button", { name: "Share" }).click();
   await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
 
-  const text = await page.evaluate(() => navigator.clipboard.readText());
   // A win on the first guess: one line, every peg a bull (Classic: 4 of 10).
-  expect(text).toBe(
+  const resultText = (bull: string) =>
     [
       `Tyr & Ko · Daily code #${number} · 1/10`,
       "",
-      "⚫⚫⚫⚫",
+      bull.repeat(4),
       "",
       // The main site, wherever the day was played.
       "https://www.tyrko.app/daily",
-    ].join("\n"),
-  );
+    ].join("\n");
+  const text = await page.evaluate(() => navigator.clipboard.readText());
+  expect(text).toBe(resultText("⚫"));
 
-  // The post links fill in the same text, ready for the player to confirm.
-  for (const site of ["X", "Threads", "Bluesky"]) {
+  /*
+   * The post links fill in the same result, ready for the player to confirm.
+   * Threads gets text shapes, since its post link breaks emoji (0012).
+   */
+  const bullBySite = { X: "⚫", Threads: "●", Bluesky: "⚫" };
+  for (const [site, bull] of Object.entries(bullBySite)) {
     const link = page.getByRole("link", { name: `Post on ${site}` });
     const href = await link.getAttribute("href");
-    expect(new URL(href ?? "").searchParams.get("text")).toBe(text);
+    expect(new URL(href ?? "").searchParams.get("text")).toBe(resultText(bull));
   }
 });
 
