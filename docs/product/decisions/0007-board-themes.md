@@ -31,6 +31,7 @@ There are six themes, each with its own hue or lightness: Neon (navy, the defaul
 - Bull and cow pegs share one outline from a `--board-key-ring` token, in a colour that stands out from the board (light on dark themes, slate on Paper, violet on Candy), so both look the same size on every board.
 - Board shadows come from tokens so the light boards don't look heavy: `--board-drop` (board) and `--board-shield-drop` (secret shield) are black at 40% on dark themes and a faint slate on Paper, violet on Candy; `--board-hole-shade` (hole inset) is black at 50% on dark themes and 25% on Paper and Candy.
 - On Paper, holes are slate with a darker rim and inset shadow, so they read as holes, not dots. On Candy they are opaque so sprinkles stay out of them.
+- Rows not reached yet recede. On most themes their holes fade to 60%; fading would let Candy's sprinkles through, so there they stay opaque in a slightly darker lavender (`--board-upcoming-opacity`, `--board-hole-upcoming`).
 - Pegs stand out on Candy because the board is much lighter than they are, even where the hue is close (the purple peg on lavender).
 - Candy's sprinkles are layered CSS gradients in `--board-surface`, no images.
 - Wood's grain is an inline SVG `feTurbulence` noise (a `data:` URI in `--board-surface`), stretched along one axis so it reads as grain; no image file. Plain gradients only gave stripes.

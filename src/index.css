@@ -271,6 +271,9 @@
   --board-drop: oklch(0 0 0 / 40%);
   --board-shield-drop: oklch(0 0 0 / 40%);
   --board-hole-shade: oklch(0 0 0 / 50%);
+  /* Rows not reached yet recede: faded, with each theme's own hole (0007). */
+  --board-upcoming-opacity: 60%;
+  --board-hole-upcoming: var(--board-hole);
 }
 
 /*
@@ -488,6 +491,9 @@
   --board-tray: oklch(1 0 0 / 50%);
   /* Opaque, so sprinkles don't show inside the holes. */
   --board-hole: oklch(0.985 0.01 294);
+  /* Fading would let sprinkles through, so unreached holes recede by tint. */
+  --board-upcoming-opacity: 100%;
+  --board-hole-upcoming: oklch(0.955 0.02 294);
   --board-hole-ring: oklch(0.811 0.111 293.571 / 60%); /* violet-300 */
   --board-active: oklch(1 0 0 / 55%);
   --board-ring: oklch(0.769 0.188 70.08); /* amber-500 */

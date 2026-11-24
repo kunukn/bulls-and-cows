@@ -60,7 +60,14 @@ export function GuessRow({
       >
         {rowNumber}
       </span>
-      <div className={cn(PEGS_COLUMN, isUpcoming && "opacity-60")}>
+      <div
+        className={cn(
+          PEGS_COLUMN,
+          // Per-theme: Candy's opaque holes recede by tint, not fade (0007).
+          isUpcoming &&
+            "opacity-(--board-upcoming-opacity) [--board-hole:var(--board-hole-upcoming)]",
+        )}
+      >
         {pegs.map((color, index) =>
           isActive && onSelectSlot ? (
             <span key={index} className="group relative">
