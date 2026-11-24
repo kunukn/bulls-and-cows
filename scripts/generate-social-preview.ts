@@ -9,9 +9,15 @@
  *
  * The secret is random, so each run shows different colours, but the clues
  * always tell the same story: five guesses getting closer, row 6 waiting.
+ *
+ * It also stamps the image's content hash into index.html
+ * (`social-preview.png?v=<hash>`). Share previews are cached by URL, so a
+ * new URL makes X, Facebook, LinkedIn and chat apps fetch the new card the
+ * next time they read the page, instead of showing the old one for weeks.
  */
 import { chromium, type Page } from "@playwright/test";
-import { writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync } from "node:fs";
 import { createServer } from "vite";
 import {
   BULL_PATHS,
@@ -27,6 +33,9 @@ import {
 } from "../src/features/game/logic.ts";
 
 const OUTPUT = "public/social-preview.png";
+const HTML = "index.html";
+/* The og:image and twitter:image URLs, with or without a version. */
+const IMAGE_URL = /social-preview\.png(\?v=[\w-]*)?"/g;
 const CARD = { width: 1280, height: 640 };
 
 /* Where the app sits in the card, and how much of it shows. */
@@ -142,6 +151,21 @@ function bullSvg(size: number): string {
   return `<svg width="${size}" height="${size}" viewBox="${BULL_VIEWBOX}" fill="none" stroke="#f1f5f9" stroke-width="${BULL_STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
 }
 
+/* Points the meta tags at this exact image; returns the new version. */
+function stampVersion(image: Buffer): string {
+  const version = createHash("sha256").update(image).digest("hex").slice(0, 8);
+  const html = readFileSync(HTML, "utf8");
+  const count = html.match(IMAGE_URL)?.length ?? 0;
+  if (count === 0) throw new Error(`No social-preview.png URL in ${HTML}`);
+
+  writeFileSync(
+    HTML,
+    html.replaceAll(IMAGE_URL, `social-preview.png?v=${version}"`),
+  );
+
+  return version;
+}
+
 /* The card's own copy: marketing for link previews, English only. */
 function cardHtml(appImage: Buffer): string {
   const chips = [
@@ -236,8 +260,10 @@ try {
   const cardPage = await browser.newPage({ viewport: CARD });
   await cardPage.setContent(cardHtml(appImage));
   await cardPage.evaluate(() => document.fonts.ready);
-  writeFileSync(OUTPUT, await cardPage.screenshot());
-  console.log(`Wrote ${OUTPUT}`);
+  const image = await cardPage.screenshot();
+  writeFileSync(OUTPUT, image);
+  const version = stampVersion(image);
+  console.log(`Wrote ${OUTPUT}; ${HTML} now points at ?v=${version}`);
 } finally {
   await browser.close();
   await server.close();
