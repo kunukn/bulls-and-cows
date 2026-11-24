@@ -1,5 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { execFileSync } from "node:child_process";
 import path from "path";
 import { defineConfig, loadEnv, type PluginOption } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
@@ -82,15 +83,45 @@ function sitemap(isEnabled: boolean): PluginOption {
   };
 }
 
-/* UTC build stamp shown in the Settings popover, e.g. `Y26-11-18_2127`. */
+/*
+ * Short hash of the commit being built, so a hand-uploaded build (itch.io)
+ * can be matched to `git log`. Vercel builds have no .git folder, so read its
+ * env var first; GitHub Actions sets GITHUB_SHA. A local build from a working
+ * tree with uncommitted changes gets "-dirty". Empty when git isn't available.
+ */
+function commitHash(): string {
+  const fromCi = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA;
+  if (fromCi) return fromCi.slice(0, 7);
+
+  try {
+    const git = (...args: string[]) =>
+      execFileSync("git", args, {
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim();
+    const hash = git("rev-parse", "--short=7", "HEAD");
+    const isDirty = git("status", "--porcelain") !== "";
+
+    return isDirty ? `${hash}-dirty` : hash;
+  } catch {
+    return "";
+  }
+}
+
+/*
+ * UTC build stamp and commit shown in the Settings footer, e.g.
+ * `Y26-11-18_2127 · accac8e`.
+ */
 function buildStamp(date = new Date()): string {
   const pad = (value: number) => String(value).padStart(2, "0");
   const year = String(date.getUTCFullYear()).slice(2);
   const month = pad(date.getUTCMonth() + 1);
   const day = pad(date.getUTCDate());
   const time = `${pad(date.getUTCHours())}${pad(date.getUTCMinutes())}`;
+  const stamp = `Y${year}-${month}-${day}_${time}`;
+  const hash = commitHash();
 
-  return `Y${year}-${month}-${day}_${time}`;
+  return hash ? `${stamp} · ${hash}` : stamp;
 }
 
 export default defineConfig(async ({ command, mode }) => {
