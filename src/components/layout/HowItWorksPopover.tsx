@@ -45,6 +45,9 @@ type HowItWorksPopoverProps = {
 export function HowItWorksPopover({ isDailyPage }: HowItWorksPopoverProps) {
   const { t } = useTranslation();
   const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
+  // The shield bull helps only in practice, and only with hints on (0011).
+  const hasHintStep =
+    useSettings((state) => state.isHintsEnabled) && !isDailyPage;
 
   const formatRules = (difficulty: Difficulty) => {
     const config = DIFFICULTIES[difficulty];
@@ -98,6 +101,7 @@ export function HowItWorksPopover({ isDailyPage }: HowItWorksPopoverProps) {
             {STEP_KEYS.map((key) => (
               <li key={key}>{t(key)}</li>
             ))}
+            {hasHintStep && <li>{t("help.stepBull")}</li>}
           </ol>
         </section>
 

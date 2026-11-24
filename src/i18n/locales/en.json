@@ -112,6 +112,7 @@
     "step4": "Each white peg is a cow: right colour, wrong spot.",
     "step5": "The coloured and white pegs don't say which spot they mean. That's the puzzle!",
     "step6": "Crack the code before you run out of rows.",
+    "stepBull": "Stuck? Tap the bull on the shield for a hint.",
     "keyboardTitle": "Keyboard",
     "keyboardColors": "Number keys add a colour.",
     "keyboardUndo": "Backspace removes the last colour.",

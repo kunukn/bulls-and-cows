@@ -112,6 +112,7 @@
     "step4": "Chaque pion blanc est une vache : bonne couleur, mauvaise place.",
     "step5": "Les pions colorés et blancs ne disent pas de quelle place ils parlent. C'est ça, l'énigme !",
     "step6": "Trouve le code avant d'avoir utilisé toutes les lignes.",
+    "stepBull": "Bloqué ? Touche le taureau sur le cache pour un indice.",
     "keyboardTitle": "Clavier",
     "keyboardColors": "Les touches chiffres ajoutent une couleur.",
     "keyboardUndo": "Retour arrière enlève la dernière couleur.",
