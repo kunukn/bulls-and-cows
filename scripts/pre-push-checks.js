@@ -5,7 +5,7 @@ const isWin = process.platform === "win32";
 
 const tasks = [
   {
-    name: "TS check",
+    name: "TS app",
     /*
      * pnpm exec, not npx: pnpm passes pnpm-only npm_config_* vars to scripts,
      * and npx (npm) warns "Unknown env config" on them.
@@ -24,6 +24,24 @@ const tasks = [
       "--noEmit",
       "--tsBuildInfoFile",
       "node_modules/.tmp/tsc-check.app.tsbuildinfo",
+    ],
+  },
+  {
+    /*
+     * e2e and config files: otherwise only `tsc -b` in pnpm build checks them.
+     * --incremental because tsconfig.node.json sets no `incremental` of its own.
+     */
+    name: "TS node",
+    cmd: "pnpm",
+    args: [
+      "exec",
+      "tsc",
+      "--project",
+      "tsconfig.node.json",
+      "--noEmit",
+      "--incremental",
+      "--tsBuildInfoFile",
+      "node_modules/.tmp/tsc-check.node.tsbuildinfo",
     ],
   },
   {
