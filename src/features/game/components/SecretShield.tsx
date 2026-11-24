@@ -1,6 +1,5 @@
 import { BullIcon } from "@/components/icons/BullIcon";
 import { cn } from "@/utils/cn";
-import type { Ref } from "react";
 import {
   FEEDBACK_COLUMN,
   NUMBER_COLUMN,
@@ -21,8 +20,6 @@ type Props = {
    * invite a click at full size.
    */
   isDaily: boolean;
-  /* The hinged plate, for the idle knock (useShieldKnock). */
-  ref?: Ref<HTMLDivElement>;
 };
 
 /*
@@ -41,11 +38,9 @@ export function SecretShield({
   hasBull,
   hasNewHint,
   isDaily,
-  ref,
 }: Props) {
   return (
     <div
-      ref={ref}
       aria-hidden
       data-open={isOpen}
       className="pointer-events-none absolute inset-0 origin-top [transform:perspective(2400px)_rotateX(0)] transition-transform duration-500 ease-in-out transform-3d data-[open=true]:[transform:perspective(2400px)_rotateX(90deg)] motion-reduce:transition-none"

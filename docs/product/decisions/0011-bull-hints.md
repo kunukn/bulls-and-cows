@@ -23,7 +23,7 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - Hints are free: they don't change the score, the clock or high scores.
 - No hint kind crowds out the others. A random pick chooses the kind first, then a fact of that kind.
 - **Help never asks to be used.** The player should try to solve the game first. The shield bull is smaller and dimmer than the header bull, and nothing about it glows, pulses or uses an alert colour.
-- **The bull is made known once, then left alone.** Until the player first asks the shield bull, the shield knocks twice on its hinge after 20 s without input, at most once a minute, like someone tapping from inside. The first click on the bull ends it for good, on this device. How it works also says "Stuck? Tap the bull on the shield for a hint." while hints are on. Knowing the bull is there isn't being asked to use it. The bull also sits on a raised round pad in the shield's own plastic, so it looks like a button rather than an engraving: lighter on hover, pushed down a pixel while pressed. The header bull has no pad.
+- **The bull looks like a button.** It sits on a raised round pad in the shield's own plastic, so it reads as something to press rather than an engraving: lighter on hover, pushed down a pixel while pressed. The header bull has no pad. How it works also says "Stuck? Tap the bull on the shield for a hint." while hints are on. Knowing the bull is there isn't being asked to use it.
 - **A quiet marker shows when there's something new.** A small dimmed-yellow dot appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them.
 - **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull.
 - **The daily code is the exception.** There the shield bull gives no hints or tips, only calm words, how the day works and stats (0012).
@@ -39,6 +39,7 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - **A pale-blue marker.** Distinct from the bull on all six shields; tried, and the dimmed yellow was preferred.
 - **An ivory marker.** Distinct on dark shields, but it is the cow peg's colour and sits beside the feedback column.
 - **A glowing yellow light for new hints.** Easy to notice, but it reads as a notification and pulls the player into clicking before they've thought for themselves.
+- **Knocking the shield after the player goes idle, until the bull is first asked.** Makes the bull known, but it moves the board on the app's timing, and the raised pad already shows the bull is a button.
 - **An "Ask Tyr" label moulded under the bull.** Clear, but it adds text to the board, which keeps words to a minimum.
 - **A light band across the shield, or a blinking shield bull.** Ambient motion that drew the eye (0001); the moulded bull is plastic and can't blink.
 - **Only a dot on the header bull.** No new board element, but the header is out of view while playing.
@@ -52,5 +53,4 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - What the player has seen lives in a non-persisted store keyed by the game (`src/features/game/store/hintsSeen.ts`), so a reload shows the marker again if there's anything to tell.
 - Facts are exact for the codes that are left, so a hint is never wrong. A property test checks every hint against the real secret over seeded games on each difficulty (`hints.test.ts`).
 - "Your row fits your clues" makes the bull a checker: a patient player can test pegs one at a time. That's accepted, because it only confirms what the clues already prove.
-- The knock is `useShieldKnock` (`src/features/game/useShieldKnock.ts`), wired in `Board.tsx`; whether the bull has been found is the persisted `app:shield-bull-found` store (`src/features/game/store/shieldBullFound.ts`), set on any click on the shield bull. It isn't a setting, so resetting settings doesn't bring the knock back.
 - Line choice and its fairness rules live in `src/features/game/bullLines.ts`: `pickChatLine` for the header bull, `pickHintLine` for the shield bull, `pickDailyLine` for the shield bull on the daily code. The bubble is `src/components/layout/BullBubble.tsx`, and `e2e/game.spec.ts` covers the click flow.
