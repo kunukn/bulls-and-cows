@@ -14,7 +14,7 @@ Bulls & Cows, in the language of the maker.
 
 ## 🌐 Try It
 
-**[www.tyrko.app](https://www.tyrko.app)** · [kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows)
+**[www.tyrko.app](https://www.tyrko.app)** · [kunukn.github.io/bulls-and-cows](https://kunukn.github.io/bulls-and-cows) · [itch.io](https://kunukn.itch.io/tyr-and-ko)
 
 <img src="docs/qr-live-demo.png" alt="QR code for live demo" width="198" />
 
@@ -51,3 +51,13 @@ Every push to `main` deploys to Vercel ([www.tyrko.app](https://www.tyrko.app))
 through its GitHub integration; pull requests get preview URLs.
 `.github/workflows/deploy.yml` also publishes a hash-routed mirror to GitHub
 Pages.
+
+The [itch.io page](https://kunukn.itch.io/tyr-and-ko) is uploaded by hand as
+a ZIP. itch serves the game from a subfolder inside an iframe, so it needs
+relative paths and hash routing. The ZIP is named after the commit, which
+itch shows on its edit page; the same hash is in the game's Settings footer.
+
+```bash
+VITE_BASE_PATH=./ VITE_USE_HISTORY_ROUTING=0 VITE_ROBOTS_NOINDEX=1 pnpm build
+mkdir -p .temp && (cd dist && zip -qr "../.temp/tyrko-itch-$(git rev-parse --short=7 HEAD).zip" . -x '.DS_Store')
+```
