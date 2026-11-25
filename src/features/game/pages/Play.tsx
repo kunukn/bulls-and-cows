@@ -150,7 +150,7 @@ export function Play() {
       />
       {/* Minimal text drops the legend; the help popover still explains pegs. */}
       {(!isMinimalText || isTimerShown || isPlaying) && (
-        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
+        <div className="flex items-center justify-between gap-3 ps-1 text-xs text-muted-foreground">
           {!isMinimalText && (
             <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="flex items-center gap-1.5">
