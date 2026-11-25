@@ -17,10 +17,11 @@ type Props = {
 /*
  * Lucide's palette draws its four paint dots as <circle>s after the outline.
  * Paint them like pegs (clockwise from the left: red, yellow, green, blue) and
- * thicken them, or the colour doesn't show at 16px.
+ * thicken them, or the colour doesn't show at 16px. Dimmed so they don't
+ * outshine the board's real pegs.
  */
 const COLOURFUL_PALETTE_CLASS =
-  "[&>circle]:stroke-[3.5] [&>circle:nth-of-type(1)]:fill-peg-green [&>circle:nth-of-type(1)]:stroke-peg-green [&>circle:nth-of-type(2)]:fill-peg-blue [&>circle:nth-of-type(2)]:stroke-peg-blue [&>circle:nth-of-type(3)]:fill-peg-red [&>circle:nth-of-type(3)]:stroke-peg-red [&>circle:nth-of-type(4)]:fill-peg-yellow [&>circle:nth-of-type(4)]:stroke-peg-yellow";
+  "[&>circle]:stroke-[3.5] [&>circle]:opacity-60 [&>circle:nth-of-type(1)]:fill-peg-green [&>circle:nth-of-type(1)]:stroke-peg-green [&>circle:nth-of-type(2)]:fill-peg-blue [&>circle:nth-of-type(2)]:stroke-peg-blue [&>circle:nth-of-type(3)]:fill-peg-red [&>circle:nth-of-type(3)]:stroke-peg-red [&>circle:nth-of-type(4)]:fill-peg-yellow [&>circle:nth-of-type(4)]:stroke-peg-yellow";
 
 /* Native radio group styled as a segmented control — arrow-key navigation for free. */
 export function DifficultyPicker({ value, onChange, name, legend }: Props) {
