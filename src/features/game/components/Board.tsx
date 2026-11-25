@@ -151,13 +151,17 @@ export function Board() {
           isDaily={isDaily}
         />
       </div>
-      {hasStartHint && (
-        <p className="mb-2 text-center text-xs leading-none text-board-label">
-          {isAutoSubmit
-            ? t("game.startHintAuto", { count: pegs })
-            : t("game.startHint", { count: pegs })}
-        </p>
-      )}
+      {/* Always rendered, hidden after the first guess, so the rows don't shift up. */}
+      <p
+        className={cn(
+          "mb-2 text-center text-xs leading-none text-board-label",
+          !hasStartHint && "invisible",
+        )}
+      >
+        {isAutoSubmit
+          ? t("game.startHintAuto", { count: pegs })
+          : t("game.startHint", { count: pegs })}
+      </p>
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {
           const guess = guesses[index];
