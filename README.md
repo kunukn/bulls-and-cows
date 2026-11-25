@@ -58,6 +58,5 @@ relative paths and hash routing. The ZIP is named after the commit, which
 itch shows on its edit page; the same hash is in the game's Settings footer.
 
 ```bash
-VITE_BASE_PATH=./ VITE_USE_HISTORY_ROUTING=0 VITE_ROBOTS_NOINDEX=1 pnpm build
-mkdir -p .temp && (cd dist && zip -qr "../.temp/tyrko-itch-$(git rev-parse --short=7 HEAD).zip" . -x '.DS_Store')
+pnpm itch:zip   # → .temp/tyrko-itch-<commit>.zip
 ```

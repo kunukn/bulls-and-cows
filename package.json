@@ -23,7 +23,8 @@
     "check": "node scripts/pre-push-checks.js",
     "prepare": "husky",
     "licenses:update": "node scripts/third-party-licenses.ts",
-    "analyze": "node scripts/bundle-analysis.ts"
+    "analyze": "node scripts/bundle-analysis.ts",
+    "itch:zip": "node scripts/itch-zip.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

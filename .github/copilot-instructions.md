@@ -41,6 +41,7 @@ React 19 + TypeScript + Vite. Styling: Tailwind CSS 4 (peg colours and the shadc
 - `pnpm licenses:update` — regenerate `THIRD-PARTY-LICENSES.md` from the production bundle; run after dependency changes (CI fails if it's stale or a license isn't allow-listed)
 - `pnpm social-preview` — regenerate `public/social-preview.png` (the 1280×640 link-share card) from the real app via Vite + headless Chromium; run after visible changes to the header, board or shield
 - `pnpm analyze` — build into `.temp/bundle-analysis/`, print per-chunk sizes (raw/gzip/brotli) and open a treemap of what each chunk contains (`--no-open` to skip the browser)
+- `pnpm itch:zip` — build for the itch.io iframe (relative paths, hash routing, noindex) into `.temp/itch/dist/` and zip it as `.temp/tyrko-itch-<commit>.zip` for the hand upload
 
 Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/vitest.setup.ts`). Unit tests live alongside source as `*.test.ts(x)`. Note `pnpm check` runs only typecheck + lint, not tests — run tests separately. Rules for writing tests (no tautologies, behaviour over structure, fixtures that match reality, store isolation): [`.github/instructions/testing.instructions.md`](instructions/testing.instructions.md).
 
