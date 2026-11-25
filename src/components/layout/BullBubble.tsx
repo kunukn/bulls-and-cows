@@ -306,6 +306,9 @@ export function BullLineText({ line }: { line: BullLine }) {
     case "rowHasAbsent":
       return t("bull.hints.rowHasAbsent", { color: colorName(hint.color) });
 
+    case "rowRepeat":
+      return t("bull.hints.rowRepeat", { color: colorName(hint.color) });
+
     case "rowSlotWrong":
       return t("bull.hints.rowSlotWrong", {
         slot: hint.slot,

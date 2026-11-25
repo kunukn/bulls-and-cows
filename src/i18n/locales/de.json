@@ -235,6 +235,7 @@
       "noRepeats": "In diesem Code kommt keine Farbe doppelt vor.",
       "hasRepeat": "Mindestens eine Farbe kommt mehrfach vor.",
       "rowHasAbsent": "In deiner Reihe ist {{color}}, aber nicht im Code.",
+      "rowRepeat": "In deiner Reihe ist {{color}} mehrmals, aber in diesem Code kommt keine Farbe doppelt vor.",
       "rowSlotWrong": "In deiner Reihe ist {{color}} in Feld {{slot}}. Da kann es nicht sein.",
       "rowConflict": "Diese Reihe passt nicht zu deinem Hinweis in Reihe {{row}}.",
       "rowNoFit": "Diese Stifte passen zusammen nicht zu deinen Hinweisen. Ändere einen.",

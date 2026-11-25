@@ -225,6 +225,7 @@
       "noRepeats": "这个密码里没有重复的颜色。",
       "hasRepeat": "至少有一种颜色出现不止一次。",
       "rowHasAbsent": "你这一行有{{color}}，但密码里没有。",
+      "rowRepeat": "你这一行里{{color}}不止一个，但这个密码里没有重复的颜色。",
       "rowSlotWrong": "你这一行的第 {{slot}} 格放了{{color}}，它不可能在那里。",
       "rowConflict": "这一行和第 {{row}} 行的线索对不上。",
       "rowNoFit": "这些小钉合在一起和你的线索对不上，换掉一个吧。",

@@ -235,6 +235,7 @@
       "noRepeats": "Aucune couleur ne revient deux fois dans ce code.",
       "hasRepeat": "Au moins une couleur revient plusieurs fois.",
       "rowHasAbsent": "Ta rangée a un pion {{color}}, mais le code n'en a aucun.",
+      "rowRepeat": "Ta rangée a plus d'un pion {{color}}, mais aucune couleur ne revient deux fois dans ce code.",
       "rowSlotWrong": "Ta rangée a un pion {{color}} dans la case {{slot}}. Il ne peut pas être là.",
       "rowConflict": "Cette rangée ne colle pas avec ton indice de la rangée {{row}}.",
       "rowNoFit": "Ces pions ne collent pas ensemble avec tes indices. Changes-en un.",

@@ -235,6 +235,7 @@
       "noRepeats": "No colour appears twice in this code.",
       "hasRepeat": "Some colour appears more than once.",
       "rowHasAbsent": "Your row has {{color}}, but the code has none.",
+      "rowRepeat": "Your row has more than one {{color}}, but no colour appears twice in this code.",
       "rowSlotWrong": "Your row has {{color}} in slot {{slot}}. It can't go there.",
       "rowConflict": "This row doesn't fit your clue in row {{row}}.",
       "rowNoFit": "These pegs don't fit your clues together. Change one.",

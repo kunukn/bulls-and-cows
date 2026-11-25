@@ -1,7 +1,7 @@
 # 0011 — The bull gives hints from the player's own clues
 
 - **Status:** Accepted
-- **Updated:** 2026-11-24
+- **Updated:** 2026-11-25
 
 ## Context
 
@@ -14,17 +14,17 @@ There are two bulls with separate jobs, so they never say the same thing. Each o
 - **The header bull chats.** Jokes, and after a game a word on the win or loss. It never helps with the game.
 - **The shield bull helps.** While playing, a bull is moulded into the end of the code shield. Before the first guess it gives general tips. After that it only says facts that follow from the player's own clues:
   - colours that are in or out, and how many pegs of a colour: exactly, at least, or no more than one;
-  - whether a colour repeats;
+  - whether a colour repeats. On Easy, where no colour ever repeats, it says so as a reminder of the rule, but only while the row being built or the last guess doubles a colour: players do that to test a colour;
   - slots: settled, a shortlist of two or three colours, or a colour ruled out, and where to look for a colour that's in;
   - how many codes still fit.
-- **It checks the row being built.** A peg whose colour is out or can't sit in that slot, pegs that don't fit the clues together, a full row that breaks a clue (and which row), or a row that still fits. These come first and then alternate with board facts, because they are what the player can act on right now.
+- **It checks the row being built.** A peg whose colour is out or can't sit in that slot, a colour placed twice on Easy, pegs that don't fit the clues together, a full row that breaks a clue (and which row), or a row that still fits. These come first and then alternate with board facts, because they are what the player can act on right now.
 - When the clues settle nothing yet, the shield bull says so.
 - Hints never name the whole code, even when only one code fits.
 - Hints are free: they don't change the score, the clock or high scores.
 - No hint kind crowds out the others. A random pick chooses the kind first, then a fact of that kind.
 - **Help never asks to be used.** The player should try to solve the game first. The shield bull is smaller and dimmer than the header bull, and nothing about it glows, pulses or uses an alert colour.
 - **The bull looks like a button.** It sits on a raised round pad in the shield's own plastic, so it reads as something to press rather than an engraving: lighter on hover, pushed down a pixel while pressed. The header bull has no pad. How it works also says "Stuck? Tap the bull on the shield for a hint." while hints are on. Knowing the bull is there isn't being asked to use it.
-- **A quiet marker shows when there's something new.** A small dimmed-yellow dot appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them.
+- **A quiet marker shows when there's something new.** A small dimmed-yellow dot appears when a guess proves a fact the player hasn't been shown: a colour in or out, a proven count or repeat, a settled or shortlisted slot, or one code left. Asking the shield bull clears it. Single slot exclusions, "no more than one" and the code count don't show it, because nearly every guess changes them. Nor does Easy's no-repeats rule, which no guess proves.
 - **Hints can be switched off** in Settings (on by default). When they're off, there's no shield bull.
 - **The daily code is the exception.** There the shield bull gives no hints or tips, only calm words, how the day works and stats (0012).
 

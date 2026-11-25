@@ -235,6 +235,7 @@
       "noRepeats": "Ingen farve er med to gange i denne kode.",
       "hasRepeat": "Mindst én farve er med flere gange.",
       "rowHasAbsent": "Din række har {{color}}, men koden har ingen.",
+      "rowRepeat": "Din række har {{color}} flere gange, men ingen farve er med to gange i denne kode.",
       "rowSlotWrong": "Din række har {{color}} i felt {{slot}}. Den kan ikke stå der.",
       "rowConflict": "Denne række passer ikke med dit spor i række {{row}}.",
       "rowNoFit": "De her pinde passer ikke sammen med dine spor. Skift én.",

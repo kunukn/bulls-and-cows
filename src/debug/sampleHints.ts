@@ -9,6 +9,7 @@ export const SAMPLE_HINTS: {
   [Kind in Hint["kind"]]: Extract<Hint, { kind: Kind }>[];
 } = {
   rowHasAbsent: [{ kind: "rowHasAbsent", color: "red" }],
+  rowRepeat: [{ kind: "rowRepeat", color: "orange" }],
   rowSlotWrong: [{ kind: "rowSlotWrong", slot: 2, color: "blue" }],
   rowConflict: [{ kind: "rowConflict", row: 3 }],
   rowNoFit: [{ kind: "rowNoFit" }],

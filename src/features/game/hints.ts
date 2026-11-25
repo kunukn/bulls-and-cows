@@ -10,6 +10,8 @@ import type { Guess } from "./machine";
 /* About the row being built: the most actionable help, so it's offered first. */
 export type RowHint =
   | { kind: "rowHasAbsent"; color: Color }
+  /* A colour placed twice where codes never repeat one (Easy). */
+  | { kind: "rowRepeat"; color: Color }
   | { kind: "rowSlotWrong"; slot: number; color: Color }
   /* A full row that can't be the code; `row` is the first clue it breaks. */
   | { kind: "rowConflict"; row: number }
@@ -37,6 +39,7 @@ export type Hint =
 
 const ROW_HINT_KINDS: ReadonlySet<Hint["kind"]> = new Set<RowHint["kind"]>([
   "rowHasAbsent",
+  "rowRepeat",
   "rowSlotWrong",
   "rowConflict",
   "rowNoFit",
@@ -185,10 +188,27 @@ export function deduceHints(
     }
   }
 
-  if (allowRepeats && isAlwaysDistinct) hints.push({ kind: "noRepeats" });
+  /*
+   * Always true on Easy, where it's the rule rather than a deduction: said
+   * only to a player doubling a colour, in this row or the last guess.
+   */
+  const lastGuess = guesses[guesses.length - 1].pegs;
+  const isDoubling = hasRepeat(lastGuess) || hasRepeat(current);
+  if (allowRepeats ? isAlwaysDistinct : isDoubling) {
+    hints.push({ kind: "noRepeats" });
+  }
   if (isAlwaysRepeating) hints.push({ kind: "hasRepeat" });
 
-  hints.push(...deduceRowHints(current, guesses, codes, absent, slotColors));
+  hints.push(
+    ...deduceRowHints(
+      current,
+      guesses,
+      codes,
+      absent,
+      slotColors,
+      allowRepeats,
+    ),
+  );
 
   if (hints.length === 0) return [];
 
@@ -201,6 +221,13 @@ export function deduceHints(
   return hints;
 }
 
+/* True when a colour appears more than once; empty slots don't count. */
+function hasRepeat(row: readonly (Color | null)[]): boolean {
+  const colors = row.filter((color) => color !== null);
+
+  return new Set(colors).size < colors.length;
+}
+
 /* Checks the pegs already in the active row against the codes left. */
 function deduceRowHints(
   current: readonly (Color | null)[],
@@ -208,6 +235,7 @@ function deduceRowHints(
   codes: readonly Color[][],
   absent: readonly Color[],
   slotColors: readonly Set<Color>[],
+  allowRepeats: boolean,
 ): RowHint[] {
   const filled = current.flatMap((color, index) =>
     color === null ? [] : [{ index, color }],
@@ -215,8 +243,12 @@ function deduceRowHints(
   if (filled.length === 0) return [];
 
   const hints: RowHint[] = [];
-  for (const color of new Set(filled.map((peg) => peg.color))) {
+  const filledColors = filled.map((peg) => peg.color);
+  for (const color of new Set(filledColors)) {
     if (absent.includes(color)) hints.push({ kind: "rowHasAbsent", color });
+    const isRepeated =
+      filledColors.indexOf(color) !== filledColors.lastIndexOf(color);
+    if (!allowRepeats && isRepeated) hints.push({ kind: "rowRepeat", color });
   }
   for (const { index, color } of filled) {
     if (!absent.includes(color) && !slotColors[index].has(color)) {
@@ -234,7 +266,10 @@ function deduceRowHints(
   } else if (isComplete) {
     const row = filled.map((peg) => peg.color);
     const brokenClue = guesses.findIndex((guess) => !isScoredLike(row, guess));
-    hints.push({ kind: "rowConflict", row: brokenClue + 1 });
+    // A repeat on Easy can fit every clue and still not be a code.
+    if (brokenClue >= 0) {
+      hints.push({ kind: "rowConflict", row: brokenClue + 1 });
+    }
   } else if (hints.length === 0) {
     hints.push({ kind: "rowNoFit" });
   }
@@ -264,7 +299,11 @@ export function newsworthyHintKeys(
   difficulty: Difficulty,
   guesses: readonly Guess[],
 ): string[] {
+  // Without repeats, "no repeats" is the rule, not news from a guess.
+  const isRule = (hint: Hint) =>
+    hint.kind === "noRepeats" && !DIFFICULTIES[difficulty].allowRepeats;
+
   return deduceHints(difficulty, guesses, [])
-    .filter((hint) => NEWSWORTHY_KINDS.has(hint.kind))
+    .filter((hint) => NEWSWORTHY_KINDS.has(hint.kind) && !isRule(hint))
     .map((hint) => JSON.stringify(hint));
 }

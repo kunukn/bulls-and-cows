@@ -82,6 +82,7 @@ function isTrueOf(
       );
 
     case "noRepeats":
+    case "rowRepeat":
       return new Set(code).size === code.length;
 
     case "hasRepeat":
@@ -133,14 +134,40 @@ describe("deduceHints: the board", () => {
     expect(kinds).not.toContain("atMostOne");
   });
 
-  it("never says 'no repeats' or counts pegs on Easy, where nothing repeats", () => {
-    const pegs = paletteFor("easy").slice(0, 4);
-    const kinds = deduceHints("easy", [{ pegs, black: 0, white: 4 }], []).map(
-      (hint) => hint.kind,
-    );
+  describe("on Easy, where nothing repeats", () => {
+    const [p, q, r, s] = paletteFor("easy");
+    const secret = [p, q, r, s];
+    const kindsFor = (guesses: Guess[], current: (Color | null)[] = []) =>
+      deduceHints("easy", guesses, current).map((hint) => hint.kind);
 
-    expect(kinds).not.toContain("noRepeats");
-    expect(kinds).not.toContain("exactly");
+    it("never counts pegs", () => {
+      expect(kindsFor([scored(secret, [s, r, q, p])])).not.toContain("exactly");
+    });
+
+    it("keeps the no-repeats rule to itself while the player never doubles", () => {
+      expect(
+        kindsFor([scored(secret, [s, r, q, p])], [p, q, null, null]),
+      ).not.toContain("noRepeats");
+    });
+
+    it("reminds a player doubling a colour in the row being built", () => {
+      expect(
+        kindsFor([scored(secret, [s, r, q, p])], [q, q, q, null]),
+      ).toContain("noRepeats");
+    });
+
+    it("reminds a player whose last guess doubled a colour", () => {
+      expect(kindsFor([scored(secret, [p, p, q, q])])).toContain("noRepeats");
+    });
+
+    it("stops once the player's next guess has no double", () => {
+      const guesses = [
+        scored(secret, [p, p, q, q]),
+        scored(secret, [s, r, q, p]),
+      ];
+
+      expect(kindsFor(guesses)).not.toContain("noRepeats");
+    });
   });
 
   it("counts a colour exactly: two bulls on four reds means two reds", () => {
@@ -302,6 +329,21 @@ describe("deduceHints: the row being built", () => {
     expect(hints.some((hint) => hint.kind === "rowSlotWrong")).toBe(false);
   });
 
+  it("flags a doubled colour on Easy, even when the row fits every clue", () => {
+    const [p, q, r, s, t, u] = paletteFor("easy");
+    // A doubled guess, as players do to test a colour: one bull, from p.
+    const guesses = [scored([p, q, r, s], [p, t, t, u])];
+    const hints = deduceHints("easy", guesses, [p, q, q, r]);
+
+    expect(hints).toContainEqual({ kind: "rowRepeat", color: q });
+    // pqqr scores like the clue; only the repeat rules it out.
+    expect(hints.some((hint) => hint.kind === "rowConflict")).toBe(false);
+  });
+
+  it("allows a doubled colour where codes can repeat", () => {
+    expect(rowKinds([b, null, b, null])).not.toContain("rowRepeat");
+  });
+
   it("checks the row even when the board itself settles nothing", () => {
     const silent: Guess[] = [{ pegs: [a, b, c, d], black: 2, white: 0 }];
 
@@ -358,6 +400,19 @@ describe("newsworthyHintKeys", () => {
     expect(keys).toHaveLength(4);
     // The same clues give many more facts in the bubble itself.
     expect(deduceHints("classic", fourCows, []).length).toBeGreaterThan(4);
+  });
+
+  it("doesn't light the dot for Easy's no-repeats rule", () => {
+    const [p, q, r, s] = paletteFor("easy");
+    // A doubled guess, so the bubble itself does say "no repeats".
+    const guesses = [scored([p, q, r, s], [p, p, q, q])];
+    const keys = newsworthyHintKeys("easy", guesses);
+
+    expect(deduceHints("easy", guesses, [])).toContainEqual({
+      kind: "noRepeats",
+    });
+    expect(keys).not.toContain(JSON.stringify({ kind: "noRepeats" }));
+    expect(keys.length).toBeGreaterThan(0);
   });
 
   it("lights the dot for a proven count", () => {
