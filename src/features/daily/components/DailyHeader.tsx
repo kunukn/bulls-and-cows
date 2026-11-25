@@ -1,11 +1,6 @@
 import { paths } from "@/app/paths";
-import {
-  DAILY_DIFFICULTY,
-  dailyDate,
-  dailyNumber,
-} from "@/features/daily/daily";
+import { dailyDate, dailyNumber } from "@/features/daily/daily";
 import { summarize, useDailyResults } from "@/features/daily/store";
-import { DIFFICULTIES } from "@/features/game/logic";
 import { useSettings } from "@/features/game/store/settings";
 import { formatDate } from "@/utils/format";
 import { ArrowLeft, CalendarDays, Flame } from "lucide-react";
@@ -18,15 +13,15 @@ type Props = {
 
 /*
  * Names the day's code where the practice page has its difficulties, at the
- * picker's height so the board doesn't jump. The rules, streak and a way back
- * set it apart from the practice page (0012).
+ * picker's height so the board doesn't jump. "1 try", the streak and a way
+ * back set it apart from the practice page; the board itself shows the pegs
+ * and colours (0012).
  */
 export function DailyHeader({ number }: Props) {
   const { t, i18n } = useTranslation();
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const results = useDailyResults((state) => state.results);
   const { currentStreak } = summarize(results, dailyNumber());
-  const { pegs, colors } = DIFFICULTIES[DAILY_DIFFICULTY];
   const numberFormat = new Intl.NumberFormat(i18n.language);
   const title = t("daily.numbered", { number });
   const date = formatDate(dailyDate(number).getTime(), i18n.language);
@@ -76,8 +71,6 @@ export function DailyHeader({ number }: Props) {
         <span>{date}</span>
         {!isMinimalText && (
           <>
-            <span aria-hidden>·</span>
-            <span>{t("difficulty.details", { pegs, colors })}</span>
             <span aria-hidden>·</span>
             <span className="font-medium text-foreground">
               {t("daily.oneTry")}
