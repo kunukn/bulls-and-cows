@@ -59,8 +59,6 @@
     "hard": "Svær",
     "pegs": "{{pegs}} pinde",
     "colors": "{{colors}} farver",
-    "noRepeats": "ingen dobbelte",
-    "repeats": "dobbelte",
     "details": "{{pegs}} pinde · {{colors}} farver"
   },
   "colors": {
@@ -97,6 +95,10 @@
     "startHint_other": "Vælg {{count}} farver, og tryk så på Tjek.",
     "startHintAuto_one": "Vælg {{count}} farve.",
     "startHintAuto_other": "Vælg {{count}} farver.",
+    "startHintDistinct_one": "Vælg {{count}} farve, og tryk så på Tjek.",
+    "startHintDistinct_other": "Vælg {{count}} forskellige farver, og tryk så på Tjek.",
+    "startHintDistinctAuto_one": "Vælg {{count}} farve.",
+    "startHintDistinctAuto_other": "Vælg {{count}} forskellige farver.",
     "abandonConfirm": "Opgiv det nuværende spil?",
     "giveUp": "Giv op",
     "revealCode": "Vis koden",

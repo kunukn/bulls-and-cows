@@ -59,8 +59,6 @@
     "hard": "Schwer",
     "pegs": "{{pegs}} Stifte",
     "colors": "{{colors}} Farben",
-    "noRepeats": "nie doppelt",
-    "repeats": "doppelt",
     "details": "{{pegs}} Stifte · {{colors}} Farben"
   },
   "colors": {
@@ -97,6 +95,10 @@
     "startHint_other": "Wähle {{count}} Farben und drück dann auf Prüfen.",
     "startHintAuto_one": "Wähle {{count}} Farbe.",
     "startHintAuto_other": "Wähle {{count}} Farben.",
+    "startHintDistinct_one": "Wähle {{count}} Farbe und drück dann auf Prüfen.",
+    "startHintDistinct_other": "Wähle {{count}} verschiedene Farben, dann Prüfen.",
+    "startHintDistinctAuto_one": "Wähle {{count}} Farbe.",
+    "startHintDistinctAuto_other": "Wähle {{count}} verschiedene Farben.",
     "abandonConfirm": "Aktuelles Spiel abbrechen?",
     "giveUp": "Aufgeben",
     "revealCode": "Code zeigen",

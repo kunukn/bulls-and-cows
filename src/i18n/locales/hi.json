@@ -59,8 +59,6 @@
     "hard": "कठिन",
     "pegs": "{{pegs}} खूँटियाँ",
     "colors": "{{colors}} रंग",
-    "noRepeats": "दोहराव नहीं",
-    "repeats": "दोहराव",
     "details": "{{pegs}} खूँटियाँ · {{colors}} रंग"
   },
   "colors": {
@@ -97,6 +95,10 @@
     "startHint_other": "{{count}} रंग चुनो, फिर जाँचो दबाओ।",
     "startHintAuto_one": "{{count}} रंग चुनो।",
     "startHintAuto_other": "{{count}} रंग चुनो।",
+    "startHintDistinct_one": "{{count}} रंग चुनो, फिर जाँचो दबाओ।",
+    "startHintDistinct_other": "{{count}} अलग-अलग रंग चुनो, फिर जाँचो दबाओ।",
+    "startHintDistinctAuto_one": "{{count}} रंग चुनो।",
+    "startHintDistinctAuto_other": "{{count}} अलग-अलग रंग चुनो।",
     "abandonConfirm": "यह खेल छोड़ना है?",
     "giveUp": "हार मानो",
     "revealCode": "कोड दिखाओ",

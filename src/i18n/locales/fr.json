@@ -59,8 +59,6 @@
     "hard": "Difficile",
     "pegs": "{{pegs}} pions",
     "colors": "{{colors}} couleurs",
-    "noRepeats": "sans doubles",
-    "repeats": "avec doubles",
     "details": "{{pegs}} pions · {{colors}} couleurs"
   },
   "colors": {
@@ -97,6 +95,10 @@
     "startHint_other": "Choisis {{count}} couleurs, puis appuie sur Vérifier.",
     "startHintAuto_one": "Choisis {{count}} couleur.",
     "startHintAuto_other": "Choisis {{count}} couleurs.",
+    "startHintDistinct_one": "Choisis {{count}} couleur, puis appuie sur Vérifier.",
+    "startHintDistinct_other": "Choisis {{count}} couleurs différentes, puis Vérifier.",
+    "startHintDistinctAuto_one": "Choisis {{count}} couleur.",
+    "startHintDistinctAuto_other": "Choisis {{count}} couleurs différentes.",
     "abandonConfirm": "Abandonner la partie en cours ?",
     "giveUp": "Abandonner",
     "revealCode": "Voir le code",

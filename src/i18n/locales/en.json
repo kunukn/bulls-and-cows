@@ -59,8 +59,6 @@
     "hard": "Hard",
     "pegs": "{{pegs}} pegs",
     "colors": "{{colors}} colours",
-    "noRepeats": "no repeats",
-    "repeats": "repeats",
     "details": "{{pegs}} pegs · {{colors}} colours"
   },
   "colors": {
@@ -97,6 +95,10 @@
     "startHint_other": "Pick {{count}} colours, then press Check.",
     "startHintAuto_one": "Pick {{count}} colour.",
     "startHintAuto_other": "Pick {{count}} colours.",
+    "startHintDistinct_one": "Pick {{count}} colour, then press Check.",
+    "startHintDistinct_other": "Pick {{count}} different colours, then press Check.",
+    "startHintDistinctAuto_one": "Pick {{count}} colour.",
+    "startHintDistinctAuto_other": "Pick {{count}} different colours.",
     "abandonConfirm": "Abandon the current game?",
     "giveUp": "Give up",
     "revealCode": "Reveal code",

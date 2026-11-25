@@ -32,7 +32,7 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
     <fieldset className="flex rounded-lg bg-card p-1">
       <legend className="sr-only">{legend}</legend>
       {DIFFICULTY_KEYS.map((key, index) => {
-        const { pegs, colors, allowRepeats } = DIFFICULTIES[key];
+        const { pegs, colors } = DIFFICULTIES[key];
 
         return (
           <label
@@ -91,11 +91,6 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
                       {t("difficulty.colors", { colors })}
                     </span>
                   </span>
-                </span>
-                <span className="block text-xs font-normal text-muted-foreground group-has-checked:text-subtle">
-                  {allowRepeats
-                    ? t("difficulty.repeats")
-                    : t("difficulty.noRepeats")}
                 </span>
               </>
             )}
