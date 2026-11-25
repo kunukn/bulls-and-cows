@@ -57,6 +57,8 @@
     "easy": "Let",
     "classic": "Klassisk",
     "hard": "Svær",
+    "pegs": "{{pegs}} pinde",
+    "colors": "{{colors}} farver",
     "details": "{{pegs}} pinde · {{colors}} farver"
   },
   "colors": {

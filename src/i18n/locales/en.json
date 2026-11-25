@@ -57,6 +57,8 @@
     "easy": "Easy",
     "classic": "Classic",
     "hard": "Hard",
+    "pegs": "{{pegs}} pegs",
+    "colors": "{{colors}} colours",
     "details": "{{pegs}} pegs · {{colors}} colours"
   },
   "colors": {

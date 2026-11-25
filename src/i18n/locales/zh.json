@@ -57,6 +57,8 @@
     "easy": "简单",
     "classic": "经典",
     "hard": "困难",
+    "pegs": "{{pegs}} 个位置",
+    "colors": "{{colors}} 种颜色",
     "details": "{{pegs}} 个位置 · {{colors}} 种颜色"
   },
   "colors": {

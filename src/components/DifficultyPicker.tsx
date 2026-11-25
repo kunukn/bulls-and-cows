@@ -56,8 +56,15 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
             ) : (
               <>
                 {t(`difficulty.${key}`)}
+                {/* Each half stays whole, so a narrow segment breaks at the dot, not mid-phrase. */}
                 <span className="block text-xs font-normal text-muted-foreground">
-                  {t("difficulty.details", { pegs, colors })}
+                  <span className="whitespace-nowrap">
+                    {t("difficulty.pegs", { pegs })}
+                  </span>{" "}
+                  ·{" "}
+                  <span className="whitespace-nowrap">
+                    {t("difficulty.colors", { colors })}
+                  </span>
                 </span>
               </>
             )}

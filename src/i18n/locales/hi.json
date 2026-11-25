@@ -57,6 +57,8 @@
     "easy": "आसान",
     "classic": "क्लासिक",
     "hard": "कठिन",
+    "pegs": "{{pegs}} खूँटियाँ",
+    "colors": "{{colors}} रंग",
     "details": "{{pegs}} खूँटियाँ · {{colors}} रंग"
   },
   "colors": {

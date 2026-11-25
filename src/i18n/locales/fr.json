@@ -57,6 +57,8 @@
     "easy": "Facile",
     "classic": "Classique",
     "hard": "Difficile",
+    "pegs": "{{pegs}} pions",
+    "colors": "{{colors}} couleurs",
     "details": "{{pegs}} pions · {{colors}} couleurs"
   },
   "colors": {

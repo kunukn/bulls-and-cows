@@ -57,6 +57,8 @@
     "easy": "Leicht",
     "classic": "Klassisch",
     "hard": "Schwer",
+    "pegs": "{{pegs}} Stifte",
+    "colors": "{{colors}} Farben",
     "details": "{{pegs}} Stifte · {{colors}} Farben"
   },
   "colors": {

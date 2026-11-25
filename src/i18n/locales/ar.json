@@ -57,6 +57,8 @@
     "easy": "سهل",
     "classic": "كلاسيكي",
     "hard": "صعب",
+    "pegs": "{{pegs}} أوتاد",
+    "colors": "{{colors}} ألوان",
     "details": "{{pegs}} أوتاد · {{colors}} ألوان"
   },
   "colors": {
