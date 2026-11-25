@@ -51,6 +51,8 @@ export type GameEvent =
   | { type: "GIVE_UP" }
   /* Practice only: a daily code gets one attempt (0012). */
   | { type: "NEW_GAME"; difficulty?: Difficulty; isSwapMode?: boolean }
+  /* Practice only, before the first guess is checked (0013). */
+  | { type: "SET_SWAP_MODE"; isSwapMode: boolean }
   /* Daily only: move on to a later day's code, dealt by `randomInt`. */
   | { type: "NEXT_DAILY"; dailyNumber: number; randomInt: RandomInt };
 
@@ -151,6 +153,8 @@ export const gameMachine = setup({
       context.dailyNumber !== null &&
       event.dailyNumber > context.dailyNumber,
     hasNotStarted: ({ context }) => context.startedAt === 0,
+    // Nothing has been scored yet, so the secret hasn't been used.
+    hasNoGuesses: ({ context }) => context.guesses.length === 0,
     isRowComplete: ({ context }) => isComplete(context.current),
     isWinningGuess: ({ context }) =>
       isComplete(context.current) &&
@@ -249,6 +253,9 @@ export const gameMachine = setup({
       };
     }),
     markFinished: assign({ finishedAt: () => Date.now() }),
+    setSwapMode: assign(({ event }) =>
+      event.type === "SET_SWAP_MODE" ? { isSwapMode: event.isSwapMode } : {},
+    ),
     resetGame: assign(({ context, event }) => {
       if (event.type !== "NEW_GAME") return {};
 
@@ -343,6 +350,10 @@ export const gameMachine = setup({
           // Rejected submit: lets the board shake the active row.
           { actions: emit({ type: "rowIncomplete" }) },
         ],
+        SET_SWAP_MODE: {
+          guard: and(["isPractice", "hasNoGuesses"]),
+          actions: "setSwapMode",
+        },
         // Ends the game as a loss so the secret is revealed.
         GIVE_UP: { target: "lost", actions: "markFinished" },
         // An untouched board may move on; a game under way is never replaced.

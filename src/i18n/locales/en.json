@@ -29,7 +29,7 @@
     "pinkBull": "Pink bulls",
     "pinkBullDescription": "Show right-spot pegs in pink instead of black.",
     "swapColors": "AI can swap colours",
-    "swapColorsDescription": "After each guess, the computer may switch to any code that still fits your pegs. The pegs never lie. Starts with your next game.",
+    "swapColorsDescription": "After each guess, the computer may switch to any code that still fits your pegs. The pegs never lie. Before your first guess, it changes this game too. After that, it waits for your next game.",
     "pegStyle": "Pegs",
     "pegStyleDescription": "Shapes help tell colours apart. Shape only is a harder way to play.",
     "pegStyles": {

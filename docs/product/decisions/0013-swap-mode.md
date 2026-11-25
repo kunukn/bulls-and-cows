@@ -15,7 +15,7 @@ An "AI can swap colours" switch in Settings, off for new players, turns on swap 
 - **The pins never lie.** Every code it can switch to matches every row already on the board, so the code shown at the end fits the whole board.
 - **Ties are broken in a fixed order.** The computer avoids the winning group first, then keeps its current code where it can, then shows fewer pins. A win comes only when the guess is the last code still possible.
 - **It is always winnable.** With perfect play the worst case is 5 guesses in Classic (Knuth, 1977). Easy has only 360 codes, and known strategies solve Hard in about 7, all within the 10 and 12 guesses allowed. It is still much harder for a person than a fixed code.
-- **It starts with the next game.** Turning the switch on or off never changes a game in progress. A saved game keeps its mode through a reload.
+- **It changes a game only before its first guess.** Until the first guess is checked, flipping the switch changes the game on screen too: no pins have been shown, so the secret hasn't been used and the game is the same as one dealt in the new mode. Once a guess is checked, the switch waits for the next game. A saved game keeps its mode through a reload.
 - **A Swap badge marks a swap-mode game.** It sits beside the game menu and timer, and follows the game, not the switch, so it says what the board in front of you is doing. Minimal text keeps only its icon.
 - **Never on the daily code.** Everyone shares one fixed daily code (0012), so it never swaps.
 - **Its own high scores.** Swap-mode wins go on separate lists (0010). The High scores page shows a Normal / Swap choice once the switch is on, or once a swap-mode score exists.

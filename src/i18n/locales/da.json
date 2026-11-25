@@ -29,7 +29,7 @@
     "pinkBull": "Lyserøde tyre",
     "pinkBullDescription": "Vis pinde på rigtig plads i lyserød i stedet for sort.",
     "swapColors": "AI'en må bytte farver",
-    "swapColorsDescription": "Efter hvert gæt må computeren skifte til en anden kode, der stadig passer med dine pinde. Pindene lyver aldrig. Gælder fra dit næste spil.",
+    "swapColorsDescription": "Efter hvert gæt må computeren skifte til en anden kode, der stadig passer med dine pinde. Pindene lyver aldrig. Før dit første gæt gælder det også dette spil. Derefter først fra dit næste spil.",
     "pegStyle": "Pinde",
     "pegStyleDescription": "Former gør det lettere at kende farverne fra hinanden. Kun former er sværere.",
     "pegStyles": {

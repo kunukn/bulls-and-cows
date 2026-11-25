@@ -29,7 +29,7 @@
     "pinkBull": "粉色公牛",
     "pinkBullDescription": "位置正确的提示钉显示为粉色，而不是黑色。",
     "swapColors": "AI 可以换颜色",
-    "swapColorsDescription": "每次猜完后，电脑可以换成另一个仍符合你所有提示钉的密码。提示钉从不说谎。从下一局开始生效。",
+    "swapColorsDescription": "每次猜完后，电脑可以换成另一个仍符合你所有提示钉的密码。提示钉从不说谎。第一次猜之前，本局也会生效；之后从下一局开始。",
     "pegStyle": "棋子",
     "pegStyleDescription": "形状能帮你分清颜色。只看形状会更难。",
     "pegStyles": {

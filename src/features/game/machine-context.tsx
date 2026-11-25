@@ -31,6 +31,7 @@ export function GameMachineProvider({ children }: Props) {
       }}
     >
       <GamePersister />
+      <SwapModeSync />
       {children}
     </GameContext.Provider>
   );
@@ -44,6 +45,29 @@ function GamePersister() {
 
     return () => subscription.unsubscribe();
   }, [actorRef]);
+
+  return null;
+}
+
+/*
+ * The swap switch also changes the game on screen until its first guess is
+ * checked; the machine ignores it after that, and in a daily game (0013).
+ */
+function SwapModeSync() {
+  const actorRef = useGameActorRef();
+
+  useEffect(
+    () =>
+      useSettings.subscribe((state, previous) => {
+        if (state.isSwapEnabled === previous.isSwapEnabled) return;
+
+        actorRef.send({
+          type: "SET_SWAP_MODE",
+          isSwapMode: state.isSwapEnabled,
+        });
+      }),
+    [actorRef],
+  );
 
   return null;
 }

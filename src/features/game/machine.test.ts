@@ -499,6 +499,32 @@ describe("gameMachine, swap mode (0013)", () => {
     expect(actor.getSnapshot().context.isSwapMode).toBe(false);
   });
 
+  it("changes mode before the first guess is checked", () => {
+    const actor = startSwapGame();
+    // Pegs placed but not checked don't lock the mode.
+    guessPegs(actor, ["red", "red"]);
+    actor.send({ type: "SET_SWAP_MODE", isSwapMode: false });
+    guessPegs(actor, ["red", "red"]);
+    actor.send({ type: "SUBMIT" });
+
+    // A normal game keeps the dealt red×4, so the hit wins.
+    expect(actor.getSnapshot().value).toBe("won");
+
+    const normal = startGame();
+    normal.send({ type: "SET_SWAP_MODE", isSwapMode: true });
+    guess(normal, ["red", "red", "red", "red"]);
+
+    expect(normal.getSnapshot().value).toBe("playing");
+  });
+
+  it("keeps the mode once a guess is checked", () => {
+    const actor = startSwapGame();
+    guess(actor, ["cyan", "cyan", "cyan", "cyan"]);
+    actor.send({ type: "SET_SWAP_MODE", isSwapMode: false });
+
+    expect(actor.getSnapshot().context.isSwapMode).toBe(true);
+  });
+
   it("never swaps a daily code", () => {
     const actor = createActor(gameMachine, {
       input: {
@@ -508,6 +534,7 @@ describe("gameMachine, swap mode (0013)", () => {
         isSwapMode: true,
       },
     }).start();
+    actor.send({ type: "SET_SWAP_MODE", isSwapMode: true });
     guess(actor, ["red", "red", "red", "red"]);
 
     expect(actor.getSnapshot().value).toBe("won");

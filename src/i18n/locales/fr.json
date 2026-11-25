@@ -29,7 +29,7 @@
     "pinkBull": "Taureaux roses",
     "pinkBullDescription": "Affiche les pions bien placés en rose plutôt qu’en noir.",
     "swapColors": "L’IA peut changer les couleurs",
-    "swapColorsDescription": "Après chaque essai, l’ordinateur peut passer à un autre code qui colle encore à tes pions. Les pions ne mentent jamais. Valable dès ta prochaine partie.",
+    "swapColorsDescription": "Après chaque essai, l’ordinateur peut passer à un autre code qui colle encore à tes pions. Les pions ne mentent jamais. Avant ton premier essai, ça change aussi cette partie. Après, ça attend ta prochaine partie.",
     "pegStyle": "Pions",
     "pegStyleDescription": "Les formes aident à reconnaître les couleurs. Avec les formes seules, c’est plus dur.",
     "pegStyles": {

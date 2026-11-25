@@ -29,7 +29,7 @@
     "pinkBull": "Pinke Bullen",
     "pinkBullDescription": "Zeigt Stifte an der richtigen Stelle pink statt schwarz.",
     "swapColors": "KI darf Farben tauschen",
-    "swapColorsDescription": "Nach jedem Versuch darf der Computer zu einem anderen Code wechseln, der noch zu deinen Stiften passt. Die Stifte lügen nie. Gilt ab deinem nächsten Spiel.",
+    "swapColorsDescription": "Nach jedem Versuch darf der Computer zu einem anderen Code wechseln, der noch zu deinen Stiften passt. Die Stifte lügen nie. Vor deinem ersten Versuch gilt es auch für dieses Spiel. Danach erst ab deinem nächsten Spiel.",
     "pegStyle": "Stifte",
     "pegStyleDescription": "Formen helfen dir, die Farben zu unterscheiden. Nur mit Formen ist es schwerer.",
     "pegStyles": {
