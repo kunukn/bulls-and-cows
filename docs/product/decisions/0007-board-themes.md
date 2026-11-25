@@ -28,7 +28,7 @@ There are six themes, each with its own hue or lightness: Neon (navy, the defaul
 
 ## Consequences
 
-- Bull and cow pegs share one outline from a `--board-key-ring` token, in a colour that stands out from the board (light on dark themes, slate on Paper, violet on Candy), so both look the same size on every board.
+- Bull and cow pegs get an outline of the same width in a colour that shows on the board (light on dark themes, slate on Paper, violet on Candy), so both look the same size on every board. Cows use `--board-key-ring`; bulls use `--board-bull-ring`, which matches it on dark themes and is darker on the light boards (slate-600 on Paper, violet-600 on Candy): a mid-tone rim between the near-black bull and the pale board reads as a blurred edge.
 - Board shadows come from tokens so the light boards don't look heavy: `--board-drop` (board) and `--board-shield-drop` (secret shield) are black at 40% on dark themes and a faint slate on Paper, violet on Candy; `--board-hole-shade` (hole inset) is black at 50% on dark themes and 25% on Paper and Candy.
 - On Paper, holes are slate with a darker rim and inset shadow, so they read as holes, not dots. On Candy they are opaque so sprinkles stay out of them.
 - Rows not reached yet recede. On most themes their holes fade to 60%; fading would let Candy's sprinkles through, so there they stay opaque in a slightly darker lavender (`--board-upcoming-opacity`, `--board-hole-upcoming`).

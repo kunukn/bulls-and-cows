@@ -11,7 +11,8 @@ import { FEEDBACK_COLUMN } from "./rowLayout";
  * The cow is lit from the same spot but stays light to its edge (zinc-300):
  * bulls and cows are told apart by light vs dark (0004).
  * Shared with the legend in Play, which keeps the bulls' own rims; on the
- * board every key peg takes the board's --board-key-ring instead (0007).
+ * board key pegs take the board's --board-bull-ring / --board-key-ring
+ * instead (0007).
  */
 const BLACK_BULL_PEG_CLASS =
   "bg-[radial-gradient(circle_at_35%_30%,var(--color-zinc-500),var(--color-zinc-950)_65%)] ring-1 ring-zinc-300";
@@ -90,8 +91,9 @@ export function FeedbackPegs({
               mark === "black" && bullPegClass,
               mark === "white" && COW_PEG_CLASS,
               // After the peg class, so cn() lets this ring colour win.
-              mark !== "empty" &&
-                "size-3 ring-1 ring-board-key-ring desk:size-3.5",
+              mark !== "empty" && "size-3 ring-1 desk:size-3.5",
+              mark === "black" && "ring-board-bull-ring",
+              mark === "white" && "ring-board-key-ring",
               mark === "empty" && "size-1.5 bg-board-label opacity-40",
               isAnimated &&
                 mark !== "empty" &&

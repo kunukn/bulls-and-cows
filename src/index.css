@@ -282,11 +282,14 @@
 [data-board-theme] {
   color-scheme: dark;
   /*
-   * Outline for every key peg (bull and cow alike), in a colour that stands
-   * out from the board: only an outline that shows adds to a peg's apparent
-   * size, so a shared one keeps bulls and cows looking the same size.
+   * Outline for every key peg, in a colour that stands out from the board:
+   * only an outline that shows adds to a peg's apparent size, so one that
+   * shows on both keeps bulls and cows looking the same size. Light boards
+   * give the bull a darker one: a mid-tone rim between the near-black peg and
+   * the pale board reads as a blurred edge.
    */
   --board-key-ring: oklch(0.871 0.006 286.286); /* zinc-300 */
+  --board-bull-ring: var(--board-key-ring);
   /* Board drop shadow; light boards need a much softer one. */
   --board-drop: oklch(0 0 0 / 40%);
   --board-shield-drop: oklch(0 0 0 / 40%);
@@ -313,6 +316,7 @@
   --color-board-shield-label: var(--board-shield-label);
   --color-board-shield-edge: var(--board-shield-edge);
   --color-board-key-ring: var(--board-key-ring);
+  --color-board-bull-ring: var(--board-bull-ring);
   --color-board-drop: var(--board-drop);
   --shadow-board-glow: var(--board-glow);
 }
@@ -482,6 +486,7 @@
   --board-shield-label: oklch(0.446 0.043 257.281); /* slate-600 */
   --board-shield-edge: oklch(0.704 0.04 256.788); /* slate-400 */
   --board-key-ring: oklch(0.704 0.04 256.788); /* slate-400 */
+  --board-bull-ring: oklch(0.446 0.043 257.281); /* slate-600 */
   --board-drop: oklch(0.279 0.041 260.031 / 14%); /* slate-800 */
   --board-shield-drop: var(--board-drop);
   --board-hole-shade: oklch(0 0 0 / 25%);
@@ -532,6 +537,7 @@
   --board-shield-label: oklch(1 0 0 / 90%);
   --board-shield-edge: oklch(0.541 0.281 293.009); /* violet-600 */
   --board-key-ring: oklch(0.811 0.111 293.571); /* violet-300 */
+  --board-bull-ring: oklch(0.541 0.281 293.009); /* violet-600 */
   --board-drop: oklch(0.283 0.141 291.089 / 14%); /* violet-950 */
   --board-shield-drop: var(--board-drop);
   --board-hole-shade: oklch(0 0 0 / 25%);
