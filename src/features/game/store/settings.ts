@@ -41,6 +41,9 @@ type SettingsStore = {
   /* Pink bull pegs instead of black, for players who find black hard to see. */
   isPinkBull: boolean;
   setPinkBull: (isPinkBull: boolean) => void;
+  /* The computer may swap the code after each guess, never lying (0013). */
+  isSwapEnabled: boolean;
+  setSwapEnabled: (isSwapEnabled: boolean) => void;
   pegStyle: PegStyle;
   setPegStyle: (pegStyle: PegStyle) => void;
   /* App interface only; board themes and printing ignore it (0006). */
@@ -74,6 +77,8 @@ export const useSettings = create<SettingsStore>()(
       setDailyEnabled: (isDailyEnabled) => set({ isDailyEnabled }),
       isPinkBull: false,
       setPinkBull: (isPinkBull) => set({ isPinkBull }),
+      isSwapEnabled: false,
+      setSwapEnabled: (isSwapEnabled) => set({ isSwapEnabled }),
       pegStyle: "color",
       setPegStyle: (pegStyle) => set({ pegStyle }),
       colorScheme: "dark",

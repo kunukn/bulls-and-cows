@@ -39,7 +39,12 @@ export function GameMenu() {
       <DropdownMenuContent align="end" className="w-auto">
         {/* New game first: the item that keeps the code secret is the easy reach. */}
         <DropdownMenuItem
-          onSelect={() => actor.send({ type: "NEW_GAME" })}
+          onSelect={() =>
+            actor.send({
+              type: "NEW_GAME",
+              isSwapMode: useSettings.getState().isSwapEnabled,
+            })
+          }
           className={touchItemClass}
         >
           <RotateCcw />

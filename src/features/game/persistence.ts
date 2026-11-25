@@ -21,13 +21,15 @@ type Placement = Pick<GameContext, "target" | "placed">;
 /*
  * Saves from before slot targeting have no placement; it is rebuilt on load.
  * Saves from before the daily code have no `dailyNumber`; they are practice
- * games.
+ * games. Saves from before swap mode have no `isSwapMode`; they never swap.
  */
+type OptionalSaved = "dailyNumber" | "isSwapMode";
+
 type SavedGame = {
   version: number;
   value: StateValue;
-  context: Omit<GameContext, "randomInt" | "dailyNumber" | keyof Placement> &
-    Partial<Placement & Pick<GameContext, "dailyNumber">>;
+  context: Omit<GameContext, "randomInt" | OptionalSaved | keyof Placement> &
+    Partial<Placement & Pick<GameContext, OptionalSaved>>;
 };
 
 type GameSnapshot = SnapshotFrom<typeof gameMachine>;
@@ -73,6 +75,7 @@ export function loadGame(
       ...saved.context,
       ...restorePlacement(saved.context),
       dailyNumber: saved.context.dailyNumber ?? null,
+      isSwapMode: saved.context.isSwapMode ?? false,
       randomInt: cryptoRandomInt,
     },
   });
@@ -155,6 +158,8 @@ function isSavedGame(value: unknown): value is SavedGame {
     typeof context.finishedAt === "number" &&
     (context.dailyNumber === undefined ||
       context.dailyNumber === null ||
-      Number.isInteger(context.dailyNumber))
+      Number.isInteger(context.dailyNumber)) &&
+    (context.isSwapMode === undefined ||
+      typeof context.isSwapMode === "boolean")
   );
 }

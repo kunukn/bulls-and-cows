@@ -129,3 +129,105 @@ export function scoreGuess(
 
   return { black, white: overlap - black };
 }
+
+/* A checked row: the pegs played and the pins they earned. */
+export type ScoredRow = Feedback & { pegs: readonly Color[] };
+
+export function isScoredLike(code: readonly Color[], row: ScoredRow): boolean {
+  const { black, white } = scoreGuess(code, row.pegs);
+
+  return black === row.black && white === row.white;
+}
+
+/*
+ * Every code the difficulty allows that scores exactly like each past guess,
+ * so the secret is always among them. Worst case is Hard: 8⁵ = 32,768 codes.
+ */
+export function consistentCodes(
+  difficulty: Difficulty,
+  guesses: readonly ScoredRow[],
+): Color[][] {
+  const palette = paletteFor(difficulty);
+  const { pegs, allowRepeats } = DIFFICULTIES[difficulty];
+  const total = palette.length ** pegs;
+  const codes: Color[][] = [];
+
+  for (let number = 0; number < total; number++) {
+    // Read `number` in base `palette.length`, one digit per slot.
+    const code: Color[] = [];
+    let rest = number;
+    for (let slot = 0; slot < pegs; slot++) {
+      code.push(palette[rest % palette.length]);
+      rest = Math.floor(rest / palette.length);
+    }
+    if (!allowRepeats && new Set(code).size < pegs) continue;
+
+    if (guesses.every((guess) => isScoredLike(code, guess))) codes.push(code);
+  }
+
+  return codes;
+}
+
+type Group = { feedback: Feedback; codes: Color[][] };
+
+function isRankedHigher(a: readonly number[], b: readonly number[]): boolean {
+  for (const [index, value] of a.entries()) {
+    if (value !== b[index]) return value > b[index];
+  }
+
+  return false;
+}
+
+function isSameCode(a: readonly Color[], b: readonly Color[]): boolean {
+  return a.every((color, index) => color === b[index]);
+}
+
+/*
+ * Swap mode (0013): the code to score `guess` against, chosen after seeing it.
+ * Every code that fits the earlier pins is split by the pins this guess would
+ * earn, and the largest group is kept, so the pins never lie but tell as
+ * little as possible. Ties avoid the winning group, then keep `currentSecret`
+ * where they can, then show fewer pins. Deterministic, so a guard and an
+ * action asking separately agree.
+ */
+export function dodgeSecret(
+  difficulty: Difficulty,
+  guesses: readonly ScoredRow[],
+  guess: readonly Color[],
+  currentSecret: readonly Color[],
+): Color[] {
+  const { pegs } = DIFFICULTIES[difficulty];
+  const groups = new Map<string, Group>();
+
+  for (const code of consistentCodes(difficulty, guesses)) {
+    const feedback = scoreGuess(code, guess);
+    const key = `${feedback.black}:${feedback.white}`;
+    const group = groups.get(key);
+    if (group) {
+      group.codes.push(code);
+    } else {
+      groups.set(key, { feedback, codes: [code] });
+    }
+  }
+
+  const holdsSecret = (codes: readonly Color[][]) =>
+    codes.some((code) => isSameCode(code, currentSecret));
+  // Higher wins, compared left to right.
+  const rank = ({ feedback, codes }: Group) => [
+    codes.length,
+    feedback.black === pegs ? 0 : 1,
+    holdsSecret(codes) ? 1 : 0,
+    -(feedback.black + feedback.white),
+    -feedback.black,
+  ];
+
+  let best: Group | undefined;
+  for (const group of groups.values()) {
+    if (!best || isRankedHigher(rank(group), rank(best))) best = group;
+  }
+  const codes = best?.codes ?? [];
+  // No codes only if the saved pins contradict each other; keep the secret.
+  if (codes.length === 0 || holdsSecret(codes)) return [...currentSecret];
+
+  return codes[0];
+}

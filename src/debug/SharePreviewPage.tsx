@@ -127,6 +127,7 @@ function finishedGame({ outcome, rows, elapsedMs }: Scenario) {
       finishedAt,
       randomInt: cryptoRandomInt,
       dailyNumber: dailyNumber(),
+      isSwapMode: false,
     },
   });
 }

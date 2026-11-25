@@ -38,22 +38,32 @@ export function qualifies(entries: HighScoreEntry[], run: RunResult): boolean {
 
 type HighScoresStore = {
   scores: Board;
+  /* Wins in swap mode, kept apart: the computer plays a different game (0013). */
+  swapScores: Board;
   lastName: string;
   addEntry: (
     difficulty: Difficulty,
     entry: Omit<HighScoreEntry, "achievedAt">,
+    isSwapMode?: boolean,
   ) => void;
   clear: () => void;
 };
+
+export function boardKey(isSwapMode: boolean): "scores" | "swapScores" {
+  return isSwapMode ? "swapScores" : "scores";
+}
 
 export const useHighScores = create<HighScoresStore>()(
   persist(
     (set) => ({
       scores: emptyBoard(),
+      // Missing from saves made before swap mode; persist's merge adds it.
+      swapScores: emptyBoard(),
       lastName: "",
-      addEntry: (difficulty, entry) =>
+      addEntry: (difficulty, entry, isSwapMode = false) =>
         set((state) => {
-          const existing = state.scores[difficulty];
+          const key = boardKey(isSwapMode);
+          const existing = state[key][difficulty];
           if (existing.some((item) => item.id === entry.id)) return state;
 
           const entries = [...existing, { ...entry, achievedAt: Date.now() }]
@@ -61,11 +71,11 @@ export const useHighScores = create<HighScoresStore>()(
             .slice(0, MAX_ENTRIES);
 
           return {
-            scores: { ...state.scores, [difficulty]: entries },
+            [key]: { ...state[key], [difficulty]: entries },
             lastName: entry.name,
           };
         }),
-      clear: () => set({ scores: emptyBoard() }),
+      clear: () => set({ scores: emptyBoard(), swapScores: emptyBoard() }),
     }),
     { name: "app:highscores", version: 1 },
   ),

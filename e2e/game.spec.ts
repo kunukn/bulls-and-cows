@@ -115,6 +115,24 @@ test("the High scores switch turns the name prompt off and on", async ({
   await expect(nameField).toBeVisible();
 });
 
+test("the Swap badge marks a swap-mode game from the next game on", async ({
+  page,
+}) => {
+  await page.goto("/");
+  const badge = page.getByText("Swap", { exact: true });
+
+  await page.getByRole("button", { name: "Settings" }).click();
+  await page.getByRole("switch", { name: "AI can swap colours" }).click();
+  await page.keyboard.press("Escape");
+  // The game on the board started before the switch, so it doesn't swap (0013).
+  await expect(badge).toBeHidden();
+
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+
+  await expect(badge).toBeVisible();
+});
+
 test("explains the rules from the How it works button", async ({ page }) => {
   await page.goto("/");
 

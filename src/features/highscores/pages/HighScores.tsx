@@ -20,7 +20,11 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router";
-import { useHighScores } from "../store";
+import { boardKey, useHighScores } from "../store";
+
+const BOARD_MODES = ["normal", "swap"] as const;
+
+type BoardMode = (typeof BOARD_MODES)[number];
 
 function isDifficulty(value: string | null): value is Difficulty {
   return DIFFICULTY_KEYS.includes(value as Difficulty);
@@ -50,7 +54,17 @@ export function HighScores() {
   const fallback = useSettings((state) => state.difficulty);
   const param = searchParams.get("difficulty");
   const difficulty = isDifficulty(param) ? param : fallback;
-  const entries = useHighScores((state) => state.scores[difficulty]);
+  const mode: BoardMode =
+    searchParams.get("mode") === "swap" ? "swap" : "normal";
+  const entries = useHighScores(
+    (state) => state[boardKey(mode === "swap")][difficulty],
+  );
+  const isSwapEnabled = useSettings((state) => state.isSwapEnabled);
+  const hasSwapScores = useHighScores((state) =>
+    DIFFICULTY_KEYS.some((key) => state.swapScores[key].length > 0),
+  );
+  // Swap-mode lists only matter to players who use it, or did (0013).
+  const isModePickerShown = isSwapEnabled || hasSwapScores || mode === "swap";
   const clear = useHighScores((state) => state.clear);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const actor = useGameActorRef();
@@ -67,12 +81,26 @@ export function HighScores() {
     (snapshot) => snapshot.context.startedAt,
   );
 
+  function showBoard(next: { difficulty?: Difficulty; mode?: BoardMode }) {
+    const nextMode = next.mode ?? mode;
+    setSearchParams(
+      {
+        difficulty: next.difficulty ?? difficulty,
+        ...(nextMode === "swap" && { mode: nextMode }),
+      },
+      { replace: true },
+    );
+  }
+
   function handleClear() {
     if (window.confirm(t("highScores.clearConfirm"))) clear();
   }
 
   function handlePlayAgain() {
-    actor.send({ type: "NEW_GAME" });
+    actor.send({
+      type: "NEW_GAME",
+      isSwapMode: useSettings.getState().isSwapEnabled,
+    });
     navigate(paths.play);
   }
 
@@ -95,10 +123,32 @@ export function HighScores() {
         name="highscore-difficulty"
         legend={t("highScores.showFor")}
         value={difficulty}
-        onChange={(next) =>
-          setSearchParams({ difficulty: next }, { replace: true })
-        }
+        onChange={(next) => showBoard({ difficulty: next })}
       />
+      {isModePickerShown && (
+        <fieldset>
+          <legend className="sr-only">{t("highScores.modeLegend")}</legend>
+          {/* Native radio group as a segmented control, like SettingsSheet. */}
+          <div className="flex rounded-lg bg-background p-1 ring-1 ring-border">
+            {BOARD_MODES.map((option) => (
+              <label
+                key={option}
+                className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
+              >
+                <input
+                  type="radio"
+                  name="highscore-mode"
+                  value={option}
+                  checked={mode === option}
+                  onChange={() => showBoard({ mode: option })}
+                  className="sr-only"
+                />
+                {t(`highScores.modes.${option}`)}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      )}
 
       <table className="w-full overflow-hidden rounded-2xl bg-card text-left text-sm">
         <thead className="bg-secondary/60 text-xs tracking-wide text-subtle uppercase">

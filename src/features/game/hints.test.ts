@@ -1,10 +1,6 @@
+import { deduceHints, newsworthyHintKeys, type Hint } from "./hints";
 import {
   consistentCodes,
-  deduceHints,
-  newsworthyHintKeys,
-  type Hint,
-} from "./hints";
-import {
   DIFFICULTIES,
   DIFFICULTY_KEYS,
   generateSecret,

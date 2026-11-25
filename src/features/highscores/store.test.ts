@@ -39,6 +39,28 @@ describe("high scores", () => {
     expect(useHighScores.getState().scores.classic).toHaveLength(0);
   });
 
+  it("keeps swap-mode wins on their own board (0013)", () => {
+    useHighScores.getState().addEntry("classic", entry({}), true);
+
+    expect(useHighScores.getState().swapScores.classic).toHaveLength(1);
+    expect(useHighScores.getState().scores.classic).toHaveLength(0);
+  });
+
+  it("gives a save from before swap mode an empty swap board", async () => {
+    localStorage.setItem(
+      "app:highscores",
+      JSON.stringify({
+        state: { scores: { easy: [], classic: [entry({})], hard: [] } },
+        version: 1,
+      }),
+    );
+
+    await useHighScores.persist.rehydrate();
+
+    expect(useHighScores.getState().scores.classic).toHaveLength(1);
+    expect(useHighScores.getState().swapScores.classic).toEqual([]);
+  });
+
   it("truncates to the top entries", () => {
     const { addEntry } = useHighScores.getState();
     for (let index = 0; index < MAX_ENTRIES + 3; index++) {

@@ -87,6 +87,8 @@ export function dailyGameInput(number: number): Required<GameInput> {
     difficulty: DAILY_DIFFICULTY,
     randomInt: seededRandomInt(number),
     dailyNumber: number,
+    // The same code for everyone, so it never swaps (0013).
+    isSwapMode: false,
   };
 }
 

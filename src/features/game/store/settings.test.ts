@@ -27,6 +27,10 @@ test("the daily code is on for new players (0012)", () => {
   expect(useSettings.getState().isDailyEnabled).toBe(true);
 });
 
+test("swap mode is off for new players (0013)", () => {
+  expect(useSettings.getState().isSwapEnabled).toBe(false);
+});
+
 test("switching to light updates <html>", () => {
   useSettings.getState().setColorScheme("light");
 

@@ -9,7 +9,7 @@ A win that makes the top 10 asks for a name and, once saved, opens the High scor
 
 ## Decision
 
-A High scores switch in Settings, on for new players, controls the name prompt. When it is off, a win is not recorded and nothing asks for a name. The trophy link, the High scores page and the scores already saved stay as they are. A daily code win never asks for a name, whatever the switch says; the daily game keeps its own stats (0012).
+A High scores switch in Settings, on for new players, controls the name prompt. When it is off, a win is not recorded and nothing asks for a name. The trophy link, the High scores page and the scores already saved stay as they are. A daily code win never asks for a name, whatever the switch says; the daily game keeps its own stats (0012). Swap-mode wins go on their own lists (0013).
 
 ## Alternatives considered
 

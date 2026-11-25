@@ -1,7 +1,8 @@
 import {
+  consistentCodes,
   DIFFICULTIES,
+  isScoredLike,
   paletteFor,
-  scoreGuess,
   type Color,
   type Difficulty,
 } from "./logic";
@@ -49,41 +50,6 @@ const ROW_HINT_KINDS: ReadonlySet<Hint["kind"]> = new Set<RowHint["kind"]>([
 
 export function isRowHint(hint: Hint): hint is RowHint {
   return ROW_HINT_KINDS.has(hint.kind);
-}
-
-function isScoredLike(code: readonly Color[], guess: Guess): boolean {
-  const { black, white } = scoreGuess(code, guess.pegs);
-
-  return black === guess.black && white === guess.white;
-}
-
-/*
- * Every code the difficulty allows that scores exactly like each past guess,
- * so the secret is always among them. Worst case is Hard: 8⁵ = 32,768 codes.
- */
-export function consistentCodes(
-  difficulty: Difficulty,
-  guesses: readonly Guess[],
-): Color[][] {
-  const palette = paletteFor(difficulty);
-  const { pegs, allowRepeats } = DIFFICULTIES[difficulty];
-  const total = palette.length ** pegs;
-  const codes: Color[][] = [];
-
-  for (let number = 0; number < total; number++) {
-    // Read `number` in base `palette.length`, one digit per slot.
-    const code: Color[] = [];
-    let rest = number;
-    for (let slot = 0; slot < pegs; slot++) {
-      code.push(palette[rest % palette.length]);
-      rest = Math.floor(rest / palette.length);
-    }
-    if (!allowRepeats && new Set(code).size < pegs) continue;
-
-    if (guesses.every((guess) => isScoredLike(code, guess))) codes.push(code);
-  }
-
-  return codes;
 }
 
 /*

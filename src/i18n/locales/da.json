@@ -28,6 +28,8 @@
     },
     "pinkBull": "Lyserøde tyre",
     "pinkBullDescription": "Vis pinde på rigtig plads i lyserød i stedet for sort.",
+    "swapColors": "AI'en må bytte farver",
+    "swapColorsDescription": "Efter hvert gæt må computeren skifte til en anden kode, der stadig passer med dine pinde. Pindene lyver aldrig. Gælder fra dit næste spil.",
     "pegStyle": "Pinde",
     "pegStyleDescription": "Former gør det lettere at kende farverne fra hinanden. Kun former er sværere.",
     "pegStyles": {
@@ -74,6 +76,7 @@
   "game": {
     "legendBull": "Tyr: rigtig plads",
     "legendCow": "Ko: forkert plads",
+    "swapBadge": "Byt",
     "time": "Tid",
     "board": "Spillebræt",
     "secret": "Hemmelig kode",
@@ -170,7 +173,12 @@
     "time": "Tid",
     "date": "Dato",
     "clear": "Ryd alle scores",
-    "clearConfirm": "Slet alle scores for alle sværhedsgrader?"
+    "clearConfirm": "Slet alle scores for alle sværhedsgrader?",
+    "modeLegend": "Spiltype",
+    "modes": {
+      "normal": "Normal",
+      "swap": "Byt"
+    }
   },
   "bull": {
     "button": "Spørg Tyr",

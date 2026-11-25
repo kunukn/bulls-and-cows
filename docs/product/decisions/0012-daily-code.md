@@ -13,7 +13,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 
 - **The date picks the code.** The day's number (#1 is 23 November 2026) seeds a small generator, so every device deals the same code without a server.
 - **The day changes at the player's local midnight.**
-- **Classic rules:** 4 pegs, 6 colours, repeats, 10 guesses.
+- **Classic rules:** 4 pegs, 6 colours, repeats, 10 guesses. The code never swaps, even with swap mode on (0013).
 - **One attempt, and no way to give up.** There is no New game and no Reveal code: everyone gets the same code, and a one-tap reveal would let anyone spoil it for others in seconds. The code shows only once the game is over, won or out of guesses. A player who wants out leaves the board unfinished. The finished board stays until the player starts the next day's code.
 - **Its own save.** A daily game never replaces a practice game in progress, and a practice game never replaces the daily one.
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).

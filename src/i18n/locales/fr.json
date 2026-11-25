@@ -28,6 +28,8 @@
     },
     "pinkBull": "Taureaux roses",
     "pinkBullDescription": "Affiche les pions bien placés en rose plutôt qu’en noir.",
+    "swapColors": "L’IA peut changer les couleurs",
+    "swapColorsDescription": "Après chaque essai, l’ordinateur peut passer à un autre code qui colle encore à tes pions. Les pions ne mentent jamais. Valable dès ta prochaine partie.",
     "pegStyle": "Pions",
     "pegStyleDescription": "Les formes aident à reconnaître les couleurs. Avec les formes seules, c’est plus dur.",
     "pegStyles": {
@@ -74,6 +76,7 @@
   "game": {
     "legendBull": "Taureau : bonne place",
     "legendCow": "Vache : mauvaise place",
+    "swapBadge": "Échange",
     "time": "Temps",
     "board": "Plateau",
     "secret": "Code secret",
@@ -170,7 +173,12 @@
     "time": "Temps",
     "date": "Date",
     "clear": "Tout effacer",
-    "clearConfirm": "Effacer les scores de toutes les difficultés ?"
+    "clearConfirm": "Effacer les scores de toutes les difficultés ?",
+    "modeLegend": "Type de partie",
+    "modes": {
+      "normal": "Normal",
+      "swap": "Échange"
+    }
   },
   "bull": {
     "button": "Demande à Tyr",

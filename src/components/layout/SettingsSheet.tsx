@@ -46,6 +46,8 @@ export function SettingsSheet() {
   const setSoundEnabled = useSettings((state) => state.setSoundEnabled);
   const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
   const setDailyEnabled = useSettings((state) => state.setDailyEnabled);
+  const isSwapEnabled = useSettings((state) => state.isSwapEnabled);
+  const setSwapEnabled = useSettings((state) => state.setSwapEnabled);
   const isPinkBull = useSettings((state) => state.isPinkBull);
   const setPinkBull = useSettings((state) => state.setPinkBull);
   const pegStyle = useSettings((state) => state.pegStyle);
@@ -294,6 +296,25 @@ export function SettingsSheet() {
               className="text-sm text-muted-foreground"
             >
               {t("common.hintsDescription")}
+            </p>
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-3">
+              <label htmlFor="settings-swap" className="font-medium">
+                {t("common.swapColors")}
+              </label>
+              <Switch
+                id="settings-swap"
+                checked={isSwapEnabled}
+                onCheckedChange={setSwapEnabled}
+                aria-describedby="settings-swap-description"
+              />
+            </div>
+            <p
+              id="settings-swap-description"
+              className="text-sm text-muted-foreground"
+            >
+              {t("common.swapColorsDescription")}
             </p>
           </div>
           <div className="flex flex-col gap-2">

@@ -2,6 +2,7 @@ import { and, assign, emit, enqueueActions, raise, setup } from "xstate";
 import {
   cryptoRandomInt,
   DIFFICULTIES,
+  dodgeSecret,
   generateSecret,
   scoreGuess,
   type Color,
@@ -27,12 +28,15 @@ export type GameContext = {
   randomInt: RandomInt;
   /* The day's number in a daily game (0012); null in a practice game. */
   dailyNumber: number | null;
+  /* The computer may swap the code after each guess (0013); never daily. */
+  isSwapMode: boolean;
 };
 
 export type GameInput = {
   difficulty: Difficulty;
   randomInt?: RandomInt;
   dailyNumber?: number;
+  isSwapMode?: boolean;
 };
 
 export type GameEvent =
@@ -46,7 +50,7 @@ export type GameEvent =
   | { type: "AUTO_SUBMIT" }
   | { type: "GIVE_UP" }
   /* Practice only: a daily code gets one attempt (0012). */
-  | { type: "NEW_GAME"; difficulty?: Difficulty }
+  | { type: "NEW_GAME"; difficulty?: Difficulty; isSwapMode?: boolean }
   /* Daily only: move on to a later day's code, dealt by `randomInt`. */
   | { type: "NEXT_DAILY"; dailyNumber: number; randomInt: RandomInt };
 
@@ -98,6 +102,37 @@ function isComplete(row: (Color | null)[]): row is Color[] {
   return row.every((peg) => peg !== null);
 }
 
+let lastDodge:
+  | {
+      context: Pick<GameContext, "guesses" | "current" | "secret">;
+      secret: Color[];
+    }
+  | undefined;
+
+/*
+ * The code the active row is scored against. In swap mode it is picked after
+ * seeing the row (0013); remembered for the row, since the SUBMIT guard and
+ * actions each ask and Hard checks up to 32,768 codes per ask.
+ */
+function secretFor(context: GameContext): Color[] {
+  if (!context.isSwapMode || !isComplete(context.current))
+    return context.secret;
+
+  const { guesses, current, secret } = context;
+  if (
+    lastDodge?.context.guesses === guesses &&
+    lastDodge.context.current === current &&
+    lastDodge.context.secret === secret
+  ) {
+    return lastDodge.secret;
+  }
+
+  const dodged = dodgeSecret(context.difficulty, guesses, current, secret);
+  lastDodge = { context: { guesses, current, secret }, secret: dodged };
+
+  return dodged;
+}
+
 export function elapsedMs({ startedAt, finishedAt }: GameContext): number {
   return startedAt === 0 ? 0 : finishedAt - startedAt;
 }
@@ -119,7 +154,7 @@ export const gameMachine = setup({
     isRowComplete: ({ context }) => isComplete(context.current),
     isWinningGuess: ({ context }) =>
       isComplete(context.current) &&
-      scoreGuess(context.secret, context.current).black ===
+      scoreGuess(secretFor(context), context.current).black ===
         DIFFICULTIES[context.difficulty].pegs,
     isLastGuess: ({ context }) =>
       isComplete(context.current) &&
@@ -145,7 +180,7 @@ export const gameMachine = setup({
     // Runs before submitGuess; the SUBMIT guards ensure the row is complete.
     emitScored: emit(({ context }) => ({
       type: "scored" as const,
-      ...scoreGuess(context.secret, context.current as Color[]),
+      ...scoreGuess(secretFor(context), context.current as Color[]),
     })),
     addPeg: assign(({ context, event }) => {
       if (event.type !== "ADD_PEG") return {};
@@ -199,12 +234,14 @@ export const gameMachine = setup({
     submitGuess: assign(({ context }) => {
       if (!isComplete(context.current)) return {};
 
+      const secret = secretFor(context);
       const guess: Guess = {
         pegs: context.current,
-        ...scoreGuess(context.secret, context.current),
+        ...scoreGuess(secret, context.current),
       };
 
       return {
+        secret,
         guesses: [...context.guesses, guess],
         current: emptyRow(context.difficulty),
         target: 0,
@@ -213,12 +250,12 @@ export const gameMachine = setup({
     }),
     markFinished: assign({ finishedAt: () => Date.now() }),
     resetGame: assign(({ context, event }) => {
-      const difficulty =
-        event.type === "NEW_GAME" && event.difficulty
-          ? event.difficulty
-          : context.difficulty;
+      if (event.type !== "NEW_GAME") return {};
 
-      return freshGame(difficulty, context.randomInt);
+      return {
+        ...freshGame(event.difficulty ?? context.difficulty, context.randomInt),
+        isSwapMode: event.isSwapMode ?? context.isSwapMode,
+      };
     }),
     startNextDaily: assign(({ context, event }) => {
       if (event.type !== "NEXT_DAILY") return {};
@@ -227,6 +264,7 @@ export const gameMachine = setup({
         ...freshGame(context.difficulty, event.randomInt),
         randomInt: event.randomInt,
         dailyNumber: event.dailyNumber,
+        isSwapMode: false,
       };
     }),
   },
@@ -235,10 +273,14 @@ export const gameMachine = setup({
   context: ({ input }) => {
     const randomInt = input.randomInt ?? cryptoRandomInt;
 
+    const dailyNumber = input.dailyNumber ?? null;
+
     return {
       ...freshGame(input.difficulty, randomInt),
       randomInt,
-      dailyNumber: input.dailyNumber ?? null,
+      dailyNumber,
+      // A daily code is the same for everyone, so it never swaps (0012).
+      isSwapMode: dailyNumber === null && (input.isSwapMode ?? false),
     };
   },
   initial: "playing",

@@ -92,6 +92,20 @@ describe("game persistence", () => {
     expect(restored.getSnapshot().value).toBe("playing");
   });
 
+  it("restores swap mode, and loads an older save without it as normal", () => {
+    const actor = createActor(gameMachine, {
+      input: { difficulty: "classic", isSwapMode: true },
+    }).start();
+    saveGame(actor.getSnapshot());
+    expect(loadGame()!.context.isSwapMode).toBe(true);
+
+    const saved = JSON.parse(localStorage.getItem(GAME_STORAGE_KEY)!);
+    delete saved.context.isSwapMode;
+    localStorage.setItem(GAME_STORAGE_KEY, JSON.stringify(saved));
+
+    expect(loadGame()!.context.isSwapMode).toBe(false);
+  });
+
   it("keeps a saved slot target", () => {
     const actor = createActor(gameMachine, {
       input: { difficulty: "classic", randomInt: sequence([0]) },

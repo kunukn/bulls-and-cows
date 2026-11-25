@@ -16,8 +16,8 @@ type Props = {
 };
 
 export function GameMachineProvider({ children }: Props) {
-  // Read once at mount — the persisted difficulty seeds the first game only.
-  const difficulty = useSettings.getState().difficulty;
+  // Read once at mount — the persisted settings seed the first game only.
+  const { difficulty, isSwapEnabled } = useSettings.getState();
 
   /*
    * A saved game survives a page refresh. The clock is wall-time based
@@ -25,7 +25,10 @@ export function GameMachineProvider({ children }: Props) {
    */
   return (
     <GameContext.Provider
-      options={{ input: { difficulty }, snapshot: loadGame() }}
+      options={{
+        input: { difficulty, isSwapMode: isSwapEnabled },
+        snapshot: loadGame(),
+      }}
     >
       <GamePersister />
       {children}

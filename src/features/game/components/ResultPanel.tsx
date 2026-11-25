@@ -6,7 +6,11 @@ import {
 import { DIFFICULTIES } from "@/features/game/logic";
 import { elapsedMs } from "@/features/game/machine";
 import { useSettings } from "@/features/game/store/settings";
-import { qualifies, useHighScores } from "@/features/highscores/store";
+import {
+  boardKey,
+  qualifies,
+  useHighScores,
+} from "@/features/highscores/store";
 import { formatDuration } from "@/utils/format";
 import { CircleCheck, RotateCcw, Save, Trophy, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -66,7 +70,9 @@ export function ResultPanel() {
   const navigate = useNavigate();
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const context = useGameSelector((snapshot) => snapshot.context);
-  const entries = useHighScores((state) => state.scores[context.difficulty]);
+  const entries = useHighScores(
+    (state) => state[boardKey(context.isSwapMode)][context.difficulty],
+  );
   const lastName = useHighScores((state) => state.lastName);
   const addEntry = useHighScores((state) => state.addEntry);
   const isMinimalText = useSettings((state) => state.isMinimalText);
@@ -87,12 +93,13 @@ export function ResultPanel() {
     const name = String(new FormData(event.currentTarget).get("name")).trim();
     if (!name) return;
 
-    addEntry(context.difficulty, {
-      id: context.startedAt,
-      name,
-      ...run,
-    });
-    navigate(`${paths.highScores}?difficulty=${context.difficulty}`);
+    addEntry(
+      context.difficulty,
+      { id: context.startedAt, name, ...run },
+      context.isSwapMode,
+    );
+    const mode = context.isSwapMode ? "&mode=swap" : "";
+    navigate(`${paths.highScores}?difficulty=${context.difficulty}${mode}`);
   }
 
   return (
@@ -156,7 +163,12 @@ export function ResultPanel() {
 
       <button
         type="button"
-        onClick={() => actor.send({ type: "NEW_GAME" })}
+        onClick={() =>
+          actor.send({
+            type: "NEW_GAME",
+            isSwapMode: useSettings.getState().isSwapEnabled,
+          })
+        }
         title={isMinimalText ? t("result.newGame") : undefined}
         className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       >

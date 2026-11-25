@@ -26,6 +26,7 @@ Each record states a rule as it holds today, as if it had always been decided th
 | [0010](0010-optional-high-scores.md)      | High scores are optional, on by default                                               |
 | [0011](0011-bull-hints.md)                | The bull gives hints from the player's own clues                                      |
 | [0012](0012-daily-code.md)                | One daily code, the same for everyone                                                 |
+| [0013](0013-swap-mode.md)                 | The computer may swap the code, but the pins never lie                                |
 
 ## Template
 

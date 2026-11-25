@@ -10,6 +10,7 @@ import {
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { cn } from "@/utils/cn";
+import { Shuffle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Board } from "../components/Board";
@@ -28,6 +29,8 @@ export function Play() {
     (snapshot) => snapshot.context.dailyNumber,
   );
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
+  // The game's own mode, not the setting: a switch flipped mid-game waits (0013).
+  const isSwapMode = useGameSelector((snapshot) => snapshot.context.isSwapMode);
   const hasProgress = useGameSelector(
     (snapshot) => snapshot.context.startedAt > 0,
   );
@@ -45,7 +48,11 @@ export function Play() {
 
   function startGame(next: Difficulty) {
     setDifficulty(next);
-    actor.send({ type: "NEW_GAME", difficulty: next });
+    actor.send({
+      type: "NEW_GAME",
+      difficulty: next,
+      isSwapMode: useSettings.getState().isSwapEnabled,
+    });
   }
 
   function changeDifficulty(next: Difficulty) {
@@ -162,6 +169,17 @@ export function Play() {
             </span>
           )}
           <span className="ms-auto flex items-center gap-3">
+            {isSwapMode && (
+              <span
+                title={t("common.swapColorsDescription")}
+                className="flex items-center gap-1 rounded-full bg-warning/15 px-2 py-0.5 font-medium text-warning"
+              >
+                <Shuffle aria-hidden className="size-3.5" />
+                <span className={isMinimalText ? "sr-only" : undefined}>
+                  {t("game.swapBadge")}
+                </span>
+              </span>
+            )}
             {/* No Give up on the daily code: one tap would spoil it for others (0012). */}
             {isPlaying && dailyNumber === null && <GameMenu />}
             {isTimerShown && <Timer />}

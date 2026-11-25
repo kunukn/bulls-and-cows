@@ -1,5 +1,5 @@
 import { createActor } from "xstate";
-import { DIFFICULTIES, paletteFor, type Color } from "./logic";
+import { consistentCodes, DIFFICULTIES, paletteFor, type Color } from "./logic";
 import { AUTO_SUBMIT_DELAY_MS, gameMachine, type GameEmitted } from "./machine";
 
 /*
@@ -455,5 +455,61 @@ describe("gameMachine, daily game", () => {
 
     expect(actor.getSnapshot().value).toBe("lost");
     expect(actor.getSnapshot().context.dailyNumber).toBeNull();
+  });
+});
+
+describe("gameMachine, swap mode (0013)", () => {
+  function startSwapGame() {
+    return createActor(gameMachine, {
+      input: { difficulty: "classic", randomInt: () => 0, isSwapMode: true },
+    }).start();
+  }
+
+  it("doesn't let a first-guess hit win", () => {
+    const actor = startSwapGame();
+    // Dealt red×4, but 625 codes have no red in the right spot.
+    guess(actor, ["red", "red", "red", "red"]);
+    const { value, context } = actor.getSnapshot();
+
+    expect(value).toBe("playing");
+    expect(context.guesses[0]).toMatchObject({ black: 0, white: 0 });
+  });
+
+  it("keeps a code that fits every row shown", () => {
+    const actor = startSwapGame();
+    const rows: Color[][] = [
+      ["red", "red", "orange", "orange"],
+      ["yellow", "yellow", "green", "green"],
+      ["cyan", "purple", "red", "orange"],
+    ];
+    for (const pegs of rows) guess(actor, pegs);
+    const { context } = actor.getSnapshot();
+
+    expect(consistentCodes("classic", context.guesses)).toContainEqual(
+      context.secret,
+    );
+  });
+
+  it("carries the mode into a new game, or changes it when asked", () => {
+    const actor = startSwapGame();
+    actor.send({ type: "NEW_GAME" });
+    expect(actor.getSnapshot().context.isSwapMode).toBe(true);
+
+    actor.send({ type: "NEW_GAME", isSwapMode: false });
+    expect(actor.getSnapshot().context.isSwapMode).toBe(false);
+  });
+
+  it("never swaps a daily code", () => {
+    const actor = createActor(gameMachine, {
+      input: {
+        difficulty: "classic",
+        randomInt: () => 0,
+        dailyNumber: 1,
+        isSwapMode: true,
+      },
+    }).start();
+    guess(actor, ["red", "red", "red", "red"]);
+
+    expect(actor.getSnapshot().value).toBe("won");
   });
 });

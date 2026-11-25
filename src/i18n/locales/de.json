@@ -28,6 +28,8 @@
     },
     "pinkBull": "Pinke Bullen",
     "pinkBullDescription": "Zeigt Stifte an der richtigen Stelle pink statt schwarz.",
+    "swapColors": "KI darf Farben tauschen",
+    "swapColorsDescription": "Nach jedem Versuch darf der Computer zu einem anderen Code wechseln, der noch zu deinen Stiften passt. Die Stifte lügen nie. Gilt ab deinem nächsten Spiel.",
     "pegStyle": "Stifte",
     "pegStyleDescription": "Formen helfen dir, die Farben zu unterscheiden. Nur mit Formen ist es schwerer.",
     "pegStyles": {
@@ -74,6 +76,7 @@
   "game": {
     "legendBull": "Stier: richtige Stelle",
     "legendCow": "Kuh: falsche Stelle",
+    "swapBadge": "Tausch",
     "time": "Zeit",
     "board": "Spielbrett",
     "secret": "Geheimer Code",
@@ -170,7 +173,12 @@
     "time": "Zeit",
     "date": "Datum",
     "clear": "Alle löschen",
-    "clearConfirm": "Alle Einträge für jede Schwierigkeit löschen?"
+    "clearConfirm": "Alle Einträge für jede Schwierigkeit löschen?",
+    "modeLegend": "Spielart",
+    "modes": {
+      "normal": "Normal",
+      "swap": "Tausch"
+    }
   },
   "bull": {
     "button": "Frag Tyr",
