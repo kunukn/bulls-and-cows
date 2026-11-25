@@ -1,14 +1,13 @@
 import { BullBubble } from "@/components/layout/BullBubble";
-import { newsworthyHintKeys } from "@/features/game/hints";
 import { DIFFICULTIES } from "@/features/game/logic";
 import {
   useGameActorRef,
   useGameSelector,
 } from "@/features/game/machine-context";
-import { useHintsSeen } from "@/features/game/store/hintsSeen";
 import { useSettings } from "@/features/game/store/settings";
 import { useGameSounds } from "@/features/game/useGameSounds";
-import { useEffect, useMemo, useRef } from "react";
+import { useHasNewHint } from "@/features/game/useHasNewHint";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
@@ -20,9 +19,6 @@ import {
 } from "./rowLayout";
 import { Peg } from "./Peg";
 import { SecretShield } from "./SecretShield";
-
-/* Stable, so the seen-hints selector doesn't hand back a new array each call. */
-const NOTHING_SEEN: readonly string[] = [];
 
 /* Symmetric, so it needs no RTL counterpart. */
 const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
@@ -38,15 +34,8 @@ export function Board() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
   useGameSounds();
-  const {
-    difficulty,
-    guesses,
-    current,
-    secret,
-    target,
-    startedAt,
-    dailyNumber,
-  } = useGameSelector((snapshot) => snapshot.context);
+  const { difficulty, guesses, current, secret, target, dailyNumber } =
+    useGameSelector((snapshot) => snapshot.context);
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
@@ -59,16 +48,7 @@ export function Board() {
   const hasShieldBull = isPlaying && isHintsEnabled;
   // The daily bull never reads the clues (0012), so it has no news to flag.
   const isDaily = dailyNumber !== null;
-  const hasHints = hasShieldBull && !isDaily;
-  // Deducing takes up to ~20 ms on Hard; redo it only when a guess is scored.
-  const hintKeys = useMemo(
-    () => (hasHints ? newsworthyHintKeys(difficulty, guesses) : []),
-    [hasHints, difficulty, guesses],
-  );
-  const seen = useHintsSeen((state) =>
-    state.gameId === startedAt ? state.keys : NOTHING_SEEN,
-  );
-  const hasNewHint = hintKeys.some((key) => !seen.includes(key));
+  const hasNewHint = useHasNewHint(hasShieldBull && !isDaily);
 
   /*
    * Keep the active row visible on small screens as the board grows, clear
