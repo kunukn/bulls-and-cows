@@ -38,11 +38,16 @@ export function Board() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
   useGameSounds();
-  const { difficulty, guesses, current, secret } = useGameSelector(
-    (snapshot) => snapshot.context,
-  );
+  const {
+    difficulty,
+    guesses,
+    current,
+    secret,
+    target,
+    startedAt,
+    dailyNumber,
+  } = useGameSelector((snapshot) => snapshot.context);
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
-  const target = useGameSelector((snapshot) => snapshot.context.target);
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
   const activeRowRef = useRef<HTMLLIElement>(null);
@@ -51,12 +56,9 @@ export function Board() {
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
   // Until the first guess is scored, say what to do: nothing else on the board does.
   const hasStartHint = isPlaying && guesses.length === 0;
-  const startedAt = useGameSelector((snapshot) => snapshot.context.startedAt);
   const hasShieldBull = isPlaying && isHintsEnabled;
   // The daily bull never reads the clues (0012), so it has no news to flag.
-  const isDaily = useGameSelector(
-    (snapshot) => snapshot.context.dailyNumber !== null,
-  );
+  const isDaily = dailyNumber !== null;
   const hasHints = hasShieldBull && !isDaily;
   // Deducing takes up to ~20 ms on Hard; redo it only when a guess is scored.
   const hintKeys = useMemo(
