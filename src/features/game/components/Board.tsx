@@ -1,4 +1,3 @@
-import { BullBubble } from "@/components/layout/BullBubble";
 import { DIFFICULTIES } from "@/features/game/logic";
 import {
   useGameActorRef,
@@ -10,14 +9,7 @@ import { useHasNewHint } from "@/features/game/useHasNewHint";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
-import {
-  FEEDBACK_COLUMN,
-  NUMBER_COLUMN,
-  PEGS_COLUMN,
-  ROW_LAYOUT,
-} from "./rowLayout";
-import { Peg } from "./Peg";
-import { SecretShield } from "./SecretShield";
+import { SecretTray } from "./SecretTray";
 import { useActiveRow } from "./useActiveRow";
 
 export function Board() {
@@ -46,42 +38,14 @@ export function Board() {
       data-board-theme={boardTheme}
       className="rounded-2xl p-3 shadow-lg shadow-board-drop board-surface"
     >
-      <div
-        aria-label={isPlaying ? t("game.secretHidden") : t("game.secret")}
-        className={cn(
-          ROW_LAYOUT,
-          // group/tray: the shield's bull pad follows the Hint button's state.
-          "group/tray relative mb-3 rounded-lg bg-board-tray py-2",
-        )}
-      >
-        <span aria-hidden className={NUMBER_COLUMN} />
-        <div className={PEGS_COLUMN}>
-          {/* Empty holes while playing, so the code never reaches the DOM. */}
-          {isPlaying
-            ? Array.from({ length: pegs }, (_, index) => (
-                <Peg key={index} color={null} />
-              ))
-            : secret.map((color, index) => (
-                <span key={index} className="contents">
-                  <Peg color={color} />
-                  <span className="sr-only">{t(`colors.${color}`)}</span>
-                </span>
-              ))}
-        </div>
-        {/* Above the shield (z-10), so the moulded bull it covers is clickable. */}
-        <span className={cn(FEEDBACK_COLUMN, "relative z-10 self-stretch")}>
-          {hasShieldBull && (
-            <BullBubble variant="shield" hasNewHint={hasNewHint} />
-          )}
-        </span>
-        <SecretShield
-          pegs={pegs}
-          isOpen={!isPlaying}
-          hasBull={hasShieldBull}
-          hasNewHint={hasNewHint}
-          isDaily={isDaily}
-        />
-      </div>
+      <SecretTray
+        pegs={pegs}
+        secret={secret}
+        isPlaying={isPlaying}
+        hasShieldBull={hasShieldBull}
+        hasNewHint={hasNewHint}
+        isDaily={isDaily}
+      />
       {/* Always rendered, hidden after the first guess, so the rows don't shift up. */}
       <p
         className={cn(

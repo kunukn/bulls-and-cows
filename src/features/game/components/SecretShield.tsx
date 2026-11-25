@@ -11,7 +11,10 @@ import {
 type Props = {
   pegs: number;
   isOpen: boolean;
-  /* The bull moulded into the shield's end; Board lays the Hint button over it. */
+  /*
+   * The bull moulded into the shield's end; SecretTray lays the Hint button
+   * over it.
+   */
   hasBull: boolean;
   /* Shows the bull's marker: a guess has proved something not yet shown. */
   hasNewHint: boolean;
@@ -70,8 +73,9 @@ export function SecretShield({
             /*
              * A raised round pad in the shield's own plastic, so the bull
              * reads as a button, not an engraving (0011). The shield ignores
-             * clicks, so it follows Board's see-through Hint button through
-             * the tray: lighter on hover, pushed down 1px while pressed.
+             * clicks, so it follows SecretTray's see-through Hint button
+             * through the tray: lighter on hover, pushed down 1px while
+             * pressed.
              */
             <span className="grid size-9 place-items-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_2px_3px_var(--board-shield-drop)] transition-[translate,box-shadow,filter] duration-75 board-shield group-has-[[data-shield-bull]:active]/tray:translate-y-px group-has-[[data-shield-bull]:active]/tray:shadow-[inset_0_1px_0_rgb(255_255_255/0.1),0_1px_1px_var(--board-shield-drop)] group-has-[[data-shield-bull]:hover]/tray:brightness-110 motion-reduce:transition-none desk:size-11">
               <span className="relative">
