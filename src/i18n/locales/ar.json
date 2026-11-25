@@ -59,6 +59,8 @@
     "hard": "صعب",
     "pegs": "{{pegs}} أوتاد",
     "colors": "{{colors}} ألوان",
+    "noRepeats": "بلا تكرار",
+    "repeats": "مع تكرار",
     "details": "{{pegs}} أوتاد · {{colors}} ألوان"
   },
   "colors": {

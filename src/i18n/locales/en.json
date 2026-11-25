@@ -59,6 +59,8 @@
     "hard": "Hard",
     "pegs": "{{pegs}} pegs",
     "colors": "{{colors}} colours",
+    "noRepeats": "no repeats",
+    "repeats": "repeats",
     "details": "{{pegs}} pegs · {{colors}} colours"
   },
   "colors": {

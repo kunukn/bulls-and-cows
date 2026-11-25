@@ -59,6 +59,8 @@
     "hard": "Svær",
     "pegs": "{{pegs}} pinde",
     "colors": "{{colors}} farver",
+    "noRepeats": "ingen dobbelte",
+    "repeats": "dobbelte",
     "details": "{{pegs}} pinde · {{colors}} farver"
   },
   "colors": {

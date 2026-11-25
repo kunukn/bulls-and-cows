@@ -59,6 +59,8 @@
     "hard": "कठिन",
     "pegs": "{{pegs}} खूँटियाँ",
     "colors": "{{colors}} रंग",
+    "noRepeats": "दोहराव नहीं",
+    "repeats": "दोहराव",
     "details": "{{pegs}} खूँटियाँ · {{colors}} रंग"
   },
   "colors": {

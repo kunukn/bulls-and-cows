@@ -59,6 +59,8 @@
     "hard": "困难",
     "pegs": "{{pegs}} 个位置",
     "colors": "{{colors}} 种颜色",
+    "noRepeats": "不重复",
+    "repeats": "可重复",
     "details": "{{pegs}} 个位置 · {{colors}} 种颜色"
   },
   "colors": {

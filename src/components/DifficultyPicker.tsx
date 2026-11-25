@@ -4,7 +4,7 @@ import {
   type Difficulty,
 } from "@/features/game/logic";
 import { useSettings } from "@/features/game/store/settings";
-import { Star } from "lucide-react";
+import { Circle, Palette, Star } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 type Props = {
@@ -13,6 +13,14 @@ type Props = {
   name: string;
   legend: string;
 };
+
+/*
+ * Lucide's palette draws its four paint dots as <circle>s after the outline.
+ * Paint them like pegs (clockwise from the left: red, yellow, green, blue) and
+ * thicken them, or the colour doesn't show at 16px.
+ */
+const COLOURFUL_PALETTE_CLASS =
+  "[&>circle]:stroke-[3.5] [&>circle:nth-of-type(1)]:fill-peg-green [&>circle:nth-of-type(1)]:stroke-peg-green [&>circle:nth-of-type(2)]:fill-peg-blue [&>circle:nth-of-type(2)]:stroke-peg-blue [&>circle:nth-of-type(3)]:fill-peg-red [&>circle:nth-of-type(3)]:stroke-peg-red [&>circle:nth-of-type(4)]:fill-peg-yellow [&>circle:nth-of-type(4)]:stroke-peg-yellow";
 
 /* Native radio group styled as a segmented control — arrow-key navigation for free. */
 export function DifficultyPicker({ value, onChange, name, legend }: Props) {
@@ -23,12 +31,12 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
     <fieldset className="flex rounded-lg bg-card p-1">
       <legend className="sr-only">{legend}</legend>
       {DIFFICULTY_KEYS.map((key, index) => {
-        const { pegs, colors } = DIFFICULTIES[key];
+        const { pegs, colors, allowRepeats } = DIFFICULTIES[key];
 
         return (
           <label
             key={key}
-            className="flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
+            className="group flex-1 cursor-pointer rounded-md px-2 py-1.5 text-center text-sm font-medium text-subtle transition-colors has-checked:bg-control has-checked:text-foreground has-focus-visible:outline-2 has-focus-visible:outline-ring"
           >
             <input
               type="radio"
@@ -56,15 +64,37 @@ export function DifficultyPicker({ value, onChange, name, legend }: Props) {
             ) : (
               <>
                 {t(`difficulty.${key}`)}
-                {/* Each half stays whole, so a narrow segment breaks at the dot, not mid-phrase. */}
-                <span className="block text-xs font-normal text-muted-foreground">
-                  <span className="whitespace-nowrap">
-                    {t("difficulty.pegs", { pegs })}
-                  </span>{" "}
-                  ·{" "}
-                  <span className="whitespace-nowrap">
-                    {t("difficulty.colors", { colors })}
+                {/* Icon + count instead of words; the words stay for screen readers + tooltip. */}
+                {/* Selected: one step lighter, since muted text fades on the lighter control fill. */}
+                <span className="flex items-center justify-center gap-2.5 text-xs font-normal text-muted-foreground group-has-checked:text-subtle">
+                  <span
+                    title={t("difficulty.pegs", { pegs })}
+                    className="inline-flex items-center gap-1"
+                  >
+                    <Circle aria-hidden className="size-2.5 fill-current" />
+                    <span aria-hidden>{pegs}</span>
+                    <span className="sr-only">
+                      {t("difficulty.pegs", { pegs })}
+                    </span>
                   </span>
+                  <span
+                    title={t("difficulty.colors", { colors })}
+                    className="inline-flex items-center gap-1"
+                  >
+                    <Palette
+                      aria-hidden
+                      className={`size-4 ${COLOURFUL_PALETTE_CLASS}`}
+                    />
+                    <span aria-hidden>{colors}</span>
+                    <span className="sr-only">
+                      {t("difficulty.colors", { colors })}
+                    </span>
+                  </span>
+                </span>
+                <span className="block text-xs font-normal text-muted-foreground group-has-checked:text-subtle">
+                  {allowRepeats
+                    ? t("difficulty.repeats")
+                    : t("difficulty.noRepeats")}
                 </span>
               </>
             )}

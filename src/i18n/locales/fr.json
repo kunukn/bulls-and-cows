@@ -59,6 +59,8 @@
     "hard": "Difficile",
     "pegs": "{{pegs}} pions",
     "colors": "{{colors}} couleurs",
+    "noRepeats": "sans doubles",
+    "repeats": "avec doubles",
     "details": "{{pegs}} pions · {{colors}} couleurs"
   },
   "colors": {

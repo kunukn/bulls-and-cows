@@ -59,6 +59,8 @@
     "hard": "Schwer",
     "pegs": "{{pegs}} Stifte",
     "colors": "{{colors}} Farben",
+    "noRepeats": "nie doppelt",
+    "repeats": "doppelt",
     "details": "{{pegs}} Stifte · {{colors}} Farben"
   },
   "colors": {
