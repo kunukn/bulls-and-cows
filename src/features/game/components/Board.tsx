@@ -34,6 +34,7 @@ export function Board() {
   const boardTheme = useSettings((state) => state.boardTheme);
   const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
+  const isMinimalText = useSettings((state) => state.isMinimalText);
   // Until the first guess is scored, say what to do: nothing else on the board does.
   const hasStartHint = isPlaying && guesses.length === 0;
   const startHintKey =
@@ -59,15 +60,20 @@ export function Board() {
         hasNewHint={hasNewHint}
         isDaily={isDaily}
       />
-      {/* Always rendered, hidden after the first guess, so the rows don't shift up. */}
-      <p
-        className={cn(
-          "mb-2 text-center text-xs leading-none text-board-label",
-          !hasStartHint && "invisible",
-        )}
-      >
-        {t(startHintKey, { count: pegs })}
-      </p>
+      {/*
+       * Hidden (not removed) after the first guess so the rows don't shift up.
+       * Minimal text drops it outright; the ? button still explains the rules.
+       */}
+      {!isMinimalText && (
+        <p
+          className={cn(
+            "mb-2 text-center text-xs leading-none text-board-label",
+            !hasStartHint && "invisible",
+          )}
+        >
+          {t(startHintKey, { count: pegs })}
+        </p>
+      )}
       <ol className="flex flex-col gap-1">
         {Array.from({ length: maxGuesses }, (_, index) => {
           const guess = guesses[index];
