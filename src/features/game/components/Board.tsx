@@ -7,7 +7,6 @@ import {
 import { useSettings } from "@/features/game/store/settings";
 import { useGameSounds } from "@/features/game/useGameSounds";
 import { useHasNewHint } from "@/features/game/useHasNewHint";
-import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/utils/cn";
 import { GuessRow } from "./GuessRow";
@@ -19,16 +18,7 @@ import {
 } from "./rowLayout";
 import { Peg } from "./Peg";
 import { SecretShield } from "./SecretShield";
-
-/* Symmetric, so it needs no RTL counterpart. */
-const ROW_SHAKE_KEYFRAMES: Keyframe[] = [
-  { transform: "translateX(0)" },
-  { transform: "translateX(-5px)" },
-  { transform: "translateX(5px)" },
-  { transform: "translateX(-3px)" },
-  { transform: "translateX(2px)" },
-  { transform: "translateX(0)" },
-];
+import { useActiveRow } from "./useActiveRow";
 
 export function Board() {
   const { t } = useTranslation();
@@ -39,7 +29,7 @@ export function Board() {
   const isPlaying = useGameSelector((snapshot) => snapshot.matches("playing"));
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const { maxGuesses, pegs } = DIFFICULTIES[difficulty];
-  const activeRowRef = useRef<HTMLLIElement>(null);
+  const activeRowRef = useActiveRow(guesses.length);
   const boardTheme = useSettings((state) => state.boardTheme);
   const isHintsEnabled = useSettings((state) => state.isHintsEnabled);
   const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
@@ -49,47 +39,6 @@ export function Board() {
   // The daily bull never reads the clues (0012), so it has no news to flag.
   const isDaily = dailyNumber !== null;
   const hasNewHint = useHasNewHint(hasShieldBull && !isDaily);
-
-  /*
-   * Keep the active row visible on small screens as the board grows, clear
-   * of the sticky dock by the row's scroll-margin. Measured by hand rather
-   * than scrollIntoView: iOS Safari's "nearest" stopped with row 9 of 10
-   * behind the dock although the page could scroll further. innerHeight is
-   * the viewport not covered by Safari's toolbars, which the dock sticks to.
-   */
-  useEffect(() => {
-    const row = activeRowRef.current;
-    if (!row) return;
-
-    const { top, bottom } = row.getBoundingClientRect();
-    const { scrollMarginTop, scrollMarginBottom } = getComputedStyle(row);
-    const overshootBelow =
-      bottom + parseFloat(scrollMarginBottom) - window.innerHeight;
-    const overshootAbove = parseFloat(scrollMarginTop) - top;
-    const distance =
-      overshootBelow > 0 ? overshootBelow : -Math.max(0, overshootAbove);
-    if (distance === 0) return;
-
-    window.scrollBy({ top: distance, behavior: "smooth" });
-  }, [guesses.length]);
-
-  /*
-   * Rejected submit (Enter on an unfinished row): shake the active row. The
-   * Web Animations API restarts on every call, which a CSS class can't do
-   * without a remove/reflow/add dance.
-   */
-  useEffect(() => {
-    const subscription = actor.on("rowIncomplete", () => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-      activeRowRef.current?.animate(ROW_SHAKE_KEYFRAMES, {
-        duration: 280,
-        easing: "ease-out",
-      });
-    });
-
-    return () => subscription.unsubscribe();
-  }, [actor]);
 
   return (
     <section
