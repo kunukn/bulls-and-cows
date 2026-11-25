@@ -5,10 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  useGameActorRef,
-  useGameSelector,
-} from "@/features/game/machine-context";
+import { useGameActorRef } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
 import { ChevronDown, Eye, Flag, RotateCcw } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -19,16 +16,13 @@ const touchItemClass = "pointer-coarse:py-3";
 /*
  * Lives in the info row above the board, away from Check, so a missed tap on
  * the main action can't land on it. Opening the menu is the deliberate first
- * step, so its items act without a further confirm dialog.
+ * step, so its items act without a further confirm dialog. Practice only: the
+ * daily code has no Give up (0012).
  */
 export function GameMenu() {
   const { t } = useTranslation();
   const actor = useGameActorRef();
   const isMinimalText = useSettings((state) => state.isMinimalText);
-  // A daily code gets one attempt, so there is no New game to offer (0012).
-  const isDaily = useGameSelector(
-    (snapshot) => snapshot.context.dailyNumber !== null,
-  );
 
   return (
     <DropdownMenu>
@@ -44,18 +38,14 @@ export function GameMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-auto">
         {/* New game first: the item that keeps the code secret is the easy reach. */}
-        {!isDaily && (
-          <>
-            <DropdownMenuItem
-              onSelect={() => actor.send({ type: "NEW_GAME" })}
-              className={touchItemClass}
-            >
-              <RotateCcw />
-              {t("result.newGame")}
-            </DropdownMenuItem>
-            <DropdownMenuSeparator className="pointer-coarse:my-2" />
-          </>
-        )}
+        <DropdownMenuItem
+          onSelect={() => actor.send({ type: "NEW_GAME" })}
+          className={touchItemClass}
+        >
+          <RotateCcw />
+          {t("result.newGame")}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator className="pointer-coarse:my-2" />
         {/* Red marks the item that ends the game and reveals the code. */}
         <DropdownMenuItem
           variant="destructive"

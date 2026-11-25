@@ -257,7 +257,6 @@
     "daily": {
       "oneTry": "Ein Versuch pro Tag. Dein Brett ist in diesem Browser gespeichert, Neuladen gibt dir also keinen neuen Versuch.",
       "sameCode": "Heute haben alle denselben Code. Teile dein Ergebnis und vergleiche.",
-      "reveal": "Wer heute den Code aufdeckt, hat verloren.",
       "streak": "Gewinne mehrere Tage hintereinander für eine Serie. Ein verpasster Tag oder eine Niederlage setzt sie zurück.",
       "noHints": "Beim Tagescode gibt es keine Tipps. Heute zählen nur du und deine Hinweise.",
       "nextCode": "Um Mitternacht, deiner Zeit, kommt ein neuer Code. Also {{time}}.",

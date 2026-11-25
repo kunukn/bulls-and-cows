@@ -257,7 +257,6 @@
     "daily": {
       "oneTry": "Un essai par jour. Ta grille est gardée dans ce navigateur, donc recharger la page ne donne pas un autre essai.",
       "sameCode": "Tout le monde a le même code aujourd'hui. Partage ton résultat et compare.",
-      "reveal": "Aujourd'hui, révéler le code compte comme une défaite.",
       "streak": "Gagne plusieurs jours de suite pour une série. Un jour manqué ou une défaite la remet à zéro.",
       "noHints": "Pas d'aide pour le code du jour. Aujourd'hui, c'est toi et tes indices.",
       "nextCode": "Un nouveau code arrive à minuit, chez toi. C'est {{time}}.",

@@ -70,7 +70,6 @@ export const CALM_KEYS = [
 export const DAILY_KEYS = [
   "bull.daily.oneTry",
   "bull.daily.sameCode",
-  "bull.daily.reveal",
   "bull.daily.streak",
   "bull.daily.noHints",
 ] as const;

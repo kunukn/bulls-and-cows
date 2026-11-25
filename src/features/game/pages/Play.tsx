@@ -162,7 +162,8 @@ export function Play() {
             </span>
           )}
           <span className="ms-auto flex items-center gap-3">
-            {isPlaying && <GameMenu />}
+            {/* No Give up on the daily code: one tap would spoil it for others (0012). */}
+            {isPlaying && dailyNumber === null && <GameMenu />}
             {isTimerShown && <Timer />}
           </span>
         </div>

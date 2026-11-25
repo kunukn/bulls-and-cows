@@ -1,4 +1,5 @@
 import {
+  DAILY_KEYS,
   pickChatLine,
   pickDailyLine,
   pickHintLine,
@@ -249,16 +250,21 @@ describe("pickDailyLine (the shield bull on the daily code)", () => {
   });
 
   it("doesn't repeat the countdown just because its time moved on", () => {
-    // Draws: group 1 (how the day works), then line 5 in it, the countdown.
+    // Draws: group 1 (how the day works), then the countdown, right after the fixed lines.
+    const countdown = DAILY_KEYS.length;
     const draws =
       (...choices: number[]): RandomInt =>
       (max) =>
         (choices.shift() ?? 0) % max;
-    const first = pickDailyLine(dailySituation(NEW_PLAYER), null, draws(1, 5));
+    const first = pickDailyLine(
+      dailySituation(NEW_PLAYER),
+      null,
+      draws(1, countdown),
+    );
     expect(first).toMatchObject({ kind: "daily", fact: { kind: "nextCode" } });
 
     const aMinuteLeft = { ...dailySituation(NEW_PLAYER), msUntilNext: 60_000 };
-    const second = pickDailyLine(aMinuteLeft, first, draws(1, 5));
+    const second = pickDailyLine(aMinuteLeft, first, draws(1, countdown));
 
     expect(second).not.toMatchObject({
       kind: "daily",

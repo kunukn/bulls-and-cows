@@ -257,7 +257,6 @@
     "daily": {
       "oneTry": "Ét forsøg om dagen. Din plade er gemt i denne browser, så du får ikke et nyt forsøg ved at genindlæse.",
       "sameCode": "Alle har den samme kode i dag. Del dit resultat og sammenlign.",
-      "reveal": "I dag tæller det som et nederlag at vise koden.",
       "streak": "Vind dage i træk. En glemt dag eller et nederlag starter tællingen forfra.",
       "noHints": "Ingen tips til dagens kode. I dag er det dig og dine spor.",
       "nextCode": "En ny kode kommer ved midnat, din tid. Altså {{time}}.",

@@ -45,16 +45,10 @@ test("the daily code gets one attempt and leaves practice alone", async ({
 
   await openDaily(page);
   const hiddenCode = page.getByLabel("Secret code (hidden)");
-  const newGame = page.getByRole("menuitem", { name: "New game" });
   await expect(hiddenCode).toBeVisible();
 
-  // No restart while playing (0012): the menu only reveals the code.
-  await page.getByRole("button", { name: "Give up" }).click();
-  await expect(
-    page.getByRole("menuitem", { name: "Reveal code" }),
-  ).toBeVisible();
-  await expect(newGame).toBeHidden();
-  await page.keyboard.press("Escape");
+  // No restart and no reveal while playing (0012): one tap would spoil it.
+  await expect(page.getByRole("button", { name: "Give up" })).toBeHidden();
 
   await winDaily(page);
   const outcome = page.getByText(/Cracked in 1 guess/);

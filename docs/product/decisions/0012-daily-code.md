@@ -1,7 +1,7 @@
 # 0012 — One daily code, the same for everyone
 
 - **Status:** Accepted
-- **Updated:** 2026-11-24
+- **Updated:** 2026-11-25
 
 ## Context
 
@@ -14,13 +14,13 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **The date picks the code.** The day's number (#1 is 23 November 2026) seeds a small generator, so every device deals the same code without a server.
 - **The day changes at the player's local midnight.**
 - **Classic rules:** 4 pegs, 6 colours, repeats, 10 guesses.
-- **One attempt.** There is no New game, and Reveal code counts as a loss. The finished board stays until the player starts the next day's code.
+- **One attempt, and no way to give up.** There is no New game and no Reveal code: everyone gets the same code, and a one-tap reveal would let anyone spoil it for others in seconds. The code shows only once the game is over, won or out of guesses. A player who wants out leaves the board unfinished. The finished board stays until the player starts the next day's code.
 - **Its own save.** A daily game never replaces a practice game in progress, and a practice game never replaces the daily one.
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
 - **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
 - **One tap to X, Threads and Bluesky.** These are where players share most, so each gets its own button in a row under the chart, showing the site's logo and name. The button opens the site's post box with the same text filled in, in a new tab or the site's app. Threads' post link turns every emoji into "�", so its text uses ● bull, ◎ cow and ○ miss instead: text shapes that come through and stay one width, so the rows still line up. Nothing is posted until the player confirms there. Share stays beside Practice game for everywhere else.
-- **No hints on the daily code.** Everyone solves the same code, so the shield bull (0011) doesn't read the clues or give tips there, and shows no new-hint dot. It talks about the day instead: calm, breathing-style lines; how the daily code works (one try saved in this browser, the same code for everyone from the date, a new code at local midnight with the time left, Classic rules, Reveal code as a loss, streaks); facts about Classic (1,296 codes, Knuth's five-guess proof, about 4.3 guesses on average with perfect play); and, once the player has finished a daily code, their own wins, average guesses per win and best streak. Its button says "Ask Tyr about today's code", not "Hint". Since it doesn't solve anything, it may invite a click: there the bull is the header bull's full size, not a size smaller as in practice. Each group gets an equal chance, as in 0011.
+- **No hints on the daily code.** Everyone solves the same code, so the shield bull (0011) doesn't read the clues or give tips there, and shows no new-hint dot. It talks about the day instead: calm, breathing-style lines; how the daily code works (one try saved in this browser, the same code for everyone from the date, a new code at local midnight with the time left, Classic rules, streaks); facts about Classic (1,296 codes, Knuth's five-guess proof, about 4.3 guesses on average with perfect play); and, once the player has finished a daily code, their own wins, average guesses per win and best streak. Its button says "Ask Tyr about today's code", not "Hint". Since it doesn't solve anything, it may invite a click: there the bull is the header bull's full size, not a size smaller as in practice. Each group gets an equal chance, as in 0011.
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
 - **The daily header shows what makes the day different.** It takes the difficulty picker's place and height, and shows the date, the rules, "1 try", the current streak (when there is one) and a link back to practice.
 - **It can be switched off.** A Daily code switch in Settings, on for new players, hides the row and the daily section of How it works. The `/daily` page, a game on it and the stats stay, so a link a friend shares still opens.
@@ -28,6 +28,9 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **A new day never interrupts a game, or a result still to share.** An untouched board moves on to today's code when the app comes back into view. A finished board stays, through a reload or a reboot too, so the result can still be shared the next day. Play today's code moves on. Only yesterday's board is kept: an older finished board, or an unfinished one from an earlier day, gives way to today's code when the page loads. A game under way stays until it's finished or the page is reloaded.
 
 ## Alternatives considered
+
+- **Reveal code as a loss.** One tap shows everyone's code for the day, so a player could spoil it for others before they've played. Running out of guesses still shows it, but that takes ten guesses.
+- **Keep the code hidden after a loss too.** A player who lost would never learn the answer, which feels unfair; the code is worked out in the browser from the date anyway, so nothing can make it truly secret.
 
 - **The UTC day.** Everyone switches at the same moment, but for most players the code would change in the middle of the day.
 - **A daily code per difficulty.** More to play, but three results to compare instead of one.

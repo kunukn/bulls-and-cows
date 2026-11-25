@@ -257,7 +257,6 @@
     "daily": {
       "oneTry": "One try a day. Your board is saved in this browser, so reloading won't give you another go.",
       "sameCode": "Everyone gets the same code today. Share your result and compare.",
-      "reveal": "Revealing the code today counts as a loss.",
       "streak": "Win days in a row for a streak. A missed day or a loss starts it over.",
       "noHints": "No hints on the daily code. Today it's you and your clues.",
       "nextCode": "A new code comes at midnight, your time. That's {{time}}.",
