@@ -16,6 +16,9 @@ import { CircleCheck, RotateCcw, Save, Trophy, UserRound } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
+/* Sizes the name field as well as limiting it, so the field shows its limit. */
+const NAME_MAX_LENGTH = 20;
+
 type OutcomeMessageProps = {
   isWon: boolean;
   /* Lost with guesses left, i.e. the player gave up. */
@@ -120,7 +123,7 @@ export function ResultPanel() {
       {canRecord && (
         <form
           onSubmit={handleSubmit}
-          className="flex w-full items-center gap-2"
+          className="flex w-full items-center justify-center gap-2"
         >
           {isMinimalText && (
             <UserRound
@@ -135,19 +138,20 @@ export function ResultPanel() {
             id="highscore-name"
             name="name"
             required
-            maxLength={20}
+            size={NAME_MAX_LENGTH}
+            maxLength={NAME_MAX_LENGTH}
             // oxlint-disable-next-line jsx-a11y/autocomplete-valid -- `nickname` is a valid HTML token; the rule's list lacks it
             autoComplete="nickname"
             // oxlint-disable-next-line jsx-a11y/no-autofocus -- focus follows the player's own winning move, so it isn't a surprise
             autoFocus
             defaultValue={lastName}
             placeholder={isMinimalText ? undefined : t("result.yourName")}
-            className="min-w-0 flex-1 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
+            className="min-w-0 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
           />
           <button
             type="submit"
             title={isMinimalText ? t("result.save") : undefined}
-            className="flex items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="flex shrink-0 items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             {isMinimalText && <Save aria-hidden className="size-5" />}
             <span className={labelClass}>{t("result.save")}</span>
