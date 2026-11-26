@@ -3,9 +3,15 @@ export const LANGUAGES = [
   { code: "en", label: "English" },
   { code: "zh", label: "中文" },
   { code: "hi", label: "हिन्दी" },
+  { code: "es", label: "Español" },
   { code: "ar", label: "العربية" },
   { code: "fr", label: "Français" },
+  { code: "bn", label: "বাংলা" },
+  { code: "pt", label: "Português" },
+  { code: "id", label: "Bahasa Indonesia" },
   { code: "de", label: "Deutsch" },
+  { code: "ja", label: "日本語" },
+  { code: "sw", label: "Kiswahili" },
   { code: "da", label: "Dansk" },
 ] as const;
 
@@ -15,14 +21,23 @@ export const LANGUAGE_CODES: readonly Language[] = LANGUAGES.map(
   (language) => language.code,
 );
 
-/* BCP 47 tag for <html lang>: `zh` is Simplified Chinese. */
+/*
+ * BCP 47 tag for <html lang>: `zh` is Simplified Chinese, `pt` is Brazilian
+ * Portuguese.
+ */
 export const HTML_LANG: Record<Language, string> = {
   en: "en",
   zh: "zh-Hans",
   hi: "hi",
+  es: "es",
   ar: "ar",
   fr: "fr",
+  bn: "bn",
+  pt: "pt-BR",
+  id: "id",
   de: "de",
+  ja: "ja",
+  sw: "sw",
   da: "da",
 };
 

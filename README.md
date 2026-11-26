@@ -30,7 +30,7 @@ Bulls & Cows, in the language of the maker.
   Streaks and stats are stored locally in your browser.
 - 🏆 **High scores** — top 10 per difficulty, ranked by fewest guesses, then
   fastest time. Stored locally in your browser.
-- 🌍 **Seven languages** — English, 简体中文, हिन्दी, العربية (right-to-left), Français, Deutsch, Dansk.
+- 🌍 **13 languages** — English, 简体中文, हिन्दी, Español, العربية (right-to-left), Français, বাংলা, Português, Bahasa Indonesia, Deutsch, 日本語, Kiswahili, Dansk.
 - ⌨️ **Keyboard support** — `1`–`8` add a colour, `Backspace` undoes, `Enter`
   checks the row.
 

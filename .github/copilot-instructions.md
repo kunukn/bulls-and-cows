@@ -60,11 +60,13 @@ Vitest is wired up (`vitest.config.ts`, jsdom + Testing Library, setup in `src/v
 
 All user-facing text — including `aria-label`, `title`, `placeholder` and `confirm()` messages — goes through `t()` from `react-i18next`. No hard-coded English in components. Exception: unlinked developer pages in `src/debug/` (e.g. `/_debug/bull-lines`) may use plain English for their own copy.
 
-- Languages: English (`en`, the source), Simplified Chinese (`zh`), Hindi (`hi`), Arabic (`ar`), French (`fr`), German (`de`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`. All seven are bundled (no lazy loading).
-- **Add a key to all seven files.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`.
-- Plurals use i18next suffixes (`_one` / `_other`); Chinese only needs `_other`; Arabic needs all six (`_zero`, `_one`, `_two`, `_few`, `_many`, `_other`). Interpolate with `{{name}}`.
+- Languages (13): English (`en`, the source), Simplified Chinese (`zh`), Hindi (`hi`), Spanish (`es`), Arabic (`ar`), French (`fr`), Bengali (`bn`), Brazilian Portuguese (`pt`), Indonesian (`id`), German (`de`), Japanese (`ja`), Swahili (`sw`), Danish (`da`). The list lives in `src/i18n/languages.ts`; strings in `src/i18n/locales/<code>.json`.
+- **Only English is bundled; every other language is its own lazy chunk** (`loadLanguage()` in `src/i18n/index.ts`, an `import.meta.glob` over `locales/`). `src/main.tsx` waits for `i18nReady` before the first render, so the page never paints in English first; `index.html` shows a text-free spinner if that takes more than 400ms. To switch language, `await loadLanguage(code)` and then call `i18n.changeLanguage(code)`. The service worker precaches the chunks, so switching works offline.
+- **To add a language:** add `locales/<code>.json`, then its entries in `LANGUAGES` and `HTML_LANG` (`languages.ts`). Nothing to import.
+- **Add a key to every locale file.** `en.json` is the source of truth: `src/i18n/i18next.d.ts` types `t()` against it, so a typo in a key fails `pnpm check`. `src/i18n/locales.test.ts` fails when a locale misses a key or mistypes a `{{placeholder}}`.
+- Plurals use i18next suffixes (`_one` / `_other`); Chinese, Japanese and Indonesian only need `_other`; Arabic needs all six (`_zero`, `_one`, `_two`, `_few`, `_many`, `_other`). Interpolate with `{{name}}`.
 - Format numbers and dates with `Intl` in the active language (`i18n.language`), not a fixed locale.
-- The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`app:language`); `src/i18n/index.ts` reads it before the first render and keeps `<html lang>` and the tab title in sync.
+- The language is picked in the Settings drawer (`src/components/layout/SettingsSheet.tsx` → `src/i18n/LanguageSelect.tsx`, a native `<select>`) and stored in `localStorage` (`app:language`); `src/i18n/index.ts` reads it at startup and keeps `<html lang>` and the tab title in sync.
 - **New settings go in the Settings drawer**, one stacked section each (label + control), below Language. Labels and descriptions are translated like any other text.
 - Tone rules for the locale files: [`.github/instructions/translation.instructions.md`](instructions/translation.instructions.md).
 
@@ -276,7 +278,7 @@ chore!: drop support for Node 18
 
 - ✅ Import from `react-router` (NOT `react-router-dom`)
 - ✅ Native HTML first, then `src/components/ui` (shadcn/ui) — no hand-rolled widgets
-- ✅ All user-facing text via `t()`; add new keys to all seven locale files
+- ✅ All user-facing text via `t()`; add new keys to every locale file
 - ✅ Logical (`ms`/`me`/`start`/`end`) Tailwind utilities, not `ml`/`mr`/`left`/`right` (RTL)
 - ✅ Use `type` not `interface`
 - ✅ Use Zustand or XState for state — don't introduce a third pattern
