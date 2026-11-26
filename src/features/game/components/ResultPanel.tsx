@@ -202,7 +202,7 @@ export function ResultPanel() {
           // Both looks keep the shared height, so typing a name moves nothing.
           ACTION_BUTTON_CLASS,
           isNameUnsaved
-            ? "px-3 py-2 text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            ? "px-3 py-2 text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
             : "bg-emerald-600 px-5 py-2 font-semibold text-white hover:bg-emerald-500",
         )}
       >
