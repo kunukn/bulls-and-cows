@@ -154,6 +154,36 @@ test("a typed name turns New game into Play without saving, without a jump", asy
   await expect(page.getByText("No scores yet")).toBeVisible();
 });
 
+test("saving a score leaves for High scores without flashing the saved panel", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await winNewGame(page);
+  await page.getByRole("textbox", { name: "Your name" }).fill("Ada");
+  /*
+   * The score is recorded a frame before the route changes. Watch every DOM
+   * update in between: the panel's saved look must never be among them.
+   */
+  await page.evaluate(() => {
+    new MutationObserver(() => {
+      if (document.body.textContent?.includes("Score saved")) {
+        document.body.dataset.sawSavedPanel = "true";
+      }
+    }).observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  });
+
+  await page.getByRole("button", { name: "Save score" }).click();
+
+  await expect(page.getByRole("cell", { name: "Ada" })).toBeVisible();
+  expect(
+    await page.evaluate(() => document.body.dataset.sawSavedPanel),
+  ).toBeUndefined();
+});
+
 test("the Swap badge marks a swap-mode game from the next game on", async ({
   page,
 }) => {

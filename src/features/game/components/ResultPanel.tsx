@@ -83,6 +83,11 @@ export function ResultPanel() {
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const isHighScoresEnabled = useSettings((state) => state.isHighScoresEnabled);
   const [name, setName] = useState(lastName);
+  /*
+   * Saving records the score at once, but the route changes a frame later.
+   * Until then the panel stays as it was submitted, not in its saved look.
+   */
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const run = {
     guesses: context.guesses.length,
@@ -90,7 +95,8 @@ export function ResultPanel() {
   };
   const isRecorded = entries.some((entry) => entry.id === context.startedAt);
   const canRecord =
-    isHighScoresEnabled && isWon && !isRecorded && qualifies(entries, run);
+    isLeaving ||
+    (isHighScoresEnabled && isWon && !isRecorded && qualifies(entries, run));
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
   /*
@@ -107,6 +113,7 @@ export function ResultPanel() {
     const trimmedName = name.trim();
     if (!trimmedName) return;
 
+    setIsLeaving(true);
     addEntry(
       context.difficulty,
       { id: context.startedAt, name: trimmedName, ...run },
@@ -170,7 +177,7 @@ export function ResultPanel() {
           </button>
         </form>
       )}
-      {isRecorded && (
+      {isRecorded && !isLeaving && (
         <p className="text-sm text-success">
           {isMinimalText && <CircleCheck aria-hidden className="size-5" />}
           <span className={labelClass}>{t("result.saved")}</span>
