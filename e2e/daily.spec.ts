@@ -71,6 +71,28 @@ test("the daily code gets one attempt and leaves practice alone", async ({
   await expect(practiceSlot).toHaveAccessibleName(practiceRow ?? "");
 });
 
+test("the daily result's actions are as tall as the palette's", async ({
+  page,
+}) => {
+  await page.clock.setFixedTime(DAY);
+  await openDaily(page);
+  // The practice page, with its own Undo, stays a moment after the URL changes.
+  await readDailyNumber(page);
+  const undoBox = await page
+    .getByRole("button", { name: "Undo" })
+    .boundingBox();
+  expect(undoBox?.height).toBeGreaterThan(0);
+  await winDaily(page);
+
+  for (const action of [
+    page.getByRole("button", { name: "Share" }),
+    page.getByRole("link", { name: "Post on X" }),
+    page.getByRole("link", { name: "Practice game" }),
+  ]) {
+    expect((await action.boundingBox())?.height).toBe(undoBox?.height);
+  }
+});
+
 test("share copies the result without the code", async ({ page, context }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   // Take the clipboard path: whether a headless browser has a share sheet varies.

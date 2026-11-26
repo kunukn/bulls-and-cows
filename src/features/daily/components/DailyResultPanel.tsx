@@ -24,6 +24,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
+import { ACTION_BUTTON_CLASS } from "@/components/actionButton";
 import { cn } from "@/utils/cn";
 import { formatCountdown } from "@/utils/format";
 import {
@@ -42,8 +43,10 @@ import { useEffect, useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
-const SECONDARY_BUTTON_CLASS =
-  "flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+const SECONDARY_BUTTON_CLASS = cn(
+  ACTION_BUTTON_CLASS,
+  "bg-secondary px-3 py-2 text-sm font-semibold text-foreground hover:bg-control",
+);
 
 // How long the button reads "Copied" before it goes back to "Share".
 const COPIED_MS = 2000;
@@ -154,7 +157,7 @@ function PostLinks({ shareInput, isMinimalText }: PostLinksProps) {
             rel="noopener noreferrer"
             aria-label={label}
             title={isMinimalText ? label : undefined}
-            className={cn(SECONDARY_BUTTON_CLASS, "justify-center")}
+            className={SECONDARY_BUTTON_CLASS}
           >
             <Icon className="size-4 shrink-0" />
             <span className={isMinimalText ? "sr-only" : undefined}>
@@ -362,7 +365,10 @@ export function DailyResultPanel() {
             type="button"
             onClick={() => actor.send(nextDailyEvent(today))}
             title={isMinimalText ? t("daily.playToday") : undefined}
-            className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className={cn(
+              ACTION_BUTTON_CLASS,
+              "bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-500",
+            )}
           >
             {isMinimalText && <CalendarDays aria-hidden className="size-5" />}
             <span className={labelClass}>{t("daily.playToday")}</span>

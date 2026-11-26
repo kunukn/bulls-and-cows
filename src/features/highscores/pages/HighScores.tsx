@@ -6,6 +6,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
+import { ACTION_BUTTON_CLASS } from "@/components/actionButton";
 import { cn } from "@/utils/cn";
 import { formatDate, formatDuration } from "@/utils/format";
 import {
@@ -241,7 +242,10 @@ export function HighScores() {
           type="button"
           onClick={handlePlayAgain}
           title={isMinimalText ? t("result.newGame") : undefined}
-          className="flex items-center gap-1.5 self-center rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className={cn(
+            ACTION_BUTTON_CLASS,
+            "self-center bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500",
+          )}
         >
           {isMinimalText && <RotateCcw aria-hidden className="size-5" />}
           <span className={isMinimalText ? "sr-only" : undefined}>

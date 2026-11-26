@@ -1,3 +1,4 @@
+import { ACTION_BUTTON_CLASS } from "@/components/actionButton";
 import { paletteFor } from "@/features/game/logic";
 import {
   useGameActorRef,
@@ -11,11 +12,14 @@ import { getPegClass } from "./Peg";
 import { PegShape } from "./PegShape";
 
 /*
- * min-w/min-h keep the tap target the same size whether the label shows or
- * is hidden by Minimal text (icon-only would otherwise shrink to ~48×36px).
+ * min-w, with the shared min-h, keeps the tap target the same size whether
+ * the label shows or is hidden by Minimal text (icon-only would otherwise
+ * shrink to ~48×36px).
  */
-const actionButtonClass =
-  "flex min-h-11 min-w-24 items-center justify-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-40";
+const actionButtonClass = cn(
+  ACTION_BUTTON_CLASS,
+  "min-w-24 px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-40",
+);
 
 export function Palette() {
   const { t } = useTranslation();

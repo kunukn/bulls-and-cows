@@ -11,6 +11,7 @@ import {
   qualifies,
   useHighScores,
 } from "@/features/highscores/store";
+import { ACTION_BUTTON_CLASS } from "@/components/actionButton";
 import { cn } from "@/utils/cn";
 import { formatDuration } from "@/utils/format";
 import { CircleCheck, RotateCcw, Save, Trophy, UserRound } from "lucide-react";
@@ -165,12 +166,16 @@ export function ResultPanel() {
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder={isMinimalText ? undefined : t("result.yourName")}
-            className="min-w-0 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
+            // As tall as Save score beside it (ACTION_BUTTON_CLASS).
+            className="h-11 min-w-0 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
           />
           <button
             type="submit"
             title={isMinimalText ? t("result.save") : undefined}
-            className="flex shrink-0 items-center gap-1.5 rounded-lg bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className={cn(
+              ACTION_BUTTON_CLASS,
+              "shrink-0 bg-amber-500 px-4 py-2 font-semibold text-slate-900 hover:bg-amber-400",
+            )}
           >
             {isMinimalText && <Save aria-hidden className="size-5" />}
             <span className={labelClass}>{t("result.save")}</span>
@@ -194,10 +199,10 @@ export function ResultPanel() {
         }
         title={isMinimalText ? newGameLabel : undefined}
         className={cn(
-          "flex items-center gap-1.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-          // Both looks match Save score's height, so typing a name moves nothing.
+          // Both looks keep the shared height, so typing a name moves nothing.
+          ACTION_BUTTON_CLASS,
           isNameUnsaved
-            ? "px-3 py-2 text-sm/6 text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            ? "px-3 py-2 text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
             : "bg-emerald-600 px-5 py-2 font-semibold text-white hover:bg-emerald-500",
         )}
       >

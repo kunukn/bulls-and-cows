@@ -169,6 +169,9 @@ test("a typed name turns New game into Play without saving, without a jump", asy
   page,
 }) => {
   await page.goto("/");
+  const undoButton = page.getByRole("button", { name: "Undo" });
+  await expect(undoButton).toBeVisible();
+  const undoBox = await undoButton.boundingBox();
   await winNewGame(page);
 
   const nameField = page.getByRole("textbox", { name: "Your name" });
@@ -184,6 +187,10 @@ test("a typed name turns New game into Play without saving, without a jump", asy
     .getByRole("button", { name: "Save score" })
     .boundingBox();
   expect(emptyBox?.height).toBe(saveBox?.height);
+  // The dock's actions keep one height from the palette to the result panel.
+  expect(undoBox?.height).toBeGreaterThan(0);
+  expect(saveBox?.height).toBe(undoBox?.height);
+  expect((await nameField.boundingBox())?.height).toBe(saveBox?.height);
 
   // A name beside a plain New game reads as "save and carry on".
   await nameField.fill("Ada");
