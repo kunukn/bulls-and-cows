@@ -222,7 +222,7 @@ export function HighScores() {
               <td className="px-3 py-2 text-muted-foreground tabular-nums">
                 {index + 1}
               </td>
-              <td className="max-w-32 truncate px-3 py-2 font-medium">
+              <td className="px-3 py-2 font-medium wrap-anywhere">
                 {entry.name}
               </td>
               <td className="px-3 py-2 text-right tabular-nums">
@@ -231,7 +231,7 @@ export function HighScores() {
               <td className="px-3 py-2 text-right font-mono tabular-nums">
                 {formatDuration(entry.elapsedMs)}
               </td>
-              <td className="hidden px-3 py-2 text-right text-muted-foreground sm:table-cell">
+              <td className="hidden px-3 py-2 text-right whitespace-nowrap text-muted-foreground sm:table-cell">
                 {formatDate(entry.achievedAt, i18n.language)}
               </td>
             </tr>
