@@ -117,6 +117,7 @@
     "step1": "Tap colours to fill the empty row.",
     "stepRemove": "Tap a colour in the row to take it out.",
     "step2": "Press Check to try your guess.",
+    "step2Auto": "Your guess is checked as soon as the row is full.",
     "step3": "Each coloured peg is a bull: right colour, right spot.",
     "step4": "Each white peg is a cow: right colour, wrong spot.",
     "step5": "The coloured and white pegs don't say which spot they mean. That's the puzzle!",

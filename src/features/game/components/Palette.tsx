@@ -30,6 +30,7 @@ export function Palette() {
   );
   const palette = paletteFor(difficulty);
   const isMinimalText = useSettings((state) => state.isMinimalText);
+  const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
   const pegStyle = useSettings((state) => state.pegStyle);
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
@@ -109,19 +110,22 @@ export function Palette() {
           <Delete className="size-4" />
           <span className={labelClass}>{t("game.undo")}</span>
         </button>
-        <button
-          type="button"
-          disabled={!isRowFull}
-          onClick={() => actor.send({ type: "SUBMIT" })}
-          title={isMinimalText ? t("game.check") : undefined}
-          className={cn(
-            actionButtonClass,
-            "bg-emerald-600 text-white hover:bg-emerald-500",
-          )}
-        >
-          <span className={labelClass}>{t("game.check")}</span>
-          <CornerDownLeft className="size-4" />
-        </button>
+        {/* With Auto check on, a full row is always checked (0008). */}
+        {!isAutoSubmit && (
+          <button
+            type="button"
+            disabled={!isRowFull}
+            onClick={() => actor.send({ type: "SUBMIT" })}
+            title={isMinimalText ? t("game.check") : undefined}
+            className={cn(
+              actionButtonClass,
+              "bg-emerald-600 text-white hover:bg-emerald-500",
+            )}
+          >
+            <span className={labelClass}>{t("game.check")}</span>
+            <CornerDownLeft className="size-4" />
+          </button>
+        )}
       </div>
     </section>
   );

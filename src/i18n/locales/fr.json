@@ -117,6 +117,7 @@
     "step1": "Touche des couleurs pour remplir la ligne vide.",
     "stepRemove": "Touche une couleur de la ligne pour l'enlever.",
     "step2": "Appuie sur Vérifier pour tenter ta chance.",
+    "step2Auto": "Ton essai est vérifié dès que la ligne est pleine.",
     "step3": "Chaque pion coloré est un taureau : bonne couleur, bonne place.",
     "step4": "Chaque pion blanc est une vache : bonne couleur, mauvaise place.",
     "step5": "Les pions colorés et blancs ne disent pas de quelle place ils parlent. C'est ça, l'énigme !",

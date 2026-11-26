@@ -14,15 +14,17 @@ import { useSettings } from "@/features/game/store/settings";
 import { CircleHelp } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const STEP_KEYS = [
-  "help.step1",
-  "help.stepRemove",
-  "help.step2",
-  "help.step3",
-  "help.step4",
-  "help.step5",
-  "help.step6",
-] as const;
+// With Auto check on there is no Check step or Check button (0008).
+const getStepKeys = (isAutoSubmit: boolean) =>
+  [
+    "help.step1",
+    "help.stepRemove",
+    isAutoSubmit ? "help.step2Auto" : "help.step2",
+    "help.step3",
+    "help.step4",
+    "help.step5",
+    "help.step6",
+  ] as const;
 
 // Mirrors the shortcuts handled in Play.tsx.
 const KEYBOARD_KEYS = [
@@ -45,6 +47,7 @@ type HowItWorksPopoverProps = {
 export function HowItWorksPopover({ isDailyPage }: HowItWorksPopoverProps) {
   const { t } = useTranslation();
   const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
+  const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
   // The shield bull helps only in practice, and only with hints on (0011).
   const hasHintStep =
     useSettings((state) => state.isHintsEnabled) && !isDailyPage;
@@ -98,7 +101,7 @@ export function HowItWorksPopover({ isDailyPage }: HowItWorksPopoverProps) {
         <section>
           <h3 className="mb-1 font-semibold">{t("help.stepsTitle")}</h3>
           <ol className="list-decimal space-y-1 ps-5">
-            {STEP_KEYS.map((key) => (
+            {getStepKeys(isAutoSubmit).map((key) => (
               <li key={key}>{t(key)}</li>
             ))}
             {hasHintStep && <li>{t("help.stepBull")}</li>}

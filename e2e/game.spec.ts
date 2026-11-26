@@ -59,6 +59,51 @@ test("starts a game and scores the first guess", async ({ page }) => {
   await expect(rowSummary).toBeAttached();
 });
 
+test("Auto check checks a row that is already full, and hides Check", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const checkButton = page.getByRole("button", { name: "Check" });
+  const autoCheckSwitch = page.getByRole("switch", { name: "Auto check" });
+  const rowSummaries = page
+    .getByLabel("Board")
+    .getByText(/bulls?, \d+ cows?|No matches/);
+
+  async function fillRow() {
+    for (const color of ["red", "cyan", "green", "yellow"]) {
+      await page.getByRole("button", { name: `Add ${color}` }).click();
+    }
+  }
+
+  async function switchAutoCheck() {
+    await page.getByRole("button", { name: "Settings" }).click();
+    await autoCheckSwitch.click();
+    await page.keyboard.press("Escape");
+  }
+
+  // A row filled first: switching Auto check on checks it (0008).
+  await fillRow();
+  await expect(checkButton).toBeEnabled();
+  await switchAutoCheck();
+  await expect(rowSummaries).toHaveCount(1);
+  await expect(checkButton).toBeHidden();
+
+  // From here the last peg checks the row.
+  await fillRow();
+  await expect(rowSummaries).toHaveCount(2);
+
+  // Switched on away from the game: the full row is checked on the way back.
+  await switchAutoCheck();
+  await fillRow();
+  await page.getByRole("link", { name: "High scores" }).click();
+  await switchAutoCheck();
+  await expect(autoCheckSwitch).toBeHidden();
+  await page.goto("/");
+  await expect(rowSummaries).toHaveCount(3);
+  await expect(checkButton).toBeHidden();
+});
+
 test("game menu restarts without revealing the code", async ({ page }) => {
   await page.goto("/");
 

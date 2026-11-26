@@ -117,6 +117,7 @@
     "step1": "Tryk på farver for at fylde den tomme række.",
     "stepRemove": "Tryk på en farve i rækken for at fjerne den.",
     "step2": "Tryk på Tjek for at prøve dit gæt.",
+    "step2Auto": "Dit gæt bliver tjekket, så snart rækken er fuld.",
     "step3": "Hver farvet pind er en tyr: rigtig farve, rigtig plads.",
     "step4": "Hver hvid pind er en ko: rigtig farve, forkert plads.",
     "step5": "De farvede og hvide pinde siger ikke, hvilken plads de hører til. Det er det, der er gåden!",

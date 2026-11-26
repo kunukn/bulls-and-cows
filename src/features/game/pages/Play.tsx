@@ -38,6 +38,7 @@ export function Play() {
   const isTimerVisible = useSettings((state) => state.isTimerVisible);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const isDailyEnabled = useSettings((state) => state.isDailyEnabled);
+  const isAutoSubmit = useSettings((state) => state.isAutoSubmit);
   const bullPegClass = useBullPegClass();
   // Hidden only while playing; the final time shows once the game ends.
   const isTimerShown = isTimerVisible || !isPlaying;
@@ -64,6 +65,16 @@ export function Play() {
 
     startGame(next);
   }
+
+  /*
+   * With Auto check on, a full row is always checked (0008): the last peg
+   * does it, and this covers a row filled before the switch was turned on,
+   * or one a saved game came back with. The machine ignores it for a row
+   * that isn't full.
+   */
+  useEffect(() => {
+    if (isAutoSubmit) actor.send({ type: "AUTO_SUBMIT" });
+  }, [actor, isAutoSubmit]);
 
   /*
    * Keys 1–8 add a colour, ←/→ move the target slot, Backspace undoes,
