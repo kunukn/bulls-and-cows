@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
 /* Sizes the name field as well as limiting it, so the field shows its limit. */
-const NAME_MAX_LENGTH = 20;
+const NAME_MAX_LENGTH = 24;
 
 type OutcomeMessageProps = {
   isWon: boolean;
