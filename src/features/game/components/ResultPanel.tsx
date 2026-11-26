@@ -11,8 +11,10 @@ import {
   qualifies,
   useHighScores,
 } from "@/features/highscores/store";
+import { cn } from "@/utils/cn";
 import { formatDuration } from "@/utils/format";
 import { CircleCheck, RotateCcw, Save, Trophy, UserRound } from "lucide-react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 
@@ -80,6 +82,7 @@ export function ResultPanel() {
   const addEntry = useHighScores((state) => state.addEntry);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const isHighScoresEnabled = useSettings((state) => state.isHighScoresEnabled);
+  const [name, setName] = useState(lastName);
 
   const run = {
     guesses: context.guesses.length,
@@ -90,15 +93,23 @@ export function ResultPanel() {
     isHighScoresEnabled && isWon && !isRecorded && qualifies(entries, run);
   // Icon-only buttons keep their name for screen readers and as a tooltip.
   const labelClass = isMinimalText ? "sr-only" : undefined;
+  /*
+   * A name in the field looks like a score about to be kept, so starting
+   * over then says what it costs. An empty field promises nothing (0010).
+   */
+  const isNameUnsaved = canRecord && name.trim() !== "";
+  const newGameLabel = isNameUnsaved
+    ? t("result.playWithoutSaving")
+    : t("result.newGame");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const name = String(new FormData(event.currentTarget).get("name")).trim();
-    if (!name) return;
+    const trimmedName = name.trim();
+    if (!trimmedName) return;
 
     addEntry(
       context.difficulty,
-      { id: context.startedAt, name, ...run },
+      { id: context.startedAt, name: trimmedName, ...run },
       context.isSwapMode,
     );
     const mode = context.isSwapMode ? "&mode=swap" : "";
@@ -144,7 +155,8 @@ export function ResultPanel() {
             autoComplete="nickname"
             // oxlint-disable-next-line jsx-a11y/no-autofocus -- focus follows the player's own winning move, so it isn't a surprise
             autoFocus
-            defaultValue={lastName}
+            value={name}
+            onChange={(event) => setName(event.target.value)}
             placeholder={isMinimalText ? undefined : t("result.yourName")}
             className="min-w-0 rounded-lg bg-background px-3 py-2 text-foreground ring-1 ring-control outline-none focus:ring-2 focus:ring-ring"
           />
@@ -173,11 +185,17 @@ export function ResultPanel() {
             isSwapMode: useSettings.getState().isSwapEnabled,
           })
         }
-        title={isMinimalText ? t("result.newGame") : undefined}
-        className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-5 py-2.5 font-semibold text-white hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+        title={isMinimalText ? newGameLabel : undefined}
+        className={cn(
+          "flex items-center gap-1.5 rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          // Both looks match Save score's height, so typing a name moves nothing.
+          isNameUnsaved
+            ? "px-3 py-2 text-sm/6 text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+            : "bg-emerald-600 px-5 py-2 font-semibold text-white hover:bg-emerald-500",
+        )}
       >
         {isMinimalText && <RotateCcw aria-hidden className="size-5" />}
-        <span className={labelClass}>{t("result.newGame")}</span>
+        <span className={labelClass}>{newGameLabel}</span>
       </button>
     </section>
   );

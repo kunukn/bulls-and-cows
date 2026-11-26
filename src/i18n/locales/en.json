@@ -140,6 +140,7 @@
     "save": "Save score",
     "saved": "Score saved",
     "newGame": "New game",
+    "playWithoutSaving": "Play without saving",
     "gaveUp": "You gave up — code revealed above"
   },
   "daily": {

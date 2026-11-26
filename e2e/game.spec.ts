@@ -1,4 +1,4 @@
-import { expect, test, type Locator } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
 /*
  * Relative luminance (0 dark … 1 light) of an element's background colour.
@@ -19,6 +19,21 @@ function getBackgroundLightness(locator: Locator): Promise<number> {
 
     return (0.2126 * red + 0.7152 * green + 0.0722 * blue) / 255;
   });
+}
+
+/* Starts a practice game and wins it in one guess, with the secret it saved. */
+async function winNewGame(page: Page) {
+  // The game is saved on its first event; a new game writes one with its secret.
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+  const secret = await page.evaluate<string[]>(
+    () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
+  );
+
+  for (const color of secret) {
+    await page.getByRole("button", { name: `Add ${color}` }).click();
+  }
+  await page.getByRole("button", { name: "Check" }).click();
 }
 
 test("starts a game and scores the first guess", async ({ page }) => {
@@ -84,17 +99,7 @@ test("the High scores switch turns the name prompt off and on", async ({
   page,
 }) => {
   await page.goto("/");
-  // The game is saved on its first event; a new game writes one with its secret.
-  await page.getByRole("button", { name: "Give up" }).click();
-  await page.getByRole("menuitem", { name: "New game" }).click();
-  const secret = await page.evaluate<string[]>(
-    () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
-  );
-
-  for (const color of secret) {
-    await page.getByRole("button", { name: `Add ${color}` }).click();
-  }
-  await page.getByRole("button", { name: "Check" }).click();
+  await winNewGame(page);
 
   const nameField = page.getByRole("textbox", { name: "Your name" });
   const highScoresSwitch = page.getByRole("switch", { name: "High scores" });
@@ -113,6 +118,40 @@ test("the High scores switch turns the name prompt off and on", async ({
   await page.keyboard.press("Escape");
 
   await expect(nameField).toBeVisible();
+});
+
+test("a typed name turns New game into Play without saving, without a jump", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await winNewGame(page);
+
+  const nameField = page.getByRole("textbox", { name: "Your name" });
+  const newGame = page.getByRole("button", { name: "New game" });
+  const playWithoutSaving = page.getByRole("button", {
+    name: "Play without saving",
+  });
+  // An empty field promises nothing, so the usual button stays.
+  await expect(nameField).toHaveValue("");
+  await expect(newGame).toBeVisible();
+  const emptyBox = await newGame.boundingBox();
+  const saveBox = await page
+    .getByRole("button", { name: "Save score" })
+    .boundingBox();
+  expect(emptyBox?.height).toBe(saveBox?.height);
+
+  // A name beside a plain New game reads as "save and carry on".
+  await nameField.fill("Ada");
+  await expect(newGame).toBeHidden();
+  const namedBox = await playWithoutSaving.boundingBox();
+  expect(namedBox?.height).toBe(emptyBox?.height);
+  expect(namedBox?.y).toBe(emptyBox?.y);
+
+  await playWithoutSaving.click();
+
+  await expect(page.getByLabel("Secret code (hidden)")).toBeVisible();
+  await page.getByRole("link", { name: "High scores" }).click();
+  await expect(page.getByText("No scores yet")).toBeVisible();
 });
 
 test("the Swap badge marks a swap-mode game from the next game on", async ({

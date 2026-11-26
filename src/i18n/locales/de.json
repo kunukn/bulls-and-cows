@@ -140,6 +140,7 @@
     "save": "Speichern",
     "saved": "Gespeichert",
     "newGame": "Neues Spiel",
+    "playWithoutSaving": "Ohne Speichern spielen",
     "gaveUp": "Du hast aufgegeben – der Code steht oben"
   },
   "daily": {

@@ -140,6 +140,7 @@
     "save": "Gem score",
     "saved": "Score gemt",
     "newGame": "Nyt spil",
+    "playWithoutSaving": "Spil uden at gemme",
     "gaveUp": "Du gav op — koden er vist øverst"
   },
   "daily": {

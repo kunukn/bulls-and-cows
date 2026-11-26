@@ -132,6 +132,7 @@
     "save": "保存成绩",
     "saved": "成绩已保存",
     "newGame": "新游戏",
+    "playWithoutSaving": "不保存，再玩一局",
     "gaveUp": "你放弃了——密码已在上方揭晓"
   },
   "daily": {

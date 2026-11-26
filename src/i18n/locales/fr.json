@@ -140,6 +140,7 @@
     "save": "Enregistrer",
     "saved": "Score enregistré",
     "newGame": "Nouvelle partie",
+    "playWithoutSaving": "Jouer sans enregistrer",
     "gaveUp": "Tu as abandonné — le code est révélé en haut"
   },
   "daily": {
