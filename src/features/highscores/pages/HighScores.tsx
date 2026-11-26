@@ -150,37 +150,34 @@ export function HighScores() {
         </fieldset>
       )}
 
-      <table className="w-full overflow-hidden rounded-2xl bg-card text-left text-sm">
+      <table className="w-full overflow-hidden rounded-2xl bg-card text-start text-sm">
         <thead className="bg-secondary/60 text-xs tracking-wide text-subtle uppercase">
           <tr>
-            <th scope="col" className="px-3 py-2">
+            <th scope="col" className="px-3 py-2 text-start">
               {t("highScores.rank")}
             </th>
-            <th scope="col" className="px-3 py-2">
+            <th scope="col" className="px-3 py-2 text-start">
               <HeaderLabel
                 label={t("highScores.name")}
                 icon={UserRound}
                 isMinimalText={isMinimalText}
               />
             </th>
-            <th scope="col" className="px-3 py-2 text-right">
+            <th scope="col" className="px-3 py-2 text-end">
               <HeaderLabel
                 label={t("highScores.guesses")}
                 icon={Rows4}
                 isMinimalText={isMinimalText}
               />
             </th>
-            <th scope="col" className="px-3 py-2 text-right">
+            <th scope="col" className="px-3 py-2 text-end">
               <HeaderLabel
                 label={t("highScores.time")}
                 icon={Clock}
                 isMinimalText={isMinimalText}
               />
             </th>
-            <th
-              scope="col"
-              className="hidden px-3 py-2 text-right sm:table-cell"
-            >
+            <th scope="col" className="hidden px-3 py-2 text-end sm:table-cell">
               <HeaderLabel
                 label={t("highScores.date")}
                 icon={CalendarDays}
@@ -225,13 +222,13 @@ export function HighScores() {
               <td className="px-3 py-2 font-medium wrap-anywhere">
                 {entry.name}
               </td>
-              <td className="px-3 py-2 text-right tabular-nums">
+              <td className="px-3 py-2 text-end tabular-nums">
                 {entry.guesses}
               </td>
-              <td className="px-3 py-2 text-right font-mono tabular-nums">
+              <td className="px-3 py-2 text-end font-mono tabular-nums">
                 {formatDuration(entry.elapsedMs)}
               </td>
-              <td className="hidden px-3 py-2 text-right whitespace-nowrap text-muted-foreground sm:table-cell">
+              <td className="hidden px-3 py-2 text-end whitespace-nowrap text-muted-foreground sm:table-cell">
                 {formatDate(entry.achievedAt, i18n.language)}
               </td>
             </tr>
