@@ -241,11 +241,26 @@ test("the Swap badge marks a swap-mode game from the next game on", async ({
 }) => {
   await page.goto("/");
   const badge = page.getByText("Swap", { exact: true });
+  // The game is saved on its first event; a new game writes one with its secret.
+  await page.getByRole("button", { name: "Give up" }).click();
+  await page.getByRole("menuitem", { name: "New game" }).click();
+  const secret = await page.evaluate<string[]>(
+    () => JSON.parse(localStorage.getItem("app:game") ?? "{}").context.secret,
+  );
+
+  // Easy never repeats, so the code rotated by one is a guess that can't win.
+  for (const color of [...secret.slice(1), secret[0]]) {
+    await page.getByRole("button", { name: `Add ${color}` }).click();
+  }
+  await page.getByRole("button", { name: "Check" }).click();
+  await expect(
+    page.getByLabel("Board").getByText(/bulls?, \d+ cows?|No matches/),
+  ).toBeAttached();
 
   await page.getByRole("button", { name: "Settings" }).click();
   await page.getByRole("switch", { name: "AI can swap colours" }).click();
   await page.keyboard.press("Escape");
-  // The game on the board started before the switch, so it doesn't swap (0013).
+  // A guess is checked, so the switch waits for the next game (0013).
   await expect(badge).toBeHidden();
 
   await page.getByRole("button", { name: "Give up" }).click();
