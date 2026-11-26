@@ -6,6 +6,7 @@
   "common": {
     "settings": "सेटिंग्स",
     "language": "भाषा",
+    "languageLoadFailed": "यह भाषा लोड नहीं हो पाई। अपना कनेक्शन जाँचो।",
     "close": "बंद करो",
     "version": "वर्ज़न",
     "showTimer": "टाइमर दिखाओ",

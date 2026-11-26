@@ -6,6 +6,7 @@
   "common": {
     "settings": "Settings",
     "language": "Language",
+    "languageLoadFailed": "Couldn't load that language. Check your connection.",
     "close": "Close",
     "version": "Version",
     "showTimer": "Show timer",

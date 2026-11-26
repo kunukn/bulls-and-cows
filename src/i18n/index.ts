@@ -1,4 +1,4 @@
-import i18n from "i18next";
+import i18n, { type ResourceKey } from "i18next";
 import { initReactI18next } from "react-i18next";
 import {
   getDirection,
@@ -8,28 +8,30 @@ import {
   LANGUAGE_STORAGE_KEY,
   type Language,
 } from "./languages";
-import ar from "./locales/ar.json";
-import da from "./locales/da.json";
-import de from "./locales/de.json";
 import en from "./locales/en.json";
-import fr from "./locales/fr.json";
-import hi from "./locales/hi.json";
-import zh from "./locales/zh.json";
 
 /*
- * All languages are bundled (a few KB each), unlike the lazy-loading
- * perceptual-speed-game setup: no Suspense boundary, and no flash of English
- * for a returning player whose saved language isn't English.
+ * Only English, the fallback, is bundled. Every other language is its own
+ * chunk, fetched when it is first needed: at startup for a player whose
+ * language isn't English, or when one is picked in Settings. The service
+ * worker precaches the chunks like any other script (0003), so switching
+ * works offline once it has installed.
  */
-const resources = {
-  en: { translation: en },
-  zh: { translation: zh },
-  hi: { translation: hi },
-  ar: { translation: ar },
-  fr: { translation: fr },
-  de: { translation: de },
-  da: { translation: da },
-};
+const loaders = import.meta.glob<ResourceKey>(
+  ["./locales/*.json", "!./locales/en.json"],
+  { import: "default" },
+);
+
+/*
+ * Makes a language's strings available to `i18n.changeLanguage`. Rejects when
+ * the chunk can't be fetched: offline before the service worker cached it.
+ */
+export async function loadLanguage(language: Language): Promise<void> {
+  if (i18n.hasResourceBundle(language, "translation")) return;
+
+  const translation = await loaders[`./locales/${language}.json`]();
+  i18n.addResourceBundle(language, "translation", translation);
+}
 
 function readStoredLanguage(): Language | null {
   try {
@@ -64,9 +66,11 @@ export function detectInitialLanguage(): Language {
   return "en";
 }
 
+const initialLanguage = detectInitialLanguage();
+
 void i18n.use(initReactI18next).init({
-  resources,
-  lng: detectInitialLanguage(),
+  resources: { en: { translation: en } },
+  lng: initialLanguage,
   fallbackLng: "en",
   supportedLngs: [...LANGUAGE_CODES],
   interpolation: { escapeValue: false }, // React already escapes.
@@ -85,7 +89,17 @@ function syncDocument(language: string) {
   document.title = titlePrefix + i18n.t("app.documentTitle");
 }
 
-syncDocument(i18n.language);
-i18n.on("languageChanged", syncDocument);
+/*
+ * Resolves once the starting language's strings are in. main.tsx holds the
+ * first render for it, so a returning player never sees English flash before
+ * their own language. Never rejects: if the chunk can't be fetched the app
+ * starts in English, and the saved choice is tried again on the next visit.
+ */
+export const i18nReady: Promise<void> = loadLanguage(initialLanguage)
+  .catch(() => i18n.changeLanguage("en"))
+  .then(() => {
+    syncDocument(i18n.language);
+    i18n.on("languageChanged", syncDocument);
+  });
 
 export { i18n };

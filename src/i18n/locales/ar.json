@@ -6,6 +6,7 @@
   "common": {
     "settings": "الإعدادات",
     "language": "اللغة",
+    "languageLoadFailed": "تعذّر تحميل هذه اللغة. تحقّق من اتصالك.",
     "close": "إغلاق",
     "version": "الإصدار",
     "showTimer": "إظهار المؤقت",

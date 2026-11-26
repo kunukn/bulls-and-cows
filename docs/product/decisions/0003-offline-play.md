@@ -17,12 +17,13 @@ The app is an installable PWA that precaches everything it needs, sounds include
 
 ## Alternatives considered
 
-- **Update prompt / "Ready offline" toast.** Extra UI and seven locales of copy for little gain: there's no server state an update could break, and a game in progress survives a reload.
+- **Update prompt / "Ready offline" toast.** Extra UI and a string to translate in every language for little gain: there's no server state an update could break, and a game in progress survives a reload.
 - **Hand-written service worker.** No dependency, but re-implements Workbox's cache versioning and cleanup.
 - **Manifest only.** Installable, but still needs the network.
 
 ## Consequences
 
 - New file types in `public/` must match `workbox.globPatterns` in `vite.config.ts` or they won't be available offline.
+- Languages other than English are lazy chunks (`src/i18n/index.ts`). They are `.js` files in the build, so they are precached too and a language switch works offline. Until the service worker has installed (a first visit that loses its connection), a switch can fail: Settings then says so and keeps the current language.
 - `pnpm dev` has no service worker; test offline behaviour with `pnpm build && pnpm preview`.
 - `workbox-window` (~2 kB gzip) ships in the bundle.

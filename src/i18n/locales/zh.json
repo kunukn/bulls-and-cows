@@ -6,6 +6,7 @@
   "common": {
     "settings": "设置",
     "language": "语言",
+    "languageLoadFailed": "这个语言没加载出来。检查一下网络。",
     "close": "关闭",
     "version": "版本",
     "showTimer": "显示计时器",

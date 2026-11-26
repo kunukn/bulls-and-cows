@@ -2,14 +2,21 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { registerSW } from "virtual:pwa-register";
 import { App } from "./app/App";
-import "./i18n"; // Initialise translations before the first render.
+import { i18nReady } from "./i18n";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+/*
+ * The first render waits for the player's language, so it never paints in
+ * English by mistake. Until then index.html's spinner fills #root; rendering
+ * replaces it.
+ */
+void i18nReady.then(() => {
+  createRoot(document.getElementById("root")!).render(
+    <StrictMode>
+      <App />
+    </StrictMode>,
+  );
+});
 
 registerSW({
   immediate: true,

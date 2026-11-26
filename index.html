@@ -109,7 +109,10 @@
         (right colour, wrong spot). Turn on JavaScript to play.
       </p>
     </noscript>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Shows only when the app is slow to start; styled in src/index.css. -->
+      <div class="boot-spinner" aria-hidden="true"></div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

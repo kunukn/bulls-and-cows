@@ -6,6 +6,7 @@
   "common": {
     "settings": "Indstillinger",
     "language": "Sprog",
+    "languageLoadFailed": "Sproget kunne ikke hentes. Tjek din forbindelse.",
     "close": "Luk",
     "version": "Version",
     "showTimer": "Vis tid",

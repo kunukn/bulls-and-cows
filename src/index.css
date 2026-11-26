@@ -564,6 +564,49 @@
 }
 
 /*
+ * Start-up spinner from index.html; the first render replaces it. Hidden for
+ * the first 400ms, so a normal start shows nothing: it only appears when the
+ * scripts, or the player's language (src/i18n/index.ts), are slow to arrive.
+ * No text, because the language isn't known yet.
+ */
+.boot-spinner {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  animation: boot-spinner-show 200ms linear 400ms forwards;
+}
+
+.boot-spinner::after {
+  content: "";
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 3px solid var(--faint);
+  border-top-color: var(--muted-foreground);
+  border-radius: 50%;
+  animation: boot-spinner-turn 800ms linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-spinner::after {
+    animation: none;
+  }
+}
+
+@keyframes boot-spinner-show {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes boot-spinner-turn {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/*
  * Sticky dock (palette / result panel). The frosted background is always
  * painted: it is what hides the board rows scrolling underneath. Switching it
  * on "when stuck" (scroll-state query, scroll-driven animation, JS) lands a

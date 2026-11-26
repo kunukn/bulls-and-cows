@@ -6,6 +6,7 @@
   "common": {
     "settings": "Réglages",
     "language": "Langue",
+    "languageLoadFailed": "Impossible de charger cette langue. Vérifie ta connexion.",
     "close": "Fermer",
     "version": "Version",
     "showTimer": "Afficher le chrono",
