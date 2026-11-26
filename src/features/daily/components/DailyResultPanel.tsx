@@ -24,6 +24,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useSettings } from "@/features/game/store/settings";
+import { getIntlLocale } from "@/i18n/languages";
 import { ACTION_BUTTON_CLASS } from "@/components/actionButton";
 import { cn } from "@/utils/cn";
 import { formatCountdown } from "@/utils/format";
@@ -211,7 +212,7 @@ function Distribution({
   isMinimalText,
 }: DistributionProps) {
   const { t, i18n } = useTranslation();
-  const numberFormat = new Intl.NumberFormat(i18n.language);
+  const numberFormat = new Intl.NumberFormat(getIntlLocale(i18n.language));
   const mostWins = Math.max(...distribution, 1);
   const caption = t("daily.distribution");
 
@@ -290,7 +291,7 @@ export function DailyResultPanel() {
   const summary = summarize(results, today);
   const guesses = context.guesses.length;
   const { pegs, maxGuesses } = DIFFICULTIES[DAILY_DIFFICULTY];
-  const numberFormat = new Intl.NumberFormat(i18n.language);
+  const numberFormat = new Intl.NumberFormat(getIntlLocale(i18n.language));
   // "X" for a loss, as in other daily games; a loss has no guess count to show.
   const score = `${isWon ? numberFormat.format(guesses) : "X"}/${numberFormat.format(maxGuesses)}`;
   const shareInput: ShareInput = {
@@ -303,7 +304,7 @@ export function DailyResultPanel() {
     pegs,
     url: SHARE_DAILY_URL,
   };
-  const percentFormat = new Intl.NumberFormat(i18n.language, {
+  const percentFormat = new Intl.NumberFormat(getIntlLocale(i18n.language), {
     style: "percent",
   });
   const winRate = summary.played === 0 ? 0 : summary.won / summary.played;

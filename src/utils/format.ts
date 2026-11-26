@@ -1,3 +1,5 @@
+import { getIntlLocale } from "@/i18n/languages";
+
 /* 83_400 → "1:23" */
 export function formatDuration(ms: number): string {
   const totalSeconds = Math.floor(ms / 1000);
@@ -21,8 +23,8 @@ export function formatCountdown(ms: number): string {
 }
 
 /* Medium date in the UI language, e.g. "18 Nov 2026" / "18. Nov. 2026". */
-export function formatDate(epochMs: number, locale: string): string {
-  return new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(
-    epochMs,
-  );
+export function formatDate(epochMs: number, language: string): string {
+  return new Intl.DateTimeFormat(getIntlLocale(language), {
+    dateStyle: "medium",
+  }).format(epochMs);
 }

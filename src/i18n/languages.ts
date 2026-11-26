@@ -43,6 +43,16 @@ export const HTML_LANG: Record<Language, string> = {
   da: "da",
 };
 
+/*
+ * The locale to give `Intl` for a UI language: the language, pinned to Western
+ * digits. Left alone, `Intl` writes Bengali in its own digits, while plain
+ * `{{count}}` values, the timer and numbers typed into the strings are
+ * Western, so one page would mix both.
+ */
+export function getIntlLocale(language: string): string {
+  return `${language}-u-nu-latn`;
+}
+
 /* Right-to-left languages; everything else renders left-to-right. */
 const RTL_LANGUAGES: ReadonlySet<Language> = new Set<Language>(["ar"]);
 

@@ -24,6 +24,7 @@ import {
   useGameSelector,
 } from "@/features/game/machine-context";
 import { useHintsSeen } from "@/features/game/store/hintsSeen";
+import { getIntlLocale } from "@/i18n/languages";
 import { cn } from "@/utils/cn";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
@@ -339,8 +340,8 @@ export function BullLineText({ line }: { line: BullLine }) {
  * Rounded to whole hours, or minutes in the last hour. Intl.RelativeTimeFormat
  * gives "in 3 hours" with each language's own plurals.
  */
-function formatTimeUntil(ms: number, locale: string): string {
-  const format = new Intl.RelativeTimeFormat(locale);
+function formatTimeUntil(ms: number, language: string): string {
+  const format = new Intl.RelativeTimeFormat(getIntlLocale(language));
   const hours = Math.round(ms / 3_600_000);
   if (hours >= 1) return format.format(hours, "hour");
 

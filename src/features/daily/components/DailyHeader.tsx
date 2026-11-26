@@ -2,6 +2,7 @@ import { paths } from "@/app/paths";
 import { dailyDate, dailyNumber } from "@/features/daily/daily";
 import { summarize, useDailyResults } from "@/features/daily/store";
 import { useSettings } from "@/features/game/store/settings";
+import { getIntlLocale } from "@/i18n/languages";
 import { formatDate } from "@/utils/format";
 import { ArrowLeft, CalendarDays, Flame } from "lucide-react";
 import { useTranslation } from "react-i18next";
@@ -22,7 +23,7 @@ export function DailyHeader({ number }: Props) {
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const results = useDailyResults((state) => state.results);
   const { currentStreak } = summarize(results, dailyNumber());
-  const numberFormat = new Intl.NumberFormat(i18n.language);
+  const numberFormat = new Intl.NumberFormat(getIntlLocale(i18n.language));
   const title = t("daily.numbered", { number });
   const date = formatDate(dailyDate(number).getTime(), i18n.language);
   const practiceLabel = t("daily.backToPractice");

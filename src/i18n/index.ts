@@ -2,6 +2,7 @@ import i18n, { type ResourceKey } from "i18next";
 import { initReactI18next } from "react-i18next";
 import {
   getDirection,
+  getIntlLocale,
   HTML_LANG,
   isLanguage,
   LANGUAGE_CODES,
@@ -75,6 +76,19 @@ void i18n.use(initReactI18next).init({
   supportedLngs: [...LANGUAGE_CODES],
   interpolation: { escapeValue: false }, // React already escapes.
 });
+
+/*
+ * `{{x, number}}` in a string: i18next gives `Intl` the bare language, so
+ * replace its formatter with one that uses the pinned locale.
+ */
+i18n.services.formatter?.add(
+  "number",
+  (value: number, language: string | undefined, options: object) =>
+    new Intl.NumberFormat(
+      getIntlLocale(language ?? i18n.language),
+      options,
+    ).format(value),
+);
 
 /* Developer-only marker, so a localhost tab stands apart from tyrko.app; not translated. */
 const LOCAL_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]"]);

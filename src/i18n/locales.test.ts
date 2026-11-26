@@ -1,9 +1,12 @@
 import { i18n, loadLanguage } from "./index";
-import { LANGUAGE_CODES } from "./languages";
+import { getIntlLocale, LANGUAGE_CODES } from "./languages";
 import en from "./locales/en.json";
+import { formatDate } from "@/utils/format";
 
 const PLURAL_SUFFIX = /_(zero|one|two|few|many|other)$/;
 const PLACEHOLDER = /\{\{[^}]+\}\}/g;
+/* A decimal digit of any script except 0–9, e.g. Bengali "২". */
+const NON_WESTERN_DIGIT = /[^\P{Nd}0-9]/u;
 
 /* Every string by its dotted path, e.g. "game.bulls_one" → "{{count}} bull". */
 function flatten(node: unknown, path = ""): [string, string][] {
@@ -75,6 +78,25 @@ describe.each(translatedLanguages)("%s translation", (language) => {
     });
 
     expect(mistyped).toEqual([]);
+  });
+
+  /*
+   * Plain `{{count}}` values and the timer are always Western, so a number
+   * `Intl` writes in Bengali digits would put two numeral systems on a page.
+   */
+  test("writes formatted numbers and dates in Western digits", () => {
+    const t = i18n.getFixedT(language);
+    const formatted = [
+      t("bull.facts.codeCount", { codes: 1296 }),
+      formatDate(Date.UTC(2026, 10, 18), language),
+      new Intl.NumberFormat(getIntlLocale(language), {
+        style: "percent",
+      }).format(0.75),
+    ];
+
+    expect(formatted.filter((text) => NON_WESTERN_DIGIT.test(text))).toEqual(
+      [],
+    );
   });
 });
 

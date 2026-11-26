@@ -2,6 +2,7 @@ import { paths } from "@/app/paths";
 import { dailyNumber } from "@/features/daily/daily";
 import { useDailyResults } from "@/features/daily/store";
 import { useSettings } from "@/features/game/store/settings";
+import { getIntlLocale } from "@/i18n/languages";
 import { CalendarDays, ChevronRight, CircleCheck, CircleX } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
@@ -31,7 +32,7 @@ export function DailyLink() {
       {isMinimalText ? (
         <>
           <span aria-hidden className="tabular-nums">
-            {new Intl.NumberFormat(i18n.language).format(today)}
+            {new Intl.NumberFormat(getIntlLocale(i18n.language)).format(today)}
           </span>
           <span className="sr-only">{title}</span>
         </>
