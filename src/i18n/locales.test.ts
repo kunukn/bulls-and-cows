@@ -77,3 +77,22 @@ describe.each(translatedLanguages)("%s translation", (language) => {
     expect(mistyped).toEqual([]);
   });
 });
+
+/* English `one` is the number 1, but Russian `one` is also 21, 31 and 101. */
+const wideOneLanguages = translatedLanguages.filter(
+  (language) => new Intl.PluralRules(language).select(21) === "one",
+);
+
+describe.each(wideOneLanguages)("%s plural forms", (language) => {
+  /* A spelled-out "one code" would show for 21 codes. */
+  test("keep the count in every _one form", async () => {
+    await loadLanguage(language);
+    const strings = flatten(i18n.getResourceBundle(language, "translation"));
+
+    const spelledOut = strings.filter(
+      ([path, text]) => path.endsWith("_one") && !text.includes("{{count"),
+    );
+
+    expect(spelledOut).toEqual([]);
+  });
+});
