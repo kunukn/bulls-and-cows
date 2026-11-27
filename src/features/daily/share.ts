@@ -1,4 +1,10 @@
-import type { Feedback } from "@/features/game/logic";
+import {
+  consistentCodes,
+  isScoredLike,
+  type Difficulty,
+  type Feedback,
+  type ScoredRow,
+} from "@/features/game/logic";
 
 export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
 
@@ -28,6 +34,8 @@ export type ShareInput = {
    * away (0012).
    */
   guesses: readonly Feedback[];
+  // Codes still possible after each guess, from countCodesLeft.
+  codesLeft: readonly number[];
   pegs: number;
   url: string;
   // The site the text is for; left out for the share sheet and clipboard.
@@ -35,25 +43,51 @@ export type ShareInput = {
 };
 
 /*
+ * How many codes still fit the pins after each guess (0012). It follows from
+ * the pins alone, so sharing it gives nothing away that the circles don't.
+ */
+export function countCodesLeft(
+  difficulty: Difficulty,
+  guesses: readonly ScoredRow[],
+): number[] {
+  let codes = consistentCodes(difficulty, []);
+
+  return guesses.map((guess) => {
+    codes = codes.filter((code) => isScoredLike(code, guess));
+
+    return codes.length;
+  });
+}
+
+/*
  * One line per guess: bulls, then cows, then misses. The feedback pegs say
  * how many, not which slot, so the line is sorted the way the board shows
- * them rather than laid out per slot like a Wordle grid.
+ * them rather than laid out per slot like a Wordle grid. Then the codes left,
+ * except on the winning row, where it's always 1. No arrow before it: these
+ * lines have no letters to set their direction, and an arrow wouldn't mirror
+ * in Arabic.
  */
 export function shareText({
   heading,
   guesses,
+  codesLeft,
   pegs,
   url,
   network,
 }: ShareInput): string {
   const { bull, cow, miss } =
     (network && NETWORK_SYMBOLS[network]) ?? EMOJI_SYMBOLS;
-  const lines = guesses.map(
-    ({ black, white }) =>
+  const lines = guesses.map(({ black, white }, index) => {
+    const circles =
       bull.repeat(black) +
       cow.repeat(white) +
-      miss.repeat(pegs - black - white),
-  );
+      miss.repeat(pegs - black - white);
+    const left = codesLeft[index];
+
+    return black === pegs || left === undefined
+      ? circles
+      : `${circles} ${left}`;
+  });
 
   return [heading, "", ...lines, "", url].join("\n");
 }

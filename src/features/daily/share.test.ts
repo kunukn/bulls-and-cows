@@ -1,5 +1,15 @@
-import { composeUrl, SHARE_NETWORKS, shareText } from "@/features/daily/share";
-import { DIFFICULTIES } from "@/features/game/logic";
+import {
+  composeUrl,
+  countCodesLeft,
+  SHARE_NETWORKS,
+  shareText,
+} from "@/features/daily/share";
+import {
+  DIFFICULTIES,
+  paletteFor,
+  scoreGuess,
+  type Color,
+} from "@/features/game/logic";
 import { expect, test } from "vitest";
 import { DAILY_DIFFICULTY } from "./daily";
 
@@ -13,6 +23,7 @@ test("one line per guess, bulls then cows then misses", () => {
       { black: 1, white: 2 },
       { black: PEGS, white: 0 },
     ],
+    codesLeft: [256, 4, 1],
     pegs: PEGS,
     url: "https://www.tyrko.app/daily",
   });
@@ -21,8 +32,8 @@ test("one line per guess, bulls then cows then misses", () => {
     [
       "Tyr & Ko · Daily code #3 · 3/10",
       "",
-      "◽◽◽◽",
-      "⚫⚪⚪◽",
+      "◽◽◽◽ 256",
+      "⚫⚪⚪◽ 4",
       "⚫⚫⚫⚫",
       "",
       "https://www.tyrko.app/daily",
@@ -36,6 +47,7 @@ const RESULT = {
     { black: 1, white: 2 },
     { black: PEGS, white: 0 },
   ],
+  codesLeft: [9, 1],
   pegs: PEGS,
   url: "https://www.tyrko.app/daily",
 };
@@ -45,7 +57,7 @@ test("the Threads text uses text circles, as its post link breaks emoji", () => 
     [
       "Tyr & Ko · Daily code #3 · 2/10",
       "",
-      "●◎◎○",
+      "●◎◎○ 9",
       "●●●●",
       "",
       "https://www.tyrko.app/daily",
@@ -72,3 +84,52 @@ test.each(SHARE_NETWORKS)(
     expect(decodeURIComponent(url.search.slice("?text=".length))).toBe(text);
   },
 );
+
+test("a loss keeps the count on its last row: the code was among those", () => {
+  const text = shareText({
+    heading: "Tyr & Ko · Daily code #3 · X/10",
+    guesses: [
+      { black: 2, white: 1 },
+      { black: PEGS - 1, white: 0 },
+    ],
+    codesLeft: [20, 3],
+    pegs: PEGS,
+    url: "https://www.tyrko.app/daily",
+  });
+
+  expect(text.split("\n").slice(2, 4)).toEqual(["⚫⚫⚪◽ 20", "⚫⚫⚫◽ 3"]);
+});
+
+const PALETTE = paletteFor(DAILY_DIFFICULTY);
+
+function scoredAgainst(secret: readonly Color[], guesses: Color[][]) {
+  return guesses.map((pegs) => ({ pegs, ...scoreGuess(secret, pegs) }));
+}
+
+test("codes left after a miss: every code without the colours guessed", () => {
+  const [first, second, ...others] = PALETTE;
+  const secret = Array.from({ length: PEGS }, () => others[0]);
+  const rows = scoredAgainst(secret, [
+    Array.from({ length: PEGS }, () => first),
+    Array.from({ length: PEGS }, () => second),
+  ]);
+
+  // Each slot can still hold any colour not ruled out.
+  expect(countCodesLeft(DAILY_DIFFICULTY, rows)).toEqual([
+    (PALETTE.length - 1) ** PEGS,
+    (PALETTE.length - 2) ** PEGS,
+  ]);
+});
+
+test("codes left only shrink, down to the secret alone on a win", () => {
+  const secret = PALETTE.slice(0, PEGS);
+  const rows = scoredAgainst(secret, [
+    PALETTE.slice(1, PEGS + 1),
+    [...secret].reverse(),
+    secret,
+  ]);
+  const counts = countCodesLeft(DAILY_DIFFICULTY, rows);
+
+  expect(counts).toEqual(counts.toSorted((a, b) => b - a));
+  expect(counts.at(-1)).toBe(1);
+});

@@ -1,7 +1,7 @@
 # 0012 — One daily code, the same for everyone
 
 - **Status:** Accepted
-- **Updated:** 2026-11-25
+- **Updated:** 2026-11-27
 
 ## Context
 
@@ -18,7 +18,7 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Its own save.** A daily game never replaces a practice game in progress, and a practice game never replaces the daily one.
 - **Stats, not high scores.** Played, win rate, streak, best streak and wins by number of guesses, kept in the browser. A daily win doesn't ask for a name (0010).
 - **A streak is days won in a row.** An unplayed today doesn't end it; a missed day or a loss does.
-- **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. It opens the device's share sheet, or copies the text where there is none.
+- **A finished day can be shared.** Share sends the day's number, the score (`4/10`, or `X/10` for a loss) and one line per guess of black (bull), white (cow) and empty (miss) circles, then a link to the daily page. It never includes the colours. Bulls come first, then cows, because the feedback pegs say how many, not which slot. After the circles each line gives the number of codes still possible (`⚫⚪◽◽ 208`), so a reader sees which guess did the work and whether the win was worked out or lucky. The number follows from the pins alone, so it gives nothing away. The winning row has none, since it's always 1; a lost game's last row keeps it. It opens the device's share sheet, or copies the text where there is none.
 - **One tap to X, Threads and Bluesky.** These are where players share most, so each gets its own button in a row under the chart, showing the site's logo and name. The button opens the site's post box with the same text filled in, in a new tab or the site's app. Threads' post link turns every emoji into "�", so its text uses ● bull, ◎ cow and ○ miss instead: text shapes that come through and stay one width, so the rows still line up. Nothing is posted until the player confirms there. Share stays beside Practice game for everywhere else.
 - **No hints on the daily code.** Everyone solves the same code, so the shield bull (0011) doesn't read the clues or give tips there, and shows no new-hint dot. It talks about the day instead: calm, breathing-style lines; how the daily code works (one try saved in this browser, the same code for everyone from the date, a new code at local midnight with the time left, Classic rules, streaks); facts about Classic (1,296 codes, Knuth's five-guess proof, about 4.3 guesses on average with perfect play); and, once the player has finished a daily code, their own wins, average guesses per win and best streak. Its button says "Ask Tyr about today's code", not "Hint". Since it doesn't solve anything, it may invite a click: there the bull is the header bull's full size, not a size smaller as in practice. Each group gets an equal chance, as in 0011.
 - **The way in is a row above the difficulty picker** on the play page. It shows whether today's code is solved.
@@ -52,6 +52,8 @@ The Daily code page (`/daily`) offers one code per calendar day, the same for ev
 - **Logo-only buttons in the bottom row.** Compact, but the targets are small and the row is easy to miss.
 - **Move a finished board on when the app comes back into view.** Lands the player straight on the new code, but a player who reopens the app the next morning to share finds the result gone.
 - **Keep the last finished board, however old.** Shareable for longer, but a player back after a week lands on an old result instead of today's code.
+- **An arrow before the codes left** (`⚫⚪◽◽ → 208`). Reads as narrowing down, but a line of circles and digits has no letters to set its direction, so in Arabic it can lay out right to left with the arrow pointing back.
+- **A word after the codes left** (`208 left`). Clearer the first time, but it needs a plural form in every language and makes the lines uneven in length.
 - **The time in the shared result.** The daily code scores guesses, not time. A shared time would also reward Auto check (0008), count interruptions, and turn a casual game into a race.
 - **Also block `/daily` when switched off.** Tidier, but a shared link would land on nothing, and a game under way would be stranded.
 - **A separate copy of the generator for daily codes.** Protects them from a change to practice games, but duplicates `generateSecret`. A test that pins a few days' codes guards the same thing.

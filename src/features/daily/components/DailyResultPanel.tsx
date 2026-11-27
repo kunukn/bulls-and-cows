@@ -11,6 +11,7 @@ import { ThreadsIcon } from "@/components/icons/ThreadsIcon";
 import { XIcon } from "@/components/icons/XIcon";
 import {
   composeUrl,
+  countCodesLeft,
   shareText,
   type ShareInput,
   type ShareNetwork,
@@ -40,7 +41,7 @@ import {
   Trophy,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useState, type ComponentType } from "react";
+import { useEffect, useMemo, useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
@@ -277,6 +278,14 @@ export function DailyResultPanel() {
   const results = useDailyResults((state) => state.results);
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const [now, setNow] = useState(() => new Date());
+  /*
+   * Expensive compute: filters all 1,296 codes per guess, and the panel
+   * re-renders every second for the countdown.
+   */
+  const codesLeft = useMemo(
+    () => countCodesLeft(DAILY_DIFFICULTY, context.guesses),
+    [context.guesses],
+  );
 
   // Drives the countdown, and notices midnight while the panel is open.
   useEffect(() => {
@@ -301,6 +310,7 @@ export function DailyResultPanel() {
       score,
     }),
     guesses: context.guesses,
+    codesLeft,
     pegs,
     url: SHARE_DAILY_URL,
   };
