@@ -126,8 +126,17 @@ test("the Threads text writes the streak in words, as its link breaks emoji", ()
   expect(heading).toBe("Tyr & Ko · Daily code #3 · 2/10 · I træk 5");
 });
 
-test("no streak, no mention: a loss or a first game keeps the plain heading", () => {
+test("no streak, no mention: a loss keeps the plain heading", () => {
   expect(shareText(RESULT).split("\n")[0]).toBe(RESULT.heading);
+});
+
+test("a 1-day streak isn't shared: 🔥1 beside the score reads like a game count", () => {
+  expect(shareText({ ...RESULT, streak: 1 }).split("\n")[0]).toBe(
+    RESULT.heading,
+  );
+  expect(shareText({ ...RESULT, streak: 2 }).split("\n")[0]).toBe(
+    `${RESULT.heading} · 🔥2`,
+  );
 });
 
 /* A win on the second guess, after `before` codes were left. */

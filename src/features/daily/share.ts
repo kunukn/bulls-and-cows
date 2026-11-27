@@ -62,7 +62,7 @@ export type ShareInput = {
   // Codes still possible after each guess, from countCodesLeft.
   codesLeft: readonly number[];
   pegs: number;
-  // Days won in a row; added to the heading when there is one.
+  // Days won in a row; added to the heading from SHARED_STREAK_MIN_DAYS.
   streak: number;
   // The translated word for it, e.g. "Streak", where emoji can't go.
   streakLabel: string;
@@ -92,6 +92,12 @@ export function countCodesLeft(
     return codes.length;
   });
 }
+
+/*
+ * A streak of 1 is just today's win, which the score already shows; next to
+ * "2/10", "🔥1" reads like a count of games (0012).
+ */
+const SHARED_STREAK_MIN_DAYS = 2;
 
 /*
  * Codes still fitting the pins before the winning guess (0012). From 5 its
@@ -140,7 +146,8 @@ export function shareText({
   const symbols = (network && NETWORK_SYMBOLS[network]) ?? EMOJI_SYMBOLS;
   const { bull, cow, miss } = symbols;
   const streakText = `${symbols.streak ?? `${streakLabel} `}${streak}`;
-  const fullHeading = streak > 0 ? `${heading} · ${streakText}` : heading;
+  const fullHeading =
+    streak >= SHARED_STREAK_MIN_DAYS ? `${heading} · ${streakText}` : heading;
   const lines = guesses.map(({ black, white }, index) => {
     const circles =
       bull.repeat(black) +

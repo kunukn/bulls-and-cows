@@ -159,7 +159,8 @@ type StreakChoice = {
 
 const STREAK_CHOICES: StreakChoice[] = [
   { id: "real", label: "This browser's results", daysBefore: null },
-  { id: "one", label: "1 day", daysBefore: 0 },
+  { id: "one", label: "1 day (not shared)", daysBefore: 0 },
+  { id: "two", label: "2 days", daysBefore: 1 },
   { id: "five", label: "5 days", daysBefore: 4 },
   { id: "hundred", label: "100 days", daysBefore: 99 },
 ];
