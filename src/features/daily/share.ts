@@ -10,19 +10,38 @@ export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
 
 export type ShareNetwork = (typeof SHARE_NETWORKS)[number];
 
-type PegSymbols = { bull: string; cow: string; miss: string };
+/*
+ * `streak` goes before the days won in a row; null writes the translated
+ * word instead.
+ */
+type ShareSymbols = {
+  bull: string;
+  cow: string;
+  miss: string;
+  streak: string | null;
+};
 
 // Emoji are drawn one width apart, so the rows line up as a grid.
-const EMOJI_SYMBOLS: PegSymbols = { bull: "⚫", cow: "⚪", miss: "◽" };
+const EMOJI_SYMBOLS: ShareSymbols = {
+  bull: "⚫",
+  cow: "⚪",
+  miss: "◽",
+  streak: "🔥",
+};
 
 /*
  * Threads' compose link turns every emoji into "�" (0012). These text
  * shapes come through, and are one width in its font so the rows still line
  * up; the dotted and small circles aren't.
  */
-const TEXT_SYMBOLS: PegSymbols = { bull: "●", cow: "◎", miss: "○" };
+const TEXT_SYMBOLS: ShareSymbols = {
+  bull: "●",
+  cow: "◎",
+  miss: "○",
+  streak: null,
+};
 
-const NETWORK_SYMBOLS: Partial<Record<ShareNetwork, PegSymbols>> = {
+const NETWORK_SYMBOLS: Partial<Record<ShareNetwork, ShareSymbols>> = {
   threads: TEXT_SYMBOLS,
 };
 
@@ -37,6 +56,10 @@ export type ShareInput = {
   // Codes still possible after each guess, from countCodesLeft.
   codesLeft: readonly number[];
   pegs: number;
+  // Days won in a row; added to the heading when there is one.
+  streak: number;
+  // The translated word for it, e.g. "Streak", where emoji can't go.
+  streakLabel: string;
   url: string;
   // The site the text is for; left out for the share sheet and clipboard.
   network?: ShareNetwork;
@@ -72,11 +95,15 @@ export function shareText({
   guesses,
   codesLeft,
   pegs,
+  streak,
+  streakLabel,
   url,
   network,
 }: ShareInput): string {
-  const { bull, cow, miss } =
-    (network && NETWORK_SYMBOLS[network]) ?? EMOJI_SYMBOLS;
+  const symbols = (network && NETWORK_SYMBOLS[network]) ?? EMOJI_SYMBOLS;
+  const { bull, cow, miss } = symbols;
+  const streakText = `${symbols.streak ?? `${streakLabel} `}${streak}`;
+  const fullHeading = streak > 0 ? `${heading} · ${streakText}` : heading;
   const lines = guesses.map(({ black, white }, index) => {
     const circles =
       bull.repeat(black) +
@@ -89,7 +116,7 @@ export function shareText({
       : `${circles} ${left}`;
   });
 
-  return [heading, "", ...lines, "", url].join("\n");
+  return [fullHeading, "", ...lines, "", url].join("\n");
 }
 
 /* Each site's documented "compose a post" link; the player still confirms. */

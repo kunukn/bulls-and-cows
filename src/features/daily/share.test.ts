@@ -25,6 +25,8 @@ test("one line per guess, bulls then cows then misses", () => {
     ],
     codesLeft: [256, 4, 1],
     pegs: PEGS,
+    streak: 0,
+    streakLabel: "Streak",
     url: "https://www.tyrko.app/daily",
   });
 
@@ -49,6 +51,8 @@ const RESULT = {
   ],
   codesLeft: [9, 1],
   pegs: PEGS,
+  streak: 0,
+  streakLabel: "Streak",
   url: "https://www.tyrko.app/daily",
 };
 
@@ -94,10 +98,33 @@ test("a loss keeps the count on its last row: the code was among those", () => {
     ],
     codesLeft: [20, 3],
     pegs: PEGS,
+    streak: 0,
+    streakLabel: "Streak",
     url: "https://www.tyrko.app/daily",
   });
 
   expect(text.split("\n").slice(2, 4)).toEqual(["⚫⚫⚪◽ 20", "⚫⚫⚫◽ 3"]);
+});
+
+test("a streak follows the score, as a flame where emoji work", () => {
+  const heading = shareText({ ...RESULT, streak: 5 }).split("\n")[0];
+
+  expect(heading).toBe("Tyr & Ko · Daily code #3 · 2/10 · 🔥5");
+});
+
+test("the Threads text writes the streak in words, as its link breaks emoji", () => {
+  const heading = shareText({
+    ...RESULT,
+    streak: 5,
+    streakLabel: "I træk",
+    network: "threads",
+  }).split("\n")[0];
+
+  expect(heading).toBe("Tyr & Ko · Daily code #3 · 2/10 · I træk 5");
+});
+
+test("no streak, no mention: a loss or a first game keeps the plain heading", () => {
+  expect(shareText(RESULT).split("\n")[0]).toBe(RESULT.heading);
 });
 
 const PALETTE = paletteFor(DAILY_DIFFICULTY);

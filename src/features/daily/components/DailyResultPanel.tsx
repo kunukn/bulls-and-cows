@@ -312,6 +312,8 @@ export function DailyResultPanel() {
     guesses: context.guesses,
     codesLeft,
     pegs,
+    streak: summary.currentStreak,
+    streakLabel: t("daily.streak"),
     url: SHARE_DAILY_URL,
   };
   const percentFormat = new Intl.NumberFormat(getIntlLocale(i18n.language), {
