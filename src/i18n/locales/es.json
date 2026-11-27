@@ -164,7 +164,8 @@
     "share": "Compartir",
     "copied": "Copiado",
     "postOn": "Publicar en {{network}}",
-    "shareHeading": "{{app}} · Código del día n.º {{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Código del día n.º {{number, number}} · {{score}}",
+    "shareLucky": "¡Qué suerte!"
   },
   "highScores": {
     "title": "Récords",

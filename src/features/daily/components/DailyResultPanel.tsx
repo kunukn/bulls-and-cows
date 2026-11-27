@@ -314,6 +314,7 @@ export function DailyResultPanel() {
     pegs,
     streak: summary.currentStreak,
     streakLabel: t("daily.streak"),
+    luckyLabel: t("daily.shareLucky"),
     url: SHARE_DAILY_URL,
   };
   const percentFormat = new Intl.NumberFormat(getIntlLocale(i18n.language), {

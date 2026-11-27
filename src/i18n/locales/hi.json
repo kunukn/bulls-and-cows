@@ -164,7 +164,8 @@
     "share": "शेयर करो",
     "copied": "कॉपी हो गया",
     "postOn": "{{network}} पर पोस्ट करो",
-    "shareHeading": "{{app}} · आज का कोड #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · आज का कोड #{{number, number}} · {{score}}",
+    "shareLucky": "क्या किस्मत!"
   },
   "highScores": {
     "title": "हाई स्कोर",

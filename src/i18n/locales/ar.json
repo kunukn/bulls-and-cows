@@ -196,7 +196,8 @@
     "share": "شارك",
     "copied": "تم النسخ",
     "postOn": "انشر على {{network}}",
-    "shareHeading": "{{app}} · رمز اليوم #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · رمز اليوم #{{number, number}} · {{score}}",
+    "shareLucky": "ضربة حظ"
   },
   "highScores": {
     "title": "أفضل النتائج",

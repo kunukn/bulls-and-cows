@@ -164,7 +164,8 @@
     "share": "Del",
     "copied": "Kopieret",
     "postOn": "Slå op på {{network}}",
-    "shareHeading": "{{app}} · Dagens kode #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Dagens kode #{{number, number}} · {{score}}",
+    "shareLucky": "Heldig"
   },
   "highScores": {
     "title": "Topliste",

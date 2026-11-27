@@ -156,7 +156,8 @@
     "share": "分享",
     "copied": "已复制",
     "postOn": "发到 {{network}}",
-    "shareHeading": "{{app}} · 每日密码 #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · 每日密码 #{{number, number}} · {{score}}",
+    "shareLucky": "运气真好"
   },
   "highScores": {
     "title": "排行榜",

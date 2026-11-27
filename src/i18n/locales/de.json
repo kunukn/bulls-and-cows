@@ -164,7 +164,8 @@
     "share": "Teilen",
     "copied": "Kopiert",
     "postOn": "Auf {{network}} posten",
-    "shareHeading": "{{app}} · Tagescode #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Tagescode #{{number, number}} · {{score}}",
+    "shareLucky": "Glück gehabt"
   },
   "highScores": {
     "title": "Bestenliste",

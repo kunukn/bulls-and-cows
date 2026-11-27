@@ -164,7 +164,8 @@
     "share": "Share",
     "copied": "Copied",
     "postOn": "Post on {{network}}",
-    "shareHeading": "{{app}} · Daily code #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Daily code #{{number, number}} · {{score}}",
+    "shareLucky": "Lucky"
   },
   "highScores": {
     "title": "High scores",

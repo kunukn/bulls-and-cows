@@ -156,7 +156,8 @@
     "share": "シェア",
     "copied": "コピーしたよ",
     "postOn": "{{network}}にとうこう",
-    "shareHeading": "{{app}} · デイリーコード #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · デイリーコード #{{number, number}} · {{score}}",
+    "shareLucky": "ラッキー"
   },
   "highScores": {
     "title": "ハイスコア",

@@ -156,7 +156,8 @@
     "share": "Bagikan",
     "copied": "Tersalin",
     "postOn": "Bagikan di {{network}}",
-    "shareHeading": "{{app}} · Kode harian #{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Kode harian #{{number, number}} · {{score}}",
+    "shareLucky": "Beruntung"
   },
   "highScores": {
     "title": "Skor tertinggi",

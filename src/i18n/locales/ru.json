@@ -180,7 +180,8 @@
     "share": "Поделиться",
     "copied": "Скопировано",
     "postOn": "Опубликовать в {{network}}",
-    "shareHeading": "{{app}} · Код дня №{{number, number}} · {{score}}"
+    "shareHeading": "{{app}} · Код дня №{{number, number}} · {{score}}",
+    "shareLucky": "Повезло"
   },
   "highScores": {
     "title": "Рекорды",

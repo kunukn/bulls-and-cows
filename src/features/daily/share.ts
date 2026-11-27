@@ -11,14 +11,16 @@ export const SHARE_NETWORKS = ["x", "threads", "bluesky"] as const;
 export type ShareNetwork = (typeof SHARE_NETWORKS)[number];
 
 /*
- * `streak` goes before the days won in a row; null writes the translated
- * word instead.
+ * `streak` goes before the days won in a row; `lucky` and `veryLucky` mark
+ * a lucky win. Null writes the translated word instead.
  */
 type ShareSymbols = {
   bull: string;
   cow: string;
   miss: string;
   streak: string | null;
+  lucky: string | null;
+  veryLucky: string | null;
 };
 
 // Emoji are drawn one width apart, so the rows line up as a grid.
@@ -27,6 +29,8 @@ const EMOJI_SYMBOLS: ShareSymbols = {
   cow: "⚪",
   miss: "◽",
   streak: "🔥",
+  lucky: "🍀",
+  veryLucky: "🦄",
 };
 
 /*
@@ -39,6 +43,8 @@ const TEXT_SYMBOLS: ShareSymbols = {
   cow: "◎",
   miss: "○",
   streak: null,
+  lucky: null,
+  veryLucky: null,
 };
 
 const NETWORK_SYMBOLS: Partial<Record<ShareNetwork, ShareSymbols>> = {
@@ -60,6 +66,11 @@ export type ShareInput = {
   streak: number;
   // The translated word for it, e.g. "Streak", where emoji can't go.
   streakLabel: string;
+  /*
+   * The translated word for a lucky win of either kind, e.g. "Lucky", where
+   * emoji can't go.
+   */
+  luckyLabel: string;
   url: string;
   // The site the text is for; left out for the share sheet and clipboard.
   network?: ShareNetwork;
@@ -83,12 +94,37 @@ export function countCodesLeft(
 }
 
 /*
+ * Codes still fitting the pins before the winning guess (0012). From 5 its
+ * chance was 1 in 5 or worse, about 1 win in 9; from 25, 1 in 25 or worse,
+ * about 1 win in 50.
+ */
+const LUCKY_MIN_CODES = 5;
+const VERY_LUCKY_MIN_CODES = 25;
+
+/*
+ * The mark after a winning row, or null when the win was worked out. Every
+ * code fits before the first guess, so a win there is very lucky.
+ */
+function luckMark(
+  codesBefore: number,
+  symbols: ShareSymbols,
+  luckyLabel: string,
+): string | null {
+  if (codesBefore >= VERY_LUCKY_MIN_CODES)
+    return symbols.veryLucky ?? luckyLabel;
+
+  if (codesBefore >= LUCKY_MIN_CODES) return symbols.lucky ?? luckyLabel;
+
+  return null;
+}
+
+/*
  * One line per guess: bulls, then cows, then misses. The feedback pegs say
  * how many, not which slot, so the line is sorted the way the board shows
  * them rather than laid out per slot like a Wordle grid. Then the codes left,
- * except on the winning row, where it's always 1. No arrow before it: these
- * lines have no letters to set their direction, and an arrow wouldn't mirror
- * in Arabic.
+ * except on the winning row, where it's always 1; a lucky win gets a clover
+ * or a unicorn there instead. No arrow before the count: these lines have no
+ * letters to set their direction, and an arrow wouldn't mirror in Arabic.
  */
 export function shareText({
   heading,
@@ -97,6 +133,7 @@ export function shareText({
   pegs,
   streak,
   streakLabel,
+  luckyLabel,
   url,
   network,
 }: ShareInput): string {
@@ -109,11 +146,16 @@ export function shareText({
       bull.repeat(black) +
       cow.repeat(white) +
       miss.repeat(pegs - black - white);
+    if (black === pegs) {
+      const before = index === 0 ? Infinity : (codesLeft[index - 1] ?? 0);
+      const mark = luckMark(before, symbols, luckyLabel);
+
+      return mark === null ? circles : `${circles} ${mark}`;
+    }
+
     const left = codesLeft[index];
 
-    return black === pegs || left === undefined
-      ? circles
-      : `${circles} ${left}`;
+    return left === undefined ? circles : `${circles} ${left}`;
   });
 
   return [fullHeading, "", ...lines, "", url].join("\n");

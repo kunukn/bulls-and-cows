@@ -49,17 +49,17 @@ const SCENARIOS: Scenario[] = [
     elapsedMs: 42_000,
   },
   {
-    id: "lucky-two",
-    label: "Lucky: won in 2, 312 codes left",
+    id: "very-lucky-two",
+    label: "Very lucky 🦄: won in 2, 312 codes left",
     outcome: "won",
     rows: ["rygp", "cryc"],
     elapsedMs: 38_000,
   },
   {
     id: "lucky-three",
-    label: "Lucky: won in 3, 3 codes left",
+    label: "Lucky 🍀: won in 3, 8 codes left",
     outcome: "won",
-    rows: ["rygp", "cyrc", "cryc"],
+    rows: ["rroo", "yycc", "cryc"],
     elapsedMs: 71_000,
   },
   {
