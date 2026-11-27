@@ -1,4 +1,5 @@
 import { DIFFICULTIES } from "@/features/game/logic";
+import { createContext, useContext } from "react";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { DAILY_DIFFICULTY } from "./daily";
@@ -85,3 +86,17 @@ export const useDailyResults = create<DailyResultsStore>()(
     { name: "app:daily", version: 1 },
   ),
 );
+
+/*
+ * Made-up results a developer page (src/debug/) shows in place of the saved
+ * ones, so previewing a streak never writes to the player's stats.
+ */
+export const DailyResultsOverride = createContext<DailyResults | null>(null);
+
+/* The results to show: the saved ones, unless a debug page overrides them. */
+export function useShownDailyResults(): DailyResults {
+  const override = useContext(DailyResultsOverride);
+  const saved = useDailyResults((state) => state.results);
+
+  return override ?? saved;
+}

@@ -16,7 +16,7 @@ import {
   type ShareInput,
   type ShareNetwork,
 } from "@/features/daily/share";
-import { summarize, useDailyResults } from "@/features/daily/store";
+import { summarize, useShownDailyResults } from "@/features/daily/store";
 import { OutcomeMessage } from "@/features/game/components/ResultPanel";
 import { DIFFICULTIES } from "@/features/game/logic";
 import { elapsedMs } from "@/features/game/machine";
@@ -275,7 +275,7 @@ export function DailyResultPanel() {
   const actor = useGameActorRef();
   const isWon = useGameSelector((snapshot) => snapshot.matches("won"));
   const context = useGameSelector((snapshot) => snapshot.context);
-  const results = useDailyResults((state) => state.results);
+  const results = useShownDailyResults();
   const isMinimalText = useSettings((state) => state.isMinimalText);
   const [now, setNow] = useState(() => new Date());
   /*

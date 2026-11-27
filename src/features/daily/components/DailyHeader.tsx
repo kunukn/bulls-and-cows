@@ -1,6 +1,6 @@
 import { paths } from "@/app/paths";
 import { dailyDate, dailyNumber } from "@/features/daily/daily";
-import { summarize, useDailyResults } from "@/features/daily/store";
+import { summarize, useShownDailyResults } from "@/features/daily/store";
 import { useSettings } from "@/features/game/store/settings";
 import { getIntlLocale } from "@/i18n/languages";
 import { formatDate } from "@/utils/format";
@@ -21,7 +21,7 @@ type Props = {
 export function DailyHeader({ number }: Props) {
   const { t, i18n } = useTranslation();
   const isMinimalText = useSettings((state) => state.isMinimalText);
-  const results = useDailyResults((state) => state.results);
+  const results = useShownDailyResults();
   const { currentStreak } = summarize(results, dailyNumber());
   const numberFormat = new Intl.NumberFormat(getIntlLocale(i18n.language));
   const title = t("daily.numbered", { number });

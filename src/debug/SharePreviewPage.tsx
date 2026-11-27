@@ -1,4 +1,8 @@
 import { dailyNumber, DAILY_DIFFICULTY } from "@/features/daily/daily";
+import {
+  DailyResultsOverride,
+  type DailyResults,
+} from "@/features/daily/store";
 import { cryptoRandomInt, scoreGuess, type Color } from "@/features/game/logic";
 import { gameMachine } from "@/features/game/machine";
 import { GameActorProvider } from "@/features/game/machine-context";
@@ -45,8 +49,22 @@ const SCENARIOS: Scenario[] = [
     elapsedMs: 42_000,
   },
   {
+    id: "lucky-two",
+    label: "Lucky: won in 2, 312 codes left",
+    outcome: "won",
+    rows: ["rygp", "cryc"],
+    elapsedMs: 38_000,
+  },
+  {
+    id: "lucky-three",
+    label: "Lucky: won in 3, 3 codes left",
+    outcome: "won",
+    rows: ["rygp", "cyrc", "cryc"],
+    elapsedMs: 71_000,
+  },
+  {
     id: "four",
-    label: "Won in 4",
+    label: "Worked out: won in 4, 1 code left",
     outcome: "won",
     rows: ["rroo", "yycc", "cyrc", "cryc"],
     elapsedMs: 134_000,
@@ -132,6 +150,44 @@ function finishedGame({ outcome, rows, elapsedMs }: Scenario) {
   });
 }
 
+type StreakChoice = {
+  id: string;
+  label: string;
+  // Days won before today; null keeps this browser's real results.
+  daysBefore: number | null;
+};
+
+const STREAK_CHOICES: StreakChoice[] = [
+  { id: "real", label: "This browser's results", daysBefore: null },
+  { id: "one", label: "1 day", daysBefore: 0 },
+  { id: "five", label: "5 days", daysBefore: 4 },
+  { id: "hundred", label: "100 days", daysBefore: 99 },
+];
+
+/*
+ * Wins on each of the days before today, then today's game. Read through
+ * DailyResultsOverride, never written to the saved results.
+ */
+function madeUpResults(
+  { outcome, rows, elapsedMs }: Scenario,
+  daysBefore: number,
+): DailyResults {
+  const today = dailyNumber();
+  const results: DailyResults = {
+    [today]: { isWon: outcome === "won", guesses: rows.length, elapsedMs },
+  };
+  for (let day = today - daysBefore; day < today; day++) {
+    // A spread of guess counts, so the chart isn't one bar.
+    results[day] = {
+      isWon: true,
+      guesses: 3 + ((today - day) % 4),
+      elapsedMs: 120_000,
+    };
+  }
+
+  return results;
+}
+
 // Captured at load, so the copy-only switch can put the share sheet back.
 const SHARE_DESCRIPTOR = Object.getOwnPropertyDescriptor(
   Navigator.prototype,
@@ -149,10 +205,15 @@ function setShareSheetHidden(isHidden: boolean) {
 }
 
 export function SharePreviewPage() {
-  const [scenarioId, setScenarioId] = useState(SCENARIOS[2].id);
+  const [scenarioId, setScenarioId] = useState("eight");
+  const [streakId, setStreakId] = useState(STREAK_CHOICES[0].id);
   const [isCopyOnly, setIsCopyOnly] = useState(false);
   const scenario =
     SCENARIOS.find(({ id }) => id === scenarioId) ?? SCENARIOS[0];
+  const { daysBefore } =
+    STREAK_CHOICES.find(({ id }) => id === streakId) ?? STREAK_CHOICES[0];
+  const results =
+    daysBefore === null ? null : madeUpResults(scenario, daysBefore);
 
   // Leaving the page brings the share sheet back for the real game.
   useEffect(() => () => setShareSheetHidden(false), []);
@@ -173,7 +234,7 @@ export function SharePreviewPage() {
         <p className="text-sm text-subtle">
           A finished daily game with made-up guesses and a made-up code. Try
           Share, X, Threads and Bluesky without using up today's code. Nothing
-          is saved. The stats are this browser's real daily results.
+          is saved, not even a made-up streak.
         </p>
       </div>
 
@@ -197,6 +258,26 @@ export function SharePreviewPage() {
         </div>
       </fieldset>
 
+      <fieldset className="flex flex-col gap-2">
+        <legend className="mb-1 text-sm font-semibold text-heading">
+          Streak, after a win (a loss shows none)
+        </legend>
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {STREAK_CHOICES.map(({ id, label }) => (
+            <label key={id} className="flex items-center gap-1.5 text-sm">
+              <input
+                type="radio"
+                name="streak"
+                value={id}
+                checked={id === streakId}
+                onChange={() => setStreakId(id)}
+              />
+              {label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
       <label className="flex items-center gap-1.5 text-sm">
         <input
           type="checkbox"
@@ -211,12 +292,14 @@ export function SharePreviewPage() {
       </label>
 
       {/* A new key per choice: the provider reads its snapshot once. */}
-      <GameActorProvider
-        key={`${scenario.id}-${isCopyOnly}`}
-        options={{ snapshot: finishedGame(scenario) }}
-      >
-        <Play />
-      </GameActorProvider>
+      <DailyResultsOverride value={results}>
+        <GameActorProvider
+          key={`${scenario.id}-${isCopyOnly}`}
+          options={{ snapshot: finishedGame(scenario) }}
+        >
+          <Play />
+        </GameActorProvider>
+      </DailyResultsOverride>
     </div>
   );
 }
