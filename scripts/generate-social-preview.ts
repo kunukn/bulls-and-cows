@@ -27,10 +27,12 @@ import {
 } from "../src/components/icons/bullMark.ts";
 import {
   DIFFICULTIES,
+  DIFFICULTY_KEYS,
   paletteFor,
   scoreGuess,
   type Color,
 } from "../src/features/game/logic.ts";
+import { LANGUAGES } from "../src/i18n/languages.ts";
 
 const OUTPUT = "public/social-preview.png";
 const HTML = "index.html";
@@ -170,8 +172,9 @@ function stampVersion(image: Buffer): string {
 function cardHtml(appImage: Buffer): string {
   const chips = [
     "Mastermind-style",
-    "3 difficulties",
-    "7 languages",
+    // Counted, so adding a language or difficulty can't leave the card stale.
+    `${DIFFICULTY_KEYS.length} difficulties`,
+    `${LANGUAGES.length} languages`,
     "Free · no sign-up",
   ]
     .map((chip) => `<span class="chip">${chip}</span>`)
