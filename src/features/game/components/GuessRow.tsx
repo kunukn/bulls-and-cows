@@ -107,10 +107,14 @@ export function GuessRow({
                     slot: index + 1,
                     color: t(`colors.${color}`),
                   })}
-                  // Touch has no hover, so the badge is always shown there.
-                  className="absolute -end-1 -top-1 grid size-4 cursor-pointer place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-sky-400 pointer-coarse:opacity-100"
+                  /*
+                   * Touch has no hover, so the badge is always shown there.
+                   * The invisible ::after widens the touch target to 32px
+                   * without growing the badge over the peg's own button.
+                   */
+                  className="absolute -end-1 -top-1 grid size-5 cursor-pointer place-items-center rounded-full bg-slate-900 text-slate-200 opacity-0 ring-1 ring-slate-500 transition-opacity group-hover:opacity-100 after:absolute after:inset-0 after:rounded-full focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-sky-400 pointer-coarse:opacity-100 pointer-coarse:after:-inset-1.5"
                 >
-                  <X className="size-3" strokeWidth={3} />
+                  <X className="size-3.5" strokeWidth={3} />
                 </button>
               )}
             </span>
