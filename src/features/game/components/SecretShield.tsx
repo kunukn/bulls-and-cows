@@ -77,7 +77,7 @@ export function SecretShield({
              * through the tray: lighter on hover, pushed down 1px while
              * pressed.
              */
-            <span className="grid size-9 place-items-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_2px_3px_var(--board-shield-drop)] transition-[translate,box-shadow,filter] duration-75 board-shield group-has-[[data-shield-bull]:active]/tray:translate-y-px group-has-[[data-shield-bull]:active]/tray:shadow-[inset_0_1px_0_rgb(255_255_255/0.1),0_1px_1px_var(--board-shield-drop)] group-has-[[data-shield-bull]:hover]/tray:brightness-110 motion-reduce:transition-none desk:size-11">
+            <span className="grid size-9 place-items-center rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.18),0_2px_3px_var(--board-shield-drop)] transition-[translate,box-shadow,filter] duration-75 board-shield group-has-[[data-shield-bull]:active]/tray:translate-y-px group-has-[[data-shield-bull]:active]/tray:shadow-[inset_0_1px_0_rgb(255_255_255/0.1),0_1px_1px_var(--board-shield-drop)] group-has-[[data-shield-bull]:hover]/tray:brightness-110 motion-reduce:transition-none desk:size-11 big:size-13">
               <span className="relative">
                 {/*
                  * Embossed: the label colour plus a highlight under each ridge.

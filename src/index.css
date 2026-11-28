@@ -8,6 +8,13 @@
  */
 @custom-variant desk (@media (min-width: 64rem) and (min-height: 50rem));
 
+/*
+ * Second step-up for tall screens such as a portrait iPad Pro 13" (1032×1376,
+ * ~1290 tall in Safari): bigger pegs and a wider column, sized so hard's 12
+ * rows still fit. Registered after desk so its utilities win where both match.
+ */
+@custom-variant big (@media (min-width: 64rem) and (min-height: 75rem));
+
 @theme {
   --color-peg-red: oklch(0.63 0.24 27);
   --color-peg-blue: oklch(0.62 0.19 259);

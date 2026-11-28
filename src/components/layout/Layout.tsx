@@ -25,7 +25,7 @@ export function Layout() {
   const isPlayPage = isPracticePage || isDailyPage;
 
   return (
-    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg">
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col px-4 desk:max-w-lg big:max-w-xl">
       <header className="flex items-center justify-between gap-2 py-4">
         {/* The bull is a button, so it sits beside the heading, not in its name. */}
         <div className="flex items-center gap-2">
@@ -42,7 +42,7 @@ export function Layout() {
         <div className="flex items-center gap-1">
           {isPlayPage && <HowItWorksPopover isDailyPage={isDailyPage} />}
           <nav className="flex gap-1">
-            {/* Icon-only: the layout is 448px max (512px on desktop), too narrow for every language's
+            {/* Icon-only: the layout is 448px max (512px on desktop, 576px on tall screens), too narrow for every language's
                 labels next to the title. Text stays for screen readers + tooltip. */}
             <NavLink
               to={paths.play}

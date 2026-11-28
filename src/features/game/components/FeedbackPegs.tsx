@@ -83,7 +83,7 @@ export function FeedbackPegs({
         <span
           key={index}
           aria-hidden
-          className="grid size-3 place-items-center desk:size-3.5"
+          className="grid size-3 place-items-center desk:size-3.5 big:size-4"
         >
           <span
             className={cn(
@@ -91,7 +91,7 @@ export function FeedbackPegs({
               mark === "black" && bullPegClass,
               mark === "white" && COW_PEG_CLASS,
               // After the peg class, so cn() lets this ring colour win.
-              mark !== "empty" && "size-3 ring-1 desk:size-3.5",
+              mark !== "empty" && "size-3 ring-1 desk:size-3.5 big:size-4",
               mark === "black" && "ring-board-bull-ring",
               mark === "white" && "ring-board-key-ring",
               mark === "empty" && "size-1.5 bg-board-label opacity-40",

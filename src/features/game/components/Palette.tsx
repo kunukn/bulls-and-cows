@@ -63,7 +63,7 @@ export function Palette() {
             gap: "clamp(0.5rem, (100cqi + 2 * var(--bleed) - var(--colors) * var(--peg)) / (var(--colors) - 1), 1.25rem)",
           } as React.CSSProperties
         }
-        className="grid grid-cols-[repeat(var(--colors),minmax(0,var(--peg)))] justify-center [--peg:2.75rem] desk:[--peg:3rem]"
+        className="grid grid-cols-[repeat(var(--colors),minmax(0,var(--peg)))] justify-center [--peg:2.75rem] desk:[--peg:3rem] big:[--peg:3.5rem]"
       >
         {palette.map((color, index) => (
           <button
