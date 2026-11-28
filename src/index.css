@@ -3,10 +3,11 @@
 @import "shadcn/tailwind.css";
 
 /*
- * Desktop step-up for the game board: wide and tall windows only, so hard's
- * 12 rows still fit a short laptop window at the default size.
+ * Step-up for the game board on tablets and desktops: tall windows only, so
+ * hard's 12 rows still fit a short laptop window at the default size. 40rem
+ * wide takes in every portrait iPad (744–1032px) but no phone.
  */
-@custom-variant desk (@media (min-width: 64rem) and (min-height: 50rem));
+@custom-variant desk (@media (min-width: 40rem) and (min-height: 50rem));
 
 /*
  * Second step-up for tall screens such as a portrait iPad Pro 13" (1032×1376,

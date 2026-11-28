@@ -44,7 +44,7 @@ const CARD = { width: 1280, height: 640 };
 const APP_FRAME = { x: 700, y: 44, width: 505 };
 const APP_HEIGHT = CARD.height - APP_FRAME.y;
 
-/* Desktop size (the `desk` variant needs ≥1024×800) for the larger pegs. */
+/* Desktop size (the `desk` variant needs ≥640×800) for the larger pegs. */
 const APP_VIEWPORT = { width: 1280, height: 1000 };
 
 const DIFFICULTY = "easy";
